@@ -240,6 +240,7 @@ export default {
       padding:0;
       height:30px;
       bottom:auto;
+      box-shadow: 0 0.1rem 0.2rem 0 rgba($defaulttextcolor, 0.1);
     }
 
     .tab_title,
@@ -262,7 +263,7 @@ export default {
       height: 40px;
       background-color:transparent;
       display:block;
-      width:100%;
+      width:calc(100% - 20px);
       //position:absolute;
       //top:0;
     }

@@ -61,7 +61,7 @@ export default {
 <style lang="scss">
   .iFrameWrap
   {
-    margin-top:0;
+    margin-top:30px;
     height:100%;
     *
     {
@@ -69,7 +69,7 @@ export default {
     }
     .iFrameContainer
     {
-      height:100%;
+      height:calc(100% - 30px);
       width:100%;
       background-color:aliceblue;
     }

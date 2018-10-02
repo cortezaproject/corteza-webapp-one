@@ -227,7 +227,7 @@ export default
   max-height:100vh;
   width:100vw;
   overflow:hidden;
-  background-color:black;
+  background-color:#fefefe;
   .is-resizing
   {
     .iFrameContainer
