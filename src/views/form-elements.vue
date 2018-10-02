@@ -3,8 +3,18 @@
     <Header :user="user" />
     <div class="form-layout">
       <h1>Basic form components</h1>
-      <radio group="yes-no" value="1">Yes</radio>
-      <radio group="yes-no" value="0">No</radio>
+      <div>
+        <radio group-name="yes-no" value="1">Yes</radio>
+        <radio group-name="yes-no" value="0">No</radio>
+      </div>
+      <div>
+        <checkbox name="yellow" value="#FFFF00">Yellow</checkbox>
+        <checkbox name="orange" value="rgb(255,153,0)">Orange</checkbox>
+        <checkbox name="red" value="red">red</checkbox>
+      </div>
+      <div>
+        <checkbox name="confirm" value="yes">It's ok!</checkbox>
+      </div>
     </div>
   </div>
 </template>
@@ -12,12 +22,14 @@
 <script>
 import Header from '@/components/Header.vue'
 import radio from '@/components/form-elements/radio.vue'
+import checkbox from '@/components/form-elements/checkbox.vue'
 
 export default {
   components:
   {
     'Header': Header,
     radio,
+    checkbox,
   },
   data ()
   {
