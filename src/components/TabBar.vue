@@ -17,10 +17,10 @@
         <span>{{ tab.title }}</span>
         <i class="icon-close"></i>
       </div>
+      <div class="tab-plus add" @click="$emit('add')">
+        <label for="show-apps"><span  arial-label="Add tab" title="Add tab">+</span></label>
+      </div>
     </draggable>
-    <div class="tab-plus add">
-      <label for="show-apps"><span  arial-label="Add tab" title="Add tab">+</span></label>
-    </div>
   </div>
 </template>
 <script>
@@ -234,6 +234,8 @@ export default {
       position:absolute;
       //this should be replaced by value from props
       top:0;
+      left:0;
+      width:100%;
       margin:0;
       padding:0;
       height:30px;
@@ -260,6 +262,7 @@ export default {
       height: 40px;
       background-color:transparent;
       display:block;
+      width:100%;
       //position:absolute;
       //top:0;
     }
@@ -275,7 +278,7 @@ export default {
       float: left;
       margin: 0 0 0 7px;
       padding: 0 15px;
-      width: 9vw;
+      padding-right:30px;
       border-radius: 0 0 5px 5px;
       box-shadow: inset -1px 1px 0 rgba(255,255,255,.5);
       background: $tab_bgcolor;
@@ -285,6 +288,8 @@ export default {
 
     .tab_list .item
     {
+      width: 10%;
+      min-width:30px;
       height: 29px;
     }
     .tab_list .item:before

@@ -9,6 +9,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "v-tooltip": "^2.0.0-rc.33",
     "vue": "^2.5.17",
     "vue-multipane": "^0.9.5",
     "vue-panel-split": "^1.0.3",
