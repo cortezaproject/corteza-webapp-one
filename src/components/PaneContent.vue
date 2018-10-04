@@ -13,7 +13,7 @@
       </div -->
       <iframe
       v-for="(tab, index) in tabs" :key="index"
-      style="width: 100%; height:100%; overflow-x: hidden; overflow-y: scroll;"
+      style="width: 100%; height:100%; overflow-x: hidden; overflow-y: scroll; background:#ccc;"
       class="iframeContent"
       :class="[ { active : active_tab === tab.id } ]"
       frameborder="0"
@@ -25,6 +25,21 @@
 <script>
 export default {
   name: 'PaneContent',
+  computed: {
+    tabs: {
+      get () {
+        console.log(this.$store.state.panes)
+        return this.$store.state.panes.items[this.pane_id].tabs
+      },
+      /* npo reason to set here ?
+      set (tabs) {
+        console.log('setting tabs')
+        console.log(tabs)
+        this.$store.commit('updateTabs', { tabs: tabs, paneId: this.pane_id })
+      },
+      */
+    },
+  },
   props:
   {
     pane_id:
@@ -44,10 +59,6 @@ export default {
       type: String,
       default: '',
     },
-    tabs: {
-      required: true,
-      type: Array,
-    },
     active_tab:
     {
       type: Number,
@@ -62,14 +73,14 @@ export default {
   .iFrameWrap
   {
     margin-top:30px;
-    height:100%;
+    height:calc(100% - 30px);
     *
     {
       box-sizing: border-box;
     }
     .iFrameContainer
     {
-      height:calc(100% - 30px);
+      height:100%;
       width:100%;
       background-color:aliceblue;
     }
@@ -81,5 +92,9 @@ export default {
         display:block;
       }
     }
+  }
+  iframe
+  {
+    background:#ccc;
   }
 </style>

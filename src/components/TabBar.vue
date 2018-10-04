@@ -6,8 +6,10 @@
       v-model="tabs"
       :options="{ group:'tabs' }"
       class="tab_list"
+      :id="'tabs_in_pane_'+pane_id"
+      :data-paneid="pane_id"
       @start="drag=true"
-      @end="drag=true">
+      @end="endDrag">
       <div
         class="tab_item item"
         :class="[ { active : active_tab === tab.id } ]"
@@ -53,10 +55,12 @@ export default {
       type: String,
       default: '',
     },
+    /*
     tabs: {
       required: true,
       type: Array,
     },
+    */
     active_tab:
     {
       type: Number,
@@ -64,17 +68,56 @@ export default {
       default: 0,
     },
   },
+  data ()
+  {
+    return {
+      // create a local instance of tabs
+      paneTabs: null,
+    }
+  },
+  // run at component first creation
+  created: function () {
+    // this.paneTabs = this.tabs
+  },
   methods:
   {
     switchActive: function (newActiveTab) {
-      // console.log('newActiveTab ' + newActiveTab.id + ' in pane ' + newActiveTab.pane)
-      this.$emit('changeActive', newActiveTab)
+      // console.log('TabBar says : newActiveTab ' + newActiveTab.id + ' in pane ' + newActiveTab.pane)
+      this.$store.commit('changeActive', newActiveTab)
     },
+    endDrag: function (e)
+    {
+      console.log('endOfDrag')
+      console.log(e)
+      console.log('from ' + e.from.dataset.paneid + ' to ' + e.to.dataset.paneid)
+      // if moving from one pane to another
+      if (e.from.dataset.paneid !== e.to.dataset.paneid)
+      {
+        this.$store.commit('setFirstTabActive', { paneId: this.pane_id })
+      }
+    },
+    /*
+    onEnd: function (tabMoved, paneId) {
+      console.log('onEnd')
+      console.log(tabMoved)
+      console.log('moving tab #' + tabMoved.oldIndex + ' of ' + tabMoved.from.getAttribute('data-paneid') + ' to ' + tabMoved.newIndex + ' of ' + tabMoved.to.getAttribute('data-paneid'))
+      this.$store.commit('updateTabs', tabMoved)
+      // debugger;
+    },
+    */
   },
-  data () {
-    return {
-
-    }
+  computed: {
+    tabs: {
+      get () {
+        // console.log(this.$store.state.panes)
+        return this.$store.state.panes.items[this.pane_id].tabs
+      },
+      set (tabs) {
+        // console.log('setting tabs')
+        // console.log(tabs)
+        this.$store.commit('updateTabs', { tabs: tabs, paneId: this.pane_id })
+      },
+    },
   },
 }
 </script>
@@ -101,6 +144,7 @@ export default {
   {
     display:none;
   }
+
   //tab list is hidden by default.
   //for no we will use media query (below)
   //to display it
@@ -108,6 +152,7 @@ export default {
   {
     display:none;
   }
+
   //style items even if hidden
   .tab_title
   {
@@ -138,10 +183,12 @@ export default {
       margin: -1.5rem;
     }
   }
+
   .tab_current_item
   {
     background-color:$tabcurrentbgcolor;
   }
+
   .tab-closer
   {
     [class*=icon]
