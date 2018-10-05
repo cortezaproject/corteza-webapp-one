@@ -13,6 +13,7 @@
           }]"
         :key="index">
         <v-popover
+          class="popover-wrap"
           offset="-25"
           trigger="hover"
           placement="left">
@@ -135,7 +136,7 @@ export default {
           allowed_contextes: ['panel', 'tab'],
         },
         {
-          name: 'Magna Aliqua',
+          name: 'Magna Aliqua UT LABORE',
           color: '',
           icon: 'icon-equalizer',
           path: '/Messaging',
@@ -286,6 +287,23 @@ export default {
 */
 </style>
 
+<!-- don't scope this -->
+<!-- using app-list as spillover limiter -->
+<style lang="scss">
+.app-list
+{
+  .available-app
+  {
+    .trigger // element of popover
+    {
+      max-width:100%;
+      display:block!important;
+    }
+  }
+}
+</style>
+
+<!-- scopable parts -->
 <style scoped lang="scss">
   $crustregular: sans-serif;
   $appyellow : #FFCC32;
@@ -325,6 +343,13 @@ export default {
     text-align:center;
     line-height:50px;
     margin:10px auto;
+
+    .trigger // element of popover
+    {
+      max-width:100%;
+      display:block!important;
+    }
+
     .label-content
     {
       display:inline-block;
@@ -355,6 +380,10 @@ export default {
       &.app-text, &.app-icon
       {
         font-size:2.4em;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        max-width:100%;
       }
       &.rowspan2
       {
