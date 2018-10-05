@@ -205,6 +205,8 @@ const store = new Vuex.Store({
         title: appData.app.name,
         src: appData.app.path,
       })
+      sspanes.items[paneId].showapps = false
+      sspanes.items[paneId].active = sspanes.nextTabId
       sspanes.nextTabId++
       /*
       console.log('Vuex adding app')
