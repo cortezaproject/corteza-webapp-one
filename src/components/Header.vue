@@ -11,14 +11,14 @@
             title="Add a pane"
             @click="$emit('apps')"></i>
         </section>
-        <section v-if="optionalAdd"
+        <section v-if="user && optionalAdd"
           class="toolbox-item toolbox_notify"
           :class="(user.has_notifications ? 'toolbox_has_notification' : '')">
           <i
             class="icon-bell2"
             :class="(user.has_notifications ? 'toolbox_notification' : '')"></i>
         </section>
-        <section class="toolbox-item toolbox_profile">
+        <section v-if="user" class="toolbox-item toolbox_profile">
           <user-avatar :user="user" />
         </section>
         <section class="toolbox-item toolbox_menu">
@@ -65,8 +65,10 @@ export default
   {
     user:
     {
-      type: Object,
       required: true,
+      validator: function (prop) {
+        return ( (typeof prop) === 'object' || prop === null)
+      }
     },
     optionalAdd:
     {

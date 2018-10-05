@@ -14,6 +14,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     // all the panels used in the interface
+    user: null,
     panes:
     {
       // disposition : null / array
@@ -164,6 +165,14 @@ const store = new Vuex.Store({
     /* */
   },
   mutations: {
+    connectUser: (e, userInfo) => {
+      store.state.user = {
+        id: '01234567891',
+        has_notifications: false,
+        username: 'BetaUser',
+        avatar: '',
+      }
+    },
     updateTabs: (e, newTabs) => {
       var newTabIs = _.difference(newTabs.tabs, store.state.panes.items[newTabs.paneId].tabs)
       console.log(newTabIs)

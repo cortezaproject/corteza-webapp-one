@@ -339,7 +339,8 @@ export default {
     {
       width: 10%;
       min-width:30px;
-      height: 29px;
+      height: 30px;
+
     }
     .tab_list .item:before
     {
@@ -495,7 +496,7 @@ export default {
 
     .tab_list .item.active
     {
-      height:31px;
+      height:33px;
       span
       {
         margin-top:-1px;
