@@ -211,7 +211,7 @@ export default
   height:100% !important;
   &.last
   {
-    // width:auto!important;
+    width:auto!important;
   }
 }
 </style>
