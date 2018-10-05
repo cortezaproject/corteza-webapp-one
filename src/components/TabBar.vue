@@ -110,6 +110,7 @@ export default {
     tabs: {
       get () {
         // console.log(this.$store.state.panes)
+        console.log('TabBar getting tabs')
         return this.$store.state.panes.items[this.pane_id].tabs
       },
       set (tabs) {

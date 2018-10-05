@@ -2,17 +2,25 @@
   <div
     class="selector app-list" v-if="displayed"
     :class="fullscreen?'fullscreen':'tabbed'">
-    <ul class="crust-available-apps clearfix">
+    <ul class="available-apps clearfix">
       <li
-
         v-for="(crustapp, index) in available_apps"
-        :class="[ 'crust-available-app', (crustapp.color && crustapp.color !=='')?crustapp.color:'appgrey', { 'in-tab' : crustapp.allowed_contextes.includes('tab') } ]"
+        :class="[
+          'available-app',
+          (crustapp.color && crustapp.color !=='')?crustapp.color:'appgrey',
+          {
+              'in-tab' : crustapp.allowed_contextes.includes('tab')
+          }]"
         :key="index">
         <v-popover
           offset="-25"
           trigger="hover"
           placement="left">
-          <div class="label-wrap">
+          <div class="label-wrap"
+            @click="$emit('add-app', {
+              app: available_apps[index],
+              paneId: paneId,
+            })">
             <!-- icons have precedence -->
             <label
               v-if="crustapp.icon && crustapp.icon!==''"
@@ -37,7 +45,10 @@
         </v-popover>
       </li>
     </ul>
-    <span class="new-app-closer" @click="$emit('close')"><i class="icon-close"></i></span>
+    <span
+      class="new-app-closer"
+      v-if="canClose"
+      @click="$emit('close')"><i class="icon-close"></i></span>
   </div>
 </template>
 
@@ -53,8 +64,18 @@ export default {
     'v-popover': VPopover,
   },
 
+  methods:
+  {
+  },
+
   props:
   {
+    paneId:
+    {
+      type: Number,
+      required: false,
+      default: null,
+    },
     displayed:
     {
       type: Boolean,
@@ -66,6 +87,12 @@ export default {
       type: Boolean,
       required: false,
       default: false,
+    },
+    canClose:
+    {
+      type: Boolean,
+      required: false,
+      default: true,
     },
   },
   data: function ()
@@ -85,141 +112,188 @@ export default {
       // if apps can be opened in tabs they will be listed via the "+" in a panel context
       // if apps can be opened in panel/window or external they will be listed via the "+" in header
       available_apps: [
-        { name: 'CRM', color: 'appgreen', icon: 'icon-user', path: '/Messaging', allowed_contextes: ['window', 'panel', 'tab', 'external'] },
-        { name: 'Messaging', color: 'appyellow', path: '/Messaging', allowed_contextes: ['panel', 'tab', 'external'] },
-        { name: 'Shell', color: 'appblue', icon: 'icon-terminal', path: '/Messaging', allowed_contextes: ['panel', 'tab'] },
-        { name: 'Magna Aliqua', color: '', icon: 'icon-equalizer', path: '/Messaging', allowed_contextes: ['panel', 'tab'] },
-        { name: 'Venimud', color: 'appred', path: '/Messaging', logo: 'https://picsum.photos/200/300', allowed_contextes: ['panel', 'tab'] },
-        { name: 'Ut labore', icon: 'icon-files-empty', path: '/Messaging', allowed_contextes: ['panel', 'tab'] },
+        {
+          name: 'CRM',
+          color: 'appgreen',
+          icon: 'icon-user',
+          path: '/Messaging',
+          allowed_contextes: ['window', 'panel', 'tab', 'external'],
+        },
+        {
+          name: 'Messaging',
+          icon: 'icon-bubble2',
+          color: 'appyellow',
+          path: 'https://latest.rustbucket.io/messaging/',
+          allowed_contextes: ['panel', 'tab', 'external'],
+          method: 'iframe',
+        },
+        {
+          name: 'Shell',
+          color: 'appblue',
+          icon: 'icon-terminal',
+          path: '/Messaging',
+          allowed_contextes: ['panel', 'tab'],
+        },
+        {
+          name: 'Magna Aliqua',
+          color: '',
+          icon: 'icon-equalizer',
+          path: '/Messaging',
+          allowed_contextes: ['panel', 'tab'],
+        },
+        {
+          name: 'Venimud',
+          color: 'appred',
+          path: '/Messaging',
+          logo: 'https://picsum.photos/200/300',
+          allowed_contextes: ['panel', 'tab'],
+        },
+        {
+          name: 'Ut labore',
+          icon: 'icon-files-empty',
+          path: '/Messaging',
+          allowed_contextes: ['panel', 'tab'],
+        },
       ],
     }
   },
 }
 </script>
-<style lang="scss">
 
-.fullscreen
-{
-  z-index:99;
-}
-
-.trigger
-{
-  display:block!important;
-}
-.tooltip
-{
-  display: block !important;
-  z-index: 10000;
-
-  .tooltip-inner {
-    background: black;
-    color: white;
-    border-radius: 16px;
-    padding: 5px 10px 4px;
+<style scoped lang="scss">
+  .fullscreen
+  {
+    z-index:99;
   }
 
-  .tooltip-arrow {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    position: absolute;
-    margin: 5px;
-    border-color: #ccc;
-    z-index: 1;
+  .trigger
+  {
+    display:block!important;
   }
 
-  &[x-placement^="top"] {
-    margin-bottom: 5px;
+  .tooltip
+  {
+    display: block !important;
+    display: none !important;
+    z-index: 10000;
+
+    .tooltip-inner {
+      background: black;
+      color: white;
+      border-radius: 16px;
+      padding: 5px 10px 4px;
+    }
 
     .tooltip-arrow {
-      border-width: 5px 5px 0 5px;
-      border-left-color: transparent !important;
-      border-right-color: transparent !important;
-      border-bottom-color: transparent !important;
-      bottom: -5px;
-      left: calc(50% - 5px);
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-  }
-
-  &[x-placement^="bottom"] {
-    margin-top: 5px;
-
-    .tooltip-arrow {
-      border-width: 0 5px 5px 5px;
-      border-left-color: transparent !important;
-      border-right-color: transparent !important;
-      border-top-color: transparent !important;
-      top: -5px;
-      left: calc(50% - 5px);
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-  }
-
-  &[x-placement^="right"] {
-    margin-left: 5px;
-
-    .tooltip-arrow {
-      border-width: 5px 5px 5px 0;
-      border-left-color: transparent !important;
-      border-top-color: transparent !important;
-      border-bottom-color: transparent !important;
-      left: -5px;
-      top: calc(50% - 5px);
-      margin-left: 0;
-      margin-right: 0;
-    }
-  }
-
-  &[x-placement^="left"] {
-    margin-right: 5px;
-
-    .tooltip-arrow {
-      border-width: 5px 0 5px 5px;
-      border-top-color: transparent !important;
-      border-right-color: transparent !important;
-      border-bottom-color: transparent !important;
-      right: -5px;
-      top: calc(50% - 5px);
-      margin-left: 0;
-      margin-right: 0;
-    }
-  }
-
-  &.popover {
-    $color: #f9f9f9;
-
-    .popover-inner {
-      background: $color;
-      color: black;
-      padding: 24px;
-      border-radius: 5px;
-      box-shadow: 0 5px 30px rgba(black, .1);
+      width: 0;
+      height: 0;
+      border-style: solid;
+      position: absolute;
+      margin: 5px;
+      border-color: #ccc;
+      z-index: 1;
     }
 
-    .popover-arrow {
-      border-color: $color;
+    &[x-placement^="top"] {
+      margin-bottom: 5px;
+
+      .tooltip-arrow {
+        border-width: 5px 5px 0 5px;
+        border-left-color: transparent !important;
+        border-right-color: transparent !important;
+        border-bottom-color: transparent !important;
+        bottom: -5px;
+        left: calc(50% - 5px);
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
+
+    &[x-placement^="bottom"] {
+      margin-top: 5px;
+
+      .tooltip-arrow {
+        border-width: 0 5px 5px 5px;
+        border-left-color: transparent !important;
+        border-right-color: transparent !important;
+        border-top-color: transparent !important;
+        top: -5px;
+        left: calc(50% - 5px);
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
+
+    &[x-placement^="right"] {
+      margin-left: 5px;
+
+      .tooltip-arrow {
+        border-width: 5px 5px 5px 0;
+        border-left-color: transparent !important;
+        border-top-color: transparent !important;
+        border-bottom-color: transparent !important;
+        left: -5px;
+        top: calc(50% - 5px);
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+
+    &[x-placement^="left"] {
+      margin-right: 5px;
+
+      .tooltip-arrow {
+        border-width: 5px 0 5px 5px;
+        border-top-color: transparent !important;
+        border-right-color: transparent !important;
+        border-bottom-color: transparent !important;
+        right: -5px;
+        top: calc(50% - 5px);
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+
+    &.popover {
+      $color: #f9f9f9;
+
+      .popover-inner {
+        background: $color;
+        color: black;
+        padding: 24px;
+        border-radius: 5px;
+        box-shadow: 0 5px 30px rgba(black, .1);
+      }
+
+      .popover-arrow {
+        border-color: $color;
+      }
+    }
+
+    &[aria-hidden='true'] {
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity .15s, visibility .15s;
+    }
+
+    &[aria-hidden='false'] {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity .15s;
     }
   }
-
-  &[aria-hidden='true'] {
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity .15s, visibility .15s;
-  }
-
-  &[aria-hidden='false'] {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity .15s;
-  }
-}
 </style>
 
 <style scoped lang="scss">
+  $crustregular: sans-serif;
+  $appyellow : #FFCC32;
+  $appred    : #E85568;
+  $appgreen  : #2FBC95;
+  $appblue   : #1397CB;
+  $applime   : #00D53E;
+  $appgrey   : #90A3B1;
+  $appcream  : #F3F3F5;
+
   @import '@/assets/sass/_0.declare.scss';
 
   *
@@ -240,7 +314,7 @@ export default {
     background-color:black;
   }
 
-  .crust-available-app
+  .available-app
   {
     width:80vw;
     height:10vh;
@@ -292,43 +366,43 @@ export default {
     }
   }
 
-  .crust-available-app.appyellow
+  .available-app.appyellow
   {
     background-color:$appyellow;
   }
 
-  .crust-available-app.appred
+  .available-app.appred
   {
     background-color:$appred;
   }
 
-  .crust-available-app.appgreen
+  .available-app.appgreen
   {
     background-color:$appgreen;
   }
 
-  .crust-available-app.appblue
+  .available-app.appblue
   {
     background-color:$appblue;
   }
 
-  .crust-available-app.appgrey
+  .available-app.appgrey
   {
     background-color:$appgrey;
   }
 
-  .crust-available-app.applime
+  .available-app.applime
   {
     background-color:$applime;
   }
 
-  .crust-available-app.appcream
+  .available-app.appcream
   {
     background-color:$appcream;
   }
 
   //media query should go here
-  .crust-available-apps
+  .available-apps
   {
     margin:20% auto 0 auto;
     max-width:640px;
@@ -343,7 +417,7 @@ export default {
     color:white;
   }
 
-  .crust-available-app
+  .available-app
   {
     width:30%;
     min-width:100px;

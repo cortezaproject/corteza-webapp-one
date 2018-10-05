@@ -1,19 +1,84 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
 import Index from './views/Index.vue'
 import router from './router'
+import Vuex from 'vuex'
+// lodash used in tab actions
 import _ from 'lodash'
 
 import './global'
 import './main.scss'
 
+// load vuex
 Vue.use(Vuex)
+// create the store
 const store = new Vuex.Store({
   state: {
     // all the panels used in the interface
     panes:
     {
-      // how panels are positionnned
+      // disposition : null / array
+      // how panes are setup
+      // null means no panes
+      // otherwise it would be a 2 dimensionnal array,
+      // first split is vertical if type:colfirst
+      // first split is horizontal if type:rowfirst
+      // single vue should be :
+      // itempos: [ [ 0 ] ],
+      // sample vue : itempos: [ [ 0, 1 ], [ 2 ] ],
+      disposition: null,
+
+      // nextTabId : int
+      // the next id for a tab, will be incremented by 1
+      // TabIds should be unique accross the whole structure.
+      nextTabId: 0,
+
+      // items : array
+      // on array entry per pane item
+      // each pane is :
+      // - active : integer
+      //   id of the active tab in the pane.
+      // - showapps :
+      //   boolean show or not the apps available in the context
+      // - tabs: array of objects
+      //   each tab is (for now)
+      //   . id : integrer
+      //     id of the tab, unique accross the structure
+      //   . title : string
+      //     label of the tab
+      //   . src : string (url)
+      //     url to load in the iframe.
+      items: [],
+    },
+    /*
+    panes:
+    {
+      disposition:
+      {
+        type: 'rowfirst',
+        nextTabId: 1,
+        itempos: [ [ 0 ] ],
+      },
+      items:
+      [
+        {
+          active: 0,
+          showapps: false,
+          tabs:
+          [
+            {
+              id: 0,
+              title: 'BDM',
+              src: 'https://www.example.com/',
+              // src: 'https://www.blogdumoderateur.com/',
+            },
+          ]
+        },
+      ],
+    },
+    */
+    /* sample test panes
+    panes:
+    {
       disposition:
       {
         type: 'rowfirst',
@@ -24,7 +89,6 @@ const store = new Vuex.Store({
         itempos: [ [ 0, 1 ], [ 2 ] ],
         // single vue should be :
         // itempos: [ [ 0 ] ],
-        // TabIds should be unique accross the whole structure.
       },
       // items
       items:
@@ -32,7 +96,6 @@ const store = new Vuex.Store({
         {
           active: 1,
           showapps: false,
-          nextTabId: 11,
           tabs:
           [
             {
@@ -98,6 +161,7 @@ const store = new Vuex.Store({
         },
       ],
     },
+    /* */
   },
   mutations: {
     updateTabs: (e, newTabs) => {
@@ -115,6 +179,79 @@ const store = new Vuex.Store({
     },
     changeActive: (e, newActiveTab) => {
       store.state.panes.items[newActiveTab.pane].active = newActiveTab.id
+    },
+    addApp: (e, appData) => {
+      var sspanes = store.state.panes
+      var paneId = appData.paneId
+      if (sspanes.items.length === 0)
+      {
+        sspanes.disposition = {
+          type: 'rowfirst',
+          itempos: [ [ 0 ] ],
+        }
+        sspanes.items = [
+          {
+            active: 0,
+            tabs: [],
+            showapps: false,
+          },
+        ]
+        // current pane is the one we just created
+        paneId = 0
+      }
+      // add tab to the current pane
+      sspanes.items[paneId].tabs.push({
+        id: sspanes.nextTabId,
+        title: appData.app.name,
+        src: appData.app.path,
+      })
+      sspanes.nextTabId++
+      /*
+      console.log('Vuex adding app')
+      console.log(appData)
+      var inPane = null
+      var newPane = {
+        active: store.state.panes.nextTabId,
+        showapps: false,
+        tabs: [],
+      }
+      newPane.tabs.push({
+        id: store.state.panes.nextTabId,
+        title: appData.name,
+        src: appData.path,
+      })
+      inPane = 0
+      store.state.panes.items[inPane] = newPane
+      store.state.panes.disposition = [[inPane]]
+      store.state.panes.nextTabId++
+      console.log(store.state.panes)
+      */
+    /*
+     store.state.panes = {
+       disposition:
+       {
+         type: 'rowfirst',
+         nextTabId: 1,
+         itempos: [ [ 0 ] ],
+       },
+       items:
+       [
+         {
+           active: 0,
+           showapps: false,
+           tabs:
+           [
+             {
+               id: 0,
+               title: appData.name,
+               src: appData.path,
+               // src: 'https://www.blogdumoderateur.com/',
+             },
+           ]
+         },
+       ],
+     }
+     */
     },
   },
 })

@@ -6,12 +6,12 @@
         <capsule>platform</capsule>
       </div>
       <div class="toolbox">
-        <section class="toolbox-item add circle">
+        <section v-if="optionalAdd" class="toolbox-item add circle">
           <i class="icon-plus"
             title="Add a pane"
             @click="$emit('apps')"></i>
         </section>
-        <section
+        <section v-if="optionalAdd"
           class="toolbox-item toolbox_notify"
           :class="(user.has_notifications ? 'toolbox_has_notification' : '')">
           <i
@@ -23,7 +23,9 @@
         </section>
         <section class="toolbox-item toolbox_menu">
           <label @click="mainMenuOpen=!mainMenuOpen">
-            <i :class="mainMenuOpen?'icon-close':'icon-menu3'" title="Show main menu"></i>
+            <i
+              :class="mainMenuOpen?'icon-close':'icon-menu3'"
+              title="Show main menu"></i>
           </label>
         </section>
       </div>
@@ -66,6 +68,12 @@ export default
       type: Object,
       required: true,
     },
+    optionalAdd:
+    {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   // --------
   data: function () {
@@ -85,13 +93,27 @@ export default
 </script>
 
 <style scoped lang="scss">
+  $headerbgcolor : white;
+  $defaulttextcolor : black;
+  $crustregular : Arial, sans-serif;
+  $defaultlinecolor : #ccc;
+  $notificationcolor : red;
+  // import global settings that override previous declarations
   @import '@/assets/sass/_0.declare.scss';
 
   *
   {
     font-family:$crustregular;
     box-sizing:border-box;
+    margin:0;
+    padding:0;
   }
+
+  .header-wrap
+  {
+    font-size:10px;
+  }
+
   header
   {
     position:fixed;
@@ -100,9 +122,9 @@ export default
     right:0;
     overflow:hidden;
     background-color: $headerbgcolor;
-    box-shadow: 0 0.1rem 0.2rem 0 rgba($defaulttextcolor, 0.1);
-    height: 6rem;
-    max-height: 6rem;
+    box-shadow: 0 0.1em 0.2em 0 rgba($defaulttextcolor, 0.1);
+    height: 6em;
+    max-height: 6em;
     top:0;
     z-index:999;
 
@@ -110,13 +132,13 @@ export default
     {
       float:left;
       display:block;
-      line-height:6rem;
-      margin:0 0.5rem 0 1.5rem;
+      line-height:6em;
+      margin:0 0.5em 0 1.5em;
     }
 
     .title
     {
-      font-size:2.4rem;
+      font-size:2.4em;
       line-height:1;
       display:inline-block;
       vertical-align:middle;
@@ -125,9 +147,10 @@ export default
 
   .toolbox
   {
+    font-size:1;
     float:right;
-    line-height:6rem;
-    margin-right:1.5rem;
+    line-height:6em;
+    margin-right:1.5em;
     vertical-align:middle;
 
     &-item
@@ -135,14 +158,13 @@ export default
       display:inline-block;
       line-height: 1;
       vertical-align: middle;
-      margin: 0 0 0 1rem;
+      margin: 0 0 0 1em;
       i
       {
+        font-size:3em;
         display:inline-block;
-        min-width:3rem;
-        font-size:3rem;
+        min-width:1em;
         color:$defaultlinecolor;
-        //border:solid 2px transparent;
         border-radius:100%;
       }
     }
@@ -155,10 +177,9 @@ export default
         border-radius:100%;
         content:".";
         background-color:$notificationcolor;
-        height:1rem;
-        width:1rem;
-        margin-left:-1.5rem;
-        font-size:1;
+        height:1em;
+        width:1em;
+        margin-left:-1.5em;
         color:$headerbgcolor;
         border:solid 2px $headerbgcolor;
       }
@@ -190,19 +211,19 @@ export default
     }
   }
 
+  /*
   .main-menu
   {
     position :fixed;
     overflow:hidden auto;
-    top:96px;
+    top:6em;
     bottom:0;
     right:0;
     min-width:200px;
     width:25%;
     background-color:$headerbgcolor;
-    box-shadow: 0 0.1rem 0.2rem 0 rgba($defaulttextcolor, 0.1);
+    box-shadow: 0 0.1em 0.2em 0 rgba($defaulttextcolor, 0.1);
     border-left: solid 1px rgba($defaultlinecolor, 0.25);
-    //border-top: solid 1px $defaultlinecolor;
     z-index:998;
     padding:20px 0 20px 20px;
     ul
@@ -211,7 +232,7 @@ export default
     }
     li
     {
-      font-size:1.2rem;
+      font-size:1.2em;
       padding:5px 0 5px 10px;
       border-radius:3px 0 0 3px;
       &:hover
@@ -221,4 +242,5 @@ export default
       }
     }
   }
+  */
 </style>

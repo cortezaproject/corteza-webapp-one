@@ -3,6 +3,8 @@
     <!-- first multipane level, either rows or cols function of layout type -->
     <multipane
       class="main"
+      v-model="panes"
+      v-if="panes.items.length > 0"
       :data-nb-items="panes.disposition.itempos.length"
       :layout="panes.disposition.type==='colfirst'?'vertical':'horizontal'"
       :style="{ height:'100%', width:'100%' }">
@@ -16,7 +18,7 @@
           class="last pane onepane-wrapper"
           :data-nb-items="paneset.length"
           :data-structure="panes.disposition.type + '-' + panesetindex"
-          :style="(paneset.length - 1 === panesubsetindex)?{ flexGrow:1 }:{
+          :style="(paneset.length - 1 === panesetindex)?{ flexGrow:1 }:{
             width: panes.disposition.type==='colfirst'?''+(100/panes.disposition.itempos.length)+'%':'100%',
             height: panes.disposition.type==='colfirst'?'100%':''+(100/panes.disposition.itempos.length)+'%'
           }"
@@ -39,8 +41,9 @@
           <app-selector
             :class="'app-selector-' + paneset[0]"
             :data-selector-id="paneset[0]"
-            :pane_id="paneset[0]"
+            :pane-id="paneset[0]"
             :displayed="panes.items[paneset[0]].showapps"
+            v-on:add-app="addTab"
             v-on:close="panes.items[paneset[0]].showapps=false"></app-selector>
         </div>
         <!-- subpanes -->
@@ -88,6 +91,7 @@
                     :class="'app-selector-' + pane_id"
                     :pane_id="pane_id"
                     :displayed="panes.items[pane_id].showapps"
+                    v-on:add-app="addTab"
                     v-on:close="panes.items[pane_id].showapps=false"></app-selector>
               </div>
               <cMultipaneResizer
@@ -144,13 +148,7 @@ export default
   {
     panes: {
       get () {
-        console.log('getting panes')
-        // console.log('this')
-        // console.log(this)
-        // console.log('this.store')
-        // console.log(this.store)
-        console.log('this.$store')
-        console.log(this.$store)
+        console.log('layout getting panes')
         return this.$store.state.panes
       },
       /*
@@ -165,6 +163,11 @@ export default
   },
   methods:
   {
+    addTab (appData) {
+      console.log('Adding a app from layout')
+      console.log(appData)
+      this.$store.commit('addApp', appData)
+    },
   },
 }
 </script>
@@ -174,9 +177,10 @@ export default
 @import '@/assets/sass/_0.declare.scss';
 .layout
 {
+  font-size:10px;
   position:absolute;
-  top:96px;
-  height:calc(100vh - 96px);
+  top:6em;
+  height:calc(100vh - 6em);
   max-height:100vh;
   width:100vw;
   overflow:hidden;

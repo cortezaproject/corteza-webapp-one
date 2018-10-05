@@ -1,13 +1,17 @@
 <template>
   <div class="workspace">
     <Header :user="user"
+      :optionalAdd="hasPanes"
       v-on:apps="showapps=true" />
-    <Layout :user="user" />
+    <Layout
+      v-model="panes"
+      :user="user" />
     <app-selector
-      :displayed="showapps"
+      :displayed="!hasPanes || showapps"
+      :canClose="hasPanes"
       :fullscreen="true"
-      style="top:96px;"
-      v-on:close="showapps=false"></app-selector>
+      v-on:close="showapps=false"
+      v-on:add-app="addTab"></app-selector>
   </div>
 </template>
 
@@ -22,6 +26,38 @@ export default {
     'Header': Header,
     'Layout': Layout,
     AppSelector,
+  },
+
+  methods:
+  {
+    addTab (appData) {
+      console.log('Adding a app from WkS')
+      console.log(appData)
+      this.$store.commit('addApp', appData)
+    },
+  },
+
+  computed:
+  {
+    hasPanes:
+    {
+      get () {
+        console.log('currently : ' + this.$store.state.panes.items.length + ' panes')
+        return (this.$store.state.panes.items.length > 0)
+      },
+    },
+    panes:
+    {
+      get () {
+        console.log('WkS getting panes')
+        return this.$store.state.panes
+      },
+      /*
+      set (tabs) {
+        this.$store.commit('updateTabs', tabs);
+      }
+      */
+    },
   },
   data ()
   {
