@@ -24,16 +24,16 @@
             <!-- icons have precedence -->
             <label
               v-if="crustapp.icon && crustapp.icon!==''"
-              class="app-icon"
+              class="label-content app-icon"
               :class="crustapp.icon"></label>
             <!-- if no icon but logo -->
             <label
               v-else-if="crustapp.logo && crustapp.logo!==''"
-              class="app-logo">
+              class="label-content app-logo">
               <i :style="'background-image:url(' + crustapp.logo + ');'" ></i></label>
             <!-- always a label, but may be 2 lined -->
             <label
-              class='app-label'
+              class='label-content app-text'
               :class="[ { rowspan2 : (!crustapp.icon || crustapp.icon === '') && (!crustapp.logo || crustapp.logo === '')  } ]">
               {{ crustapp.name }}
             </label>
@@ -115,7 +115,7 @@ export default {
         {
           name: 'CRM',
           color: 'appgreen',
-          icon: 'icon-user',
+          // icon: 'icon-user',
           path: '/Messaging',
           allowed_contextes: ['window', 'panel', 'tab', 'external'],
         },
@@ -161,6 +161,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+/*
   .fullscreen
   {
     z-index:99;
@@ -282,6 +283,7 @@ export default {
       transition: opacity .15s;
     }
   }
+*/
 </style>
 
 <style scoped lang="scss">
@@ -296,41 +298,40 @@ export default {
 
   @import '@/assets/sass/_0.declare.scss';
 
-  *
-  {
-    font-family:$crustregular;
-    box-sizing:border-box;
-  }
-
-  .selector
+  .app-list
   {
     position:absolute;
     top:0;
     left:0;
     bottom:0;
     right:0;
-    //width:100%;
-    //height:100%;
     background-color:black;
+    font-family:$crustregular;
+    font-size:10px;
+    box-sizing:border-box;
+    *
+    {
+      font-family:$crustregular;
+      box-sizing:border-box;
+    }
   }
 
   .available-app
   {
-    width:80vw;
-    height:10vh;
+    width:200px;
+    height:100px;
     color:white;
-    background-color:red;
+    background-color:$appgrey;
     text-align:center;
-    line-height:5vh;
-    margin:2vh auto;
-    font-size:1.8rem;
-    a, label
+    line-height:50px;
+    margin:10px auto;
+    .label-content
     {
       display:inline-block;
       width:100%;
       color:white;
       line-height:1;
-      padding:0.5vh;
+      padding:5px;
       vertical-align:top;
       text-decoration:none;
       &:first-child
@@ -351,13 +352,13 @@ export default {
           border-radius:50%;
         }
       }
-      &.app-label
+      &.app-text, &.app-icon
       {
-        font-size:1.2rem;
+        font-size:2.4em;
       }
       &.rowspan2
       {
-        line-height:9vh; //9 because of 0.5 padding
+        line-height:90px; //9 because of 5px padding
       }
     }
     &:last-of-type
@@ -406,14 +407,15 @@ export default {
   {
     margin:20% auto 0 auto;
     max-width:640px;
+    min-width:320px;
   }
 
   .new-app-closer
   {
     position:absolute;
-    top:3rem;
-    right:3rem;
-    font-size:3rem;
+    top:3em;
+    right:3em;
+    font-size:3em;
     color:white;
   }
 
@@ -436,5 +438,4 @@ export default {
       clear:left;
     }
   }
-
 </style>
