@@ -5,6 +5,7 @@ $wideminwidth:720px;
 //paths
 $fonts_dir : './assets/fonts/';
 $icomoon-font-path: $fonts_dir + 'crust-icomoon' !default;
+$icomoon-font-family: "crust-icomoon" !default;
 
 //variabilize fonts, so we can change theme easily
 $crustregular: 'nunito_sansregular';

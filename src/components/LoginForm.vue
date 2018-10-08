@@ -18,15 +18,15 @@
       <fieldset class="sso-signons">
         <div class="sso-provider-wrap google">
           <input type="radio" hidden id="google" name="target" value="google" />
-          <label for="google"  @click="connect"><i class="icon-bell"></i><span class="text">Login with <strong>Google</strong></span></label>
+          <label for="google"  @click="connect"><i class="icon-google"></i><span class="text">Login with <strong>Google</strong></span></label>
         </div>
         <div class="sso-provider-wrap facebook">
           <input type="radio" hidden id="facebook" name="target" value="facebook" />
-          <label for="facebook" @click="connect"><i class="icon-bell"></i><span class="text">Login with <strong>Facebook</strong></span></label>
+          <label for="facebook" @click="connect"><i class="icon-facebook"></i><span class="text">Login with <strong>Facebook</strong></span></label>
         </div>
         <div class="sso-provider-wrap saml2">
           <input type="radio" hidden id="Saml2" name="target" value="Saml2" />
-          <label for="Saml2" @click="connect"><i class="icon-bell"></i><span class="text">Login with <strong>SAML2</strong></span></label>
+          <label for="Saml2" @click="connect"><i class="icon-fatlock"></i><span class="text">Login with <strong>SAML2</strong></span></label>
         </div>
       </fieldset>
     </section>
@@ -139,11 +139,13 @@ fieldset
 {
   border:none;
 }
+
 .login-form
 {
   height:100%;
   width:100%;
 }
+
 .login-fields
 {
   position: relative;
@@ -160,6 +162,7 @@ fieldset
   transition: all .3s ease;
   font-family: Helvetica, Arial, sans-serif;
 }
+
 .login-btn
 {
   outline-color: transparent;
@@ -248,5 +251,4 @@ input[type="password"] {
         opacity: 0.5;
     }
 }
-
 </style>

@@ -24,7 +24,7 @@
         <section v-if="user" class="toolbox-item toolbox_menu">
           <label @click="mainMenuOpen=!mainMenuOpen">
             <i
-              :class="mainMenuOpen?'icon-close':'icon-menu3'"
+              :class="mainMenuOpen?'icon-close':'icon-menu'"
               title="Show main menu"></i>
           </label>
         </section>
@@ -120,6 +120,11 @@ export default
     box-sizing:border-box;
     margin:0;
     padding:0;
+  }
+
+  .toolbox_menu
+  {
+    transition:all 0.2s ease;
   }
 
   .main-menu
@@ -246,7 +251,7 @@ export default
       margin: 0 0 0 1em;
       i
       {
-        font-size:3em;
+        font-size:32px;
         display:inline-block;
         min-width:1em;
         color:$defaultlinecolor;
