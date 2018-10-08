@@ -1,7 +1,8 @@
 <template>
   <div
     class="tab_list_wrapper"
-    :style="(top === ''?'':'top:' + top) + ';' + (left ==='' ? '' : 'left:calc('+left+' - 5px)')">
+    :style="(top === ''?'':'top:' + top) + ';' + (left ==='' ? '' : 'left:calc('+left+' - 5px)')"
+    :class="[ { mobileListShown : 'mobile-shown'  } ]">
     <draggable
       v-model="tabs"
       :options="{ group:'tabs' }"
@@ -10,14 +11,17 @@
       :data-paneid="pane_id"
       @start="drag=true"
       @end="endDrag">
+      <!-- we don't want the close button to propagate the click to span an parent, so we double event but limit to span and div "self" -->
       <div
         class="tab_item item"
         :class="[ { active : active_tab === tab.id } ]"
         v-for="(tab, index) in tabs" :key="index"
-        @touch="switchActive({id:tab.id, pane:pane_id})"
-        @mousedown="switchActive({id:tab.id, pane:pane_id})">
-        <span>{{ tab.title }}</span>
-        <i class="icon-close"></i>
+        @touch.self="switchActive({id:tab.id, pane:pane_id})"
+        @mousedown.self="switchActive({id:tab.id, pane:pane_id})">
+        <span
+          @touch.self="switchActive({id:tab.id, pane:pane_id})"
+          @mousedown.self="switchActive({id:tab.id, pane:pane_id})">{{ tab.title }}</span>
+        <i class="icon-close" @click="removeTab({id:tab.id, pane:pane_id})"></i>
       </div>
       <div class="tab-plus add" @click="$emit('add')">
         <label for="show-apps"><span  arial-label="Add tab" title="Add tab">+</span></label>
@@ -73,6 +77,7 @@ export default {
     return {
       // create a local instance of tabs
       paneTabs: null,
+      mobileListShown: false,
     }
   },
   // run at component first creation
@@ -84,6 +89,10 @@ export default {
     switchActive: function (newActiveTab) {
       // console.log('TabBar says : newActiveTab ' + newActiveTab.id + ' in pane ' + newActiveTab.pane)
       this.$store.commit('changeActive', newActiveTab)
+    },
+    removeTab: function (tabToDel) {
+      // console.log('TabBar says : newActiveTab ' + newActiveTab.id + ' in pane ' + newActiveTab.pane)
+      this.$store.commit('removeTab', tabToDel)
     },
     endDrag: function (e)
     {
@@ -152,6 +161,11 @@ export default {
   .tab_list
   {
     display:none;
+  }
+
+  .tab_list_wrapper.mobile-shown
+  {
+    display:block;
   }
 
   //style items even if hidden

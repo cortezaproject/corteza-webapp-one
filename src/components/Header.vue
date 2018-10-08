@@ -6,7 +6,7 @@
         <capsule>platform</capsule>
       </div>
       <div class="toolbox">
-        <section v-if="optionalAdd" class="toolbox-item add circle">
+        <section v-if="user && optionalAdd" class="toolbox-item add circle">
           <i class="icon-plus"
             title="Add a pane"
             @click="$emit('apps')"></i>
@@ -21,7 +21,7 @@
         <section v-if="user" class="toolbox-item toolbox_profile">
           <user-avatar :user="user" />
         </section>
-        <section class="toolbox-item toolbox_menu">
+        <section v-if="user" class="toolbox-item toolbox_menu">
           <label @click="mainMenuOpen=!mainMenuOpen">
             <i
               :class="mainMenuOpen?'icon-close':'icon-menu3'"
@@ -31,12 +31,22 @@
       </div>
     </header>
     <nav class="main-menu" v-if="mainMenuOpen">
-      <div>
-        <ul>
-          <li v-for="(item, index) in mainmenu" :key="index">
-            {{ item.label }}
-          </li>
-        </ul>
+      <div class="main-menu-wrap">
+        <section>
+          <div class="menu-section-title">General</div>
+          <ul>
+            <li v-for="(item, index) in mainmenu" :key="index">
+              {{ item.label }}
+            </li>
+          </ul>
+        </section>
+        <div class="main-menu-footer">
+          <span class="help">
+            <i class="icon-message-circle-right-speak"></i>
+            <em>Help</em>
+          </span>
+          <span class="version">v0.7</span>
+        </div>
       </div>
     </nav>
     <modal v-if="showAppModalPanel" @close="showAppModalPanel = false">
@@ -67,8 +77,8 @@ export default
     {
       required: true,
       validator: function (prop) {
-        return ( (typeof prop) === 'object' || prop === null)
-      }
+        return ((typeof prop) === 'object' || prop === null)
+      },
     },
     optionalAdd:
     {
@@ -100,6 +110,7 @@ export default
   $crustregular : Arial, sans-serif;
   $defaultlinecolor : #ccc;
   $notificationcolor : red;
+  $wideminwidth : 720px;
   // import global settings that override previous declarations
   @import '@/assets/sass/_0.declare.scss';
 
@@ -109,6 +120,78 @@ export default
     box-sizing:border-box;
     margin:0;
     padding:0;
+  }
+
+  .main-menu
+  {
+    position:fixed;
+    font-size:13px;
+    color: $appgrey;
+    top:60px;
+    right:0;
+    bottom:0;
+    width:90vw;
+    max-width:320px;
+    z-index:100;
+    background:#fff;
+    overflow:hidden auto;
+    background-color:$headerbgcolor;
+    box-shadow: 0 0.1em 0.2em 0 rgba($defaulttextcolor, 0.1);
+    border-left: solid 1px rgba($defaultlinecolor, 0.25);
+    padding:60px 20px 20px 20px;
+    .menu-section-title
+    {
+      margin-bottom: 20px;
+      color: $defaulttextcolor;
+      font-weight:600;
+    }
+    .main-menu-footer
+    {
+      position:absolute;
+      bottom:20px;
+      right:20px;
+      left:20px;
+      font-weight: 300;
+      display: block;
+      font-weight:600;
+
+      i, span, em
+      {
+        line-height: 20px;
+        vertical-align: top;
+        font-style:normal;
+      }
+
+      i
+      {
+        font-size:18px;
+        margin-right:5px;
+      }
+
+      .version
+      {
+        float:right;
+      }
+    }
+    ul
+    {
+      list-style:none;
+    }
+    li
+    {
+      height:35px;
+      line-height:35px;
+      padding:0 9px;
+      border-radius:3px;
+      background-color: rgba($defaultitembgcolor, 0.15);
+      margin-bottom:10px;
+      &:hover
+      {
+        cursor:pointer;
+        color:darken($appgrey,50);
+        background-color: rgba($defaultitembgcolor, 0.25);
+      }
+    }
   }
 
   .header-wrap
@@ -212,37 +295,4 @@ export default
       color:$headerbgcolor;
     }
   }
-
-  /*
-  .main-menu
-  {
-    position :fixed;
-    overflow:hidden auto;
-    top:6em;
-    bottom:0;
-    right:0;
-    min-width:200px;
-    width:25%;
-    background-color:$headerbgcolor;
-    box-shadow: 0 0.1em 0.2em 0 rgba($defaulttextcolor, 0.1);
-    border-left: solid 1px rgba($defaultlinecolor, 0.25);
-    z-index:998;
-    padding:20px 0 20px 20px;
-    ul
-    {
-      list-style:none;
-    }
-    li
-    {
-      font-size:1.2em;
-      padding:5px 0 5px 10px;
-      border-radius:3px 0 0 3px;
-      &:hover
-      {
-        background-color:$defaultlinecolor;
-        color:$headerbgcolor;
-      }
-    }
-  }
-  */
 </style>

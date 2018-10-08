@@ -9,7 +9,7 @@
           :user="user" />
         <app-selector
           :displayed="!hasPanes || showapps"
-          :canClose="hasPanes"
+          :firstApp="!hasPanes"
           :fullscreen="true"
           v-on:close="showapps=false"
           v-on:add-app="addTab"></app-selector>
@@ -72,8 +72,8 @@ export default {
       this.$store.commit('addApp', appData)
     },
     connect () {
-      this.$store.commit('connectUser');
-    }
+      this.$store.commit('connectUser')
+    },
   },
 
   computed:
@@ -118,6 +118,7 @@ $gris-bleu: #90A3B1;
 $bleu: #1397CB;
 $font-family: Arial, sans-serif;
 @import '@/assets/sass/_0.declare.scss';
+
 .sso-signons
 {
   max-width: 100%;
@@ -192,13 +193,13 @@ $font-family: Arial, sans-serif;
   }
   .login-fields
   {
-    width:50vw;
-    min-width:200px;
-    max-width:400px;
-    padding:20px;
     position: relative;
     top: 50%;
     transform: translateY(-50%);
+    width:90vw;
+    min-width:200px;
+    max-width:400px;
+    padding:20px;
     margin: 0 auto;
     background-color: #fff;
     border-radius: 2px;

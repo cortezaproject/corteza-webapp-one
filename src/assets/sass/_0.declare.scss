@@ -1,5 +1,7 @@
 // All future configurable elements colors and dimensions reside here.
 
+$wideminwidth:720px;
+
 //paths
 $fonts_dir : './assets/fonts/';
 $icomoon-font-path: $fonts_dir + 'crust-icomoon' !default;
@@ -34,8 +36,9 @@ $hoverbgcolor     : #f3f3F5;
 $defaulttextcolor : #1E2224;
 $defaultlinkcolor : #1397CB;
 $defaultbodysize  : 10px;
-$defaultlinecolor : #90A3B1;
-$defaulticoncolor : #90A3B1;
+$defaultlinecolor   : $gris-bleu;
+$defaulticoncolor   : $gris-bleu;
+$defaultitembgcolor : $gris-bleu;
 
 //header
 $headerbgcolor    : #fff;

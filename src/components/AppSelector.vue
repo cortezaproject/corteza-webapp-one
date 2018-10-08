@@ -4,11 +4,11 @@
     :class="fullscreen?'fullscreen':'tabbed'">
     <div class="available-apps">
       <div class="welcome">
-        <span v-if="!canClose">What should we start with ?</span>
+        <span v-if="firstApp">What should we start with ?</span>
         <span v-else>Choose an application</span>
         <span
           class="new-app-closer"
-          v-if="canClose"
+          v-if="!firstApp"
           @click="$emit('close')"><i class="icon-close"></i></span>
       </div>
       <ul>
@@ -19,60 +19,78 @@
             (crustapp.color && crustapp.color !=='')?crustapp.color:'appgrey',
             {
                 'in-tab' : crustapp.allowed_contextes.includes('tab')
-            }]"
+            },
+            { rowspan2 : (!crustapp.icon || crustapp.icon === '') && (!crustapp.logo || crustapp.logo === '')  }
+            ]"
           :key="index">
-          <v-popover
-            class="popover-wrap"
-            offset="-25"
-            trigger="hover"
-            placement="left">
-            <div class="label-wrap"
-              @click="$emit('add-app', {
-                app: available_apps[index],
-                paneId: paneId,
-              })">
-              <!-- icons have precedence -->
-              <label
-                v-if="crustapp.icon && crustapp.icon!==''"
-                class="label-content app-icon"
-                :class="crustapp.icon"></label>
-              <!-- if no icon but logo -->
-              <label
-                v-else-if="crustapp.logo && crustapp.logo!==''"
-                class="label-content app-logo">
-                <i :style="'background-image:url(' + crustapp.logo + ');'" ></i></label>
-              <!-- always a label, but may be 2 lined -->
-              <label
-                class='label-content app-text'
-                :class="[ { rowspan2 : (!crustapp.icon || crustapp.icon === '') && (!crustapp.logo || crustapp.logo === '')  } ]">
-                {{ crustapp.name }}
-              </label>
+          <div class="label-wrap"
+            @click="addApp(available_apps[index],paneId)">
+            <!-- icons have precedence -->
+            <label
+              v-if="crustapp.icon && crustapp.icon!==''"
+              class="label-content app-icon"
+              :class="crustapp.icon"></label>
+            <!-- if no icon but logo -->
+            <label
+              v-else-if="crustapp.logo && crustapp.logo!==''"
+              class="label-content app-logo">
+              <i :style="'background-image:url(' + crustapp.logo + ');'" ></i></label>
+            <!-- always a label, but may be 2 lined -->
+            <label
+              class='label-content app-text'>
+              {{ crustapp.name }}
+            </label>
+            <div class="where">
+              <div>open in crust</div>
+              <div>open in new window</div>
             </div>
-            <template slot="popover">
-              new window
-              <br>new tab
-            </template>
-          </v-popover>
+          </div>
         </li>
       </ul>
     </div>
+    <modal v-if="chooseDisposition" @close="addApp">
+      <h3 slot="header">Where should we add it ?</h3>
+      <div class="chooseDisposition">
+        <ul class="split2ways">
+          <li class="h"></li>
+        </ul>
+      </div>
+    </modal>
   </div>
 </template>
 
 <script>
-import { VTooltip, VPopover } from 'v-tooltip'
+import Modal from '@/components/Modal'
 
 export default {
   directives: {
-    'tooltip': VTooltip,
   },
 
   components: {
-    'v-popover': VPopover,
+    Modal,
   },
 
   methods:
   {
+    // no fat arrow
+    // https://stackoverflow.com/a/43073924
+    addApp: function (availableApp, paneId)
+    {
+      // if we have a paneId,
+      // nothing to do, just send add-app
+      // otherwise we need to know how to dispose panes,
+      // if this is not the first app.
+      console.log('paneId :' + paneId)
+      if (!this.firstApp && null === paneId)
+      {
+        this.chooseDisposition = true
+        return
+      }
+      this.$emit('add-app', {
+        app: availableApp,
+        paneId: paneId,
+      })
+    },
   },
 
   props:
@@ -95,16 +113,23 @@ export default {
       required: false,
       default: false,
     },
-    canClose:
+    // if true this is the first app we add,
+    // we cannot close the app window selection
+    // and we do not need to ask disposition.
+    firstApp:
     {
       type: Boolean,
       required: false,
-      default: true,
+      default: false,
     },
   },
   data: function ()
   {
     return {
+      // if this is not the first app we will use this structure to
+      // add data need to add the tab (chosen orientation and position)
+      app_to_add: null,
+      chooseDisposition: false,
       // app struct
       // must have name,
       // may have color (defaults to $appgrey)
@@ -123,8 +148,9 @@ export default {
           name: 'CRM',
           color: 'appgreen',
           // icon: 'icon-user',
-          path: '/Messaging',
+          path: 'https://example.com/',
           allowed_contextes: ['window', 'panel', 'tab', 'external'],
+          method: 'iframe',
         },
         {
           name: 'Messaging',
@@ -135,30 +161,31 @@ export default {
           method: 'iframe',
         },
         {
-          name: 'Shell',
+          name: 'appear.in',
           color: 'appblue',
-          icon: 'icon-terminal',
-          path: '/Messaging',
+          icon: 'icon-bubble',
+          path: 'https://appear.in/crusttech/',
           allowed_contextes: ['panel', 'tab'],
+          method: 'iframe',
         },
         {
           name: 'Magna Aliqua UT LABORE',
           color: '',
           icon: 'icon-equalizer',
-          path: '/Messaging',
+          path: 'https://example.com/',
           allowed_contextes: ['panel', 'tab'],
         },
         {
           name: 'Venimud',
           color: 'appred',
-          path: '/Messaging',
           logo: 'https://picsum.photos/200/300',
+          path: 'https://example.com/',
           allowed_contextes: ['panel', 'tab'],
         },
         {
           name: 'Ut labore',
           icon: 'icon-files-empty',
-          path: '/Messaging',
+          path: 'https://example.com/',
           allowed_contextes: ['panel', 'tab'],
         },
       ],
@@ -167,23 +194,6 @@ export default {
 }
 </script>
 
-<!-- don't scope this -->
-<!-- using app-list as spillover limiter -->
-<style lang="scss">
-.app-list
-{
-  .available-app
-  {
-    .trigger // element of popover
-    {
-      max-width:100%;
-      // display:block!important;
-    }
-  }
-}
-</style>
-
-<!-- scopable parts -->
 <style scoped lang="scss">
   $crustregular: sans-serif;
   $appyellow : #FFCC32;
@@ -217,6 +227,7 @@ export default {
     font-family:$crustregular;
     font-size:10px;
     box-sizing:border-box;
+    z-index:99;
     *
     {
       font-family:$crustregular;
@@ -233,11 +244,55 @@ export default {
     text-align:center;
     line-height:50px;
     margin:10px auto;
+    overflow:hidden;
 
-    .trigger // element of popover
+    .label-wrap
     {
-      max-width:100%;
-      display:block!important;
+      transition: all 0.2s;
+      &:hover
+      {
+        margin-top:-50px;
+        .where
+        {
+          opacity: 1;
+        }
+      }
+    }
+
+    .where
+    {
+      width: calc(100% - 40px);
+      margin: 0 auto;
+      opacity:0;
+    }
+
+    .where div
+    {
+      border:solid 1px white;
+      padding:5px;
+      font-size:12px;
+      line-height:1;
+      border-radius:3px;
+      margin:-5px 0 10px 0;
+      &:hover
+      {
+        background-color:rgba(0,0,0,0.2);
+      }
+    }
+
+    &.rowspan2
+    {
+      .where
+      {
+        margin-top:15px;
+      }
+      .label-wrap
+      {
+        &:hover
+        {
+          margin-top:-40px;
+        }
+      }
     }
 
     .label-content
@@ -257,7 +312,7 @@ export default {
       {
         i
         {
-          margin-top:0.5vh;
+          //margin-top:0.5vh;
           height:4vh;
           width:4vh;
           display:inline-block;
@@ -275,14 +330,14 @@ export default {
         text-overflow:ellipsis;
         max-width:100%;
       }
-      &.rowspan2
-      {
-        line-height:90px; //9 because of 5px padding
-      }
     }
     &:last-of-type
     {
       margin-bottom:0;
+    }
+    &.rowspan2 .label-content:first-child
+    {
+      margin-top:40px;
     }
   }
 
@@ -362,7 +417,6 @@ export default {
     }
   }
 </style>
-
 <!-- style for popover -->
 <style scoped lang="scss">
 /*
