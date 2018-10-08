@@ -6,7 +6,8 @@
         <capsule>platform</capsule>
       </div>
       <div class="toolbox">
-        <section v-if="user && optionalAdd" class="toolbox-item add circle">
+        <!-- the header add is for panels, not for now, remove false && to restore -->
+        <section v-if="false && user && optionalAdd" class="toolbox-item add circle">
           <i class="icon-plus"
             title="Add a pane"
             @click="$emit('apps')"></i>

@@ -23,8 +23,7 @@
             { rowspan2 : (!crustapp.icon || crustapp.icon === '') && (!crustapp.logo || crustapp.logo === '')  }
             ]"
           :key="index">
-          <div class="label-wrap"
-            @click="addApp(available_apps[index],paneId)">
+          <div class="label-wrap">
             <!-- icons have precedence -->
             <label
               v-if="crustapp.icon && crustapp.icon!==''"
@@ -41,8 +40,8 @@
               {{ crustapp.name }}
             </label>
             <div class="where">
-              <div>open in crust</div>
-              <div>open in new window</div>
+              <div><a @click="addApp(available_apps[index],paneId)">open in crust</a></div>
+              <div><a target="_blank" :href="crustapp.path">open in new window</a></div>
             </div>
           </div>
         </li>
@@ -161,10 +160,10 @@ export default {
           method: 'iframe',
         },
         {
-          name: 'appear.in',
+          name: 'Maps',
           color: 'appblue',
-          icon: 'icon-bubble',
-          path: 'https://appear.in/crusttech/',
+          icon: 'icon-location',
+          path: 'https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d5548694.956216767!2d1.9195935488340492!3d47.2298136496854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x476531f5969886d1%3A0x400f81c823fec20!2sLjubljana%2C+Slovenia!3m2!1d46.056946499999995!2d14.505751499999999!4m5!1s0x480ede2fa7d69085%3A0x40ca5cd36e4ab30!2sRennes!3m2!1d48.117266!2d-1.6777925999999999!5e0!3m2!1sen!2sfr!4v1537822098803',
           allowed_contextes: ['panel', 'tab'],
           method: 'iframe',
         },
@@ -269,11 +268,20 @@ export default {
     .where div
     {
       border:solid 1px white;
-      padding:5px;
+      padding:0;
       font-size:12px;
       line-height:1;
       border-radius:3px;
       margin:-5px 0 10px 0;
+      a
+      {
+        color:white;
+        text-decoration:none;
+        display:inline-block;
+        width:100%;
+        padding:5px;
+        cursor:pointer;
+      }
       &:hover
       {
         background-color:rgba(0,0,0,0.2);
