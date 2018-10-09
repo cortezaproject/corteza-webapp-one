@@ -106,7 +106,6 @@ fieldset {
     margin-bottom: 8rem;
 }
 
-
 h1 {
     font-size: 3em;
     margin: 2em 0;
@@ -489,7 +488,6 @@ fieldset {
 [type="checkbox"]:checked + label.custom-toggle::after  {
   transform: translateX(30px);
 }
-
 
 .btn {
     height: 40px;

@@ -34,7 +34,7 @@
       <div>
         <ul>
           <li v-for="(item, index) in mainmenu" :key="index">
-            {{ item.label }}
+            <a :href="item.link">{{ item.label }}</a>
           </li>
         </ul>
       </div>
@@ -67,8 +67,8 @@ export default
     {
       required: true,
       validator: function (prop) {
-        return ( (typeof prop) === 'object' || prop === null)
-      }
+        return ((typeof prop) === 'object' || prop === null)
+      },
     },
     optionalAdd:
     {
@@ -87,7 +87,8 @@ export default
       [
         { label: 'My Profile' },
         { label: 'Settings' },
-        { label: 'Logout' },
+        { label: 'Logout', link: '/auth/signin' },
+        { label: 'Logout', link: '/auth/signout' },
       ],
     }
   },
