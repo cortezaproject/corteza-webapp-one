@@ -72,8 +72,8 @@ export default {
       this.$store.commit('addApp', appData)
     },
     connect () {
-      this.$store.commit('connectUser');
-    }
+      this.$store.commit('connectUser')
+    },
   },
 
   computed:
