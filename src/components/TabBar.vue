@@ -1,7 +1,20 @@
 <template>
   <div
     class="tab_list_wrapper"
-    :style="(top === ''?'':'top:' + top) + ';' + (left ==='' ? '' : 'left:calc('+left+' - 5px)')">
+    :style="(top === ''?'':'top:' + top) + ';' + (left ==='' ? '' : 'left:calc('+left+' - 5px)')"
+    :class="[ { 'mobile-shown' : mobileListShown  } ]">
+    <div
+      class="mobile mobile-switch"
+      @click="mobileListShown=!mobileListShown">
+        <i v-if="!mobileListShown" class="icon-tabs"></i>
+        <i v-else class="icon-x"></i>
+      </div>
+    <div class="mobile title">
+      <span>All Tabs</span>
+      <div class="tab-plus add" @click="$emit('add')">
+        <label for="show-apps"><i class="icon-plus"></i></label>
+      </div>
+    </div>
     <draggable
       v-model="tabs"
       :options="{ group:'tabs' }"
@@ -10,14 +23,18 @@
       :data-paneid="pane_id"
       @start="drag=true"
       @end="endDrag">
+      <!-- we don't want the close button to propagate the click to span an parent, so we double event but limit to span and div "self" -->
       <div
         class="tab_item item"
         :class="[ { active : active_tab === tab.id } ]"
         v-for="(tab, index) in tabs" :key="index"
-        @touch="switchActive({id:tab.id, pane:pane_id})"
-        @mousedown="switchActive({id:tab.id, pane:pane_id})">
-        <span>{{ tab.title }}</span>
-        <i class="icon-close"></i>
+        @touch.self="switchActive({id:tab.id, pane:pane_id})"
+        @mousedown.self="switchActive({id:tab.id, pane:pane_id})">
+        <i class="active-indicator icon-play3" v-if="mobileListShown && active_tab === tab.id"></i>
+        <span
+          @touch.self="switchActive({id:tab.id, pane:pane_id})"
+          @mousedown.self="switchActive({id:tab.id, pane:pane_id})">{{ tab.title }}</span>
+        <i class="icon-close" @click="removeTab({id:tab.id, pane:pane_id})"></i>
       </div>
       <div class="tab-plus add" @click="$emit('add')">
         <label for="show-apps"><span  arial-label="Add tab" title="Add tab">+</span></label>
@@ -73,6 +90,7 @@ export default {
     return {
       // create a local instance of tabs
       paneTabs: null,
+      mobileListShown: false,
     }
   },
   // run at component first creation
@@ -84,6 +102,11 @@ export default {
     switchActive: function (newActiveTab) {
       // console.log('TabBar says : newActiveTab ' + newActiveTab.id + ' in pane ' + newActiveTab.pane)
       this.$store.commit('changeActive', newActiveTab)
+      this.mobileListShown = false
+    },
+    removeTab: function (tabToDel) {
+      // console.log('TabBar says : newActiveTab ' + newActiveTab.id + ' in pane ' + newActiveTab.pane)
+      this.$store.commit('removeTab', tabToDel)
     },
     endDrag: function (e)
     {
@@ -131,163 +154,165 @@ export default {
   .tab_list_wrapper
   {
     font-family:$crustregular;
-    height:0;
-    position:fixed;
-    bottom:-100vh;
+    background-color:$headerbgcolor;
+    z-index:3;
+    top:0;
     left:0;
-    right:0;
-    background-color:$tabbgcolor;
-    transition: all 0.5s ease;
-    z-index:3;
-  }
-
-  .tab_title
-  {
-    display:none;
-  }
-
-  //tab list is hidden by default.
-  //for no we will use media query (below)
-  //to display it
-  .tab_list
-  {
-    display:none;
-  }
-
-  //style items even if hidden
-  .tab_title
-  {
-    padding:1.5rem;
-    color:$tabtitletxtcolor;
-    font-size:1.8rem;
-  }
-
-  .tab_list
-  {
-    margin:1.5rem;
+    width:100%;
+    margin:0;
     padding:0;
-    list-style:none;
-  }
-
-  .tab_item
-  {
-    padding:1.5rem;
-    background-color:rgba($defaultlinecolor,0.15);
-    border-radius:3px;
-    margin-bottom:1rem;
-    color:$tabitemtxtcolor;
-    font-size:1.4rem;
-    .icon-close
-    {
-      float:right;
-      padding: 1.5rem;
-      margin: -1.5rem;
-    }
-  }
-
-  .tab_current_item
-  {
-    background-color:$tabcurrentbgcolor;
-  }
-
-  .tab-closer
-  {
-    [class*=icon]
-    {
-      color:$tabitemtxtcolor;
-    }
-  }
-
-  //tab counter when folded.
-  .tab_count
-  {
-    line-height:1;
     position:absolute;
-    top:3rem;
-    left:2rem;
+    height:30px;
+    bottom:auto;
+    box-shadow: 0 0.1rem 0.2rem 0 rgba($defaulttextcolor, 0.1);
   }
-  //red dot on tab opener
-  .tab-notification,
-  .tab-opener-notification
+
+  @media (max-width: $wideminwidth - 1px)
   {
-    &:after
+    .title
     {
-      display:inline-block;
-      border-radius:100%;
-      content:"";
-      background-color:$notificationcolor;
-      height:1rem;
-      width:1rem;
-      font-size:1;
-      color:$headerbgcolor;
+      line-height:30px;
+      max-height:30px;
+      overflow:hidden;
+      display:none;
     }
-  }
-  .tab-opener-notification
-  {
-    &:after
+    .mobile-switch,
+    .title .add
     {
-      position:absolute;
-      top:0;
-      right:0;
-      border:solid 2px $headerbgcolor;
+      float:left;
+      font-size:24px;
+      line-height:30px;
+      height:30px;
+      padding:3px 0;
+      i
+      {
+        line-height:1;
+      }
     }
-  }
-  //this is the label to show tabs in reponsive mode
-  .tab_display
-  {
-    position:fixed;
-    width:5.6rem;
-    height:5.6rem;
-    background-color:$defaultlinecolor;
-    color:$tabitemtxtcolor;
-    right:1.5rem;
-    bottom:2rem;
-    border-radius:100%;
-    line-height:5.6rem;
-    display:block;
-    text-align:center;
-  }
-  .tab_bg
-  {
-    position:absolute;
-    height:3.6rem;
-    width:3.6rem;
-    font-size:3.6rem;
-    left:1rem;
-    top:1rem;
-    color:$tabitemtxtcolor;
-  }
-  //this is the display switched
-  .tab_list_wrapper.displayed
-  {
-    height:calc(100% - 6rem);
-    display:block;
-    z-index:3;
-    bottom:0;
-    .tab_title,
+    .mobile-switch
+    {
+      padding:4px 0 0 15px;
+      .title
+      {
+        display:block;
+      }
+    }
+    .title
+    {
+      span
+      {
+        display:inline-block;
+        vertical-align: middle;
+        margin-bottom: 20px;
+        color: $defaulttextcolor;
+        font-weight:600;
+        font-size:14px;
+        padding-left:10px;
+      }
+      .add
+      {
+        float:right;
+        margin-right:15px;
+      }
+    }
     .tab_list
     {
-      display:block;
+      background-color:$headerbgcolor;
+      .add
+      {
+        display:none;
+      }
+    }
+
+    .tab_item
+    {
+      display:none;
+      line-height:30px;
+      margin-left: 24px + 15px + 10px; // icon width + 15 + 15
+      margin-right: 15px; // icon width + 15 + 15
+      &.active
+      {
+        display:block;
+        font-size:14px;
+      }
+      .icon-close
+      {
+        float:right;
+        font-size:24px;
+        padding:3px 0;
+      }
+    }
+
+    .tab_list_wrapper.mobile-shown
+    {
+      background-color:$headerbgcolor;
+      .mobile-switch
+      {
+        padding-top:3px;
+      }
+      .tab_list
+      {
+        display:block;
+      }
+      .title
+      {
+        display:block;
+        line-height:34px;
+      }
+      .tab_item
+      {
+        display:block;
+        height:34px;
+        line-height:34px;
+        padding:0 5px 0 9px;
+        margin-left: 24px + 15px + 10px;
+        margin-right: 15px - 4px;
+        border-radius:3px;
+        background-color: rgba($defaultitembgcolor, 0.15);
+        margin-bottom:10px;
+        font-size:14px;
+        vertical-align: middle;
+        .icon-close
+        {
+          padding-top:5px;
+        }
+        &.active
+        {
+          background-color: rgba($appgreen, 0.15);
+        }
+        .active-indicator
+        {
+          margin-left: -10px;
+          width: 9px;
+          font-size: 9px;
+          display: block;
+          float: left;
+          line-height: 33px;
+        }
+      }
+      .tab_list
+      {
+        padding:10px 0 20px 0;
+        box-shadow: 0 0.1rem 0.2rem 0 rgba($defaulttextcolor, 0.1);
+        max-height: calc(100vh - 100px);
+        overflow: hidden auto;
+      }
     }
   }
 
   //using media query to change behaviour if available display area is sufficient.
   @media (min-width: $wideminwidth)
   {
+    .mobile
+    {
+      display:none;
+    }
     // browser like tabs
     // extended from Adem ilter @ademilter
     .tab_list_wrapper
     {
+      display:block;
       background:none;
-      position:absolute;
-      //this should be replaced by value from props
-      top:0;
-      left:0;
-      width:100%;
-      margin:0;
-      padding:0;
-      height:30px;
-      bottom:auto;
       box-shadow: 0 0.1rem 0.2rem 0 rgba($defaulttextcolor, 0.1);
     }
 
@@ -408,6 +433,7 @@ export default {
         background-color: #1E2224;
         color: $tab_hovercolor;
       }
+
       .icon-close:before, em
       {
         position:absolute;
