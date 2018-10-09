@@ -23,7 +23,7 @@
           :key="index">
           <div
             class="label-wrap"
-            :class="[ { active : showOptions } ]"
+            :class="[ { active : crustapp.showOptions } ]"
             @touch="crustapp.showOptions=!crustapp.showOptions">
             <!-- icons have precedence -->
             <label
