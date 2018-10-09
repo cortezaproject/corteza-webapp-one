@@ -17,13 +17,14 @@
           :class="[
             'available-app',
             (crustapp.color && crustapp.color !=='')?crustapp.color:'appgrey',
-            {
-                'in-tab' : crustapp.allowed_contextes.includes('tab')
-            },
+            { 'in-tab' : crustapp.allowed_contextes.includes('tab') },
             { rowspan2 : (!crustapp.icon || crustapp.icon === '') && (!crustapp.logo || crustapp.logo === '')  }
             ]"
           :key="index">
-          <div class="label-wrap">
+          <div
+            class="label-wrap"
+            :class="[ { active : showOptions } ]"
+            @touch="crustapp.showOptions=!crustapp.showOptions">
             <!-- icons have precedence -->
             <label
               v-if="crustapp.icon && crustapp.icon!==''"
@@ -150,6 +151,7 @@ export default {
           path: 'https://example.com/',
           allowed_contextes: ['window', 'panel', 'tab', 'external'],
           method: 'iframe',
+          showOptions: false, // should be initalised as false for all
         },
         {
           name: 'Messaging',
@@ -158,6 +160,7 @@ export default {
           path: 'https://latest.rustbucket.io/messaging/',
           allowed_contextes: ['panel', 'tab', 'external'],
           method: 'iframe',
+          showOptions: false,
         },
         {
           name: 'Maps',
@@ -166,6 +169,7 @@ export default {
           path: 'https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d5548694.956216767!2d1.9195935488340492!3d47.2298136496854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m13!3e0!4m5!1s0x476531f5969886d1%3A0x400f81c823fec20!2sLjubljana%2C+Slovenia!3m2!1d46.056946499999995!2d14.505751499999999!4m5!1s0x480ede2fa7d69085%3A0x40ca5cd36e4ab30!2sRennes!3m2!1d48.117266!2d-1.6777925999999999!5e0!3m2!1sen!2sfr!4v1537822098803',
           allowed_contextes: ['panel', 'tab'],
           method: 'iframe',
+          showOptions: false,
         },
         {
           name: 'Magna Aliqua UT LABORE',
@@ -173,6 +177,7 @@ export default {
           icon: 'icon-equalizer',
           path: 'https://example.com/',
           allowed_contextes: ['panel', 'tab'],
+          showOptions: false,
         },
         {
           name: 'Venimud',
@@ -180,12 +185,14 @@ export default {
           logo: 'https://picsum.photos/200/300',
           path: 'https://example.com/',
           allowed_contextes: ['panel', 'tab'],
+          showOptions: false,
         },
         {
           name: 'Ut labore',
           icon: 'icon-files-empty',
           path: 'https://example.com/',
           allowed_contextes: ['panel', 'tab'],
+          showOptions: false,
         },
       ],
     }
@@ -207,6 +214,7 @@ export default {
 
   .welcome
   {
+    margin-top:calc(50vh - 200px);
     color:$appyellow;
     font-size:2.5em;
     margin-bottom:30px;
@@ -248,7 +256,7 @@ export default {
     .label-wrap
     {
       transition: all 0.2s;
-      &:hover
+      &:hover, &:focus
       {
         margin-top:-50px;
         .where
@@ -387,11 +395,10 @@ export default {
   //media query should go here
   .available-apps
   {
-    margin:20% auto 0 auto;
+    margin:0 auto;
     max-width:640px;
     min-width:320px;
     position: static;
-    top: -25%;
     transform: translateY(-50%);
   }
 
