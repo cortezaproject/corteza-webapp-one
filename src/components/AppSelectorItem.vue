@@ -27,7 +27,7 @@
     </div>
     <!-- this should appear on hover -->
     <div class="app-display-options">
-      <div class="display-option"><a class="link" @click="addApp(appIndex,paneId)">open in crust</a></div>
+      <div class="display-option"><a class="link" @click="$emit('doadd')">open in crust</a></div>
       <div class="display-option"><a class="link" target="_blank" :href="crustapp.path">open in new window</a></div>
     </div>
   </div>
@@ -40,6 +40,11 @@ export default {
     return {
     }
   },
+
+  methods:
+  {
+  },
+
   props:
   {
     paneId:

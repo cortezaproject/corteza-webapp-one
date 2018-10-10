@@ -16,7 +16,8 @@
           <AppSelectorItem
             :crustapp="available_apps[appIndex]"
             :paneId="paneId"
-            :appIndex="appIndex" />
+            :appIndex="appIndex"
+            v-on:doadd="addApp(available_apps[appIndex], paneId)"/>
         </li>
       </ul>
     </section>
@@ -31,7 +32,8 @@
           <AppSelectorItem
             :crustapp="crustapp"
             :paneId="paneId"
-            :appIndex="index" />
+            :appIndex="index"
+            v-on:doadd="addApp(crustapp, paneId)" />
         </li>
       </ul>
     </section>
@@ -65,6 +67,7 @@ export default {
     // https://stackoverflow.com/a/43073924
     addApp: function (availableApp, paneId)
     {
+      console.log('adding app in selector')
       // if we have a paneId,
       // nothing to do, just send add-app
       // otherwise we need to know how to dispose panes,
