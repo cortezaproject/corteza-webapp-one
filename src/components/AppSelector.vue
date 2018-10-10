@@ -2,52 +2,39 @@
   <div
     class="selector app-list" v-if="displayed"
     :class="fullscreen?'fullscreen':'tabbed'">
-    <div class="available-apps">
-      <div class="welcome">
-        <span v-if="firstApp">What should we start with ?</span>
-        <span v-else>Choose an application</span>
-        <span
-          class="new-app-closer"
-          v-if="!firstApp"
-          @click="$emit('close')"><i class="icon-close"></i></span>
-      </div>
-      <ul>
+    <span
+      class="new-app-closer"
+      v-if="!firstApp"
+      @click="$emit('close')"><i class="icon-close"></i></span>
+    <section class="app-section popular">
+      <div class="section-title">Most popular</div>
+      <ul :class="[ 'available-apps' ]">
         <li
-          v-for="(crustapp, index) in available_apps"
-          :class="[
-            'available-app',
-            (crustapp.color && crustapp.color !=='')?crustapp.color:'appgrey',
-            { 'in-tab' : crustapp.allowed_contextes.includes('tab') },
-            { rowspan2 : (!crustapp.icon || crustapp.icon === '') && (!crustapp.logo || crustapp.logo === '')  }
-            ]"
+          v-for="(appIndex, index) in popular_apps"
+          :class="[ 'available-app' ]"
           :key="index">
-          <div
-            class="label-wrap"
-            :class="[ { active : crustapp.showOptions } ]"
-            @touch="crustapp.showOptions=!crustapp.showOptions">
-            <!-- icons have precedence -->
-            <label
-              v-if="crustapp.icon && crustapp.icon!==''"
-              class="label-content app-icon"
-              :class="crustapp.icon"></label>
-            <!-- if no icon but logo -->
-            <label
-              v-else-if="crustapp.logo && crustapp.logo!==''"
-              class="label-content app-logo">
-              <i :style="'background-image:url(' + crustapp.logo + ');'" ></i></label>
-            <!-- always a label, but may be 2 lined -->
-            <label
-              class='label-content app-text'>
-              {{ crustapp.name }}
-            </label>
-            <div class="where">
-              <div><a @click="addApp(available_apps[index],paneId)">open in crust</a></div>
-              <div><a target="_blank" :href="crustapp.path">open in new window</a></div>
-            </div>
-          </div>
+          <AppSelectorItem
+            :crustapp="available_apps[appIndex]"
+            :paneId="paneId"
+            :appIndex="appIndex" />
         </li>
       </ul>
-    </div>
+    </section>
+    <section class="app-section available">
+      <div class="section-title">Available</div>
+      <ul :class="[ 'available-apps' ]">
+        <li
+          v-for="(crustapp, index) in available_apps"
+          :class="[ 'available-app' ]"
+          :key="index"
+          v-if="-1 === popular_apps.indexOf(index)">
+          <AppSelectorItem
+            :crustapp="crustapp"
+            :paneId="paneId"
+            :appIndex="index" />
+        </li>
+      </ul>
+    </section>
     <modal v-if="chooseDisposition" @close="addApp">
       <h3 slot="header">Where should we add it ?</h3>
       <div class="chooseDisposition">
@@ -61,6 +48,7 @@
 
 <script>
 import Modal from '@/components/Modal'
+import AppSelectorItem from '@/components/AppSelectorItem'
 
 export default {
   directives: {
@@ -68,6 +56,7 @@ export default {
 
   components: {
     Modal,
+    AppSelectorItem,
   },
 
   methods:
@@ -143,18 +132,21 @@ export default {
       //  - panel : can be opened in crust context
       // if apps can be opened in tabs they will be listed via the "+" in a panel context
       // if apps can be opened in panel/window or external they will be listed via the "+" in header
+      popular_apps: [ 0, 3, 6, 1 ],
       available_apps: [
         {
-          name: 'CRM',
+          name: 'Crust CRM',
           color: 'appgreen',
           // icon: 'icon-user',
+          logo: require('@/assets/logos/crust.jpg'),
           path: 'https://example.com/',
           allowed_contextes: ['window', 'panel', 'tab', 'external'],
           method: 'iframe',
           showOptions: false, // should be initalised as false for all
         },
         {
-          name: 'Messaging',
+          name: 'Crust Messaging',
+          logo: require('@/assets/logos/crust.jpg'),
           icon: 'icon-bubble2',
           color: 'appyellow',
           path: 'https://latest.rustbucket.io/messaging/',
@@ -172,9 +164,38 @@ export default {
           showOptions: false,
         },
         {
+          name: 'Jira',
+          color: '',
+          logo: require('@/assets/logos/jira.png'),
+          path: 'https://example.com/',
+          allowed_contextes: ['panel', 'tab'],
+          showOptions: false,
+        },
+        {
+          name: 'Carta Magna',
+          color: '',
+          path: 'https://example.com/',
+          allowed_contextes: ['panel', 'tab'],
+          showOptions: false,
+        },
+        {
+          name: 'Jenkins',
+          logo: require('@/assets/logos/jenkins.png'),
+          allowed_contextes: ['panel', 'tab'],
+          showOptions: false,
+        },
+        {
           name: 'Magna Aliqua UT LABORE',
           color: '',
           icon: 'icon-equalizer',
+          path: 'https://example.com/',
+          allowed_contextes: ['panel', 'tab'],
+          showOptions: false,
+        },
+        {
+          name: 'Aliqua UT LABORE',
+          color: '',
+          icon: 'icon-files-empty',
           path: 'https://example.com/',
           allowed_contextes: ['panel', 'tab'],
           showOptions: false,
@@ -188,9 +209,39 @@ export default {
           showOptions: false,
         },
         {
+          name: 'OwnCloud',
+          logo: require('@/assets/logos/owncloud.png'),
+          allowed_contextes: ['panel', 'tab'],
+          showOptions: false,
+        },
+        {
           name: 'Ut labore',
-          icon: 'icon-files-empty',
           path: 'https://example.com/',
+          allowed_contextes: ['panel', 'tab'],
+          showOptions: false,
+        },
+        {
+          name: 'Chemistry',
+          logo: require('@/assets/logos/app-logo.jpg'),
+          allowed_contextes: ['panel', 'tab'],
+          showOptions: false,
+        },
+        {
+          name: 'TalkTalk',
+          color: 'appred',
+          icon: 'icon-bubbles',
+          path: 'https://example.com/',
+          allowed_contextes: ['panel', 'tab'],
+          showOptions: false,
+        },
+        {
+          name: 'Archive',
+          logo: require('@/assets/logos/archive.png'),
+          allowed_contextes: ['panel', 'tab'],
+          showOptions: false,
+        },
+        {
+          name: '123',
           allowed_contextes: ['panel', 'tab'],
           showOptions: false,
         },
@@ -201,6 +252,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+  // these values makes this standalone
+  $wideminwidth:640px;
   $crustregular: sans-serif;
   $appyellow : #FFCC32;
   $appred    : #E85568;
@@ -209,18 +262,17 @@ export default {
   $applime   : #00D53E;
   $appgrey   : #90A3B1;
   $appcream  : #F3F3F5;
-
+  $appselectorbg : #EDF1F4;
+  $appselectoritembg : #fff;
+  // this is the global config
   @import '@/assets/sass/_0.declare.scss';
 
-  .welcome
+  .new-app-closer
   {
-    margin-top:calc(50vh - 200px);
-    color:$appyellow;
-    font-size:2.5em;
-    margin-bottom:30px;
-    clear:both;
-    text-align:center;
-    padding: 0 0 0 20px;
+    position:absolute;
+    top:10px;
+    right:15px;
+    font-size:32px;
   }
 
   .app-list
@@ -230,331 +282,56 @@ export default {
     left:0;
     bottom:0;
     right:0;
-    background-color:black;
+    background-color:$appselectorbg;
     font-family:$crustregular;
     font-size:10px;
     box-sizing:border-box;
     z-index:99;
+    overflow:hidden auto;
+    padding-bottom:30px;
     *
     {
       font-family:$crustregular;
       box-sizing:border-box;
     }
+    .available-apps
+    {
+      list-style:none;
+      padding:10px;
+      clear:both;
+    }
   }
 
   .available-app
   {
-    width:200px;
-    height:100px;
-    color:white;
-    background-color:$appgrey;
-    text-align:center;
-    line-height:50px;
-    margin:10px auto;
-    overflow:hidden;
-
-    .label-wrap
-    {
-      transition: all 0.2s;
-      &:hover, &:focus
-      {
-        margin-top:-50px;
-        .where
-        {
-          opacity: 1;
-        }
-      }
-    }
-
-    .where
-    {
-      width: calc(100% - 40px);
-      margin: 0 auto;
-      opacity:0;
-    }
-
-    .where div
-    {
-      border:solid 1px white;
-      padding:0;
-      font-size:12px;
-      line-height:1;
-      border-radius:3px;
-      margin:-5px 0 10px 0;
-      a
-      {
-        color:white;
-        text-decoration:none;
-        display:inline-block;
-        width:100%;
-        padding:5px;
-        cursor:pointer;
-      }
-      &:hover
-      {
-        background-color:rgba(0,0,0,0.2);
-      }
-    }
-
-    &.rowspan2
-    {
-      .where
-      {
-        margin-top:15px;
-      }
-      .label-wrap
-      {
-        &:hover
-        {
-          margin-top:-40px;
-        }
-      }
-    }
-
-    .label-content
-    {
-      display:inline-block;
-      width:100%;
-      color:white;
-      line-height:1;
-      padding:5px;
-      vertical-align:top;
-      text-decoration:none;
-      &:first-child
-      {
-        vertical-align:bottom;
-      }
-      &.app-logo
-      {
-        i
-        {
-          //margin-top:0.5vh;
-          height:4vh;
-          width:4vh;
-          display:inline-block;
-          background:#000;
-          background-repeat:no-repeat;
-          background-size:cover;
-          border-radius:50%;
-        }
-      }
-      &.app-text, &.app-icon
-      {
-        font-size:2.4em;
-        white-space:nowrap;
-        overflow:hidden;
-        text-overflow:ellipsis;
-        max-width:100%;
-      }
-    }
-    &:last-of-type
-    {
-      margin-bottom:0;
-    }
-    &.rowspan2 .label-content:first-child
-    {
-      margin-top:40px;
-    }
-  }
-
-  .available-app.appyellow
-  {
-    background-color:$appyellow;
-  }
-
-  .available-app.appred
-  {
-    background-color:$appred;
-  }
-
-  .available-app.appgreen
-  {
-    background-color:$appgreen;
-  }
-
-  .available-app.appblue
-  {
-    background-color:$appblue;
-  }
-
-  .available-app.appgrey
-  {
-    background-color:$appgrey;
-  }
-
-  .available-app.applime
-  {
-    background-color:$applime;
-  }
-
-  .available-app.appcream
-  {
-    background-color:$appcream;
-  }
-
-  //media query should go here
-  .available-apps
-  {
-    margin:0 auto;
-    max-width:640px;
-    min-width:320px;
-    position: static;
-    transform: translateY(-50%);
-  }
-
-  .new-app-closer
-  {
-    float:right;
-    top:3em;
-    right:3em;
-    // font-size:3em;
-    color:white;
-    margin-right: 20px;
-  }
-
-  .available-app
-  {
-    width:30%;
-    min-width:100px;
-    max-width:200px;
     display:block;
+    width:calc(50% - 10px);
+    max-width:180px;
+    height:115px;
+    background-color:$appselectoritembg;
     float:left;
-    margin:0 20px 20px 0;
-    border-radius:5px;
-    &:nth-child(3n)
+    margin:5px;
+    border-radius:3px;
+  }
+
+  .section-title
+  {
+    font-size:2.5em;
+    margin-top:30px;
+    padding:20px 15px 10px 15px;
+    clear:both;
+  }
+
+  @media (min-width: $wideminwidth)
+  {
+    .section-title
     {
-      clear:right;
-      margin-right:0;
+      padding-top:60px;
     }
-    &:nth-child(3n+1)
+    .app-section
     {
-      clear:left;
+      max-width: 4*(180px + 5px + 10px); // app width + margin + list padding
+      margin:0 auto;
     }
   }
-</style>
-<!-- style for popover -->
-<style scoped lang="scss">
-/*
-  .fullscreen
-  {
-    z-index:99;
-  }
-
-  .trigger
-  {
-    display:block!important;
-  }
-
-  .tooltip
-  {
-    display: block !important;
-    display: none !important;
-    z-index: 10000;
-
-    .tooltip-inner {
-      background: black;
-      color: white;
-      border-radius: 16px;
-      padding: 5px 10px 4px;
-    }
-
-    .tooltip-arrow {
-      width: 0;
-      height: 0;
-      border-style: solid;
-      position: absolute;
-      margin: 5px;
-      border-color: #ccc;
-      z-index: 1;
-    }
-
-    &[x-placement^="top"] {
-      margin-bottom: 5px;
-
-      .tooltip-arrow {
-        border-width: 5px 5px 0 5px;
-        border-left-color: transparent !important;
-        border-right-color: transparent !important;
-        border-bottom-color: transparent !important;
-        bottom: -5px;
-        left: calc(50% - 5px);
-        margin-top: 0;
-        margin-bottom: 0;
-      }
-    }
-
-    &[x-placement^="bottom"] {
-      margin-top: 5px;
-
-      .tooltip-arrow {
-        border-width: 0 5px 5px 5px;
-        border-left-color: transparent !important;
-        border-right-color: transparent !important;
-        border-top-color: transparent !important;
-        top: -5px;
-        left: calc(50% - 5px);
-        margin-top: 0;
-        margin-bottom: 0;
-      }
-    }
-
-    &[x-placement^="right"] {
-      margin-left: 5px;
-
-      .tooltip-arrow {
-        border-width: 5px 5px 5px 0;
-        border-left-color: transparent !important;
-        border-top-color: transparent !important;
-        border-bottom-color: transparent !important;
-        left: -5px;
-        top: calc(50% - 5px);
-        margin-left: 0;
-        margin-right: 0;
-      }
-    }
-
-    &[x-placement^="left"] {
-      margin-right: 5px;
-
-      .tooltip-arrow {
-        border-width: 5px 0 5px 5px;
-        border-top-color: transparent !important;
-        border-right-color: transparent !important;
-        border-bottom-color: transparent !important;
-        right: -5px;
-        top: calc(50% - 5px);
-        margin-left: 0;
-        margin-right: 0;
-      }
-    }
-
-    &.popover {
-      $color: #f9f9f9;
-
-      .popover-inner {
-        background: $color;
-        color: black;
-        padding: 24px;
-        border-radius: 5px;
-        box-shadow: 0 5px 30px rgba(black, .1);
-      }
-
-      .popover-arrow {
-        border-color: $color;
-      }
-    }
-
-    &[aria-hidden='true'] {
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity .15s, visibility .15s;
-    }
-
-    &[aria-hidden='false'] {
-      visibility: visible;
-      opacity: 1;
-      transition: opacity .15s;
-    }
-  }
-*/
 </style>

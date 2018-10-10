@@ -271,7 +271,6 @@ export default {
         background-color: rgba($defaultitembgcolor, 0.15);
         margin-bottom:10px;
         font-size:14px;
-        vertical-align: middle;
         .icon-close
         {
           padding-top:5px;
