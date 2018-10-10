@@ -106,30 +106,30 @@ const state = {
 const mutations =
 {
   updateTabs: (state, newTabs) => {
-    var newTabIs = _.difference(newTabs.tabs, state.panes.items[newTabs.paneId].tabs)
+    var newTabIs = _.difference(newTabs.tabs, state.items[newTabs.paneId].tabs)
     console.log(newTabIs)
-    state.panes.items[newTabs.paneId].tabs = newTabs.tabs
+    state.items[newTabs.paneId].tabs = newTabs.tabs
     if (0 !== newTabIs.length)
     {
-      state.panes.items[newTabs.paneId].active = newTabIs[0].id
+      state.items[newTabs.paneId].active = newTabIs[0].id
     }
   },
   setFirstTabActive: (state, pane) =>
   {
-    state.panes.items[pane.paneId].active = state.panes.items[pane.paneId].tabs[0].id
+    state.items[pane.paneId].active = state.items[pane.paneId].tabs[0].id
   },
   removeTab: (state, tabToDel) => {
     console.log('removing tab')
     console.log(tabToDel)
     var itemIndexToDel = null
-    var tabItems = state.panes.items[tabToDel.pane].tabs
+    var tabItems = state.items[tabToDel.pane].tabs
     console.log('active')
-    console.log(state.panes.items[tabToDel.pane].active)
+    console.log(state.items[tabToDel.pane].active)
     // if this is the last tab, remove the panel
     if (tabItems.length === 1)
     {
       // remove panel
-      state.panes.items.splice(tabToDel.pane, 1)
+      state.items.splice(tabToDel.pane, 1)
       // and in the future we should reorganize if necessary.
     }
     // else remove the tab
@@ -145,37 +145,37 @@ const mutations =
       if (null !== itemIndexToDel)
       {
         // if the deleted tab is the active...
-        if (state.panes.items[tabToDel.pane].active === tabToDel.id)
+        if (state.items[tabToDel.pane].active === tabToDel.id)
         {
           // activate the tab before the one we deleted if it exists,
           if ('undefined' !== typeof tabItems[itemIndexToDel - 1])
           {
-            state.panes.items[tabToDel.pane].active = tabItems[itemIndexToDel - 1].id
+            state.items[tabToDel.pane].active = tabItems[itemIndexToDel - 1].id
           }
           // the one after otherwise.
           else
           {
-            state.panes.items[tabToDel.pane].active = tabItems[itemIndexToDel + 1].id
+            state.items[tabToDel.pane].active = tabItems[itemIndexToDel + 1].id
           }
         }
         // and delete current tab
-        state.panes.items[tabToDel.pane].tabs.splice(itemIndexToDel, 1)
+        state.items[tabToDel.pane].tabs.splice(itemIndexToDel, 1)
       }
     }
   },
   changeActive: (state, newActiveTab) => {
-    state.panes.items[newActiveTab.pane].active = newActiveTab.id
+    state.items[newActiveTab.pane].active = newActiveTab.id
   },
   addApp: (state, appData) => {
-    var sspanes = state.panes
+    console.log('in panes/addApp')
     var paneId = appData.paneId
-    if (sspanes.items.length === 0)
+    if (state.items.length === 0)
     {
-      sspanes.disposition = {
+      state.disposition = {
         type: 'rowfirst',
         itempos: [ [ 0 ] ],
       }
-      sspanes.items = [
+      state.items = [
         {
           active: 0,
           tabs: [],
@@ -186,20 +186,20 @@ const mutations =
       paneId = 0
     }
     // add tab to the current pane
-    sspanes.items[paneId].tabs.push({
-      id: sspanes.nextTabId,
+    state.items[paneId].tabs.push({
+      id: state.nextTabId,
       title: appData.app.name,
       src: appData.app.path,
     })
-    sspanes.items[paneId].showapps = false
-    sspanes.items[paneId].active = sspanes.nextTabId
-    sspanes.nextTabId++
+    state.items[paneId].showapps = false
+    state.items[paneId].active = state.nextTabId
+    state.nextTabId++
   },
 }
 
 // export created elements
 export default {
-  // namespaced: true,
+  namespaced: true,
   state,
   mutations,
 }
@@ -209,23 +209,23 @@ console.log('Vuex adding app')
 console.log(appData)
 var inPane = null
 var newPane = {
-active: state.panes.nextTabId,
+active: state.nextTabId,
 showapps: false,
 tabs: [],
 }
 newPane.tabs.push({
-id: state.panes.nextTabId,
+id: state.nextTabId,
 title: appData.name,
 src: appData.path,
 })
 inPane = 0
-state.panes.items[inPane] = newPane
-state.panes.disposition = [[inPane]]
-state.panes.nextTabId++
-console.log(state.panes)
+state.items[inPane] = newPane
+state.disposition = [[inPane]]
+state.nextTabId++
+console.log(state)
 */
 /*
-state.panes = {
+state = {
 disposition:
 {
 type: 'rowfirst',

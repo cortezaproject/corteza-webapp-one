@@ -35,7 +35,7 @@ export default {
       set (tabs) {
         console.log('setting tabs')
         console.log(tabs)
-        this.$store.commit('updateTabs', { tabs: tabs, paneId: this.pane_id })
+        this.$store.commit('panes/updateTabs', { tabs: tabs, paneId: this.pane_id })
       },
       */
     },

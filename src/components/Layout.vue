@@ -153,7 +153,7 @@ export default
       },
       /*
       set (tabs) {
-        this.$store.commit('updateTabs', tabs);
+        this.$store.commit('panes/updateTabs', tabs);
       }
       */
     },
@@ -166,7 +166,7 @@ export default
     addTab (appData) {
       console.log('Adding a app from layout')
       console.log(appData)
-      this.$store.commit('addApp', appData)
+      this.$store.commit('panes/addApp', appData)
     },
   },
 }

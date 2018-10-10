@@ -42,7 +42,7 @@ export default {
     addTab (appData) {
       console.log('Adding a app from WkS')
       console.log(appData)
-      this.$store.commit('addApp', appData)
+      this.$store.commit('panes/addApp', appData)
     },
     connect () {
       this.$store.commit('user/connectUser')
@@ -76,7 +76,7 @@ export default {
       },
       /*
       set (tabs) {
-        this.$store.commit('updateTabs', tabs);
+        this.$store.commit('panes/updateTabs', tabs);
       }
       */
     },

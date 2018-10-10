@@ -101,12 +101,12 @@ export default {
   {
     switchActive: function (newActiveTab) {
       // console.log('TabBar says : newActiveTab ' + newActiveTab.id + ' in pane ' + newActiveTab.pane)
-      this.$store.commit('changeActive', newActiveTab)
+      this.$store.commit('panes/changeActive', newActiveTab)
       this.mobileListShown = false
     },
     removeTab: function (tabToDel) {
       // console.log('TabBar says : newActiveTab ' + newActiveTab.id + ' in pane ' + newActiveTab.pane)
-      this.$store.commit('removeTab', tabToDel)
+      this.$store.commit('panes/removeTab', tabToDel)
     },
     endDrag: function (e)
     {
@@ -116,7 +116,7 @@ export default {
       // if moving from one pane to another
       if (e.from.dataset.paneid !== e.to.dataset.paneid)
       {
-        this.$store.commit('setFirstTabActive', { paneId: this.pane_id })
+        this.$store.commit('panes/setFirstTabActive', { paneId: this.pane_id })
       }
     },
     /*
@@ -124,7 +124,7 @@ export default {
       console.log('onEnd')
       console.log(tabMoved)
       console.log('moving tab #' + tabMoved.oldIndex + ' of ' + tabMoved.from.getAttribute('data-paneid') + ' to ' + tabMoved.newIndex + ' of ' + tabMoved.to.getAttribute('data-paneid'))
-      this.$store.commit('updateTabs', tabMoved)
+      this.$store.commit('panes/updateTabs', tabMoved)
       // debugger;
     },
     */
@@ -139,7 +139,7 @@ export default {
       set (tabs) {
         // console.log('setting tabs')
         // console.log(tabs)
-        this.$store.commit('updateTabs', { tabs: tabs, paneId: this.pane_id })
+        this.$store.commit('panes/updateTabs', { tabs: tabs, paneId: this.pane_id })
       },
     },
   },
