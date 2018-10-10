@@ -70,6 +70,7 @@ export default {
   $wideminwidth:720px;
   $appgrey   : #90A3B1;
   $appselectoritembg : #fff;
+  $appselectorbg : #EDF1F4;
   $defaultlinecolor : #ccc;
   $defaulttextcolor : #000;
   $appgreen: green;
@@ -100,6 +101,7 @@ export default {
   {
     height: $appvisualheight;
     line-height: $appvisualheight;
+    transition: opacity 0.5s;
   }
   .app-display-options
   {
@@ -127,7 +129,12 @@ export default {
       }
       &:hover
       {
-        background-color:rgba($appgreen,0.2);
+        background-color: $appgrey;
+        border-color: $appselectorbg;
+        .link
+        {
+          color: $appselectoritembg;
+        }
       }
     }
   }
@@ -185,6 +192,10 @@ export default {
       .app-label
       {
         margin-top:-70px;
+      }
+      .app-visual
+      {
+        opacity:0;
       }
       .app-display-options
       {
