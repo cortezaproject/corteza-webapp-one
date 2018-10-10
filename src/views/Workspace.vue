@@ -45,7 +45,7 @@ export default {
       this.$store.commit('addApp', appData)
     },
     connect () {
-      this.$store.commit('connectUser')
+      this.$store.commit('user/connectUser')
     },
   },
 
@@ -54,6 +54,10 @@ export default {
     user:
     {
       get () {
+        console.log('getting user')
+        // console.log(typeof this.$store)
+        console.log('store')
+        console.log(this.$store)
         return (this.$store.state.user)
       },
     },

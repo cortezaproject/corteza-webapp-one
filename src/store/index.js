@@ -1,13 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import route from './route'
+import user from './user'
+import panes from './panes'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   modules: {
-    route,
+    user,
+    panes,
   },
 })
 
 export default store
+console.log('loaded store')

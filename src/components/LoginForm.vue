@@ -45,7 +45,7 @@ export default
   methods:
   {
     connect () {
-      this.$store.commit('connectUser')
+      this.$store.commit('user/connectUser')
     },
   },
 
