@@ -1,11 +1,15 @@
 <!-- template for the user avatar component -->
 <template>
-  <i name="avatar"
-     class="u-avatar"
-     :title="user.username"
-     :data-uid="user.id"
-     :style="(user.avatar && ''!==user.avatar)?'background-image:url('+user.avatar+')':''"
-     aria-hidden="true"><span>{{ user.username }}</span></i>
+  <i v-if="user" class="avatar u-avatar"
+     :class="[ { 'no-avatar' : !user.avatar } ]"
+     :title="user.name || user.username"
+     :style="user.avatar?'background-image:'+user.avatar:''">
+      <span aria-hidden="true">{{ user.name[0] || user.username[0] }}</span>
+  </i>
+  <i v-else
+     class="avatar u-avatar coward">
+      <span aria-hidden="true">?</span>
+  </i>
 </template>
 
 <script>
@@ -13,8 +17,7 @@ export default
 {
   name: 'avatar',
   // require user param
-  props:
-  {
+  props: {
     'user': Object,
     'required': true,
   },
@@ -23,23 +26,28 @@ export default
 
 <style scoped lang="scss">
 //this import is for variables
-//we can define vars here
-$defaultlinecolor: #ccc;
-//and overwrite them here, with the defaults
 @import '@/assets/sass/_0.declare.scss';
-i
+i.u-avatar
 {
   display:inline-block;
-  height:1em;
-  width:1em;
+  font-size:16px!important;
+  height:32px;
+  width:32px;
   border:solid 2px $defaultlinecolor;
   border-radius:100%;
-  // background: center center no-repeat url(../assets/pics/no-profile-pic.png);
-  background: center center no-repeat url(../assets/pics/user4.png);
+  background:url('/static/pics/no-profile-pic.png') center center no-repeat;
   background-size:contain;
+  line-height:32px;
+  text-align:center;
+  font-style:normal;
+  background-color:$appgrey;
+  color:$appwhite;
+  vertical-align:middle;
   span
   {
-    display:none;
+    color:$appwhite;
+    font-size:16px;
+    line-height:1;
   }
 }
 </style>

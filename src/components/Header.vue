@@ -20,7 +20,7 @@
             :class="(user.has_notifications ? 'toolbox_notification' : '')"></i>
         </section>
         <section v-if="user" class="toolbox-item toolbox_profile">
-          <user-avatar :user="user" />
+          <user-avatar :user="{name:'Not Known'}" />
         </section>
         <section v-if="user" class="toolbox-item toolbox_menu">
           <label @click="mainMenuOpen=!mainMenuOpen">
