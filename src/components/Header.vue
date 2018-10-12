@@ -98,7 +98,8 @@ export default
       [
         { label: 'My Profile' },
         { label: 'Settings' },
-        { label: 'Logout', link: '/auth/signin' },
+        // no use for login link here... This menu is not shown ifnot logged in
+        // { label: 'Login', link: '/auth/signin' },
         { label: 'Logout', link: '/auth/signout' },
       ],
     }
@@ -192,6 +193,11 @@ export default
       border-radius:3px;
       background-color: rgba($defaultitembgcolor, 0.15);
       margin-bottom:10px;
+      a
+      {
+        text-decoration: none;
+        color:$appgrey;
+      }
       &:hover
       {
         cursor:pointer;
