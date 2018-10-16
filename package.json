@@ -8,6 +8,9 @@
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
   },
+  "gitHooks": {
+    "pre-commit": "yarn lint"
+  },
   "dependencies": {
     "v-tooltip": "^2.0.0-rc.33",
     "vue": "^2.5.17",
