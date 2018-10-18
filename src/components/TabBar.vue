@@ -286,7 +286,7 @@ export default {
           font-size: 9px;
           display: block;
           float: left;
-          line-height: 33px;
+          line-height: 30px;
         }
       }
       .tab_list
@@ -385,7 +385,7 @@ export default {
     .tab_list .item.active:before {
       z-index: 999 !important;
       //background: #eee;
-      height: 31px;
+      height: 30px;
       border-color: #888;
       background-color:$curtab_bgcolor;
     }
@@ -521,7 +521,11 @@ export default {
 
     .tab_list .item.active
     {
-      height:33px;
+      height:30px;
+      &::before
+      {
+        height:28px;
+      }
       span
       {
         margin-top:-1px;

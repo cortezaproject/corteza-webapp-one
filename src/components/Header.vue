@@ -19,14 +19,22 @@
             class="icon-bell2"
             :class="(user.has_notifications ? 'toolbox_notification' : '')"></i>
         </section>
-        <section v-if="user" class="toolbox-item toolbox_profile">
-          <user-avatar :user="{name:'Not Known'}" />
+        <section @click="mainMenuOpen=!mainMenuOpen" v-if="user" class="toolbox-item toolbox_profile">
+          <user-avatar v-if="!mainMenuOpen" :user="{name:'Not Known'}" />
+          <label v-else>
+            <i
+              class="icon-close user-menu-close"
+              title="Show main menu"></i>
+          </label>
         </section>
         <section v-if="user" class="toolbox-item toolbox_menu">
-          <label @click="mainMenuOpen=!mainMenuOpen">
+          <label>
             <i
-              :class="mainMenuOpen?'icon-close':'icon-menu'"
+              class="icon-menu"
               title="Show main menu"></i>
+            <!-- i
+              :class="mainMenuOpen?'icon-close':'icon-menu'"
+              title="Show main menu"></i -->
           </label>
         </section>
       </div>
@@ -264,6 +272,16 @@ export default
         min-width:1em;
         color:$defaultlinecolor;
         border-radius:100%;
+        &.user-menu-close
+        {
+          border-radius:32px;
+          width:32px;
+          background-color:$appgrey;
+          font-size:24px;
+          text-align:center;
+          line-height:32px;
+          color:white;
+        }
       }
     }
 
