@@ -265,6 +265,7 @@ export default
       line-height: 1;
       vertical-align: middle;
       margin: 0 0 0 1em;
+      // cursor:pointer;
       i
       {
         font-size:32px;
@@ -309,6 +310,14 @@ export default
     {
       margin-top:-2px;
     }
+  }
+  .toolbox_menu
+  {
+    display:none; //for now
+  }
+  .toolbox_profile
+  {
+    cursor: pointer;
   }
   .add
   {
