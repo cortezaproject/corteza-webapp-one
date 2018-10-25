@@ -3,7 +3,7 @@
     <header>
       <div class="title-wrap">
         <strong class="title">Crust</strong>
-        <capsule>platform</capsule>
+        <Capsule>platform</Capsule>
       </div>
       <div class="toolbox">
         <!-- the header add is for panels, not for now, remove false && to restore -->
@@ -20,7 +20,7 @@
             :class="(user.has_notifications ? 'toolbox_notification' : '')"></i>
         </section>
         <section @click="mainMenuOpen=!mainMenuOpen" v-if="user" class="toolbox-item toolbox_profile">
-          <user-avatar v-if="!mainMenuOpen" :user="{name:'Not Known'}" />
+          <Avatar v-if="!mainMenuOpen" :user="user"></Avatar>
           <label v-else>
             <i
               class="icon-close user-menu-close"
@@ -75,8 +75,8 @@ export default
   // --------
   components:
   {
-    'user-avatar': Avatar,
-    'capsule': Capsule,
+    Avatar,
+    Capsule,
     Modal,
   },
   // --------
