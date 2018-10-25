@@ -3,8 +3,8 @@
   <i v-if="user" class="avatar u-avatar"
      :class="[ { 'no-avatar' : !user.avatar } ]"
      :title="user.name || user.username"
-     :style="user.avatar?'background-image:'+user.avatar:''">
-      <span aria-hidden="true">{{ user.name[0] || user.username[0] }}</span>
+     :style="{ 'background-image': (user.avatar ? `url(${user.avatar})` : '') }">
+      <span aria-hidden="true" v-if="!user.avatar">{{ user.name[0] || user.username[0] }}</span>
   </i>
   <i v-else
      class="avatar u-avatar coward">
