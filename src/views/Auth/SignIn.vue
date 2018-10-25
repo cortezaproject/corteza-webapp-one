@@ -25,21 +25,24 @@ export default {
   },
 
   computed: {
-    ...mapGetters({
-      isAuthenticated: 'auth/isAuthenticated',
-    }),
+    ...mapGetters('auth', [
+      'isAuthenticated',
+    ]),
   },
 
   methods: {
-    ...mapActions({
-      setUser: 'auth/setUser',
-    }),
+    ...mapActions('auth', [
+      'setUser',
+      'clear',
+    ]),
   },
 
   mounted () {
     this.$auth.check().then((user) => {
+      this.setUser(user)
       this.$router.push({ name: 'root' })
     }).catch((error) => {
+      this.clear()
       console.error(error)
     })
   },

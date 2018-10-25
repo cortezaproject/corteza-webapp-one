@@ -4,7 +4,7 @@
       :optionalAdd="hasPanes"
       v-on:apps="showapps=true" />
       <!-- if user exists display interface -->
-      <template v-if="user">
+      <template v-if="isAuthenticated">
         <Layout
           v-model="panes"
           :user="user" />
@@ -27,6 +27,8 @@ import Header from '@/components/Header.vue'
 import Layout from '@/components/Layout.vue'
 import AppSelector from '@/components/AppSelector.vue'
 import LoginForm from '@/components/LoginForm.vue'
+
+import { mapGetters } from 'vuex'
 
 export default {
   components:
@@ -51,16 +53,10 @@ export default {
 
   computed:
   {
-    user:
-    {
-      get () {
-        console.log('getting user')
-        // console.log(typeof this.$store)
-        console.log('store')
-        console.log(this.$store)
-        return (this.$store.state.user)
-      },
-    },
+    ...mapGetters('auth', [
+      'user',
+      'isAuthenticated',
+    ]),
     hasPanes:
     {
       get () {

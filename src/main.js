@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import Index from './views/Index.vue'
-import router from './router'
+
 import './global'
+import './plugins'
 import './main.scss'
+
+import router from './router'
 import store from './store'
-console.log('main')
+
 // implement a Vue with store and router
 new Vue({
   router,
