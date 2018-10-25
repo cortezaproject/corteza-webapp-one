@@ -12,6 +12,7 @@
     "pre-commit": "yarn lint"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "v-tooltip": "^2.0.0-rc.33",
     "vue": "^2.5.17",
     "vue-multipane": "^0.9.5",
