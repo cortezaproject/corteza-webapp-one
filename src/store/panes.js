@@ -28,7 +28,7 @@ const state = {
           id: 0,
           title: 'Messaging',
           // src: 'https://www.example.com/',
-          src: 'https://latest.rustbucket.io/messaging/',
+          src: '/messaging/',
         },
       ],
     },
