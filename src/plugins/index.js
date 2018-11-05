@@ -1,4 +1,5 @@
 import Vue from 'vue'
-import auth from '@/plugins/auth'
 
-Vue.use(auth)
+import system from '@/plugins/system'
+
+Vue.use(system)

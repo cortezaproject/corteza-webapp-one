@@ -20,7 +20,7 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   data () {
     return {
-      oidc: this.$auth.baseURL() + '/oidc',
+      oidc: this.$system.baseURL() + '/oidc',
     }
   },
 
@@ -38,7 +38,7 @@ export default {
   },
 
   mounted () {
-    this.$auth.check().then((user) => {
+    this.$system.authCheck().then((user) => {
       this.setUser(user)
       this.$router.push({ name: 'root' })
     }).catch((error) => {

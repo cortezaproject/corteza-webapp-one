@@ -19,7 +19,7 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   data () {
     return {
-      oidc: this.$auth.baseURL() + '/oidc',
+      oidc: this.$system.baseURL() + '/oidc',
     }
   },
 
@@ -37,7 +37,7 @@ export default {
 
   mounted () {
     if (this.isAuthenticated) {
-      this.$auth.clear().catch((err) => {
+      this.$system.authLogout().catch((err) => {
         console.error(err)
       }).finally(() => {
         this.clear()
