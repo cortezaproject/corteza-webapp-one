@@ -77,8 +77,7 @@ export default {
       */
     },
   },
-  data ()
-  {
+  data () {
     return {
       showapps: false,
     }

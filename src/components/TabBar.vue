@@ -85,8 +85,7 @@ export default {
       default: 0,
     },
   },
-  data ()
-  {
+  data () {
     return {
       // create a local instance of tabs
       paneTabs: null,
@@ -108,14 +107,12 @@ export default {
       // console.log('TabBar says : newActiveTab ' + newActiveTab.id + ' in pane ' + newActiveTab.pane)
       this.$store.commit('panes/removeTab', tabToDel)
     },
-    endDrag: function (e)
-    {
+    endDrag: function (e) {
       console.log('endOfDrag')
       console.log(e)
       console.log('from ' + e.from.dataset.paneid + ' to ' + e.to.dataset.paneid)
       // if moving from one pane to another
-      if (e.from.dataset.paneid !== e.to.dataset.paneid)
-      {
+      if (e.from.dataset.paneid !== e.to.dataset.paneid) {
         this.$store.commit('panes/setFirstTabActive', { paneId: this.pane_id })
       }
     },

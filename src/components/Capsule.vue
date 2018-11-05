@@ -15,8 +15,7 @@ export default
     color: String,
     default: '',
   },
-  data: function ()
-  {
+  data: function () {
     return {
       var: false,
     }

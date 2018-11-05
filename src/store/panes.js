@@ -109,13 +109,11 @@ const mutations =
     var newTabIs = _.difference(newTabs.tabs, state.items[newTabs.paneId].tabs)
     console.log(newTabIs)
     state.items[newTabs.paneId].tabs = newTabs.tabs
-    if (0 !== newTabIs.length)
-    {
+    if (newTabIs.length !== 0) {
       state.items[newTabs.paneId].active = newTabIs[0].id
     }
   },
-  setFirstTabActive: (state, pane) =>
-  {
+  setFirstTabActive: (state, pane) => {
     state.items[pane.paneId].active = state.items[pane.paneId].tabs[0].id
   },
   removeTab: (state, tabToDel) => {
@@ -126,35 +124,25 @@ const mutations =
     console.log('active')
     console.log(state.items[tabToDel.pane].active)
     // if this is the last tab, remove the panel
-    if (tabItems.length === 1)
-    {
+    if (tabItems.length === 1) {
       // remove panel
       state.items.splice(tabToDel.pane, 1)
       // and in the future we should reorganize if necessary.
-    }
-    // else remove the tab
-    else
-    {
-      for (var itemIndex = 0; itemIndex < tabItems.length; itemIndex++)
-      {
-        if (tabItems[itemIndex].id === tabToDel.id)
-        {
+    } else {
+      // else remove the tab
+      for (var itemIndex = 0; itemIndex < tabItems.length; itemIndex++) {
+        if (tabItems[itemIndex].id === tabToDel.id) {
           itemIndexToDel = itemIndex
         }
       }
-      if (null !== itemIndexToDel)
-      {
+      if (itemIndexToDel !== null) {
         // if the deleted tab is the active...
-        if (state.items[tabToDel.pane].active === tabToDel.id)
-        {
+        if (state.items[tabToDel.pane].active === tabToDel.id) {
           // activate the tab before the one we deleted if it exists,
-          if ('undefined' !== typeof tabItems[itemIndexToDel - 1])
-          {
+          if (typeof tabItems[itemIndexToDel - 1] !== 'undefined') {
             state.items[tabToDel.pane].active = tabItems[itemIndexToDel - 1].id
-          }
-          // the one after otherwise.
-          else
-          {
+          } else {
+            // the one after otherwise.
             state.items[tabToDel.pane].active = tabItems[itemIndexToDel + 1].id
           }
         }
@@ -169,8 +157,7 @@ const mutations =
   addApp: (state, appData) => {
     console.log('in panes/addApp')
     var paneId = appData.paneId
-    if (state.items.length === 0)
-    {
+    if (state.items.length === 0) {
       state.disposition = {
         type: 'rowfirst',
         itempos: [ [ 0 ] ],

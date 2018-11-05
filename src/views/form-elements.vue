@@ -17,8 +17,7 @@ export default {
   {
     Header,
   },
-  data ()
-  {
+  data () {
     return {
     }
   },

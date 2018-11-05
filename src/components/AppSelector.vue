@@ -65,16 +65,14 @@ export default {
   {
     // no fat arrow
     // https://stackoverflow.com/a/43073924
-    addApp: function (availableApp, paneId)
-    {
+    addApp: function (availableApp, paneId) {
       console.log('adding app in selector')
       // if we have a paneId,
       // nothing to do, just send add-app
       // otherwise we need to know how to dispose panes,
       // if this is not the first app.
       console.log('paneId :' + paneId)
-      if (!this.firstApp && null === paneId)
-      {
+      if (!this.firstApp && paneId === null) {
         this.chooseDisposition = true
         return
       }
@@ -115,8 +113,7 @@ export default {
       default: false,
     },
   },
-  data: function ()
-  {
+  data: function () {
     return {
       // if this is not the first app we will use this structure to
       // add data need to add the tab (chosen orientation and position)

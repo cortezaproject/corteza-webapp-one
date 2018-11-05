@@ -133,15 +133,13 @@ export default
     PaneContent,
     AppSelector,
   },
-  data ()
-  {
+  data () {
     return {
       // layoutpanes: null,
     }
   },
   // on create init pane data in store
-  created: function ()
-  {
+  created: function () {
     console.log('created')
   },
   computed:
