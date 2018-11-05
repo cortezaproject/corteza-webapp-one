@@ -5,9 +5,9 @@ import axios from 'axios'
 // As this file is generated, any mock calls should go into
 // the related *_mock.js file; please don't modify this file.
 
-class System {
+class CRM {
   constructor (baseLink) {
-    this.baseLink = baseLink || 'https://system.api.latest.rustbucket.io'
+    this.baseLink = baseLink || 'https://crm.api.latest.rustbucket.io'
     this.headers = {
       'Content-Type': 'application/json',
     }
@@ -29,8 +29,8 @@ class System {
     }
   }
 
-  async authCheck () {
-    const endpoint = `${this.baseLink}/auth/check`
+  async fieldList () {
+    const endpoint = `${this.baseLink}/field/`
     return new Promise((resolve, reject) => {
       axios({
         method: 'GET',
@@ -43,8 +43,110 @@ class System {
     })
   }
 
-  async authLogout () {
-    const endpoint = `${this.baseLink}/auth/check`
+  async fieldType ({ id }) {
+    const endpoint = `${this.baseLink}/field/${id}`
+    return new Promise((resolve, reject) => {
+      axios({
+        method: 'GET',
+        url: endpoint,
+        withCredentials: true,
+        headers: this.headers,
+        params: {},
+        data: {},
+      }).then(this.stdResolve(resolve, reject), this.stdReject(reject))
+    })
+  }
+
+  async pageList ({ selfID }) {
+    const endpoint = `${this.baseLink}/page/`
+    return new Promise((resolve, reject) => {
+      axios({
+        method: 'GET',
+        url: endpoint,
+        withCredentials: true,
+        headers: this.headers,
+        params: {
+          'selfID': selfID,
+        },
+        data: {},
+      }).then(this.stdResolve(resolve, reject), this.stdReject(reject))
+    })
+  }
+
+  async pageCreate ({ selfID, moduleID, title, description, visible, blocks }) {
+    const endpoint = `${this.baseLink}/page/`
+    return new Promise((resolve, reject) => {
+      axios({
+        method: 'POST',
+        url: endpoint,
+        withCredentials: true,
+        headers: this.headers,
+        params: {},
+        data: {
+          'selfID': selfID,
+          'moduleID': moduleID,
+          'title': title,
+          'description': description,
+          'visible': visible,
+          'blocks': blocks,
+        },
+      }).then(this.stdResolve(resolve, reject), this.stdReject(reject))
+    })
+  }
+
+  async pageRead ({ id }) {
+    const endpoint = `${this.baseLink}/page/${id}`
+    return new Promise((resolve, reject) => {
+      axios({
+        method: 'GET',
+        url: endpoint,
+        withCredentials: true,
+        headers: this.headers,
+        params: {},
+        data: {},
+      }).then(this.stdResolve(resolve, reject), this.stdReject(reject))
+    })
+  }
+
+  async pageEdit ({ id, selfID, moduleID, title, description, visible, blocks }) {
+    const endpoint = `${this.baseLink}/page/${id}`
+    return new Promise((resolve, reject) => {
+      axios({
+        method: 'POST',
+        url: endpoint,
+        withCredentials: true,
+        headers: this.headers,
+        params: {},
+        data: {
+          'selfID': selfID,
+          'moduleID': moduleID,
+          'title': title,
+          'description': description,
+          'visible': visible,
+          'blocks': blocks,
+        },
+      }).then(this.stdResolve(resolve, reject), this.stdReject(reject))
+    })
+  }
+
+  async pageReorder ({ selfID, pageIDs }) {
+    const endpoint = `${this.baseLink}/page/${selfID}/reorder`
+    return new Promise((resolve, reject) => {
+      axios({
+        method: 'POST',
+        url: endpoint,
+        withCredentials: true,
+        headers: this.headers,
+        params: {},
+        data: {
+          'pageIDs': pageIDs,
+        },
+      }).then(this.stdResolve(resolve, reject), this.stdReject(reject))
+    })
+  }
+
+  async pageDelete ({ id }) {
+    const endpoint = `${this.baseLink}/page/${id}`
     return new Promise((resolve, reject) => {
       axios({
         method: 'DELETE',
@@ -57,8 +159,8 @@ class System {
     })
   }
 
-  async organisationList ({ query }) {
-    const endpoint = `${this.baseLink}/organisation/`
+  async moduleList ({ query }) {
+    const endpoint = `${this.baseLink}/module/`
     return new Promise((resolve, reject) => {
       axios({
         method: 'GET',
@@ -73,8 +175,8 @@ class System {
     })
   }
 
-  async organisationCreate ({ name }) {
-    const endpoint = `${this.baseLink}/organisation/`
+  async moduleCreate ({ name, fields }) {
+    const endpoint = `${this.baseLink}/module/`
     return new Promise((resolve, reject) => {
       axios({
         method: 'POST',
@@ -84,29 +186,45 @@ class System {
         params: {},
         data: {
           'name': name,
+          'fields': fields,
         },
       }).then(this.stdResolve(resolve, reject), this.stdReject(reject))
     })
   }
 
-  async organisationEdit ({ id, name }) {
-    const endpoint = `${this.baseLink}/organisation/${id}`
+  async moduleRead ({ id }) {
+    const endpoint = `${this.baseLink}/module/${id}`
     return new Promise((resolve, reject) => {
       axios({
-        method: 'PUT',
+        method: 'GET',
+        url: endpoint,
+        withCredentials: true,
+        headers: this.headers,
+        params: {},
+        data: {},
+      }).then(this.stdResolve(resolve, reject), this.stdReject(reject))
+    })
+  }
+
+  async moduleEdit ({ id, name, fields }) {
+    const endpoint = `${this.baseLink}/module/${id}`
+    return new Promise((resolve, reject) => {
+      axios({
+        method: 'POST',
         url: endpoint,
         withCredentials: true,
         headers: this.headers,
         params: {},
         data: {
           'name': name,
+          'fields': fields,
         },
       }).then(this.stdResolve(resolve, reject), this.stdReject(reject))
     })
   }
 
-  async organisationRemove ({ id }) {
-    const endpoint = `${this.baseLink}/organisation/${id}`
+  async moduleDelete ({ id }) {
+    const endpoint = `${this.baseLink}/module/${id}`
     return new Promise((resolve, reject) => {
       axios({
         method: 'DELETE',
@@ -119,8 +237,8 @@ class System {
     })
   }
 
-  async organisationRead ({ id }) {
-    const endpoint = `${this.baseLink}/organisation/${id}`
+  async moduleContentList ({ moduleID, page, perPage }) {
+    const endpoint = `${this.baseLink}/module/${moduleID}/content`
     return new Promise((resolve, reject) => {
       axios({
         method: 'GET',
@@ -128,45 +246,16 @@ class System {
         withCredentials: true,
         headers: this.headers,
         params: {
-          'id': id,
+          'page': page,
+          'perPage': perPage,
         },
         data: {},
       }).then(this.stdResolve(resolve, reject), this.stdReject(reject))
     })
   }
 
-  async organisationArchive ({ id }) {
-    const endpoint = `${this.baseLink}/organisation/${id}/archive`
-    return new Promise((resolve, reject) => {
-      axios({
-        method: 'POST',
-        url: endpoint,
-        withCredentials: true,
-        headers: this.headers,
-        params: {},
-        data: {},
-      }).then(this.stdResolve(resolve, reject), this.stdReject(reject))
-    })
-  }
-
-  async teamList ({ query }) {
-    const endpoint = `${this.baseLink}/team/`
-    return new Promise((resolve, reject) => {
-      axios({
-        method: 'GET',
-        url: endpoint,
-        withCredentials: true,
-        headers: this.headers,
-        params: {
-          'query': query,
-        },
-        data: {},
-      }).then(this.stdResolve(resolve, reject), this.stdReject(reject))
-    })
-  }
-
-  async teamCreate ({ name, members }) {
-    const endpoint = `${this.baseLink}/team/`
+  async moduleContentCreate ({ moduleID, fields }) {
+    const endpoint = `${this.baseLink}/module/${moduleID}/content`
     return new Promise((resolve, reject) => {
       axios({
         method: 'POST',
@@ -175,32 +264,14 @@ class System {
         headers: this.headers,
         params: {},
         data: {
-          'name': name,
-          'members': members,
+          'fields': fields,
         },
       }).then(this.stdResolve(resolve, reject), this.stdReject(reject))
     })
   }
 
-  async teamEdit ({ teamID, name, members }) {
-    const endpoint = `${this.baseLink}/team/${teamID}`
-    return new Promise((resolve, reject) => {
-      axios({
-        method: 'PUT',
-        url: endpoint,
-        withCredentials: true,
-        headers: this.headers,
-        params: {},
-        data: {
-          'name': name,
-          'members': members,
-        },
-      }).then(this.stdResolve(resolve, reject), this.stdReject(reject))
-    })
-  }
-
-  async teamRead ({ teamID }) {
-    const endpoint = `${this.baseLink}/team/${teamID}`
+  async moduleContentRead ({ moduleID, id }) {
+    const endpoint = `${this.baseLink}/module/${moduleID}/content/${id}`
     return new Promise((resolve, reject) => {
       axios({
         method: 'GET',
@@ -213,8 +284,24 @@ class System {
     })
   }
 
-  async teamRemove ({ teamID }) {
-    const endpoint = `${this.baseLink}/team/${teamID}`
+  async moduleContentEdit ({ moduleID, id, fields }) {
+    const endpoint = `${this.baseLink}/module/${moduleID}/content/${id}`
+    return new Promise((resolve, reject) => {
+      axios({
+        method: 'POST',
+        url: endpoint,
+        withCredentials: true,
+        headers: this.headers,
+        params: {},
+        data: {
+          'fields': fields,
+        },
+      }).then(this.stdResolve(resolve, reject), this.stdReject(reject))
+    })
+  }
+
+  async moduleContentDelete ({ moduleID, id }) {
+    const endpoint = `${this.baseLink}/module/${moduleID}/content/${id}`
     return new Promise((resolve, reject) => {
       axios({
         method: 'DELETE',
@@ -222,68 +309,6 @@ class System {
         withCredentials: true,
         headers: this.headers,
         params: {},
-        data: {},
-      }).then(this.stdResolve(resolve, reject), this.stdReject(reject))
-    })
-  }
-
-  async teamArchive ({ teamID }) {
-    const endpoint = `${this.baseLink}/team/${teamID}/archive`
-    return new Promise((resolve, reject) => {
-      axios({
-        method: 'POST',
-        url: endpoint,
-        withCredentials: true,
-        headers: this.headers,
-        params: {},
-        data: {},
-      }).then(this.stdResolve(resolve, reject), this.stdReject(reject))
-    })
-  }
-
-  async teamMove ({ teamID, organisationID }) {
-    const endpoint = `${this.baseLink}/team/${teamID}/move`
-    return new Promise((resolve, reject) => {
-      axios({
-        method: 'POST',
-        url: endpoint,
-        withCredentials: true,
-        headers: this.headers,
-        params: {},
-        data: {
-          'organisationID': organisationID,
-        },
-      }).then(this.stdResolve(resolve, reject), this.stdReject(reject))
-    })
-  }
-
-  async teamMerge ({ teamID, destination }) {
-    const endpoint = `${this.baseLink}/team/${teamID}/merge`
-    return new Promise((resolve, reject) => {
-      axios({
-        method: 'POST',
-        url: endpoint,
-        withCredentials: true,
-        headers: this.headers,
-        params: {},
-        data: {
-          'destination': destination,
-        },
-      }).then(this.stdResolve(resolve, reject), this.stdReject(reject))
-    })
-  }
-
-  async userSearch ({ query }) {
-    const endpoint = `${this.baseLink}/user/`
-    return new Promise((resolve, reject) => {
-      axios({
-        method: 'GET',
-        url: endpoint,
-        withCredentials: true,
-        headers: this.headers,
-        params: {
-          'query': query,
-        },
         data: {},
       }).then(this.stdResolve(resolve, reject), this.stdReject(reject))
     })
@@ -292,8 +317,8 @@ class System {
 
 export default {
   install (Vue, store) {
-    const client = new System(window.CrustConfig.system.baseUrl)
+    const client = new CRM(window.CrustConfig.crm.baseUrl)
 
-    Vue.prototype.$system = client
+    Vue.prototype.$crm = client
   },
 }
