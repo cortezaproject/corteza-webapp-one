@@ -49,6 +49,18 @@
             </li>
           </ul>
         </section>
+        <section>
+          <div class="menu-section-title">Panels</div>
+          <div class="menu-panels">
+              <div class="menu-panels-text">
+                Select or deselect the panels you want to see:
+              </div>
+              <div class="menu-panels-grid">
+                <span>Row 1: </span><input type="checkbox" name="panel_row_0_column_0" /> | <input type="checkbox" name="panel_row_0_column_1" /><br/>
+                <span>Row 2: </span><input type="checkbox" name="panel_row_1_column_0" /> | <input type="checkbox" name="panel_row_1_column_1" />
+              </div>
+          </div>
+        </section>
         <div class="main-menu-footer">
           <span class="help">
             <i class="icon-message-circle-right-speak"></i>

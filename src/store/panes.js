@@ -11,11 +11,12 @@ Vue.use(Vuex)
 const state = {
   // demo version : 4 panes
   // for full specs see below.
-  nextTabId: 1,
+  nextTabId: 4,
+  maxNumberOfTabsInPanel: 6,
   disposition:
   {
     type: 'rowfirst',
-    itempos: [ [ 0, 1 ], [ 2, 3 ] ]
+    itempos: [ [ 0, 1 ], [ 2, 3 ] ],
   },
   items:
   [
@@ -37,17 +38,17 @@ const state = {
       tabs:
       [
         {
-          id: 0,
+          id: 1,
           title: 'Temp4',
           src: 'https://www.example.com/',
         },
         {
-          id: 1,
+          id: 2,
           title: 'Temp5',
           src: 'https://www.example.com/',
         },
         {
-          id: 2,
+          id: 3,
           title: 'Temp6',
           src: 'https://www.example.com/',
         },
@@ -76,6 +77,11 @@ const state = {
     // the next id for a tab, will be incremented by 1
     // TabIds should be unique accross the whole structure.
     nextTabId: 0,
+
+    //maxNumberOfTabsInPanel: int
+    //Maximum number of tabs per panel. The minimal number is 0.
+    //There is no maximal number, but if we want to give an experience
+    //of unlimited tabs we can use the number 99999
 
     // disposition : null / struct
     // how panes are setup

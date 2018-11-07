@@ -317,7 +317,7 @@ export default {
   .section-title
   {
     font-size:2.5em;
-    margin-top:30px;
+    margin-top:50px;
     padding:20px 15px 10px 15px;
     clear:both;
   }

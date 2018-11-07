@@ -27,8 +27,8 @@
     </div>
     <!-- this should appear on hover -->
     <div class="app-display-options">
-      <div class="display-option"><a class="link" @click="$emit('doadd')">open in crust</a></div>
-      <div class="display-option"><a class="link" target="_blank" :href="crustapp.path">open in new window</a></div>
+      <div class="display-option"><a class="link" @click="$emit('doadd')">open in a Crust tab</a></div>
+      <div class="display-option"><a class="link" target="_blank" :href="crustapp.path">open in a new window</a></div>
     </div>
   </div>
 </template>
