@@ -9,13 +9,13 @@ Vue.use(Vuex)
 // defines the current status of the different panes of the workspace
 // initial state and default value
 const state = {
-  // demo version : 1 pane, 1 tab, messaging
+  // demo version : 4 panes
   // for full specs see below.
   nextTabId: 1,
   disposition:
   {
     type: 'rowfirst',
-    itempos: [ [ 0 ] ],
+    itempos: [ [ 0, 1 ], [ 2, 3 ] ]
   },
   items:
   [
@@ -27,9 +27,42 @@ const state = {
         {
           id: 0,
           title: 'Messaging',
-          // src: 'https://www.example.com/',
-          src: '/messaging/',
+          src: 'https://beta.rustbucket.io/messaging/',
         },
+      ],
+    },
+    {
+      active: 1,
+      showapps: false,
+      tabs:
+      [
+        {
+          id: 0,
+          title: 'Temp4',
+          src: 'https://www.example.com/',
+        },
+        {
+          id: 1,
+          title: 'Temp5',
+          src: 'https://www.example.com/',
+        },
+        {
+          id: 2,
+          title: 'Temp6',
+          src: 'https://www.example.com/',
+        },
+      ],
+    },
+    {
+      showapps: true,
+      tabs:
+      [
+      ],
+    },
+    {
+      showapps: false,
+      tabs:
+      [
       ],
     },
   ],
