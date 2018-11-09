@@ -56,8 +56,8 @@
                 Select or deselect the panels you want to see:
               </div>
               <div class="menu-panels-grid">
-                <span>Row 1: </span><input type="checkbox" name="panel_row_0_column_0" /> | <input type="checkbox" name="panel_row_0_column_1" /><br/>
-                <span>Row 2: </span><input type="checkbox" name="panel_row_1_column_0" /> | <input type="checkbox" name="panel_row_1_column_1" />
+                <span>Row 1: </span><input type="checkbox" name="panel_row_0_column_0" v-model="panels_top" value="0" @click="updPanels"/> | <input type="checkbox" name="panel_row_0_column_1" v-model="panels_top" value="1" @click="updPanels"/><br/>
+                <span>Row 2: </span><input type="checkbox" name="panel_row_1_column_0" v-model="panels_bottom" value="2" @click="updPanels"/> | <input type="checkbox" name="panel_row_1_column_1" v-model="panels_bottom" value="3" @click="updPanels"/>
               </div>
           </div>
         </section>
@@ -114,16 +114,40 @@ export default
       var: false,
       mainMenuOpen: false,
       showAppModalPanel: false,
+      panels_top: this.$store.state.panes.disposition.itempos[0] || [],
+      panels_bottom: this.$store.state.panes.disposition.itempos[1] || [],
       mainmenu:
       [
-        { label: 'My Profile' },
-        { label: 'Settings' },
+        {
+          label: 'My Profile',
+        },
+        {
+          label: 'Settings',
+        },
         // no use for login link here... This menu is not shown ifnot logged in
         // { label: 'Login', link: '/auth/signin' },
-        { label: 'Logout', link: '/auth/signout' },
+        {
+          label: 'Logout',
+          link: '/auth/signout',
+        },
       ],
     }
   },
+  watch:
+    {
+      panels_top: 'updPanels',
+      panels_bottom: 'updPanels',
+    },
+  methods:
+    {
+      updPanels () {
+        const top = this.panels_top.map(item => Number(item)).sort()
+        const bottom = this.panels_bottom.map(item => Number(item)).sort()
+        this.$store.commit('panes/changeDisposition',
+          (top.length > 0 && bottom.length > 0) ? [top, bottom]
+            : top.length > 0 ? [top] : bottom > 0 ? [bottom] : [])
+      },
+    },
 }
 </script>
 
@@ -131,7 +155,7 @@ export default
   $headerbgcolor : white;
   $defaulttextcolor : black;
   $crustregular : Arial, sans-serif;
-  $defaultlinecolor : #ccc;
+  $defaultlinecolor : #CCC;
   $notificationcolor : red;
   $wideminwidth : 720px;
   // import global settings that override previous declarations
@@ -139,89 +163,179 @@ export default
 
   *
   {
-    font-family:$crustregular;
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+    font-family: $crustregular;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
 
   .toolbox_menu
   {
-    transition:all 0.2s ease;
+    display: none; //for now
+    transition: all 0.2s ease;
+  }
+
+  .toolbox
+  {
+    font-size: 100%;
+    float: right;
+    line-height: 6em;
+    margin-right: 1.5em;
+    vertical-align: middle;
+
+    &-item
+    {
+      display: inline-block;
+      line-height: 1;
+      vertical-align: middle;
+      margin: 0 0 0 1em;
+      // cursor:pointer;
+
+      i
+      {
+        font-size: 32px;
+        display: inline-block;
+        min-width: 1em;
+        color: $defaultlinecolor;
+        border-radius: 100%;
+
+        &.user-menu-close
+        {
+          border-radius: 32px;
+          width: 32px;
+          background-color: $appgrey;
+          font-size: 24px;
+          text-align: center;
+          line-height: 32px;
+          color: white;
+        }
+      }
+    }
+
+    &_notification
+    {
+      &::after
+      {
+        display: inline-block;
+        border-radius: 100%;
+        content: ".";
+        background-color: $notificationcolor;
+        height: 1em;
+        width: 1em;
+        margin-left: -1.5em;
+        color: $headerbgcolor;
+        border: solid 2px $headerbgcolor;
+      }
+    }
+
+    &_profile,
+    &_menu
+    {
+      margin-top: 1px;
+    }
+
+    &_has_notification
+    {
+      margin-top: -2px;
+    }
+  }
+
+  .add
+  {
+    i
+    {
+      border-radius: 50%;
+      background-color: $headerbgcolor;
+      text-align: center;
+      line-height: 1;
+      vertical-align: middle;
+    }
+
+    &:hover i
+    {
+      background-color: $defaultlinecolor;
+      color: $headerbgcolor;
+    }
   }
 
   .main-menu
   {
-    position:fixed;
-    font-size:13px;
+    position: fixed;
+    font-size: 13px;
     color: $appgrey;
-    top:60px;
-    right:0;
-    bottom:0;
-    width:90vw;
-    max-width:320px;
-    z-index:100;
-    background:#fff;
-    overflow:hidden auto;
-    background-color:$headerbgcolor;
+    top: 60px;
+    right: 0;
+    bottom: 0;
+    width: 90vw;
+    max-width: 320px;
+    z-index: 100;
+    overflow: hidden auto;
+    background-color: $headerbgcolor;
     box-shadow: 0 0.1em 0.2em 0 rgba($defaulttextcolor, 0.1);
     border-left: solid 1px rgba($defaultlinecolor, 0.25);
-    padding:60px 20px 20px 20px;
+    padding: 60px 20px 20px 20px;
+
     .menu-section-title
     {
       margin-bottom: 20px;
       color: $defaulttextcolor;
-      font-weight:600;
+      font-weight: 600;
     }
+
     .main-menu-footer
     {
-      position:absolute;
-      bottom:20px;
-      right:20px;
-      left:20px;
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      left: 20px;
       font-weight: 300;
       display: block;
-      font-weight:600;
 
-      i, span, em
+      i,
+      span,
+      em
       {
         line-height: 20px;
         vertical-align: top;
-        font-style:normal;
+        font-style: normal;
       }
 
       i
       {
-        font-size:18px;
-        margin-right:5px;
+        font-size: 18px;
+        margin-right: 5px;
       }
 
       .version
       {
-        float:right;
+        float: right;
       }
     }
+
     ul
     {
-      list-style:none;
+      list-style: none;
     }
+
     li
     {
-      height:35px;
-      line-height:35px;
-      padding:0 9px;
-      border-radius:3px;
+      height: 35px;
+      line-height: 35px;
+      padding: 0 9px;
+      border-radius: 3px;
       background-color: rgba($defaultitembgcolor, 0.15);
-      margin-bottom:10px;
+      margin-bottom: 10px;
+
       a
       {
         text-decoration: none;
-        color:$appgrey;
+        color: $appgrey;
       }
+
       &:hover
       {
-        cursor:pointer;
-        color:darken($appgrey,50);
+        cursor: pointer;
+        color: darken($appgrey, 50);
         background-color: rgba($defaultitembgcolor, 0.25);
       }
     }
@@ -229,122 +343,43 @@ export default
 
   .header-wrap
   {
-    font-size:10px;
+    font-size: 10px;
   }
 
   header
   {
-    position:fixed;
+    position: fixed;
     width: 100%;
-    left:0;
-    right:0;
-    overflow:hidden;
+    left: 0;
+    right: 0;
+    overflow: hidden;
     background-color: $headerbgcolor;
     box-shadow: 0 0.1em 0.2em 0 rgba($defaulttextcolor, 0.1);
     height: 6em;
     max-height: 6em;
-    top:0;
-    z-index:999;
+    top: 0;
+    z-index: 999;
 
     .title-wrap
     {
-      float:left;
-      display:block;
-      line-height:6em;
-      margin:0 0.5em 0 1.5em;
+      float: left;
+      display: block;
+      line-height: 6em;
+      margin: 0 0.5em 0 1.5em;
     }
 
     .title
     {
-      font-size:2.4em;
-      line-height:1;
-      display:inline-block;
-      vertical-align:middle;
-    }
-  }
-
-  .toolbox
-  {
-    font-size:1;
-    float:right;
-    line-height:6em;
-    margin-right:1.5em;
-    vertical-align:middle;
-
-    &-item
-    {
-      display:inline-block;
+      font-size: 2.4em;
       line-height: 1;
+      display: inline-block;
       vertical-align: middle;
-      margin: 0 0 0 1em;
-      // cursor:pointer;
-      i
-      {
-        font-size:32px;
-        display:inline-block;
-        min-width:1em;
-        color:$defaultlinecolor;
-        border-radius:100%;
-        &.user-menu-close
-        {
-          border-radius:32px;
-          width:32px;
-          background-color:$appgrey;
-          font-size:24px;
-          text-align:center;
-          line-height:32px;
-          color:white;
-        }
-      }
-    }
-
-    &_notification
-    {
-      &:after
-      {
-        display:inline-block;
-        border-radius:100%;
-        content:".";
-        background-color:$notificationcolor;
-        height:1em;
-        width:1em;
-        margin-left:-1.5em;
-        color:$headerbgcolor;
-        border:solid 2px $headerbgcolor;
-      }
-    }
-    &_profile, &_menu
-    {
-      margin-top:1px;
-    }
-
-    &_has_notification
-    {
-      margin-top:-2px;
     }
   }
-  .toolbox_menu
-  {
-    display:none; //for now
-  }
+
   .toolbox_profile
   {
     cursor: pointer;
   }
-  .add
-  {
-    i
-    {
-      border-radius:50%;
-      background-color:$headerbgcolor;
-      text-align:center;
-      line-height: 1;
-      vertical-align: middle;
-    }
-    &:hover i
-    {
-      background-color:$defaultlinecolor;
-      color:$headerbgcolor;
-    }
-  }
+
 </style>

@@ -36,13 +36,11 @@
 <script>
 export default {
   data: function () {
-    return {
-    }
+    return {}
   },
 
   methods:
-  {
-  },
+  {},
 
   props:
   {
@@ -68,68 +66,76 @@ export default {
 <style lang="scss" scoped>
   $wideminwidth:720px;
   $appgrey   : #90A3B1;
-  $appselectoritembg : #fff;
+  $appselectoritembg : #FFF;
   $appselectorbg : #EDF1F4;
-  $defaultlinecolor : #ccc;
+  $defaultlinecolor : #CCC;
   $defaulttextcolor : #000;
   $appgreen: green;
   // @import '@/assets/sass/_0.declare.scss';
   //local vars
   $appheight: 115px;
   $appvisualheight: 80px;
+
   .app-visual,
   .app-text,
   .app-display-options
   {
-    display:block;
-    text-align:center;
+    display: block;
+    text-align: center;
   }
+
   .app-text
   {
     line-height: $appheight - $appvisualheight;
-    color:$appgrey;
-    font-weight:bold;
-    font-size:15px;
-    max-width:90%;
+    color: $appgrey;
+    font-weight: bold;
+    font-size: 15px;
+    max-width: 90%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    margin:0 auto;
+    margin: 0 auto;
   }
+
   .app-visual
   {
     height: $appvisualheight;
     line-height: $appvisualheight;
     transition: opacity 0.5s;
   }
+
   .app-display-options
   {
     line-height: $appheight/2; //50% of app-visual
     transition: opacity 0.75s;
-    opacity:0;
+    opacity: 0;
+
     .display-option
     {
-      border:solid 1px $defaultlinecolor;
-      padding:0;
-      font-size:11px;
-      line-height:1;
-      border-radius:$appheight/2;
-      margin:5px auto;
-      max-width:80%;
-      color:$defaulttextcolor;
+      border: solid 1px $defaultlinecolor;
+      padding: 0;
+      font-size: 11px;
+      line-height: 1;
+      border-radius: $appheight/2;
+      margin: 5px auto;
+      max-width: 80%;
+      color: $defaulttextcolor;
+
       .link
       {
-        color:darken($appgrey,25);
-        text-decoration:none;
-        display:inline-block;
-        width:100%;
-        padding:5px;
-        cursor:pointer;
+        color: darken($appgrey, 25);
+        text-decoration: none;
+        display: inline-block;
+        width: 100%;
+        padding: 5px;
+        cursor: pointer;
       }
+
       &:hover
       {
         background-color: $appgrey;
         border-color: $appselectorbg;
+
         .link
         {
           color: $appselectoritembg;
@@ -137,78 +143,89 @@ export default {
       }
     }
   }
+
   .app-logo
   {
     i
     {
       top: 50%;
-      transform:translateY(10px);
-      display:block;
-      height:$appvisualheight - 10px;
-      max-width:75%;
-      margin:0 auto;
-      border-radius:3px;
+      transform: translateY(10px);
+      display: block;
+      height: $appvisualheight - 10px;
+      max-width: 75%;
+      margin: 0 auto;
+      border-radius: 3px;
       background-size: contain;
-      background-repeat:no-repeat;
+      background-repeat: no-repeat;
       background-position-x: center;
       background-position-y: center;
     }
   }
+
   .app-icon,
   .app-letter
   {
-    color:$appselectoritembg;
-    padding-top:10px;
+    color: $appselectoritembg;
+    padding-top: 10px;
+
     i
     {
-      color:$appselectoritembg;
-      display:block;
-      width:64px;
-      height:64px;
-      line-height:64px;
-      margin:0 auto;
+      color: $appselectoritembg;
+      display: block;
+      width: 64px;
+      height: 64px;
+      line-height: 64px;
+      margin: 0 auto;
       background-color: $appgrey;
-      font-size:32px;
-      font-style:normal;
+      font-size: 32px;
+      font-style: normal;
     }
   }
+
   .app-letter i
   {
-    font-weight:600;
+    font-weight: 600;
   }
+
   .app-wrap
   {
-    min-height:115px;
-    max-height:115px;
+    min-height: 115px;
+    max-height: 115px;
     max-width: 100%;
-    overflow:hidden;
+    overflow: hidden;
+
     .app-label
     {
       transition: all 0.2s;
     }
-    &:hover, &:focus
+
+    &:hover,
+    &:focus
     {
       .app-label
       {
-        margin-top:-70px;
+        margin-top: -70px;
       }
+
       .app-visual
       {
-        opacity:0;
+        opacity: 0;
       }
+
       .app-display-options
       {
-        opacity:1;
+        opacity: 1;
       }
     }
   }
+
   @media (min-width: $wideminwidth)
   {
     .app-display-options
     {
       .display-option
       {
-        font-size:13px;
+        font-size: 13px;
       }
     }
   }

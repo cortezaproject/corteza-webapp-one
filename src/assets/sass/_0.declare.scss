@@ -3,7 +3,7 @@
 $wideminwidth:720px;
 
 //paths
-$fonts_dir : './assets/fonts/';
+$fonts_dir : './fonts/';
 $icomoon-font-path: $fonts_dir + 'crust-icomoon' !default;
 $icomoon-font-family: "crust-icomoon" !default;
 
@@ -14,7 +14,7 @@ $crustsemibold : 'nunito_sanssemibold';
 
 $gris-bleu: #90A3B1;
 $bleu: #1397CB;
-$white: #ffffff;
+$white: #FFF;
 $black: #1E2224;
 $error: #E85568;
 $success: #00D53E;
@@ -29,15 +29,15 @@ $appblue   : #1397CB;
 $applime   : #00D53E;
 $appgrey   : #90A3B1;
 $appcream  : #F3F3F5;
-$appwhite  : #FFFFFF;
+$appwhite  : #FFF;
 
 $appselectorbg : #EDF1F4;
-$appselectoritembg : #fff;
+$appselectoritembg : #FFF;
 
 //generics
 $mainbgcolor      : #EEF1F3;
-$inactivebgcolor  : #f3f3F5;
-$hoverbgcolor     : #f3f3F5;
+$inactivebgcolor  : #F3F3F5;
+$hoverbgcolor     : #F3F3F5;
 $defaulttextcolor : #1E2224;
 $defaultlinkcolor : #1397CB;
 $defaultbodysize  : 10px;
@@ -46,45 +46,45 @@ $defaulticoncolor   : $gris-bleu;
 $defaultitembgcolor : $gris-bleu;
 
 //header
-$headerbgcolor    : #fff;
+$headerbgcolor    : #FFF;
 $pfbgcolor        : #FFCC32;
 
 //menupanes
-$menupanebgcolor  : #fff;
+$menupanebgcolor  : #FFF;
 
 //forms
 $defaultbuttonbkg : #1397CB;
-$defaultbuttontxt : #fff;
+$defaultbuttontxt : #FFF;
 $focusbordercolor : #1397CB;
 
 //messages
 $errorbkgcolor:#E85568;
-$errortxtcolor:#fff;
+$errortxtcolor:#FFF;
 
 //tabs
 //background-tab
-$tab_bgcolor             : #e8eae9;
+$tab_bgcolor             : #E8EAE9;
 $tab_hoverbg             : #1E2224;
-$tab_hovercolor          : #fff;
+$tab_hovercolor          : #FFF;
 
 //current tab
 $curtab_topbordercolor   : #FFCC32;
-$curtab_bgcolor          : #fff;
+$curtab_bgcolor          : #FFF;
 
 //footer
-$footerbgcolor    : #fff;
+$footerbgcolor    : #FFF;
 
 //items :
 $notificationcolor : #E85568;
 $projectbgcolor    : #1397CB;
-$projecttxtcolor   : #fff;
+$projecttxtcolor   : #FFF;
 $tabbgcolor        : #1E2224;
 
 $tabtitletxtcolor  : #FFCC32;
-$tabitemtxtcolor   : #fff;
+$tabitemtxtcolor   : #FFF;
 $tabcurrentbgcolor : #1397CB;
 
-$messagebgcolor          : #fff;
+$messagebgcolor          : #FFF;
 $currentmessagebgcolor   : $tabcurrentbgcolor;
-$currentmessagetxtcolor  : #fff;
-$currentmymessagebgcolor : lighten(rgba($appblue,1),40%);
+$currentmessagetxtcolor  : #FFF;
+$currentmymessagebgcolor : lighten(rgba($appblue, 1), 40%);

@@ -53,8 +53,7 @@ import Modal from '@/components/Modal'
 import AppSelectorItem from '@/components/AppSelectorItem'
 
 export default {
-  directives: {
-  },
+  directives: {},
 
   components: {
     Modal,
@@ -263,75 +262,78 @@ export default {
   $appgrey   : #90A3B1;
   $appcream  : #F3F3F5;
   $appselectorbg : #EDF1F4;
-  $appselectoritembg : #fff;
+  $appselectoritembg : #FFF;
   // this is the global config
   @import '@/assets/sass/_0.declare.scss';
 
   .new-app-closer
   {
-    position:absolute;
-    top:10px;
-    right:15px;
-    font-size:32px;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 32px;
   }
 
   .app-list
   {
-    position:absolute;
-    top:0;
-    left:0;
-    bottom:0;
-    right:0;
-    background-color:$appselectorbg;
-    font-family:$crustregular;
-    font-size:10px;
-    box-sizing:border-box;
-    z-index:99;
-    overflow:hidden auto;
-    padding-bottom:30px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: $appselectorbg;
+    font-family: $crustregular;
+    font-size: 10px;
+    box-sizing: border-box;
+    z-index: 99;
+    overflow: hidden auto;
+    padding-bottom: 30px;
+
     *
     {
-      font-family:$crustregular;
-      box-sizing:border-box;
+      font-family: $crustregular;
+      box-sizing: border-box;
     }
+
     .available-apps
     {
-      list-style:none;
-      padding:10px;
-      clear:both;
+      list-style: none;
+      padding: 10px;
+      clear: both;
     }
   }
 
   .available-app
   {
-    display:block;
-    width:calc(50% - 10px);
-    max-width:180px;
-    height:115px;
-    background-color:$appselectoritembg;
-    float:left;
-    margin:5px;
-    border-radius:3px;
+    display: block;
+    width: calc(50% - 10px);
+    max-width: 180px;
+    height: 115px;
+    background-color: $appselectoritembg;
+    float: left;
+    margin: 5px;
+    border-radius: 3px;
   }
 
   .section-title
   {
-    font-size:2.5em;
-    margin-top:50px;
-    padding:20px 15px 10px 15px;
-    clear:both;
+    font-size: 2.5em;
+    margin-top: 50px;
+    padding: 20px 15px 10px 15px;
+    clear: both;
   }
 
   @media (min-width: $wideminwidth)
   {
     .section-title
     {
-      padding-top:60px;
+      padding-top: 60px;
     }
+
     .app-section
     {
       max-width: 4*(180px + 5px + 10px); // app width + margin + list padding
-      margin:0 auto;
+      margin: 0 auto;
     }
   }
 </style>

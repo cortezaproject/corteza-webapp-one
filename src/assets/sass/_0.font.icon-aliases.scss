@@ -1,5 +1,7 @@
-.icon-close {
-  &:before {
-    content: $icon-x; 
+.icon-close
+ {
+  &::before
+ {
+    content: $icon-x;
   }
 }

@@ -27,6 +27,57 @@ const state = {
       [
         {
           id: 0,
+          title: 'Temp1',
+          src: 'https://www.example.com/',
+        },
+      ],
+    },
+    {
+      active: 1,
+      showapps: false,
+      tabs:
+      [
+        {
+          id: 1,
+          title: 'Temp2',
+          src: 'https://www.example.com/',
+        },
+      ],
+    },
+    {
+      active: 2,
+      showapps: false,
+      tabs:
+      [
+        {
+          id: 2,
+          title: 'Temp3',
+          src: 'https://www.example.com/',
+        },
+      ],
+    },
+    {
+      active: 3,
+      showapps: false,
+      tabs:
+      [
+        {
+          id: 3,
+          title: 'Temp4',
+          src: 'https://www.example.com/',
+        },
+      ],
+    },
+  ],
+  /* items:
+  [
+    {
+      active: 0,
+      showapps: false,
+      tabs:
+      [
+        {
+          id: 0,
           title: 'Messaging',
           src: 'https://beta.rustbucket.io/messaging/',
         },
@@ -55,18 +106,20 @@ const state = {
       ],
     },
     {
+      active: 0,
       showapps: true,
       tabs:
       [
       ],
     },
     {
+      active: 0,
       showapps: false,
       tabs:
       [
       ],
     },
-  ],
+  ], */
 }
 
 // Below would be the default case : no panels to start with.
@@ -194,7 +247,6 @@ const mutations =
     state.items[newActiveTab.pane].active = newActiveTab.id
   },
   addApp: (state, appData) => {
-    console.log('in panes/addApp')
     var paneId = appData.paneId
     if (state.items.length === 0) {
       state.disposition = {
@@ -220,6 +272,9 @@ const mutations =
     state.items[paneId].showapps = false
     state.items[paneId].active = state.nextTabId
     state.nextTabId++
+  },
+  changeDisposition (state, payload) {
+    state.disposition.itempos = payload
   },
 }
 

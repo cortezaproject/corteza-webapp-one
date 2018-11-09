@@ -18,23 +18,23 @@ export default {
     Header,
   },
   data () {
-    return {
-    }
+    return {}
   },
 }
 </script>
 
 <style lang="scss">
 @import '@/assets/sass/_0.declare.scss';
+
 *
 {
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
 .form-layout
 {
-  margin-top:60px;
+  margin-top: 60px;
 }
 </style>

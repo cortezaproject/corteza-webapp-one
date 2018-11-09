@@ -3,8 +3,7 @@ import Vue from 'vue'
 const localStorageKey = 'crust.route'
 
 // Initial state
-const state = {
-}
+const state = {}
 
 const storedState = JSON.parse(localStorage.getItem(localStorageKey))
 if (storedState !== null && typeof storedState === 'object') {

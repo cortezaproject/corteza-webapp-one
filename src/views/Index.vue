@@ -7,22 +7,22 @@
 <script>
 export default {
   data () {
-    return {
-    }
+    return {}
   },
 }
 </script>
 <style lang="scss">
   html *
   {
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
   }
+
   body
   {
-    padding:0;
-    margin:0;
-    min-height:100vh;
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
   }
 </style>

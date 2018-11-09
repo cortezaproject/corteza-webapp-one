@@ -26,7 +26,9 @@ export default {
     }).finally(() => {
       this.$store.commit('clean')
     })
-    this.$router.push({ name: 'signin' })
+    this.$router.push({
+      name: 'signin',
+    })
   },
 }
 </script>

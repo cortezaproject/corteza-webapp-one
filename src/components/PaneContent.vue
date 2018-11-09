@@ -13,7 +13,7 @@
       </div -->
       <iframe
       v-for="(tab, index) in tabs" :key="index"
-      style="width: 100%; height:100%; overflow-x: hidden; overflow-y: scroll; background:#ccc;"
+      style="width: 100%; height:100%; overflow-x: hidden; overflow-y: scroll; background:#CCC;"
       class="iframeContent"
       :class="[ { active : active_tab === tab.id } ]"
       frameborder="0"
@@ -28,7 +28,6 @@ export default {
   computed: {
     tabs: {
       get () {
-        console.log(this.$store.state.panes)
         return this.$store.state.panes.items[this.pane_id].tabs
       },
       /* npo reason to set here ?
@@ -72,29 +71,34 @@ export default {
 <style lang="scss">
   .iFrameWrap
   {
-    margin-top:30px;
-    height:calc(100% - 30px);
+    margin-top: 30px;
+    height: calc(100% - 30px);
+
     *
     {
       box-sizing: border-box;
     }
+
     .iFrameContainer
     {
-      height:100%;
-      width:100%;
-      background-color:aliceblue;
+      height: 100%;
+      width: 100%;
+      background-color: aliceblue;
     }
+
     .iframeContent
     {
-      display:none;
+      display: none;
+
       &.active
       {
-        display:block;
+        display: block;
       }
     }
   }
+
   iframe
   {
-    background:#ccc;
+    background: #CCC;
   }
 </style>

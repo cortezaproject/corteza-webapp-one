@@ -18,7 +18,7 @@
           class="last pane onepane-wrapper"
           :data-nb-items="paneset.length"
           :data-structure="panes.disposition.type + '-' + panesetindex"
-          :style="(paneset.length - 1 === panesetindex)?{ flexGrow:1 }:{
+          :style="{
             width: panes.disposition.type==='colfirst'?''+(100/panes.disposition.itempos.length)+'%':'100%',
             height: panes.disposition.type==='colfirst'?'100%':''+(100/panes.disposition.itempos.length)+'%'
           }"
@@ -50,7 +50,8 @@
         <div
           v-else
           class="pane subpane-wrapper"
-          :style="(paneset.length - 1 === panesubsetindex)?{ flexGrow:1, height:'50%' }:{
+          :style="
+          {
             width: panes.disposition.type==='colfirst'?''+(100/panes.disposition.itempos.length)+'%':'100%',
             height: panes.disposition.type==='colfirst'?'100%':''+(100/panes.disposition.itempos.length)+'%'
           }"
@@ -79,7 +80,7 @@
                     top="0"
                     left="0"
                     :showapps="false"
-                    v-on:add="panes.items[pane_id].showapps=true" />
+                    v-on:add="tryAddTab(pane_id)" />
                   <PaneContent
                     :data-pane-id="pane_id"
                     :pane_id="pane_id"
@@ -89,7 +90,7 @@
                   <app-selector
                     :data-selector-id="pane_id"
                     :class="'app-selector-' + pane_id"
-                    :pane_id="pane_id"
+                    :paneId="pane_id"
                     :displayed="panes.items[pane_id].showapps"
                     v-on:add-app="addTab"
                     v-on:close="panes.items[pane_id].showapps=false"></app-selector>
@@ -108,6 +109,10 @@
           :key="'r'+panesetindex" />
       </template>
     </multipane>
+    <modal v-if="cantAddTab" @close="cantAddTab = false">
+      <h3 slot="header">Warning</h3>
+      <div class="cant-add-tab">You cannot add more tabs to this panel</div>
+    </modal>
   </div>
 </template>
 
@@ -117,6 +122,7 @@ import cMultipaneResizer from '@/components/cMultipaneResizer.vue'
 import TabBar from '@/components/TabBar.vue'
 import PaneContent from '@/components/PaneContent.vue'
 import AppSelector from '@/components/AppSelector.vue'
+import Modal from '@/components/Modal'
 /*
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -132,10 +138,13 @@ export default
     TabBar,
     PaneContent,
     AppSelector,
+    Modal,
   },
   data () {
     return {
-      // layoutpanes: null,
+      layoutpanes: null,
+      cantAddTab: false,
+      panesubsetindex: 0,
     }
   },
   // on create init pane data in store
@@ -156,9 +165,6 @@ export default
       */
     },
   },
-  props:
-  {
-  },
   methods:
   {
     addTab (appData) {
@@ -166,50 +172,64 @@ export default
       console.log(appData)
       this.$store.commit('panes/addApp', appData)
     },
+    tryAddTab (paneID) {
+      const maxNum = this.panes.maxNumberOfTabsInPanel
+      const pane = this.panes.items[paneID]
+      if (pane.tabs.length < maxNum) pane.showapps = true
+      else this.cantAddTab = true
+    },
   },
 }
 </script>
 
 <!-- don't scope this ! -->
 <style lang="scss">
-@import '@/assets/sass/_0.declare.scss';
-.layout
-{
-  font-size:10px;
-  position:absolute;
-  top:6em;
-  height:calc(100vh - 6em);
-  max-height:100vh;
-  width:100vw;
-  overflow:hidden;
-  background-color:#fefefe;
-  .is-resizing
+  @import '@/assets/sass/_0.declare.scss';
+
+  .layout
   {
-    .iFrameContainer
+    font-size: 10px;
+    position: absolute;
+    top: 6em;
+    height: calc(100vh - 6em);
+    max-height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: #FEFEFE;
+
+    .is-resizing
     {
-      border:solid 2px $appblue;
-      iframe
+      .iFrameContainer
       {
-        pointer-events:none;
+        border: solid 2px $appblue;
+
+        iframe
+        {
+          pointer-events: none;
+        }
       }
     }
   }
-}
-.pane.last
-{
-  flex-grow:1;
-  flex:1;
-}
-.layout-h > .pane
-{
-  width:100% !important;
-}
-.layout-v > .pane
-{
-  height:100% !important;
-  &.last
+
+  .layout-h > .pane
   {
-    width:auto!important;
+    width: 100% !important;
   }
-}
+
+  .layout-v > .pane
+  {
+    height: 100% !important;
+
+    &.last
+    {
+      width: auto !important;
+    }
+  }
+
+  .cant-add-tab
+  {
+    font-size: 16px;
+    font-weight: bold;
+    color: red;
+  }
 </style>

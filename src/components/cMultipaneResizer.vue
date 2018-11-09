@@ -28,25 +28,29 @@ export default
 </script>
 
 <style scoped lang="scss">
-.multipane-resizer {
-  margin: 0; left: auto; /* reset default styling */
+.multipane-resizer
+ {
+  margin: 0;
+  left: auto; /* reset default styling */
   width: 0;
-  border:solid 3px #ccc;
+  border: solid 3px #CCC;
   background: rgb(240, 240, 240);
   height: auto;
-  z-index:10;
+  z-index: 10;
+
   &.v
   {
-    border-top:none;
-    border-bottom:none;
+    border-top: none;
+    border-bottom: none;
   }
+
   &.h
   {
-    border-left:none;
-    border-right:none;
+    border-left: none;
+    border-right: none;
     width: auto;
-    height:0;
-    top:0;
+    height: 0;
+    top: 0;
   }
 }
 </style>

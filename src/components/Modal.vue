@@ -43,9 +43,9 @@ export default
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, .5);
+    background-color: rgba(0, 0, 0, 0.5);
     display: table;
-    transition: opacity .3s ease;
+    transition: opacity 0.3s ease;
   }
 
   .modal-wrapper
@@ -54,17 +54,19 @@ export default
     vertical-align: middle;
   }
 
-  .modal-container {
+  .modal-container
+ {
     width: 500px;
     margin: 0px auto;
-    background-color: #fff;
+    background-color: #FFF;
     border-radius: 2px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
-    transition: all .3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+    transition: all 0.3s ease;
     font-family: Helvetica, Arial, sans-serif;
   }
 
-  .modal-header {
+  .modal-header
+ {
     margin-top: 0;
     color: white;
     font-weight: bold;
@@ -72,12 +74,14 @@ export default
     padding: 20px 20px;
   }
 
-  .modal-body {
+  .modal-body
+ {
     margin: 0 0 20px 0;
     padding: 20px 20px;
   }
 
-  .modal-close-button {
+  .modal-close-button
+ {
     float: right;
     margin-top: -30px;
     font-size: 2em;
@@ -93,16 +97,19 @@ export default
    * these styles.
    */
 
-  .modal-enter {
+  .modal-enter
+ {
     opacity: 0;
   }
 
-  .modal-leave-active {
+  .modal-leave-active
+ {
     opacity: 0;
   }
 
   .modal-enter .modal-container,
-  .modal-leave-active .modal-container {
+  .modal-leave-active .modal-container
+ {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
   }

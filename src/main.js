@@ -3,7 +3,7 @@ import Index from './views/Index.vue'
 
 import './global'
 import './plugins'
-import './main.scss'
+import './assets/main.scss'
 
 import router from './router'
 import store from './store'
