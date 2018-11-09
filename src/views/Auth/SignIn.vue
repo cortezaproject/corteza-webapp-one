@@ -30,6 +30,8 @@ export default {
     }).catch((error) => {
       this.$store.commit('auth/clean')
       console.error(error)
+    }).finally(() => {
+      this.$store.commit('auth/loaded', true)
     })
   },
 }
