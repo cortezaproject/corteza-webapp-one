@@ -24,9 +24,7 @@ export default {
   mounted () {
     this.$system.authCheck().then((check) => {
       this.$store.commit('auth/setUser', check.user)
-      this.$router.push({
-        name: 'root',
-      })
+      this.$router.push({ name: 'root' })
     }).catch((error) => {
       this.$store.commit('auth/clean')
       console.error(error)
@@ -38,14 +36,12 @@ export default {
 </script>
 
 <style scoped>
-section
- {
+section {
   text-align: center;
   height: 120px;
 }
 
-section a
- {
+section a {
   padding: 50px;
   font-size: 20px;
   text-decoration: none;
