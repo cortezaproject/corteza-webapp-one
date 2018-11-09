@@ -1,12 +1,7 @@
-import store from '@/store'
 import Vue from 'vue'
 import Router from 'vue-router'
 
 Vue.use(Router)
-
-function protect (to, from, next) {
-  next(store.getters['auth/isAuthenticated'] ? true : '/auth/signin')
-}
 
 export default new Router({
   mode: 'history',
@@ -18,13 +13,11 @@ export default new Router({
     {
       path: '/:name',
       component: view('Workspace'),
-      beforeEnter: protect,
     },
     {
       path: '/',
       name: 'root',
       component: view('Workspace'),
-      beforeEnter: protect,
     },
     {
       path: '/auth',

@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import auth from '@/mixins/auth'
+
 import Header from '@/components/Header.vue'
 import Layout from '@/components/Layout.vue'
 import AppSelector from '@/components/AppSelector.vue'
@@ -31,6 +33,8 @@ import LoginForm from '@/components/LoginForm.vue'
 import { mapGetters } from 'vuex'
 
 export default {
+  mixins: [auth],
+
   components:
   {
     Header,
