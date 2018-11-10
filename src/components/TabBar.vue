@@ -45,18 +45,22 @@
 <script>
 import draggable from 'vuedraggable'
 
-export default {
+export default
+{
   name: 'TabBar',
   components:
   {
     draggable,
   },
-  props: {
-    showapps: {
+  props:
+  {
+    showapps:
+    {
       required: true,
       type: Boolean,
     },
-    pane_id: {
+    pane_id:
+    {
       required: true,
       type: Number,
     },
@@ -166,6 +170,7 @@ export default {
     position: absolute;
     height: 30px;
     bottom: auto;
+    overflow: hidden;
     box-shadow: 0 0.1rem 0.2rem 0 rgba($defaulttextcolor, 0.1);
   }
 

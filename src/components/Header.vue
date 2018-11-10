@@ -145,7 +145,7 @@ export default
         const bottom = this.panels_bottom.map(item => Number(item)).sort()
         this.$store.commit('panes/changeDisposition',
           (top.length > 0 && bottom.length > 0) ? [top, bottom]
-            : top.length > 0 ? [top] : bottom > 0 ? [bottom] : [])
+            : top.length > 0 ? [top] : bottom.length > 0 ? [bottom] : [])
       },
     },
 }

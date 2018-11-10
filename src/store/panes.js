@@ -13,6 +13,53 @@ const state = {
   // for full specs see below.
   nextTabId: 4,
   maxNumberOfTabsInPanel: 6,
+
+  disposition:
+    {
+      type: 'rowfirst',
+      itempos: [ [ 0, 1 ], [ 2 ] ],
+    },
+  items:
+    [
+      {
+        active: 0,
+        showapps: false,
+        tabs:
+          [
+            {
+              id: 0,
+              title: 'Temp1',
+              src: 'https://www.example.com/',
+            },
+          ],
+      },
+      {
+        active: 1,
+        showapps: false,
+        tabs:
+          [
+            {
+              id: 1,
+              title: 'Temp2',
+              src: 'https://www.example.com/',
+            },
+          ],
+      },
+      {
+        active: 2,
+        showapps: false,
+        tabs:
+          [
+            {
+              id: 2,
+              title: 'Temp3',
+              src: 'https://www.example.com/',
+            },
+          ],
+      },
+    ],
+
+  /*
   disposition:
   {
     type: 'rowfirst',
@@ -69,6 +116,7 @@ const state = {
       ],
     },
   ],
+  */
   /* items:
   [
     {
@@ -211,37 +259,37 @@ const mutations =
   removeTab: (state, tabToDel) => {
     console.log('removing tab')
     console.log(tabToDel)
-    var itemIndexToDel = null
-    var tabItems = state.items[tabToDel.pane].tabs
+    const pane = state.items[tabToDel.pane]
+    const tabItems = pane.tabs
     console.log('active')
-    console.log(state.items[tabToDel.pane].active)
+    console.log(pane.active)
     // if this is the last tab, remove the panel
-    if (tabItems.length === 1) {
+    /*
+    if (tabItems.length === 1)
+    {
       // remove panel
       state.items.splice(tabToDel.pane, 1)
       // and in the future we should reorganize if necessary.
-    } else {
-      // else remove the tab
-      for (var itemIndex = 0; itemIndex < tabItems.length; itemIndex++) {
-        if (tabItems[itemIndex].id === tabToDel.id) {
-          itemIndexToDel = itemIndex
+    }
+    else
+    */
+    // {
+    // else remove the tab
+    let itemIndexToDel = tabItems.findIndex(item => item.id === tabToDel.id)
+    if (itemIndexToDel !== -1) {
+      // delete current tab
+      pane.tabs.splice(itemIndexToDel, 1)
+      // if the deleted tab is the active...
+      if (pane.active === tabToDel.id) {
+        const len = tabItems.length
+        if (itemIndexToDel < len) pane.active = tabItems[itemIndexToDel].id
+        else {
+          if (len) pane.active = tabItems[len - 1].id
+          else pane.active = null
         }
-      }
-      if (itemIndexToDel !== null) {
-        // if the deleted tab is the active...
-        if (state.items[tabToDel.pane].active === tabToDel.id) {
-          // activate the tab before the one we deleted if it exists,
-          if (typeof tabItems[itemIndexToDel - 1] !== 'undefined') {
-            state.items[tabToDel.pane].active = tabItems[itemIndexToDel - 1].id
-          } else {
-            // the one after otherwise.
-            state.items[tabToDel.pane].active = tabItems[itemIndexToDel + 1].id
-          }
-        }
-        // and delete current tab
-        state.items[tabToDel.pane].tabs.splice(itemIndexToDel, 1)
       }
     }
+    // }
   },
   changeActive: (state, newActiveTab) => {
     state.items[newActiveTab.pane].active = newActiveTab.id
@@ -274,6 +322,19 @@ const mutations =
     state.nextTabId++
   },
   changeDisposition (state, payload) {
+    let count = 0
+    payload.forEach(levelOne => {
+      if (Object.prototype.toString.call(levelOne) === '[object Array]') count += levelOne.length
+      else count++
+    })
+    while (count > state.items.length) {
+      // create the missing panel(s)
+      state.items.push({
+        active: null,
+        showapps: false,
+        tabs: [],
+      })
+    }
     state.disposition.itempos = payload
   },
 }
