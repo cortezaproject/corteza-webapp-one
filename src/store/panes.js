@@ -13,6 +13,7 @@ const state = {
   // for full specs see below.
   nextTabId: 4,
   maxNumberOfTabsInPanel: 6,
+  nowResizing: false,
 
   disposition:
     {
@@ -336,6 +337,9 @@ const mutations =
       })
     }
     state.disposition.itempos = payload
+  },
+  setResizing (state, resizing) {
+    state.nowResizing = resizing
   },
 }
 

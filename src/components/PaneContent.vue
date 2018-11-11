@@ -16,6 +16,7 @@
       style=""
       class="iframeContent"
       :class="[ { active : active_tab === tab.id } ]"
+      :style="{pointerEvents: isResizing ? 'none' : 'auto'}"
       frameborder="0"
       :src="tab.src" />
     </div>
@@ -37,6 +38,9 @@ export default {
         this.$store.commit('panes/updateTabs', { tabs: tabs, paneId: this.pane_id })
       },
       */
+    },
+    isResizing () {
+      return this.$store.state.panes.nowResizing
     },
   },
   props:
@@ -83,6 +87,7 @@ export default {
     {
       display: flex;
       flex: 1 1 0;
+      min-height: 0;
       background-color: aliceblue;
     }
 

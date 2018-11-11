@@ -338,6 +338,7 @@ export default
     {
       display: block;
       background: none;
+      min-height: 0;
       box-shadow: 0 0.1rem 0.2rem 0 rgba($defaulttextcolor, 0.1);
 
       .add
@@ -404,6 +405,7 @@ export default
       margin: 0;
       margin-left: 20px;
       background-color: transparent;
+      height: 30px;
       display: block;
       width: calc(100% - 20px);
       //position:absolute;

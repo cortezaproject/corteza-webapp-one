@@ -1,7 +1,9 @@
 <template>
   <div ref="layout" class="layout layout-rowfirst">
-    <div v-for="(levelOne,index) in panes.disposition.itempos" :key="index"
-         class="layout-colfirst" :class="{'layout-autosized': index ? [2,5,6,8,10].includes(typeLayout) : [9].includes(typeLayout) }">
+    <div v-for="(levelOne,index) in panes.disposition.itempos" :key="index" class="layout-colfirst"
+         :class="{'layout-autosized': index ? [2,5,6,8,10].includes(typeLayout) : [1,4,9].includes(typeLayout) }"
+         :style="adjustHeight(index)"
+    >
       <component v-for="(levelTwo,index_2) in levelOne" :key="index_2" :is="shouldResize(index,index_2) ? 'VueResize' : 'NormalPanel'"
                  :class="{'static-panel-container': !shouldResize(index,index_2)}" :style="adjustWidth(index,index_2)"
                  :width="width" :height="height" :sticks="sticks" @resize="onResize" @stopresize="onStopResize">
@@ -131,10 +133,8 @@ export default
     },
     onResize (newRect) {
       // in order to sync the width of the 1st panel on the 2nd row
-      let parentRect = this.$refs.layout.getBoundingClientRect()
-      this.width = Math.min(newRect.width, parentRect.width)
-      this.height = Math.min(newRect.height, parentRect.height)
-      console.log(newRect.height, parentRect.height, this.height)
+      this.width = newRect.width
+      this.height = newRect.height
     },
     onStopResize () {
       // otherwise the stick can go outside of the screen (because of the specific layout - markup + styling)
@@ -152,6 +152,10 @@ export default
         case 10: return idx === 0 && idx2 === 0 ? {} : idx !== 0 && idx2 === 0 ? { flex: '0 0 ' + this.width + 'px' } : {}
         default: return { flex: '1 1 0' }
       }
+    },
+    adjustHeight (idx) {
+      if (idx ? [2, 5, 6, 8, 10].includes(this.typeLayout) : [1, 4, 9].includes(this.typeLayout)) return {}
+      else return { height: this.height + 'px' }
     },
     shouldResize (idx, idx2) {
       switch (this.typeLayout) {

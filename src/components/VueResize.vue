@@ -39,6 +39,7 @@ export default
   methods:
     {
       onResize (newRect) {
+        this.$store.commit('panes/setResizing', true)
         // without NextTick() Vue-Drag-Resize overrides our setting
         this.$nextTick(() => {
           this.$refs.vdr.style.top = '0'
@@ -46,6 +47,7 @@ export default
         this.$emit('resize', newRect)
       },
       onStopResize () {
+        this.$store.commit('panes/setResizing', false)
         this.$emit('stopresize')
       },
     },
@@ -96,7 +98,8 @@ export default
 
   .resizable-panel-content
   {
-    min-height: 100%;
+    min-height: 0;
+    height: 100%;
     overflow: hidden;
     display: flex;
     flex-direction: column;
