@@ -27,18 +27,76 @@
               title="Show main menu"></i>
           </label>
         </section>
-        <section v-if="user" class="toolbox-item toolbox_menu">
-          <label>
+        <section @click="optionsMenuOpen=!optionsMenuOpen" class="toolbox-item toolbox_menu">
+          <label v-if="optionsMenuOpen">
+            <i
+              class="icon-close"
+              title="Show options menu"></i>
+          </label>
+          <label v-else>
             <i
               class="icon-menu"
-              title="Show main menu"></i>
-            <!-- i
-              :class="mainMenuOpen?'icon-close':'icon-menu'"
-              title="Show main menu"></i -->
+              title="Show options menu"></i>
           </label>
         </section>
       </div>
     </header>
+    <nav class="main-menu" v-if="optionsMenuOpen">
+      <div class="main-menu-wrap">
+        <section>
+          <div class="menu-section-title">Panels</div>
+          <div class="menu-panels">
+              <div class="menu-panels-text-big">
+                Select or deselect the panels you want work in during this session:
+              </div>
+              <div class="menu-panels-grid">
+                <table class="panels-table">
+                  <thead>
+                    <tr>
+                      <th>&nbsp;
+                      </th>
+                      <th scope="col"><span>Column 1</span>
+                      </th>
+                      <th scope="col"><span>Column 2</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row"><span>Row 1</span>
+                      </th>
+                      <td>
+                        <label for="panel_row_0_column_0">
+                          <input type="checkbox" id="panel_row_0_column_0" name="panel_row_0_column_0" v-model="panels_top" value="0" @click="updPanels"/>
+                        </label>
+                      </td>
+                      <td>
+                        <label for="panel_row_0_column_1">
+                          <input type="checkbox" id="panel_row_0_column_1" name="panel_row_0_column_1" v-model="panels_top" value="1" @click="updPanels"/>
+                        </label>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row"><span>Row 2</span>
+                      </th>
+                      <td>
+                        <label for="panel_row_1_column_0">
+                          <input type="checkbox" id="panel_row_1_column_0" name="panel_row_1_column_0" v-model="panels_bottom" value="2" @click="updPanels"/>
+                        </label>
+                      </td>
+                      <td>
+                        <label for="panel_row_1_column_1">
+                          <input type="checkbox" id="panel_row_1_column_1" name="panel_row_1_column_1" v-model="panels_bottom" value="3" @click="updPanels"/>
+                        </label>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+          </div>
+        </section>
+      </div>
+    </nav>
     <nav class="main-menu" v-if="mainMenuOpen">
       <div class="main-menu-wrap">
         <section>
@@ -48,18 +106,6 @@
               <a :href="item.link">{{ item.label }}</a>
             </li>
           </ul>
-        </section>
-        <section>
-          <div class="menu-section-title">Panels</div>
-          <div class="menu-panels">
-              <div class="menu-panels-text">
-                Select or deselect the panels you want to see:
-              </div>
-              <div class="menu-panels-grid">
-                <span>Row 1: </span><input type="checkbox" name="panel_row_0_column_0" v-model="panels_top" value="0" @click="updPanels"/> | <input type="checkbox" name="panel_row_0_column_1" v-model="panels_top" value="1" @click="updPanels"/><br/>
-                <span>Row 2: </span><input type="checkbox" name="panel_row_1_column_0" v-model="panels_bottom" value="2" @click="updPanels"/> | <input type="checkbox" name="panel_row_1_column_1" v-model="panels_bottom" value="3" @click="updPanels"/>
-              </div>
-          </div>
         </section>
         <div class="main-menu-footer">
           <span class="help">
@@ -113,6 +159,7 @@ export default
     return {
       var: false,
       mainMenuOpen: false,
+      optionsMenuOpen: false,
       showAppModalPanel: false,
       panels_top: this.$store.state.panes.disposition.itempos[0] || [],
       panels_bottom: this.$store.state.panes.disposition.itempos[1] || [],
@@ -314,6 +361,45 @@ export default
       }
     }
 
+    .menu-panels-text-big
+    {
+      margin-bottom: 20px;
+      color: $defaulttextcolor;
+      font-size: 14px;
+    }
+
+    .panels-table
+    {
+      color: $appgrey;
+      border:none;
+      border-collapse: collapse;
+    }
+
+    .panels-table th,
+    .panels-table td
+    {
+      text-align: center;
+      vertical-align: middle;
+      border:1px solid #fff;
+    }
+
+    .panels-table th span,
+    .panels-table td label
+    {
+      padding:10px;
+      display: block;
+    }
+    .panels-table td label:hover
+    {
+      cursor: pointer;
+      background: $appyellow;
+    }
+
+    .panels-table th
+    {
+      background-color: rgba($defaultitembgcolor, 0.15);
+    }
+
     ul
     {
       list-style: none;
@@ -373,7 +459,9 @@ export default
     }
   }
 
-  .toolbox_profile
+  .toolbox_profile,
+  .icon-menu,
+  .icon-close
   {
     cursor: pointer;
   }
