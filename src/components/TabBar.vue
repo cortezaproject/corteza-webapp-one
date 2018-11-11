@@ -162,14 +162,8 @@ export default
     font-family: $crustregular;
     background-color: $headerbgcolor;
     z-index: 3;
-    top: 0;
-    left: 0;
-    width: 100%;
     margin: 0;
     padding: 0;
-    position: absolute;
-    height: 30px;
-    bottom: auto;
     overflow: hidden;
     box-shadow: 0 0.1rem 0.2rem 0 rgba($defaulttextcolor, 0.1);
   }
@@ -409,7 +403,6 @@ export default
       float: left;
       margin: 0;
       margin-left: 20px;
-      height: 40px;
       background-color: transparent;
       display: block;
       width: calc(100% - 20px);

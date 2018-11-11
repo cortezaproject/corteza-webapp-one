@@ -1,9 +1,7 @@
 <template>
-  <div ref="layout" class="layout" :class="{'layout-rowfirst': panes.disposition.type === 'rowfirst', 'layout-colfirst': panes.disposition.type === 'colfirst'}">
+  <div ref="layout" class="layout layout-rowfirst">
     <div v-for="(levelOne,index) in panes.disposition.itempos" :key="index"
-         :class="{'layout-colfirst': panes.disposition.type === 'rowfirst',
-         'layout-rowfirst': panes.disposition.type === 'colfirst',
-         'layout-autosized': index ? [2,3,5,7,8].includes(typeLayout) : [4,6].includes(typeLayout) }">
+         class="layout-colfirst" :class="{'layout-autosized': index ? [2,5,6,8,10].includes(typeLayout) : [9].includes(typeLayout) }">
       <component v-for="(levelTwo,index_2) in levelOne" :key="index_2" :is="shouldResize(index,index_2) ? 'VueResize' : 'NormalPanel'"
                  :class="{'static-panel-container': !shouldResize(index,index_2)}" :style="adjustWidth(index,index_2)"
                  :width="width" :height="height" :sticks="sticks" @resize="onResize" @stopresize="onStopResize">
@@ -85,59 +83,29 @@ export default
       return this.panes.disposition.itempos
     },
     typeLayout () {
+      // bits 1,0 = number of panels in row 1
+      // bits 3,2 = number of panels in row 2
       // 0 = no panels
-      // 1 = 1 panel
-      // 2 = 2 rows by 1 panel
-      // 3 = 2 cols by 1 panel
-      // 4 = 2 rows (1 top, 2 bottom)
-      // 5 = 2 rows (2 top, 1 bottom)
-      // 6 = 2 cols (1 left, 2 right)
-      // 7 = 2 cols (2 left, 1 right)
-      // 8 = 4 panels
-      const kind = this.panes.disposition.type
+      // 1/4 = 1 panel
+      // 2/8 = 2 columns by 1 panel
+      // 5 = 2 rows by 1 panel
+      // 6 = 2 on top, 1 on bottom
+      // 9 = 1 on top, 2 on bottom
+      // 10 = 4 panels
       const layout = this.panes.disposition.itempos
-      switch (layout.length) {
-        default: return 0
-        case 1:
-          switch (layout[0].length) {
-            default: return 0
-            case 1: return 1
-            case 2: return kind === 'rowfirst' ? 2 : 3
-          }
-        case 2:
-          switch (layout[0].length) {
-            default:
-              switch (layout[1].length) {
-                default: return 0
-                case 1: return 1
-                case 2: return kind === 'rowfirst' ? 2 : 3
-              }
-            case 1:
-              switch (layout[1].length) {
-                default: return 1
-                case 1: return kind === 'rowfirst' ? 2 : 3
-                case 2: return kind === 'rowfirst' ? 4 : 6
-              }
-            case 2:
-              switch (layout[1].length) {
-                default: return kind === 'rowfirst' ? 2 : 3
-                case 1: return kind === 'rowfirst' ? 5 : 7
-                case 2: return 8
-              }
-          }
-      }
+      return layout[0].length + 4 * layout[1].length
     },
     sticks () {
       switch (this.typeLayout) {
         case 0:
-        case 1: return ''
-        case 2: return 'bm'
-        case 3: return 'mr'
-        case 4: return 'tr'
-        case 5: return 'br'
-        case 6: return 'bl'
-        case 7: return 'br'
-        case 8: return 'br'
+        case 1:
+        case 4: return ''
+        case 2:
+        case 8: return 'mr'
+        case 6:
+        case 10: return 'br'
+        case 5: return 'bm'
+        case 9: return 'tr'
       }
     },
   },
@@ -161,10 +129,12 @@ export default
       if (pane.tabs.length < maxNum) pane.showapps = true
       else this.cantAddTab = true
     },
-    onResize (rect) {
+    onResize (newRect) {
       // in order to sync the width of the 1st panel on the 2nd row
-      this.width = rect.width
-      this.height = rect.height
+      let parentRect = this.$refs.layout.getBoundingClientRect()
+      this.width = Math.min(newRect.width, parentRect.width)
+      this.height = Math.min(newRect.height, parentRect.height)
+      console.log(newRect.height, parentRect.height, this.height)
     },
     onStopResize () {
       // otherwise the stick can go outside of the screen (because of the specific layout - markup + styling)
@@ -175,37 +145,36 @@ export default
     adjustWidth (idx, idx2) {
       switch (this.typeLayout) {
         case 2:
-        case 3:
-        case 5:
-        case 7: return idx === 0 && idx2 === 0 ? {} : { flex: '1 1 0' }
-        case 4:
-        case 6: return idx > 0 && idx2 === 0 ? {} : { flex: '1 1 0' }
-        case 8: return idx > 0 && idx2 === 0 ? { flex: '0 0 ' + this.width + 'px' } : {}
+        case 8: return idx2 === 0 ? {} : { flex: '1 1 0' }
+        case 5: return idx === 0 ? {} : { flex: '1 1 0' }
+        case 9: return idx !== 0 && idx2 === 0 ? {} : { flex: '1 1 0' }
+        case 6: return idx === 0 && idx2 === 0 ? {} : { flex: '1 1 0' }
+        case 10: return idx === 0 && idx2 === 0 ? {} : idx !== 0 && idx2 === 0 ? { flex: '0 0 ' + this.width + 'px' } : {}
         default: return { flex: '1 1 0' }
       }
     },
     shouldResize (idx, idx2) {
       switch (this.typeLayout) {
         case 2:
-        case 3:
-        case 5:
-        case 7:
-        case 8: return idx === 0 && idx2 === 0
-        case 4:
-        case 6: return idx > 0 && idx2 === 0
+        case 8: return idx2 === 0
+        case 5: return idx === 0
+        case 9: return idx !== 0 && idx2 === 0
+        case 6:
+        case 10: return idx === 0 && idx2 === 0
         default: return false
       }
     },
     computeSize () {
       let rect = this.$refs.layout.getBoundingClientRect()
       switch (this.typeLayout) {
-        case 2: // 2 rows by 1 panel
-          this.width = rect.width
-          this.height = rect.height / 2
-          break
-        case 3: // 2 cols by 1 panel
+        case 2:
+        case 8: // 2 cols by 1 panel
           this.width = rect.width / 2
           this.height = rect.height
+          break
+        case 5: // 2 rows by 1 panel
+          this.width = rect.width
+          this.height = rect.height / 2
           break
         default:
           this.width = rect.width / 2
@@ -222,12 +191,8 @@ export default
 
   .layout
   {
+    flex: 1 1 0;
     font-size: 10px;
-    position: absolute;
-    top: 6em;
-    height: calc(100vh - 6em);
-    max-height: calc(100vh - 6em);
-    width: 100vw;
     overflow: hidden;
     background-color: #FEFEFE;
   }
@@ -251,11 +216,17 @@ export default
 
   .static-panel-container
   {
+    display: flex;
+    flex-direction: column;
     flex: 1 1 0;
     min-height: 0;
     min-width: 0;
     overflow: hidden;
-    position: relative;
+  }
+
+  .static-panel-container > *:nth-child(2)
+  {
+    flex: 1 1 0;
   }
 
   .cant-add-tab

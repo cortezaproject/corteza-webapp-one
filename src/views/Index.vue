@@ -4,6 +4,13 @@
   </div>
 </template>
 
+<script>
+export default {
+  data () {
+    return {}
+  },
+}
+</script>
 <style lang="scss">
   html *
   {
@@ -16,6 +23,11 @@
   {
     padding: 0;
     margin: 0;
-    min-height: 100vh;
+  }
+
+  #crust-chrome > *
+  {
+    width: 100vw;
+    height: 100vh;
   }
 </style>

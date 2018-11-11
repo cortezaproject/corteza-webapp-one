@@ -13,7 +13,7 @@
       </div -->
       <iframe
       v-for="(tab, index) in tabs" :key="index"
-      style="width: 100%; height:100%; overflow-x: hidden; overflow-y: scroll; background:#CCC;"
+      style=""
       class="iframeContent"
       :class="[ { active : active_tab === tab.id } ]"
       frameborder="0"
@@ -71,8 +71,8 @@ export default {
 <style lang="scss">
   .iFrameWrap
   {
-    margin-top: 30px;
-    height: calc(100% - 30px);
+    display: flex;
+    flex-direction: column;
 
     *
     {
@@ -81,24 +81,23 @@ export default {
 
     .iFrameContainer
     {
-      height: 100%;
-      width: 100%;
+      display: flex;
+      flex: 1 1 0;
       background-color: aliceblue;
     }
 
     .iframeContent
     {
       display: none;
+      flex: 1 1 0;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      background: #CCC;
 
       &.active
       {
         display: block;
       }
     }
-  }
-
-  iframe
-  {
-    background: #CCC;
   }
 </style>

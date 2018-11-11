@@ -143,9 +143,11 @@ export default
       updPanels () {
         const top = this.panels_top.map(item => Number(item)).sort()
         const bottom = this.panels_bottom.map(item => Number(item)).sort()
-        this.$store.commit('panes/changeDisposition',
+        this.$store.commit('panes/changeDisposition', [top, bottom])
+        /*
           (top.length > 0 && bottom.length > 0) ? [top, bottom]
-            : top.length > 0 ? [top] : bottom.length > 0 ? [bottom] : [])
+            : top.length > 0 ? [top] : bottom.length > 0 ? [bottom] : []);
+            */
       },
     },
 }
@@ -348,17 +350,11 @@ export default
 
   header
   {
-    position: fixed;
-    width: 100%;
-    left: 0;
-    right: 0;
     overflow: hidden;
     background-color: $headerbgcolor;
-    box-shadow: 0 0.1em 0.2em 0 rgba($defaulttextcolor, 0.1);
+    border-bottom: 1px solid rgba($defaulttextcolor, 0.1);
     height: 6em;
     max-height: 6em;
-    top: 0;
-    z-index: 999;
 
     .title-wrap
     {

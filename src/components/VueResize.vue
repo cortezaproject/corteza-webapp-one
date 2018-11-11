@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import VueDragResize from 'vue-drag-resize'
+import VueDragResize from '@/library/vue-drag-resize'
 
 export default
 {
@@ -98,5 +98,13 @@ export default
   {
     min-height: 100%;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
+
+  .resizable-panel-content > *:nth-child(2)
+  {
+    flex: 1 1 0;
+  }
+
 </style>

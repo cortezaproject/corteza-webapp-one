@@ -95,4 +95,12 @@ export default {
     height: 100vh;
     width: 100%;
   }
+
+  .workspace
+  {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+  }
 </style>

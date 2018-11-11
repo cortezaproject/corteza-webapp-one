@@ -148,7 +148,7 @@ export default {
           logo: require('@/assets/logos/crust.jpg'),
           icon: 'icon-bubble2',
           color: 'appyellow',
-          path: 'https://beta.rustbucket.io/messaging/',
+          path: '/messaging/',
           allowed_contextes: ['panel', 'tab', 'external'],
           method: 'iframe',
           showOptions: false,
