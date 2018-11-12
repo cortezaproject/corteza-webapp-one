@@ -2,7 +2,7 @@
   <div
     class="tab_list_wrapper"
     :style="(top === ''?'':'top:' + top) + ';' + (left ==='' ? '' : 'left:calc('+left+' - 5px)')"
-    :class="[ { 'mobile-shown' : mobileListShown  } ]">
+    :class="{ 'mobile-shown' : mobileListShown}">
     <div
       class="mobile mobile-switch"
       @click="mobileListShown=!mobileListShown">
@@ -15,42 +15,40 @@
         <label for="show-apps"><i class="icon-plus"></i></label>
       </div>
     </div>
-    <draggable
-      v-model="tabs"
-      :options="{ group:'tabs' }"
+    <slick
+      ref="slick"
       class="tab_list"
+      :options="slickOptions"
       :id="'tabs_in_pane_'+pane_id"
-      :data-paneid="pane_id"
-      @start="drag=true"
-      @end="endDrag">
-      <!-- we don't want the close button to propagate the click to span an parent, so we double event but limit to span and div "self" -->
+      :data-paneid="pane_id">
       <div
-        class="tab_item item"
+        class="tab_item"
         :class="[ { active : active_tab === tab.id } ]"
         v-for="(tab, index) in tabs" :key="index"
         @touch.self="switchActive({id:tab.id, pane:pane_id})"
         @mousedown.self="switchActive({id:tab.id, pane:pane_id})">
         <i class="active-indicator icon-play3" v-if="mobileListShown && active_tab === tab.id"></i>
-        <span
+        <div v-if="tab.logo" :style="{backgroundImage: 'url(' + tab.logo + ')'}" class="tab_logo"/>
+        <div
+          class="tab_title"
           @touch.self="switchActive({id:tab.id, pane:pane_id})"
-          @mousedown.self="switchActive({id:tab.id, pane:pane_id})">{{ tab.title }}</span>
-        <i class="icon-close" @click="removeTab({id:tab.id, pane:pane_id})"></i>
+          @mousedown.self="switchActive({id:tab.id, pane:pane_id})">{{ tab.title }}</div>
+        <button class="tab-close" @click="removeTab({id:tab.id, pane:pane_id})">&times;</button>
       </div>
-      <div class="tab-plus add" @click="$emit('add')">
-        <label for="show-apps"><span  arial-label="Add tab" title="Add tab">+</span></label>
-      </div>
-    </draggable>
+    </slick>
+    <button class="tab-plus" aria-label="Add tab" title="Add tab" @click="addTab">+</button>
   </div>
 </template>
 <script>
-import draggable from 'vuedraggable'
+import Slick from 'vue-slick'
+require('slick-carousel/slick/slick.css')
 
 export default
 {
   name: 'TabBar',
   components:
   {
-    draggable,
+    Slick,
   },
   props:
   {
@@ -100,6 +98,10 @@ export default
   created: function () {
     // this.paneTabs = this.tabs
   },
+  watch:
+    {
+      tabs: 'reInit',
+    },
   methods:
   {
     switchActive: function (newActiveTab) {
@@ -107,30 +109,22 @@ export default
       this.$store.commit('panes/changeActive', newActiveTab)
       this.mobileListShown = false
     },
+    reInit () {
+      let currIndex = this.$refs.slick.currentSlide()
+
+      this.$refs.slick.destroy()
+      this.$nextTick(() => {
+        this.$refs.slick.create()
+        this.$refs.slick.goTo(currIndex, true)
+      })
+    },
+    addTab () {
+      this.$emit('add')
+    },
     removeTab: function (tabToDel) {
       // console.log('TabBar says : newActiveTab ' + newActiveTab.id + ' in pane ' + newActiveTab.pane)
       this.$store.commit('panes/removeTab', tabToDel)
     },
-    endDrag: function (e) {
-      console.log('endOfDrag')
-      console.log(e)
-      console.log('from ' + e.from.dataset.paneid + ' to ' + e.to.dataset.paneid)
-      // if moving from one pane to another
-      if (e.from.dataset.paneid !== e.to.dataset.paneid) {
-        this.$store.commit('panes/setFirstTabActive', {
-          paneId: this.pane_id,
-        })
-      }
-    },
-    /*
-    onEnd: function (tabMoved, paneId) {
-      console.log('onEnd')
-      console.log(tabMoved)
-      console.log('moving tab #' + tabMoved.oldIndex + ' of ' + tabMoved.from.getAttribute('data-paneid') + ' to ' + tabMoved.newIndex + ' of ' + tabMoved.to.getAttribute('data-paneid'))
-      this.$store.commit('panes/updateTabs', tabMoved)
-      // debugger;
-    },
-    */
   },
   computed: {
     tabs: {
@@ -148,13 +142,18 @@ export default
         })
       },
     },
+    slickOptions () {
+      return {
+        infinite: false,
+        variableWidth: true,
+        prevArrow: '<button class="slick_arrow">&lt;</button>',
+        nextArrow: '<button class="slick_arrow">&gt;</button>',
+      }
+    },
   },
 }
 </script>
 <style scoped lang="scss">
-  //define vars here
-  $wideminwidth:640px;
-  //import global variables (may overwrite previous ones)
   @import '@/assets/sass/_0.declare.scss';
 
   .tab_list_wrapper
@@ -318,312 +317,135 @@ export default
       display: none;
     }
 
-    .tab_list .item > span
-    {
-      display: block;
-      width: calc(85% + 20px);
-      line-height: 28px;
-      transform: skewX(25deg);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      background: $tab_bgcolor;
-      padding-left: 8px;
-      margin-left: -20px;
-    }
-
-    // browser like tabs
-    // extended from Adem ilter @ademilter
     .tab_list_wrapper
     {
-      display: block;
-      background: none;
-      min-height: 0;
-      box-shadow: 0 0.1rem 0.2rem 0 rgba($defaulttextcolor, 0.1);
-
-      .add
-      {
-        cursor: pointer;
-        text-align: center;
-        font-weight: bold;
-        color: #CCC;
-        line-height: 15px;
-        font-size: 15px;
-        float: left;
-        margin: 6px 8px 0;
-        width: 23px;
-        height: 16px;
-        background: $tab_bgcolor;
-        border-radius: 5px;
-        border: 1px solid #AAA;
-        transform: skewX(-25deg);
-        //box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
-
-        span
-        {
-          display: block;
-          transform: skewX(25deg);
-          color: rgba(0, 0, 0, 0.8);
-        }
-      }
-
-      .add:hover
-      {
-        background-color: #1E2224;
-        color: $tab_hovercolor;
-
-        span
-        {
-          color: $tab_hovercolor;
-        }
-      }
-
-      .add:active
-      {
-        //box-shadow: inset 0 1px 2px rgba(0,0,0,.2);
-        background: #CCC;
-        color: #555;
-      }
-    }
-
-    .tab_title,
-    .tab_display
-    {
-      display: none !important;
-    }
-
-    .tab-wrapper
-    {
-      min-height: 100vh;
-      padding-top: 9rem;
+      display: flex;
+      overflow: hidden;
     }
 
     .tab_list
- {
-      position: relative;
-      float: left;
-      margin: 0;
-      margin-left: 20px;
-      background-color: transparent;
-      height: 30px;
+    {
+      display: flex;
+      /* flex-wrap: wrap; */
+      overflow: hidden;
+      border-top: 1px solid #DDD;
+    }
+
+    .tab-plus
+    {
       display: block;
-      width: calc(100% - 20px);
-      //position:absolute;
-      //top:0;
-    }
-
-    .tab_list .item,
-    .tab_list .item::before
- {
-      cursor: pointer;
-      z-index: 1;
-      position: relative;
-      border: 1px solid #AAA;
-      border-top: 0;
-      transform: skewX(-25deg);
-      float: left;
-      margin: 0 0 0 7px;
-      padding: 0 15px;
-      padding-right: 30px;
-      border-radius: 0 0 5px 5px;
-      box-shadow: inset -1px 1px 0 rgba(255, 255, 255, 0.5);
-      background: $tab_bgcolor;
-      color: $defaulttextcolor;
-      font-size: 14px;
-    }
-
-    .tab_list .item
-    {
-      width: 10%;
+      font-weight: bold;
+      color: #FFF;
+     background: $tab_bgcolor;
+      line-height: 20px;
+      font-size: 20px;
+      width: 30px;
       min-width: 30px;
-      height: 30px;
-
-      .icon-close::before
-      {
-        border-radius: 100%;
-      }
-
-      .icon-close::before,
-      em
-      {
-        position: absolute;
-        top: 7px;
-        right: 12px;
-        padding: 0;
-        margin: 0;
-      }
-
-      a,
-      em .icon-close::before
-      {
-        transform: skewX(25deg);
-      }
-
-      .icon-close:hover::before
-      {
-        background-color: #1E2224;
-        color: $tab_hovercolor;
-      }
-
-      .icon-close
-      {
-        margin: -3rem -1.5rem;
-      }
-
-      &.updated
-      {
-        > span
-        {
-          padding-left: 18px;
-        }
-      }
-
-      em
-      {
-        top: 5px;
-        z-index: 4;
-        right: auto;
-        left: 0px;
-
-        &::after
-        {
-          height: 0.6rem;
-          width: 0.6rem;
-        }
-      }
-
-      a
-      {
-        z-index: 3;
-        position: absolute;
-        right: 10px;
-        top: 7px;
-        font-size: 18px;
-        color: #777;
-        width: 15px;
-        height: 15px;
-        line-height: 16px;
-        text-align: center;
-        border-radius: 100%;
-      }
+      border: none;
+      cursor: pointer;
     }
 
-    .tab_list .item::before
+    .tab-plus:hover
     {
-      height: 30px;
-      content: '';
-      position: absolute;
-      left: -18px;
-      transform: skewX(-140deg);
-      border-right: 0;
-      margin: 0;
-      padding: 0;
-      width: 18px;
-      border-radius: 0  0 0 5px;
-      box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.5);
-      margin-top: -1px;
+      background: $defaulttextcolor;
     }
 
-    .tab_list .item:nth-child(1)
- {
-      z-index: 9;
-    }
-
-    .tab_list .item:nth-child(2)
- {
-      z-index: 8;
-    }
-
-    .tab_list .item:nth-child(3)
- {
-      z-index: 7;
-    }
-
-    .tab_list .item:nth-child(4)
- {
-      z-index: 6;
-    }
-
-    .tab_list .item:nth-child(5)
- {
-      z-index: 5;
-    }
-
-    .tab_list .item:nth-child(6)
- {
-      z-index: 4;
-    }
-
-    .tab_list .item:nth-child(7)
- {
-      z-index: 3;
-    }
-
-    .tab_list .item:nth-child(8)
- {
-      z-index: 2;
-    }
-
-    .tab_list .item:nth-child(9)
- {
-      z-index: 1;
-    }
-
-    .tab_list .item.active,
-    .tab_list .item.active::before
- {
-      z-index: 999 !important;
-      //background: #eee;
-      height: 30px;
-      border-color: #888;
-      background-color: $curtab_bgcolor;
-    }
-
-    .tab_list .item img
+    .tab-plus:active
     {
-      z-index: 9;
-      position: absolute;
-      left: -6px;
-      top: 6px;
-      width: 16px;
-      height: 16px;
-      transform: skewX(25deg);
-      border-radius: 3px;
+      padding: 1px 0 0 1px;
+      background: #CCC;
+      color: #555;
     }
 
-    .tab_list .item a:hover
+    .tab_item
     {
-      color: $defaulttextcolor;
-      background-color: #E05D68;
-      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.4);
-    }
+      width: 150px;
+      overflow: hidden;
+      background: #FFF;
+      padding: 3px 2px 2px 4px;
+      display: inline-flex !important;
+      align-items: center;
+      border: 1px solid #DDD;
 
-    .tab_list .item a:active
-    {
-      background-color: #D83240;
-    }
-
-    .tab_list .item.active,
-    .tab_list .item.active::before,
-    .tab_list .item.active span
-    {
-      border-top: solid 1px $curtab_topbordercolor;
-    }
-
-    .tab_list .item.active
-    {
-      height: 30px;
-
-      &::before
+      .tab_logo
       {
-        height: 28px;
+        width: 25px;
+        height: 25px;
+        margin-right: 5px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
       }
 
-      span
+      .tab_title
       {
-        margin-top: -1px;
-        background-color: $curtab_bgcolor;
+        flex: 1 1 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 12px;
+        line-height: 25px;
+        cursor: pointer;
+      }
+
+      .tab-close
+      {
+        cursor: pointer;
+        border: none;
+        background-color: transparent;
+        width: 16px;
+        font-size: 20px;
+      }
+
+      .tab-close:hover
+      {
+        transform: scale(1.2);
       }
     }
+
+    .tab_item.active
+    {
+      background-color: $appgreen;
+      color: #FFF;
+      border-color: $appgreen;
+
+      .tab-close
+      {
+        color: #FFF;
+      }
+    }
+  }
+</style>
+
+<style>
+  .slick_arrow
+  {
+    display: block;
+    font-weight: bold;
+    color: #777;
+    background: #DDD;
+    line-height: 20px;
+    font-size: 20px;
+    width: 30px;
+    min-width: 30px;
+    border: 1px solid black;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  .slick_arrow:active
+  {
+    padding: 1px 0 0 1px;
+  }
+
+  .slick-list
+  {
+    overflow: hidden;
+  }
+
+  .slick-slide
+  {
+    width: 150px !important;
+    display: inline-block;
   }
 </style>

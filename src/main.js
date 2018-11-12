@@ -8,6 +8,8 @@ import './assets/main.scss'
 import router from './router'
 import store from './store'
 
+window.$ = window.jQuery = require('jquery'); 
+
 // implement a Vue with store and router
 new Vue({
   router,

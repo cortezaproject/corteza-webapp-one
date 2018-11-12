@@ -31,6 +31,7 @@ const state = {
               id: 0,
               title: 'Temp1',
               src: 'https://www.example.com/',
+              logo: '/img/jira.c6266a81.png',
             },
           ],
       },
@@ -43,6 +44,7 @@ const state = {
               id: 1,
               title: 'Temp2',
               src: 'https://www.example.com/',
+              logo: '/img/jira.c6266a81.png',
             },
           ],
       },
@@ -55,6 +57,7 @@ const state = {
               id: 2,
               title: 'Temp3',
               src: 'https://www.example.com/',
+              logo: '/img/jira.c6266a81.png',
             },
           ],
       },
@@ -317,22 +320,20 @@ const mutations =
       id: state.nextTabId,
       title: appData.app.name,
       src: appData.app.path,
+      logo: appData.app.logo,
     })
     state.items[paneId].showapps = false
     state.items[paneId].active = state.nextTabId
     state.nextTabId++
   },
   changeDisposition (state, payload) {
-    let maxPane = 0;
-    payload.forEach(levelOne =>
-    {
-      levelOne.forEach(levelTwo =>
-      {
-        if (levelTwo > maxPane) maxPane = levelTwo;
-      });
-    });
-    while (maxPane >= state.items.length)
-    {
+    let maxPane = 0
+    payload.forEach(levelOne => {
+      levelOne.forEach(levelTwo => {
+        if (levelTwo > maxPane) maxPane = levelTwo
+      })
+    })
+    while (maxPane >= state.items.length) {
       // create the missing panel(s)
       state.items.push({
         active: null,
