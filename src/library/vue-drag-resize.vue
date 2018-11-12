@@ -258,25 +258,21 @@ export default
 
     move (ev) {
       if (!this.stickDrag && !this.bodyDrag) {
-        console.log('move - not stickDrag, not bodyDrag')
         return
       }
 
       ev.stopPropagation()
 
       if (this.stickDrag) {
-        console.log('stickDrag')
         this.stickMove(ev)
       }
       if (this.bodyDrag) {
-        console.log('bodyDrag')
         this.bodyMove(ev)
       }
     },
 
     up (ev) {
       if (this.stickDrag) {
-        console.log('stickUp')
         this.stickUp(ev)
       }
       if (this.bodyDrag) {
@@ -748,13 +744,13 @@ export default
     },
 
     minw (val) {
-      if (val > 0 && val <= this.width) {
+      if (val >= 0 && val <= this.width) {
         this.minWidth = val
       }
     },
 
     minh (val) {
-      if (val > 0 && val <= this.height) {
+      if (val >= 0 && val <= this.height) {
         this.minHeight = val
       }
     },

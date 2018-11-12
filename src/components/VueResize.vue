@@ -1,6 +1,6 @@
 <template>
   <VueDragResize ref="vdr" class="vdr-panel" isActive preventActiveBehavior :parentLimitation="false" :isDraggable="false"
-                 :minw="1" :minh="1" :w="width" :h="height" :sticks="sticks ? [sticks] : []"
+                 :minw="0" :minh="0" :w="width" :h="height" :sticks="sticks ? [sticks] : []"
                  @resizing="onResize" @resizestop="onStopResize">
     <div class="resizable-panel-content">
       <slot/>

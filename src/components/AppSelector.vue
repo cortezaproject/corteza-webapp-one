@@ -268,7 +268,7 @@ export default {
 
   .new-app-closer
   {
-    position: absolute;
+    position: fixed;
     top: 10px;
     right: 15px;
     font-size: 32px;
@@ -276,7 +276,7 @@ export default {
 
   .app-list
   {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
