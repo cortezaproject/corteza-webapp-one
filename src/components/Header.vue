@@ -3,7 +3,8 @@
     <header>
       <div class="title-wrap">
         <strong class="title">Crust</strong>
-        <Capsule>platform</Capsule>
+        <Capsule title="Platform"/>
+          <span class="active_mobile">{{ (activeTab || {}).title }}</span>
       </div>
       <div class="toolbox">
         <!-- the header add is for panels, not for now, remove false && to restore -->
@@ -180,6 +181,20 @@ export default
       ],
     }
   },
+  computed:
+    {
+      allTabs()
+      {
+        return this.$store.state.panes.items.reduce((acc, panel) => {
+          return acc.concat(panel.tabs)
+        }, [])
+      },
+      activeTab()
+      {
+        let active = this.$store.state.panes.activeMobileTab;
+        return this.allTabs.find(item => item.id === active);
+      }
+    },
   watch:
     {
       panels_top: 'updPanels',
@@ -206,7 +221,6 @@ export default
   $crustregular : Arial, sans-serif;
   $defaultlinecolor : #CCC;
   $notificationcolor : red;
-  $wideminwidth : 720px;
   // import global settings that override previous declarations
   @import '@/assets/sass/_0.declare.scss';
 
@@ -448,6 +462,7 @@ export default
       display: block;
       line-height: 6em;
       margin: 0 0.5em 0 1.5em;
+      position: relative;
     }
 
     .title
@@ -466,4 +481,24 @@ export default
     cursor: pointer;
   }
 
+  .active_mobile
+  {
+    background-color: $appgrey;
+    color: white;
+    text-transform: uppercase;
+    border-radius: 10px;
+    padding: 5px 10px 3px;
+    position: absolute;
+    left: 0;
+    bottom: 5px;
+    line-height: 1;
+  }
+
+  @media (min-width: $wideminwidth)
+  {
+    .active_mobile
+    {
+      display: none;
+    }
+  }
 </style>
