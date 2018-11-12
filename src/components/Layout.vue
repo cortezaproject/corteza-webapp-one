@@ -2,7 +2,7 @@
   <div ref="layout" class="layout layout-rowfirst">
     <div v-for="(levelOne,index) in panes.disposition.itempos" :key="index" class="layout-colfirst"
          :class="{'layout-autosized': index ? [2,5,6,8,10].includes(typeLayout) : [1,4,9].includes(typeLayout) }"
-         :style="adjustHeight(index)"
+         :style="adjustHeight(index,levelOne.length)"
     >
       <component v-for="(levelTwo,index_2) in levelOne" :key="index_2" :is="shouldResize(index,index_2) ? 'VueResize' : 'NormalPanel'"
                  :class="{'static-panel-container': !shouldResize(index,index_2)}" :style="adjustWidth(index,index_2)"
@@ -153,9 +153,9 @@ export default
         default: return { flex: '1 1 0' }
       }
     },
-    adjustHeight (idx) {
+    adjustHeight (idx, len) {
       if (idx ? [2, 5, 6, 8, 10].includes(this.typeLayout) : [1, 4, 9].includes(this.typeLayout)) return {}
-      else return { height: this.height + 'px' }
+      else return len ? { height: this.height + 'px' } : {};
     },
     shouldResize (idx, idx2) {
       switch (this.typeLayout) {
@@ -238,5 +238,14 @@ export default
     font-size: 16px;
     font-weight: bold;
     color: red;
+  }
+
+  @media (max-width: $wideminwidth - 1px)
+  {
+    .layout-colfirst:not(:last-child),
+    .layout-colfirst > *:not(:last-child)
+    {
+      display: none;
+    }
   }
 </style>

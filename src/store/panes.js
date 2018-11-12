@@ -323,12 +323,16 @@ const mutations =
     state.nextTabId++
   },
   changeDisposition (state, payload) {
-    let count = 0
-    payload.forEach(levelOne => {
-      if (Object.prototype.toString.call(levelOne) === '[object Array]') count += levelOne.length
-      else count++
-    })
-    while (count > state.items.length) {
+    let maxPane = 0;
+    payload.forEach(levelOne =>
+    {
+      levelOne.forEach(levelTwo =>
+      {
+        if (levelTwo > maxPane) maxPane = levelTwo;
+      });
+    });
+    while (maxPane >= state.items.length)
+    {
       // create the missing panel(s)
       state.items.push({
         active: null,
