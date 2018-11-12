@@ -15,7 +15,7 @@
       v-for="(tab, index) in tabs" :key="index"
       style=""
       class="iframeContent"
-      :class="[ { active : active_tab === tab.id } ]"
+      :class="{ active : active_tab === tab.id }"
       :style="{pointerEvents: isResizing ? 'none' : 'auto'}"
       frameborder="0"
       :src="tab.src" />
@@ -27,18 +27,6 @@
 export default {
   name: 'PaneContent',
   computed: {
-    tabs: {
-      get () {
-        return this.$store.state.panes.items[this.pane_id].tabs
-      },
-      /* npo reason to set here ?
-      set (tabs) {
-        console.log('setting tabs')
-        console.log(tabs)
-        this.$store.commit('panes/updateTabs', { tabs: tabs, paneId: this.pane_id })
-      },
-      */
-    },
     isResizing () {
       return this.$store.state.panes.nowResizing
     },
@@ -67,6 +55,10 @@ export default {
       type: Number,
       required: false,
       default: 0,
+    },
+    tabs: {
+      required: true,
+      type: Array,
     },
   },
 }

@@ -1,6 +1,6 @@
 <template>
   <div ref="layout" class="layout layout-rowfirst">
-    <div v-for="(levelOne,index) in panes.disposition.itempos" :key="index" class="layout-colfirst"
+    <div v-for="(levelOne,index) in panes.disposition.itempos" :key="index" class="layout-colfirst desktop"
          :class="{'layout-autosized': index ? [2,5,6,8,10].includes(typeLayout) : [1,4,9].includes(typeLayout) }"
          :style="adjustHeight(index,levelOne.length)"
     >
@@ -25,6 +25,26 @@
           @add-app="addTab"
           @close="panes.items[levelTwo].showapps=false"></app-selector>
       </component>
+    </div>
+    <div class="static-panel-container mobile">
+      <TabBar
+        mobile
+        :pane_id="0"
+        :tabs="allTabs"
+        :active_tab="panes.activeMobileTab"
+        :showapps="false"
+        @add="tryAddTabMobile" />
+      <PaneContent
+        :pane_id="0"
+        :tabs="allTabs"
+        :active_tab="panes.activeMobileTab"
+        class="pane-content" />
+      <app-selector
+        class="app-selector-mobile"
+        :paneId="0"
+        :displayed="panes.mobileShowApps"
+        @add-app="addTab"
+        @close="panes.mobileShowApps = false"/>
     </div>
     <modal v-if="cantAddTab" @close="cantAddTab = false">
       <h3 slot="header">Warning</h3>
@@ -84,6 +104,11 @@ export default
     itempos () {
       return this.panes.disposition.itempos
     },
+    allTabs () {
+      return this.panes.items.reduce((acc, panel) => {
+        return acc.concat(panel.tabs)
+      }, [])
+    },
     typeLayout () {
       // bits 1,0 = number of panels in row 1
       // bits 3,2 = number of panels in row 2
@@ -121,7 +146,7 @@ export default
   methods:
   {
     addTab (appData) {
-      console.log('Adding a app from layout')
+      console.log('Adding app from layout')
       console.log(appData)
       this.$store.commit('panes/addApp', appData)
     },
@@ -129,6 +154,12 @@ export default
       const maxNum = this.panes.maxNumberOfTabsInPanel
       const pane = this.panes.items[paneID]
       if (pane.tabs.length < maxNum) pane.showapps = true
+      else this.cantAddTab = true
+    },
+    tryAddTabMobile () {
+      const maxNum = this.panes.maxNumberOfTabsInPanel
+      const pane = this.panes.items[0]
+      if (pane.tabs.length < maxNum) this.panes.mobileShowApps = true
       else this.cantAddTab = true
     },
     onResize (newRect) {
@@ -155,7 +186,7 @@ export default
     },
     adjustHeight (idx, len) {
       if (idx ? [2, 5, 6, 8, 10].includes(this.typeLayout) : [1, 4, 9].includes(this.typeLayout)) return {}
-      else return len ? { height: this.height + 'px' } : {};
+      else return len ? { height: this.height + 'px' } : {}
     },
     shouldResize (idx, idx2) {
       switch (this.typeLayout) {
@@ -242,8 +273,15 @@ export default
 
   @media (max-width: $wideminwidth - 1px)
   {
-    .layout-colfirst:not(:last-child),
-    .layout-colfirst > *:not(:last-child)
+    .layout .desktop
+    {
+      display: none;
+    }
+  }
+
+  @media (min-width: $wideminwidth)
+  {
+    .layout .mobile
     {
       display: none;
     }

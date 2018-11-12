@@ -1,21 +1,36 @@
 <template>
-  <div
-    class="tab_list_wrapper"
-    :style="(top === ''?'':'top:' + top) + ';' + (left ==='' ? '' : 'left:calc('+left+' - 5px)')"
-    :class="{ 'mobile-shown' : mobileListShown}">
-    <div
-      class="mobile mobile-switch"
-      @click="mobileListShown=!mobileListShown">
-        <i v-if="!mobileListShown" class="icon-tabs"></i>
-        <i v-else class="icon-x"></i>
+  <div class="tab_list_wrapper">
+    <div v-if="mobile" class="tab_bar_mobile">
+      <div class="tab_header_mobile">
+        <div class="tab_icon_mobile" @click="mobileListShown=!mobileListShown">
+          <i v-if="!mobileListShown" class="icon-tabs"></i>
+          <i v-else class="icon-x"></i>
+        </div>
+        <div class="tab_active_title">{{ mobileListShown ? 'All Tabs' : activeMobileTitle }}</div>
+        <div class="tab_icon_mobile" @click="mobileListShown ? $emit('add') : removeTab(panes.activeMobileTab)">
+          <i v-if="mobileListShown" class="icon-plus-circle"></i>
+          <i v-else class="icon-x"></i>
+        </div>
       </div>
-    <div class="mobile title">
-      <span>All Tabs</span>
-      <div class="tab-plus add" @click="$emit('add')">
-        <label for="show-apps"><i class="icon-plus"></i></label>
+      <div class="tab_list_mobile" :style="{maxHeight: mobileListShown ? '250px' : '0'}">
+        <div
+          class="tab_item_mobile"
+          :class="{ active : active_tab === tab.id }"
+          v-for="tab in tabs" :key="tab.id"
+          @touch.self="switchActive(tab.id)"
+          @mousedown.self="switchActive(tab.id)">
+          <i class="active-indicator icon-play3" v-if="active_tab === tab.id"></i>
+          <div v-if="tab.logo" :style="{backgroundImage: 'url(' + tab.logo + ')'}" class="tab_logo"/>
+          <div
+            class="tab_title"
+            @touch.self="switchActive(tab.id)"
+            @mousedown.self="switchActive(tab.id)">{{ tab.title }}</div>
+          <button class="tab-close" @click="removeTab(tab.id)">&times;</button>
+        </div>
       </div>
     </div>
     <slick
+      v-else
       ref="slick"
       class="tab_list"
       :options="slickOptions"
@@ -23,20 +38,19 @@
       :data-paneid="pane_id">
       <div
         class="tab_item"
-        :class="[ { active : active_tab === tab.id } ]"
-        v-for="(tab, index) in tabs" :key="index"
-        @touch.self="switchActive({id:tab.id, pane:pane_id})"
-        @mousedown.self="switchActive({id:tab.id, pane:pane_id})">
-        <i class="active-indicator icon-play3" v-if="mobileListShown && active_tab === tab.id"></i>
+        :class="{ active : active_tab === tab.id }"
+        v-for="tab in tabs" :key="tab.id"
+        @touch.self="switchActive(tab.id)"
+        @mousedown.self="switchActive(tab.id)">
         <div v-if="tab.logo" :style="{backgroundImage: 'url(' + tab.logo + ')'}" class="tab_logo"/>
         <div
           class="tab_title"
-          @touch.self="switchActive({id:tab.id, pane:pane_id})"
-          @mousedown.self="switchActive({id:tab.id, pane:pane_id})">{{ tab.title }}</div>
-        <button class="tab-close" @click="removeTab({id:tab.id, pane:pane_id})">&times;</button>
+          @touch.self="switchActive(tab.id)"
+          @mousedown.self="switchActive(tab.id)">{{ tab.title }}</div>
+        <button class="tab-close" @click="removeTab(tab.id)">&times;</button>
       </div>
     </slick>
-    <button class="tab-plus" aria-label="Add tab" title="Add tab" @click="addTab">+</button>
+    <button v-if="!mobile" class="tab-plus" aria-label="Add tab" title="Add tab" @click="$emit('add')">+</button>
   </div>
 </template>
 <script>
@@ -74,29 +88,26 @@ export default
       type: String,
       default: '',
     },
-    /*
     tabs: {
       required: true,
       type: Array,
     },
-    */
     active_tab:
     {
       type: Number,
       required: false,
       default: 0,
     },
+    mobile:
+      {
+        type: Boolean,
+        default: false,
+      },
   },
   data () {
     return {
-      // create a local instance of tabs
-      paneTabs: null,
       mobileListShown: false,
     }
-  },
-  // run at component first creation
-  created: function () {
-    // this.paneTabs = this.tabs
   },
   watch:
     {
@@ -104,12 +115,13 @@ export default
     },
   methods:
   {
-    switchActive: function (newActiveTab) {
+    switchActive: function (tabID) {
       // console.log('TabBar says : newActiveTab ' + newActiveTab.id + ' in pane ' + newActiveTab.pane)
-      this.$store.commit('panes/changeActive', newActiveTab)
+      this.$store.commit(this.mobile ? 'panes/changeActiveMobile' : 'panes/changeActive', tabID)
       this.mobileListShown = false
     },
     reInit () {
+      if (this.mobile) return
       let currIndex = this.$refs.slick.currentSlide()
 
       this.$refs.slick.destroy()
@@ -118,29 +130,14 @@ export default
         this.$refs.slick.goTo(currIndex, true)
       })
     },
-    addTab () {
-      this.$emit('add')
-    },
-    removeTab: function (tabToDel) {
+    removeTab: function (tabID) {
       // console.log('TabBar says : newActiveTab ' + newActiveTab.id + ' in pane ' + newActiveTab.pane)
-      this.$store.commit('panes/removeTab', tabToDel)
+      this.$store.commit('panes/removeTab', tabID)
     },
   },
   computed: {
-    tabs: {
-      get () {
-        // console.log(this.$store.state.panes)
-        // console.log('TabBar getting tabs')
-        return this.$store.state.panes.items[this.pane_id].tabs
-      },
-      set (tabs) {
-        // console.log('setting tabs')
-        // console.log(tabs)
-        this.$store.commit('panes/updateTabs', {
-          tabs: tabs,
-          paneId: this.pane_id,
-        })
-      },
+    panes () {
+      return this.$store.state.panes
     },
     slickOptions () {
       return {
@@ -150,9 +147,15 @@ export default
         nextArrow: '<button class="slick_arrow">&gt;</button>',
       }
     },
+    activeMobileTitle () {
+      const active = this.panes.activeMobileTab
+      const tab = this.tabs.find(item => item.id === active)
+      return tab ? tab.title : ''
+    },
   },
 }
 </script>
+
 <style scoped lang="scss">
   @import '@/assets/sass/_0.declare.scss';
 
@@ -167,145 +170,89 @@ export default
     box-shadow: 0 0.1rem 0.2rem 0 rgba($defaulttextcolor, 0.1);
   }
 
+  .tab_logo
+  {
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+  }
+
+  .tab_title
+  {
+    flex: 1 1 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    line-height: 25px;
+    cursor: pointer;
+  }
+
+  .tab-close
+  {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    width: 16px;
+    font-size: 20px;
+  }
+
+  .tab-close:hover
+  {
+    transform: scale(1.2);
+  }
+
   @media (max-width: $wideminwidth - 1px)
   {
-    .title
+    .tab_header_mobile
     {
-      line-height: 30px;
-      max-height: 30px;
-      overflow: hidden;
-      display: none;
-
-      span
-      {
-        display: inline-block;
-        vertical-align: middle;
-        margin-bottom: 20px;
-        color: $defaulttextcolor;
-        font-weight: 600;
-        font-size: 14px;
-        padding-left: 10px;
-      }
-
-      .add
-      {
-        float: right;
-        margin-right: 15px;
-      }
+      display: flex;
+      align-items: center;
     }
 
-    .mobile-switch,
-    .title .add
+    .tab_icon_mobile
     {
-      float: left;
-      font-size: 24px;
-      line-height: 30px;
+      width: 30px;
       height: 30px;
-      padding: 3px 0;
-
-      i
-      {
-        line-height: 1;
-      }
+      font-size: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    .mobile-switch
+    .tab_active_title
     {
-      padding: 4px 0 0 15px;
-
-      .title
-      {
-        display: block;
-      }
+      flex: 1 1 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 16px;
+      cursor: pointer;
     }
 
-    .tab_list
+    .tab_list_mobile
     {
-      background-color: $headerbgcolor;
-
-      .add
-      {
-        display: none;
-      }
+      overflow: auto;
+      transition: max-height 0.3s linear;
     }
 
-    .tab_item
+    .tab_item_mobile
     {
-      display: none;
-      line-height: 30px;
-      margin-left: 24px + 15px + 10px; // icon width + 15 + 15
-      margin-right: 15px; // icon width + 15 + 15
-      &.active
-      {
-        display: block;
-        font-size: 14px;
-      }
-
-      .icon-close
-      {
-        float: right;
-        font-size: 24px;
-        padding: 3px 0;
-      }
+      background-color: $mainbgcolor;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      padding: 0 6px;
+      border-radius: 3px;
+      margin: 8px 12px 12px 25px;
     }
 
-    .tab_list_wrapper.mobile-shown
+    .tab_item_mobile.active
     {
-      background-color: $headerbgcolor;
-
-      .mobile-switch
-      {
-        padding-top: 3px;
-      }
-
-      .tab_list
-      {
-        display: block;
-        padding: 10px 0 20px 0;
-        box-shadow: 0 0.1rem 0.2rem 0 rgba($defaulttextcolor, 0.1);
-        max-height: calc(100vh - 100px);
-        overflow: hidden auto;
-      }
-
-      .title
-      {
-        display: block;
-        line-height: 34px;
-      }
-
-      .tab_item
-      {
-        display: block;
-        height: 34px;
-        line-height: 34px;
-        padding: 0 5px 0 9px;
-        margin-left: 24px + 15px + 10px;
-        margin-right: 15px - 4px;
-        border-radius: 3px;
-        background-color: rgba($defaultitembgcolor, 0.15);
-        margin-bottom: 10px;
-        font-size: 14px;
-
-        .icon-close
-        {
-          padding-top: 5px;
-        }
-
-        &.active
-        {
-          background-color: rgba($appgreen, 0.15);
-        }
-
-        .active-indicator
-        {
-          margin-left: -10px;
-          width: 9px;
-          font-size: 9px;
-          display: block;
-          float: left;
-          line-height: 30px;
-        }
-      }
+      background-color: $appgreen;
     }
   }
 
@@ -321,6 +268,7 @@ export default
     {
       display: flex;
       overflow: hidden;
+      border-top: 1px solid #DDD;
     }
 
     .tab_list
@@ -328,7 +276,7 @@ export default
       display: flex;
       /* flex-wrap: wrap; */
       overflow: hidden;
-      border-top: 1px solid #DDD;
+      flex: 1 1 0;
     }
 
     .tab-plus
@@ -336,11 +284,12 @@ export default
       display: block;
       font-weight: bold;
       color: #FFF;
-     background: $tab_bgcolor;
+      background: $tab_bgcolor;
       line-height: 20px;
       font-size: 20px;
       width: 30px;
       min-width: 30px;
+      min-height: 30px;
       border: none;
       cursor: pointer;
     }
@@ -366,41 +315,6 @@ export default
       display: inline-flex !important;
       align-items: center;
       border: 1px solid #DDD;
-
-      .tab_logo
-      {
-        width: 25px;
-        height: 25px;
-        margin-right: 5px;
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: contain;
-      }
-
-      .tab_title
-      {
-        flex: 1 1 0;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-size: 12px;
-        line-height: 25px;
-        cursor: pointer;
-      }
-
-      .tab-close
-      {
-        cursor: pointer;
-        border: none;
-        background-color: transparent;
-        width: 16px;
-        font-size: 20px;
-      }
-
-      .tab-close:hover
-      {
-        transform: scale(1.2);
-      }
     }
 
     .tab_item.active
@@ -428,7 +342,7 @@ export default
     font-size: 20px;
     width: 30px;
     min-width: 30px;
-    border: 1px solid black;
+    border: 1px solid #999;
     border-radius: 2px;
     cursor: pointer;
   }

@@ -14,6 +14,8 @@ const state = {
   nextTabId: 4,
   maxNumberOfTabsInPanel: 6,
   nowResizing: false,
+  activeMobileTab: 0,
+  mobileShowApps: false,
 
   disposition:
     {
@@ -260,31 +262,29 @@ const mutations =
   setFirstTabActive: (state, pane) => {
     state.items[pane.paneId].active = state.items[pane.paneId].tabs[0].id
   },
-  removeTab: (state, tabToDel) => {
-    console.log('removing tab')
-    console.log(tabToDel)
-    const pane = state.items[tabToDel.pane]
-    const tabItems = pane.tabs
+  removeTab: (state, tabID) => {
+    console.log('removing tab = ' + tabID)
+    let pane, itemIndexToDel, tabItems
+    state.items.every(curPanel => {
+      itemIndexToDel = curPanel.tabs.findIndex(item => item.id === tabID)
+      if (itemIndexToDel !== -1) {
+        pane = curPanel
+        tabItems = pane.tabs
+        return false
+      }
+      return true
+    })
     console.log('active')
     console.log(pane.active)
-    // if this is the last tab, remove the panel
-    /*
-    if (tabItems.length === 1)
-    {
-      // remove panel
-      state.items.splice(tabToDel.pane, 1)
-      // and in the future we should reorganize if necessary.
-    }
-    else
-    */
-    // {
-    // else remove the tab
-    let itemIndexToDel = tabItems.findIndex(item => item.id === tabToDel.id)
     if (itemIndexToDel !== -1) {
+      const allTabs = state.items.reduce((acc, panel) => {
+        return acc.concat(panel.tabs)
+      }, [])
+      const itemIndex = allTabs.findIndex(item => item.id === tabID)
       // delete current tab
-      pane.tabs.splice(itemIndexToDel, 1)
+      tabItems.splice(itemIndexToDel, 1)
       // if the deleted tab is the active...
-      if (pane.active === tabToDel.id) {
+      if (pane.active === tabID) {
         const len = tabItems.length
         if (itemIndexToDel < len) pane.active = tabItems[itemIndexToDel].id
         else {
@@ -292,11 +292,28 @@ const mutations =
           else pane.active = null
         }
       }
+      if (pane.active) state.activeMobileTab = pane.active
+      else {
+        if (itemIndex) state.activeMobileTab = allTabs[itemIndex - 1].id
+        else if (allTabs.length > 1) state.activeMobileTab = allTabs[itemIndex + 1].id
+        else state.activeMobileTab = null
+      }
     }
-    // }
   },
-  changeActive: (state, newActiveTab) => {
-    state.items[newActiveTab.pane].active = newActiveTab.id
+  changeActive: (state, tabID) => {
+    let pane, tabIndex
+    state.items.every(curPanel => {
+      tabIndex = curPanel.tabs.findIndex(item => item.id === tabID)
+      if (tabIndex !== -1) {
+        pane = curPanel
+        return false
+      }
+      return true
+    })
+    pane.active = tabID
+  },
+  changeActiveMobile (state, tabID) {
+    state.activeMobileTab = tabID
   },
   addApp: (state, appData) => {
     var paneId = appData.paneId
@@ -323,7 +340,9 @@ const mutations =
       logo: appData.app.logo,
     })
     state.items[paneId].showapps = false
+    state.mobileShowApps = false
     state.items[paneId].active = state.nextTabId
+    state.activeMobileTab = state.nextTabId
     state.nextTabId++
   },
   changeDisposition (state, payload) {
