@@ -27,7 +27,7 @@
     </div>
     <template v-else-if="!mobile">
       <button v-if="hasOverflow" class="tab-prev-next" aria-label="Slide left" title="Slide left" @mousedown.self="startPrev" @mouseup.self="stopPrev" @mouseleave="stopPrev">&lt;</button>
-      <div class="tab_list">
+      <div class="tab_list" @mousedown.stop>
         <draggable
           ref="dragger"
           v-model="tabList"
