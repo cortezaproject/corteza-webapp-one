@@ -11,7 +11,7 @@ Vue.use(Vuex)
 const state = {
   // demo version : 4 panes
   // for full specs see below.
-  nextTabId: 1,
+  nextTabId: 3,
   maxNumberOfTabsInPanel: 8,
   nowResizing: false,
   activeMobileTab: 0,
