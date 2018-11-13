@@ -3,7 +3,7 @@
     <header>
       <div class="title-wrap">
         <strong class="title">Crust</strong>
-        <Capsule title="Platform"/>
+        <Capsule title="Platform">platform</Capsule>
         <span class="active_mobile">{{ (activeTab || {}).title }}</span>
       </div>
       <div class="toolbox">
