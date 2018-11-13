@@ -164,8 +164,9 @@ export default
     },
     onResize (newRect) {
       // in order to sync the width of the 1st panel on the 2nd row
-      this.width = newRect.width
-      this.height = newRect.height
+      this.width = isNaN(newRect.width) ? 0 : newRect.width
+      this.height = isNaN(newRect.height) ? 0 : newRect.height
+      this.$root.$emit('panelresized') // to notify TabBar so that it can check whether to show PREV/NEXT buttons on overflow
     },
     onStopResize () {
       // otherwise the stick can go outside of the screen (because of the specific layout - markup + styling)

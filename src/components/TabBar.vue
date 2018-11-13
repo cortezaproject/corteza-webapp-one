@@ -1,5 +1,5 @@
 <template>
-  <div class="tab_list_wrapper">
+  <div class="tab_list_wrapper" ref="tabbar">
     <div v-if="mobile" class="tab_bar_mobile">
       <div class="tab_header_mobile">
         <div class="tab_icon_mobile" @click="mobileListShown=!mobileListShown">
@@ -29,30 +29,37 @@
         </div>
       </div>
     </div>
-    <draggable
-      v-else
-      v-model="tabList"
-      :options="{ group:'tabs' }"
-      class="tab_list"
-      :id="'tabs_in_pane_'+pane_id"
-      :data-paneid="pane_id"
-      @start="drag=true"
-      @end="endDrag">
-      <div
-        class="tab_item"
-        :class="{ active : active_tab === tab.id }"
-        v-for="tab in tabs" :key="tab.id"
-        @touch.self="switchActive(tab.id)"
-        @mousedown.self="switchActive(tab.id)">
-        <div v-if="tab.logo" :style="{backgroundImage: 'url(' + tab.logo + ')'}" class="tab_logo"/>
-        <div
-          class="tab_title"
-          @touch.self="switchActive(tab.id)"
-          @mousedown.self="switchActive(tab.id)">{{ tab.title }}</div>
-        <button class="tab-close" @click="removeTab(tab.id)">&times;</button>
+    <template v-else>
+      <button v-if="hasOverflow" class="tab-prev-next" aria-label="Slide left" title="Slide left" @mousedown.self="startPrev" @mouseup.self="stopPrev" @mouseleave="stopPrev">&lt;</button>
+      <div class="tab_list">
+        <draggable
+          ref="dragger"
+          v-model="tabList"
+          :options="{ group:'tabs' }"
+          class="tab_list"
+          :style="{marginLeft: -posSlider + 'px'}"
+          :id="'tabs_in_pane_'+pane_id"
+          :data-paneid="pane_id"
+          @start="drag=true"
+          @end="endDrag">
+          <div
+            class="tab_item"
+            :class="{ active : active_tab === tab.id }"
+            v-for="tab in tabs" :key="tab.id"
+            @touch.self="switchActive(tab.id)"
+            @mousedown.self="switchActive(tab.id)">
+            <div v-if="tab.logo" :style="{backgroundImage: 'url(' + tab.logo + ')'}" class="tab_logo"/>
+            <div
+              class="tab_title"
+              @touch.self="switchActive(tab.id)"
+              @mousedown.self="switchActive(tab.id)">{{ tab.title }}</div>
+            <button class="tab-close" @click="removeTab(tab.id)">&times;</button>
+          </div>
+        </draggable>
       </div>
-    </draggable>
-    <button v-if="!mobile" class="tab-plus" aria-label="Add tab" title="Add tab" @click="$emit('add')">+</button>
+      <button v-if="hasOverflow" class="tab-prev-next" aria-label="Slide right" title="Slide right" @mousedown.self="startNext" @mouseup.self="stopNext" @mouseleave="stopNext">&gt;</button>
+      <button class="tab-plus" aria-label="Add tab" title="Add tab" @click="$emit('add')">+</button>
+    </template>
   </div>
 </template>
 <script>
@@ -108,7 +115,20 @@ export default
   data () {
     return {
       mobileListShown: false,
+      hasOverflow: false,
+      posSlider: 0,
+      slidingLeft: false,
+      slidingRight: false,
     }
+  },
+  created () {
+    this.$root.$on('panelresized', this.onResize)
+  },
+  beforeDestroy () {
+    this.$root.$off('panelresized', this.onResize)
+  },
+  mounted () {
+    this.onResize()
   },
   methods:
   {
@@ -132,6 +152,36 @@ export default
       // console.log('TabBar says : newActiveTab ' + newActiveTab.id + ' in pane ' + newActiveTab.pane)
       this.$store.commit('panes/removeTab', tabID)
     },
+    onResize () {
+      this.hasOverflow = this.$refs.dragger ? this.$refs.dragger.$el.scrollWidth > this.$refs.dragger.$el.offsetWidth && this.$refs.dragger.$el.offsetWidth > 0 && this.$refs.tabbar.offsetWidth > 100 : false
+    },
+    startPrev () {
+      this.slidingLeft = true
+      this.slidingRight = false
+      requestAnimationFrame(this.slideLeft)
+    },
+    stopPrev () {
+      this.slidingLeft = false
+    },
+    startNext () {
+      this.slidingRight = true
+      this.slidingLeft = false
+      requestAnimationFrame(this.slideRight)
+    },
+    stopNext () {
+      this.slidingRight = false
+    },
+    slideLeft () {
+      if (this.posSlider > 0) this.posSlider = this.posSlider - 5
+      else this.stopPrev()
+      if (this.slidingLeft) requestAnimationFrame(this.slideLeft)
+    },
+    slideRight () {
+      let dif = this.$refs.dragger.$el.scrollWidth - this.$refs.dragger.$el.clientWidth
+      if (dif > 0) this.posSlider = this.posSlider + (dif >= 5 ? 5 : dif)
+      else this.stopNext()
+      if (this.slidingRight) requestAnimationFrame(this.slideRight)
+    },
   },
   computed: {
     tabList:
@@ -148,14 +198,6 @@ export default
     },
     panes () {
       return this.$store.state.panes
-    },
-    slickOptions () {
-      return {
-        infinite: false,
-        variableWidth: true,
-        prevArrow: '<button class="slick_arrow">&lt;</button>',
-        nextArrow: '<button class="slick_arrow">&gt;</button>',
-      }
     },
     activeMobileTitle () {
       const active = this.panes.activeMobileTab
@@ -213,6 +255,34 @@ export default
   .tab-close:hover
   {
     transform: scale(1.2);
+  }
+
+  .tab-prev-next
+  {
+    display: block;
+    font-weight: bold;
+    color: #FFF;
+    background: $tab_bgcolor;
+    line-height: 20px;
+    font-size: 20px;
+    width: 30px;
+    min-width: 30px;
+    min-height: 30px;
+    border: 1px solid #555;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  .tab-prev-next:hover
+  {
+    background: $defaulttextcolor;
+  }
+
+  .tab-prev-next:active
+  {
+    padding: 1px 0 0 1px;
+    background: #CCC;
+    color: #555;
   }
 
   @media (max-width: $wideminwidth - 1px)
@@ -284,9 +354,7 @@ export default
     .tab_list
     {
       display: flex;
-      /* flex-wrap: wrap; */
       overflow: hidden;
-      flex: 1 1 0;
     }
 
     .tab-plus
@@ -319,6 +387,7 @@ export default
     .tab_item
     {
       width: 150px;
+      min-width: 150px;
       overflow: hidden;
       background: #FFF;
       padding: 3px 2px 2px 4px;

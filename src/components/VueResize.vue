@@ -71,8 +71,8 @@ export default
 
     .vdr-stick-tr
     {
-      top: -25px !important;
-      right: -25px !important;
+      top: -7px !important;
+      right: -23px !important;
     }
 
     .vdr-stick-mr
@@ -93,8 +93,8 @@ export default
 
     .vdr-stick-br
     {
-      bottom: -25px !important;
-      right: -25px !important;
+      bottom: -41px !important;
+      right: -23px !important;
     }
   }
 
