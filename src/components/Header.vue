@@ -183,17 +183,15 @@ export default
   },
   computed:
     {
-      allTabs()
-      {
+      allTabs () {
         return this.$store.state.panes.items.reduce((acc, panel) => {
           return acc.concat(panel.tabs)
         }, [])
       },
-      activeTab()
-      {
-        let active = this.$store.state.panes.activeMobileTab;
-        return this.allTabs.find(item => item.id === active);
-      }
+      activeTab () {
+        let active = this.$store.state.panes.activeMobileTab
+        return this.allTabs.find(item => item.id === active)
+      },
     },
   watch:
     {
