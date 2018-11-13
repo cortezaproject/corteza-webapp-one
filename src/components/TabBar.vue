@@ -1,58 +1,61 @@
 <template>
-  <div class="tab_list_wrapper">
-    <div v-if="mobile" class="tab_bar_mobile">
-      <div class="tab_header_mobile">
-        <div class="tab_icon_mobile" @click="mobileListShown=!mobileListShown">
-          <i v-if="!mobileListShown" class="icon-tabs"></i>
-          <i v-else class="icon-x"></i>
-        </div>
-        <div class="tab_active_title">{{ mobileListShown ? 'All Tabs' : activeMobileTitle }}</div>
-        <div class="tab_icon_mobile" @click="mobileListShown ? $emit('add') : removeTab(panes.activeMobileTab)">
-          <i v-if="mobileListShown" class="icon-plus-circle"></i>
-          <i v-else class="icon-x"></i>
-        </div>
-      </div>
-      <div class="tab_list_mobile" :style="{maxHeight: mobileListShown ? '250px' : '0'}">
+  <div class="tab_list_wrapper" ref="tabbar">
+    <div v-if="mobile && mobileListShown" class="tab_bar_mobile">
+      <div class="tab_header_mobile">All tabs</div>
+      <div class="tab_list_mobile">
         <div
           class="tab_item_mobile"
           :class="{ active : active_tab === tab.id }"
           v-for="tab in tabs" :key="tab.id"
           @touch.self="switchActive(tab.id)"
           @mousedown.self="switchActive(tab.id)">
-          <i class="active-indicator icon-play3" v-if="active_tab === tab.id"></i>
           <div v-if="tab.logo" :style="{backgroundImage: 'url(' + tab.logo + ')'}" class="tab_logo"/>
           <div
             class="tab_title"
             @touch.self="switchActive(tab.id)"
-            @mousedown.self="switchActive(tab.id)">{{ tab.title }}</div>
+            @mousedown.self="switchActive(tab.id)"
+          >
+            {{ tab.title }}
+            <i class="active-indicator" v-if="active_tab === tab.id"></i>
+          </div>
           <button class="tab-close" @click="removeTab(tab.id)">&times;</button>
         </div>
       </div>
-    </div>
-    <draggable
-      v-else
-      v-model="tabs"
-      :options="{ group:'tabs' }"
-      class="tab_list"
-      :id="'tabs_in_pane_'+pane_id"
-      :data-paneid="pane_id"
-      @start="drag=true"
-      @end="endDrag">
-      <div
-        class="tab_item"
-        :class="{ active : active_tab === tab.id }"
-        v-for="tab in tabs" :key="tab.id"
-        @touch.self="switchActive(tab.id)"
-        @mousedown.self="switchActive(tab.id)">
-        <div v-if="tab.logo" :style="{backgroundImage: 'url(' + tab.logo + ')'}" class="tab_logo"/>
-        <div
-          class="tab_title"
-          @touch.self="switchActive(tab.id)"
-          @mousedown.self="switchActive(tab.id)">{{ tab.title }}</div>
-        <button class="tab-close" @click="removeTab(tab.id)">&times;</button>
+      <div class="tab_add_mobile">
+        <button class="tab-plus" @click="$emit('add')">+</button>
       </div>
-      <button v-if="!mobile" class="tab-plus" aria-label="Add tab" title="Add tab" @click="$emit('add')">+</button>
-    </draggable>
+    </div>
+    <template v-else-if="!mobile">
+      <button v-if="hasOverflow" class="tab-prev-next" aria-label="Slide left" title="Slide left" @mousedown.self="startPrev" @mouseup.self="stopPrev" @mouseleave="stopPrev">&lt;</button>
+      <div class="tab_list">
+        <draggable
+          ref="dragger"
+          v-model="tabList"
+          :options="{ group:'tabs' }"
+          class="tab_list"
+          :style="{marginLeft: -posSlider + 'px'}"
+          :id="'tabs_in_pane_'+pane_id"
+          :data-paneid="pane_id"
+          @start="drag=true"
+          @end="endDrag">
+          <div
+            class="tab_item"
+            :class="{ active : active_tab === tab.id }"
+            v-for="tab in tabs" :key="tab.id"
+            @touch.self="switchActive(tab.id)"
+            @mousedown.self="switchActive(tab.id)">
+            <div v-if="tab.logo" :style="{backgroundImage: 'url(' + tab.logo + ')'}" class="tab_logo"/>
+            <div
+              class="tab_title"
+              @touch.self="switchActive(tab.id)"
+              @mousedown.self="switchActive(tab.id)">{{ tab.title }}</div>
+            <button class="tab-close" @click="removeTab(tab.id)">&times;</button>
+          </div>
+        </draggable>
+      </div>
+      <button v-if="hasOverflow" class="tab-prev-next" aria-label="Slide right" title="Slide right" @mousedown.self="startNext" @mouseup.self="stopNext" @mouseleave="stopNext">&gt;</button>
+      <button class="tab-plus" aria-label="Add tab" title="Add tab" @click="$emit('add')">+</button>
+    </template>
   </div>
 </template>
 <script>
@@ -108,12 +111,23 @@ export default
   data () {
     return {
       mobileListShown: false,
+      hasOverflow: false,
+      posSlider: 0,
+      slidingLeft: false,
+      slidingRight: false,
     }
   },
-  watch:
-    {
-      tabs: 'reInit',
-    },
+  created () {
+    this.$root.$on('panelresized', this.onResize)
+    this.$root.$on('showTabsMobile', this.onShowMobile)
+  },
+  beforeDestroy () {
+    this.$root.$off('panelresized', this.onResize)
+    this.$root.$off('showTabsMobile', this.onShowMobile)
+  },
+  mounted () {
+    this.onResize()
+  },
   methods:
   {
     endDrag: function (e) {
@@ -131,33 +145,61 @@ export default
       // console.log('TabBar says : newActiveTab ' + newActiveTab.id + ' in pane ' + newActiveTab.pane)
       this.$store.commit(this.mobile ? 'panes/changeActiveMobile' : 'panes/changeActive', tabID)
       this.mobileListShown = false
-    },
-    reInit () {
-      if (this.mobile) return
-      let currIndex = this.$refs.slick.currentSlide()
-
-      this.$refs.slick.destroy()
-      this.$nextTick(() => {
-        this.$refs.slick.create()
-        this.$refs.slick.goTo(currIndex, true)
-      })
+      this.$root.$emit('closeTabsMobile')
     },
     removeTab: function (tabID) {
       // console.log('TabBar says : newActiveTab ' + newActiveTab.id + ' in pane ' + newActiveTab.pane)
       this.$store.commit('panes/removeTab', tabID)
     },
+    onResize () {
+      this.hasOverflow = this.$refs.dragger ? this.$refs.dragger.$el.scrollWidth > this.$refs.dragger.$el.offsetWidth && this.$refs.dragger.$el.offsetWidth > 0 && this.$refs.tabbar.offsetWidth > 100 : false
+    },
+    onShowMobile (shown) {
+      this.mobileListShown = shown
+    },
+    startPrev () {
+      this.slidingLeft = true
+      this.slidingRight = false
+      requestAnimationFrame(this.slideLeft)
+    },
+    stopPrev () {
+      this.slidingLeft = false
+    },
+    startNext () {
+      this.slidingRight = true
+      this.slidingLeft = false
+      requestAnimationFrame(this.slideRight)
+    },
+    stopNext () {
+      this.slidingRight = false
+    },
+    slideLeft () {
+      if (this.posSlider > 0) this.posSlider = this.posSlider - 5
+      else this.stopPrev()
+      if (this.slidingLeft) requestAnimationFrame(this.slideLeft)
+    },
+    slideRight () {
+      let dif = this.$refs.dragger.$el.scrollWidth - this.$refs.dragger.$el.clientWidth
+      if (dif > 0) this.posSlider = this.posSlider + (dif >= 5 ? 5 : dif)
+      else this.stopNext()
+      if (this.slidingRight) requestAnimationFrame(this.slideRight)
+    },
   },
   computed: {
+    tabList:
+    {
+      get () {
+        return this.tabs
+      },
+      set (tabs) {
+        this.$store.commit('panes/updateTabs', {
+          tabs: tabs,
+          paneId: this.pane_id,
+        })
+      },
+    },
     panes () {
       return this.$store.state.panes
-    },
-    slickOptions () {
-      return {
-        infinite: false,
-        variableWidth: true,
-        prevArrow: '<button class="slick_arrow">&lt;</button>',
-        nextArrow: '<button class="slick_arrow">&gt;</button>',
-      }
     },
     activeMobileTitle () {
       const active = this.panes.activeMobileTab
@@ -217,54 +259,99 @@ export default
     transform: scale(1.2);
   }
 
+  .tab-prev-next
+  {
+    display: block;
+    font-weight: bold;
+    color: #FFF;
+    background: $tab_bgcolor;
+    line-height: 20px;
+    font-size: 20px;
+    width: 30px;
+    min-width: 30px;
+    min-height: 30px;
+    border: 1px solid #555;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  .tab-prev-next:hover
+  {
+    background: $defaulttextcolor;
+  }
+
+  .tab-prev-next:active
+  {
+    padding: 1px 0 0 1px;
+    background: #CCC;
+    color: #555;
+  }
+
   @media (max-width: $wideminwidth - 1px)
   {
+    .tab_bar_mobile
+    {
+      position: fixed;
+      top: 6em; /* take into account the header */
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      background-color: $appgrey;
+      overflow: hidden;
+    }
+
     .tab_header_mobile
     {
-      display: flex;
-      align-items: center;
-    }
-
-    .tab_icon_mobile
-    {
-      width: 30px;
-      height: 30px;
+      padding: 16px 20px;
       font-size: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .tab_active_title
-    {
-      flex: 1 1 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      font-size: 16px;
-      cursor: pointer;
     }
 
     .tab_list_mobile
     {
+      flex: 1 1 0;
       overflow: auto;
-      transition: max-height 0.3s linear;
     }
 
     .tab_item_mobile
     {
-      background-color: $mainbgcolor;
+      background-color: $appwhite;
       height: 30px;
       display: flex;
       align-items: center;
       padding: 0 6px;
       border-radius: 3px;
-      margin: 8px 12px 12px 25px;
+      margin: 8px 16px 16px;
     }
 
-    .tab_item_mobile.active
+    .active-indicator
     {
-      background-color: $appgreen;
+      background-color: $error;
+      display: inline-block;
+      border-radius: 50%;
+      width: 8px;
+      height: 8px;
+    }
+
+    .tab_add_mobile
+    {
+      padding: 16px 0 20px;
+
+      .tab-plus
+      {
+        color: $appwhite;
+        background-color: $appblue;
+        font-size: 28px;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+      }
     }
   }
 
@@ -286,9 +373,7 @@ export default
     .tab_list
     {
       display: flex;
-      /* flex-wrap: wrap; */
       overflow: hidden;
-      flex: 1 1 0;
     }
 
     .tab-plus

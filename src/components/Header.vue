@@ -3,7 +3,7 @@
     <header>
       <div class="title-wrap">
         <strong class="title">Crust</strong>
-        <Capsule title="Platform"/>
+        <Capsule title="Platform">platform</Capsule>
         <span class="active_mobile">{{ (activeTab || {}).title }}</span>
       </div>
       <div class="toolbox">
@@ -28,17 +28,21 @@
               title="Show main menu"></i>
           </label>
         </section>
-        <section @click="optionsMenuOpen=!optionsMenuOpen" class="toolbox-item toolbox_menu">
-          <label v-if="optionsMenuOpen">
-            <i
-              class="icon-close"
+        <section @click="optionsMenuOpen=!optionsMenuOpen" class="toolbox-item toolbox_menu desktop">
+            <i v-if="optionsMenuOpen"
+              class="icon-grid-interface-close"
               title="Show options menu"></i>
-          </label>
-          <label v-else>
-            <i
-              class="icon-menu"
+            <i v-else
+              class="icon-grid-interface-open"
               title="Show options menu"></i>
-          </label>
+        </section>
+        <section @click="clickMenuMobile" class="toolbox-item toolbox_menu mobile">
+          <i v-if="mobileMenuOpen"
+             class="icon-grid-interface-close"
+             title="Show options menu"></i>
+          <i v-else
+             class="icon-grid-interface-open"
+             title="Show options menu"></i>
         </section>
       </div>
     </header>
@@ -161,6 +165,7 @@ export default
       var: false,
       mainMenuOpen: false,
       optionsMenuOpen: false,
+      mobileMenuOpen: false,
       showAppModalPanel: false,
       panels_top: this.$store.state.panes.disposition.itempos[0] || [],
       panels_bottom: this.$store.state.panes.disposition.itempos[1] || [],
@@ -198,8 +203,17 @@ export default
       panels_top: 'updPanels',
       panels_bottom: 'updPanels',
     },
+  created () {
+    this.$root.$on('closeTabsMobile', this.onCloseMobile)
+  },
+  beforeDestroy () {
+    this.$root.$off('closeTabsMobile', this.onCloseMobile)
+  },
   methods:
     {
+      onCloseMobile () {
+        this.mobileMenuOpen = false
+      },
       updPanels () {
         const top = this.panels_top.map(item => Number(item)).sort()
         const bottom = this.panels_bottom.map(item => Number(item)).sort()
@@ -208,6 +222,10 @@ export default
           (top.length > 0 && bottom.length > 0) ? [top, bottom]
             : top.length > 0 ? [top] : bottom.length > 0 ? [bottom] : []);
             */
+      },
+      clickMenuMobile () {
+        this.mobileMenuOpen = !this.mobileMenuOpen
+        this.$root.$emit('showTabsMobile', this.mobileMenuOpen)
       },
     },
 }
@@ -473,7 +491,7 @@ export default
   }
 
   .toolbox_profile,
-  .icon-menu,
+  .toolbox_menu,
   .icon-close
   {
     cursor: pointer;
@@ -501,5 +519,19 @@ export default
     {
       display: none;
     }
+
+    .toolbox_menu.mobile
+    {
+      display: none;
+    }
   }
+
+  @media (max-width: $wideminwidth - 1px)
+  {
+    .toolbox_menu.desktop
+    {
+      display: none;
+    }
+  }
+
 </style>
