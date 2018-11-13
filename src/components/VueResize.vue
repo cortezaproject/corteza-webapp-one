@@ -67,11 +67,17 @@ export default
       width: 50px !important;
       height: 50px !important;
       border-radius: 25px;
+      opacity: 0.6;
+      cursor: grab;
     }
-
+    .vdr-stick:hover
+    {
+      border-width:2px;
+      opacity: 0.9;
+    }
     .vdr-stick-tr
     {
-      top: -7px !important;
+      top: -9px !important;
       right: -23px !important;
     }
 

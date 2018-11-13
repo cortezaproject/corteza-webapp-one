@@ -131,8 +131,18 @@ export default {
       //  - panel : can be opened in crust context
       // if apps can be opened in tabs they will be listed via the "+" in a panel context
       // if apps can be opened in panel/window or external they will be listed via the "+" in header
-      popular_apps: [ 0, 3, 6, 1 ],
+      popular_apps: [ 0, 1, 2, 3 ],
       available_apps: [
+        {
+          name: 'Crust Messaging',
+          logo: require('@/assets/logos/crust.jpg'),
+          icon: 'icon-bubble2',
+          color: 'appyellow',
+          path: 'https://beta.rustbucket.io/messaging/',
+          allowed_contextes: ['panel', 'tab', 'external'],
+          method: 'iframe',
+          showOptions: false,
+        },
         {
           name: 'Crust CRM',
           color: 'appgreen',
@@ -144,13 +154,10 @@ export default {
           showOptions: false, // should be initalised as false for all
         },
         {
-          name: 'Crust Messaging',
-          logo: require('@/assets/logos/crust.jpg'),
-          icon: 'icon-bubble2',
-          color: 'appyellow',
-          path: '/messaging/',
-          allowed_contextes: ['panel', 'tab', 'external'],
-          method: 'iframe',
+          name: 'Meet.Jit.Si',
+          color: '',
+          path: 'https://meet.jit.si/',
+          allowed_contextes: ['panel', 'tab'],
           showOptions: false,
         },
         {
@@ -171,51 +178,14 @@ export default {
           showOptions: false,
         },
         {
-          name: 'Carta Magna',
-          color: '',
-          path: 'https://example.com/',
-          allowed_contextes: ['panel', 'tab'],
-          showOptions: false,
-        },
-        {
           name: 'Jenkins',
           logo: require('@/assets/logos/jenkins.png'),
           allowed_contextes: ['panel', 'tab'],
           showOptions: false,
         },
         {
-          name: 'Magna Aliqua UT LABORE',
-          color: '',
-          icon: 'icon-equalizer',
-          path: 'https://example.com/',
-          allowed_contextes: ['panel', 'tab'],
-          showOptions: false,
-        },
-        {
-          name: 'Aliqua UT LABORE',
-          color: '',
-          icon: 'icon-files-empty',
-          path: 'https://example.com/',
-          allowed_contextes: ['panel', 'tab'],
-          showOptions: false,
-        },
-        {
-          name: 'Venimud',
-          color: 'appred',
-          logo: 'https://picsum.photos/200/300',
-          path: 'https://example.com/',
-          allowed_contextes: ['panel', 'tab'],
-          showOptions: false,
-        },
-        {
           name: 'OwnCloud',
           logo: require('@/assets/logos/owncloud.png'),
-          allowed_contextes: ['panel', 'tab'],
-          showOptions: false,
-        },
-        {
-          name: 'Ut labore',
-          path: 'https://example.com/',
           allowed_contextes: ['panel', 'tab'],
           showOptions: false,
         },
@@ -236,11 +206,6 @@ export default {
         {
           name: 'Archive',
           logo: require('@/assets/logos/archive.png'),
-          allowed_contextes: ['panel', 'tab'],
-          showOptions: false,
-        },
-        {
-          name: '123',
           allowed_contextes: ['panel', 'tab'],
           showOptions: false,
         },

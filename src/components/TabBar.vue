@@ -27,7 +27,7 @@
     </div>
     <template v-else-if="!mobile">
       <button v-if="hasOverflow" class="tab-prev-next" aria-label="Slide left" title="Slide left" @mousedown.self="startPrev" @mouseup.self="stopPrev" @mouseleave="stopPrev">&lt;</button>
-      <div class="tab_list">
+      <div class="tab_list" @mousedown.stop>
         <draggable
           ref="dragger"
           v-model="tabList"
@@ -298,7 +298,7 @@ export default
       right: 0;
       display: flex;
       flex-direction: column;
-      background-color: $appgrey;
+      background-color: $mainbgcolor;
       overflow: hidden;
     }
 
@@ -317,12 +317,12 @@ export default
     .tab_item_mobile
     {
       background-color: $appwhite;
-      height: 30px;
       display: flex;
       align-items: center;
       padding: 0 6px;
       border-radius: 3px;
-      margin: 8px 16px 16px;
+      margin: 4px 8px 8px;
+      padding: 8px 8px 8px;
     }
 
     .active-indicator
@@ -332,6 +332,7 @@ export default
       border-radius: 50%;
       width: 8px;
       height: 8px;
+      margin-left: 3px;
     }
 
     .tab_add_mobile
