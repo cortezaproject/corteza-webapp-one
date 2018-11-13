@@ -31,7 +31,7 @@
     </div>
     <draggable
       v-else
-      v-model="tabs"
+      v-model="tabList"
       :options="{ group:'tabs' }"
       class="tab_list"
       :id="'tabs_in_pane_'+pane_id"
@@ -110,10 +110,6 @@ export default
       mobileListShown: false,
     }
   },
-  watch:
-    {
-      tabs: 'reInit',
-    },
   methods:
   {
     endDrag: function (e) {
@@ -132,22 +128,24 @@ export default
       this.$store.commit(this.mobile ? 'panes/changeActiveMobile' : 'panes/changeActive', tabID)
       this.mobileListShown = false
     },
-    reInit () {
-      if (this.mobile) return
-      let currIndex = this.$refs.slick.currentSlide()
-
-      this.$refs.slick.destroy()
-      this.$nextTick(() => {
-        this.$refs.slick.create()
-        this.$refs.slick.goTo(currIndex, true)
-      })
-    },
     removeTab: function (tabID) {
       // console.log('TabBar says : newActiveTab ' + newActiveTab.id + ' in pane ' + newActiveTab.pane)
       this.$store.commit('panes/removeTab', tabID)
     },
   },
   computed: {
+    tabList:
+    {
+      get () {
+        return this.tabs
+      },
+      set (tabs) {
+        this.$store.commit('panes/updateTabs', {
+          tabs: tabs,
+          paneId: this.pane_id,
+        })
+      },
+    },
     panes () {
       return this.$store.state.panes
     },
