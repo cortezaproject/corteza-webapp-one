@@ -51,8 +51,8 @@
           @mousedown.self="switchActive(tab.id)">{{ tab.title }}</div>
         <button class="tab-close" @click="removeTab(tab.id)">&times;</button>
       </div>
+      <button v-if="!mobile" class="tab-plus" aria-label="Add tab" title="Add tab" @click="$emit('add')">+</button>
     </draggable>
-    <button v-if="!mobile" class="tab-plus" aria-label="Add tab" title="Add tab" @click="$emit('add')">+</button>
   </div>
 </template>
 <script>
@@ -321,6 +321,7 @@ export default
     .tab_item
     {
       width: 150px;
+      min-width: 150px;
       overflow: hidden;
       background: #FFF;
       padding: 3px 2px 2px 4px;
