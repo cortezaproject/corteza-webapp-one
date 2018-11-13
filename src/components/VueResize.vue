@@ -58,6 +58,8 @@ export default
   .vdr.vdr-panel
   {
     position: relative;
+    max-width: 100vw;
+    max-height: calc(100vh - 6em); /* exclude header */
 
     .vdr-stick
     {
