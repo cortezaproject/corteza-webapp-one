@@ -29,13 +29,15 @@
         </div>
       </div>
     </div>
-    <slick
+    <draggable
       v-else
-      ref="slick"
+      v-model="tabs"
+      :options="{ group:'tabs' }"
       class="tab_list"
-      :options="slickOptions"
       :id="'tabs_in_pane_'+pane_id"
-      :data-paneid="pane_id">
+      :data-paneid="pane_id"
+      @start="drag=true"
+      @end="endDrag">
       <div
         class="tab_item"
         :class="{ active : active_tab === tab.id }"
@@ -49,20 +51,19 @@
           @mousedown.self="switchActive(tab.id)">{{ tab.title }}</div>
         <button class="tab-close" @click="removeTab(tab.id)">&times;</button>
       </div>
-    </slick>
+    </draggable>
     <button v-if="!mobile" class="tab-plus" aria-label="Add tab" title="Add tab" @click="$emit('add')">+</button>
   </div>
 </template>
 <script>
-import Slick from 'vue-slick'
-require('slick-carousel/slick/slick.css')
+import draggable from 'vuedraggable'
 
 export default
 {
   name: 'TabBar',
   components:
   {
-    Slick,
+    draggable,
   },
   props:
   {
@@ -115,6 +116,17 @@ export default
     },
   methods:
   {
+    endDrag: function (e) {
+      console.log('endOfDrag')
+      console.log(e)
+      console.log('from ' + e.from.dataset.paneid + ' to ' + e.to.dataset.paneid)
+      // if moving from one pane to another
+      if (e.from.dataset.paneid !== e.to.dataset.paneid) {
+        this.$store.commit('panes/setFirstTabActive', {
+          paneId: this.pane_id,
+        })
+      }
+    },
     switchActive: function (tabID) {
       // console.log('TabBar says : newActiveTab ' + newActiveTab.id + ' in pane ' + newActiveTab.pane)
       this.$store.commit(this.mobile ? 'panes/changeActiveMobile' : 'panes/changeActive', tabID)
@@ -312,7 +324,7 @@ export default
       overflow: hidden;
       background: #FFF;
       padding: 3px 2px 2px 4px;
-      display: inline-flex !important;
+      display: flex;
       align-items: center;
       border: 1px solid #DDD;
     }
@@ -328,38 +340,5 @@ export default
         color: #FFF;
       }
     }
-  }
-</style>
-
-<style>
-  .slick_arrow
-  {
-    display: block;
-    font-weight: bold;
-    color: #777;
-    background: #DDD;
-    line-height: 20px;
-    font-size: 20px;
-    width: 30px;
-    min-width: 30px;
-    border: 1px solid #999;
-    border-radius: 2px;
-    cursor: pointer;
-  }
-
-  .slick_arrow:active
-  {
-    padding: 1px 0 0 1px;
-  }
-
-  .slick-list
-  {
-    overflow: hidden;
-  }
-
-  .slick-slide
-  {
-    width: 150px !important;
-    display: inline-block;
   }
 </style>

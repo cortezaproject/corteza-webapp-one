@@ -4,7 +4,7 @@
       <div class="title-wrap">
         <strong class="title">Crust</strong>
         <Capsule title="Platform"/>
-          <span class="active_mobile">{{ (activeTab || {}).title }}</span>
+        <span class="active_mobile">{{ (activeTab || {}).title }}</span>
       </div>
       <div class="toolbox">
         <!-- the header add is for panels, not for now, remove false && to restore -->
@@ -490,6 +490,9 @@ export default
     left: 0;
     bottom: 5px;
     line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   @media (min-width: $wideminwidth)
