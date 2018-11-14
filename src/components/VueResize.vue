@@ -61,6 +61,11 @@ export default
     max-width: 100vw;
     max-height: calc(100vh - 6em); /* exclude header */
 
+    &::before
+    {
+      z-index: -2;
+    }
+
     .vdr-stick
     {
       z-index: 4;
@@ -96,6 +101,11 @@ export default
       bottom: -41px !important;
       right: -23px !important;
     }
+  }
+
+  .vdr.vdr-panel.active
+  {
+    outline: 1px dashed #D6D6D6;
   }
 
   .resizable-panel-content
