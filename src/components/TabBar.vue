@@ -45,6 +45,7 @@
             @touch.self="switchActive(tab.id)"
             @mousedown.self="switchActive(tab.id)">
             <div v-if="tab.logo" :style="{backgroundImage: 'url(' + tab.logo + ')'}" class="tab_logo"/>
+            <div v-if="!tab.logo" class="no_tab_logo"/>
             <div
               class="tab_title"
               @touch.self="switchActive(tab.id)"
@@ -234,6 +235,11 @@ export default
     background-size: contain;
   }
 
+  .no_tab_logo
+  {
+    margin-right: 5px;
+  }
+
   .tab_title
   {
     flex: 1 1 0;
@@ -382,19 +388,23 @@ export default
       display: block;
       font-weight: bold;
       color: #FFF;
-      background: $tab_bgcolor;
+      background: $mainbgcolor;
       line-height: 20px;
       font-size: 20px;
-      width: 30px;
+      width: 60px;
       min-width: 30px;
       min-height: 30px;
       border: none;
       cursor: pointer;
+      color:$appgrey;
     }
 
     .tab-plus:hover
     {
-      background: $defaulttextcolor;
+      color: $hoverbgcolor;
+      background: $appgreen;
+      border-left:1px solid #fff;
+      width:59px;
     }
 
     .tab-plus:active
