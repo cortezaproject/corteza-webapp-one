@@ -1,7 +1,7 @@
 <template>
   <div ref="layout" class="layout layout-rowfirst">
-    <div v-for="(levelOne,index) in panes.disposition.itempos" :key="index" class="layout-colfirst desktop"
-         :class="{'layout-autosized': index ? [2,5,6,8,10].includes(typeLayout) : [1,4,9].includes(typeLayout) }"
+    <div v-for="(levelOne,index) in itempos" :key="index" class="layout-colfirst desktop"
+         :class="{'layout-autosized': index ? [4,5,6,8,10].includes(typeLayout) : [1,2,9].includes(typeLayout) }"
          :style="adjustHeight(index,levelOne.length)"
     >
       <component v-for="(levelTwo,index_2) in levelOne" :key="index_2" :is="shouldResize(index,index_2) ? 'VueResize' : 'NormalPanel'"
