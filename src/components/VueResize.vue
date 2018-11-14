@@ -40,10 +40,6 @@ export default
     {
       onResize (newRect) {
         this.$store.commit('panes/setResizing', true)
-        // without NextTick() Vue-Drag-Resize overrides our setting
-        this.$nextTick(() => {
-          this.$refs.vdr.style.top = '0'
-        })
         this.$emit('resize', newRect)
       },
       onStopResize () {
@@ -60,6 +56,8 @@ export default
     position: relative;
     max-width: 100vw;
     max-height: calc(100vh - 6em); /* exclude header */
+    top: 0 !important;
+    left: 0 !important;
 
     &::before
     {
