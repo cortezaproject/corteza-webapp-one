@@ -103,11 +103,6 @@ export default
     }
   }
 
-  .vdr.vdr-panel.active
-  {
-    outline: 1px dashed #D6D6D6;
-  }
-
   .resizable-panel-content
   {
     min-height: 0;
@@ -115,6 +110,7 @@ export default
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    border: 1px dashed #D6D6D6;
   }
 
   .resizable-panel-content > *:nth-child(2)
