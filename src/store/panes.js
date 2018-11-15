@@ -64,116 +64,6 @@ const state = {
           ],
       },
     ],
-
-  /*
-  disposition:
-  {
-    type: 'rowfirst',
-    itempos: [ [ 0, 1 ], [ 2, 3 ] ],
-  },
-  items:
-  [
-    {
-      active: 0,
-      showapps: false,
-      tabs:
-      [
-        {
-          id: 0,
-          title: 'Temp1',
-          src: 'https://www.example.com/',
-        },
-      ],
-    },
-    {
-      active: 1,
-      showapps: false,
-      tabs:
-      [
-        {
-          id: 1,
-          title: 'Temp2',
-          src: 'https://www.example.com/',
-        },
-      ],
-    },
-    {
-      active: 2,
-      showapps: false,
-      tabs:
-      [
-        {
-          id: 2,
-          title: 'Temp3',
-          src: 'https://www.example.com/',
-        },
-      ],
-    },
-    {
-      active: 3,
-      showapps: false,
-      tabs:
-      [
-        {
-          id: 3,
-          title: 'Temp4',
-          src: 'https://www.example.com/',
-        },
-      ],
-    },
-  ],
-  */
-  /* items:
-  [
-    {
-      active: 0,
-      showapps: false,
-      tabs:
-      [
-        {
-          id: 0,
-          title: 'Messaging',
-          src: 'https://beta.rustbucket.io/messaging/',
-        },
-      ],
-    },
-    {
-      active: 1,
-      showapps: false,
-      tabs:
-      [
-        {
-          id: 1,
-          title: 'Temp4',
-          src: 'https://www.example.com/',
-        },
-        {
-          id: 2,
-          title: 'Temp5',
-          src: 'https://www.example.com/',
-        },
-        {
-          id: 3,
-          title: 'Temp6',
-          src: 'https://www.example.com/',
-        },
-      ],
-    },
-    {
-      active: 0,
-      showapps: true,
-      tabs:
-      [
-      ],
-    },
-    {
-      active: 0,
-      showapps: false,
-      tabs:
-      [
-      ],
-    },
-  ], */
 }
 
 // Below would be the default case : no panels to start with.
@@ -274,8 +164,7 @@ const mutations =
       }
       return true
     })
-    console.log('active')
-    console.log(pane.active)
+    console.log('active = ' + pane.active)
     if (itemIndexToDel !== -1) {
       const allTabs = state.items.reduce((acc, panel) => {
         return acc.concat(panel.tabs)
@@ -297,6 +186,16 @@ const mutations =
         if (itemIndex) state.activeMobileTab = allTabs[itemIndex - 1].id
         else if (allTabs.length > 1) state.activeMobileTab = allTabs[itemIndex + 1].id
         else state.activeMobileTab = null
+      }
+      if (tabItems.length === 0) {
+        // hide the panel - no more tabs
+        const paneID = state.items.indexOf(pane)
+        const idx = state.disposition.itempos[0].indexOf(paneID)
+        if (idx !== -1) state.disposition.itempos[0].splice(idx, 1)
+        else {
+          const idx = state.disposition.itempos[1].indexOf(paneID)
+          if (idx !== -1) state.disposition.itempos[1].splice(idx, 1)
+        }
       }
     }
   },
