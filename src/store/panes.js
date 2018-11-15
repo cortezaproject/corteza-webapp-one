@@ -19,7 +19,7 @@ const state = {
 
   disposition:
     {
-      type: 'rowfirst',
+      type: 'colfirst',
       itempos: [ [ 0, 1 ], [ 2 ] ],
     },
   items:

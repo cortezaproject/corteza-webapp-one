@@ -1,7 +1,8 @@
 <template>
-  <div ref="layout" class="layout layout-rowfirst">
-    <div v-for="(levelOne,index) in itempos" :key="index" class="layout-colfirst desktop"
-         :class="{'layout-autosized': index ? [4,5,6,8,10].includes(typeLayout) : [1,2,9].includes(typeLayout) }"
+  <div ref="layout" class="layout" :class="{'layout-rowfirst': rowFirst, 'layout-colfirst': !rowFirst}">
+    <div v-for="(levelOne,index) in itempos" :key="index" class="desktop"
+         :class="{'layout-autosized': index ? [4,5,6,8,10].includes(typeLayout) : [1,2,9].includes(typeLayout),
+          'layout-colfirst': rowFirst, 'layout-rowfirst': !rowFirst}"
          :style="adjustHeight(index,levelOne.length)"
     >
       <component v-for="(levelTwo,index_2) in levelOne" :key="index_2" :is="shouldResize(index,index_2) ? 'VueResize' : 'NormalPanel'"
@@ -109,30 +110,47 @@ export default
         return acc.concat(panel.tabs)
       }, [])
     },
+    rowFirst () {
+      return this.panes.disposition.type === 'rowfirst'
+    },
     typeLayout () {
       // bits 1,0 = number of panels in row 1
       // bits 3,2 = number of panels in row 2
       // 0 = no panels
       // 1/4 = 1 panel
-      // 2/8 = 2 columns by 1 panel
-      // 5 = 2 rows by 1 panel
-      // 6 = 2 on top, 1 on bottom
-      // 9 = 1 on top, 2 on bottom
+      // 2/8 = 2 columns by 1 panel (rowfirst), 2 rows by 1 panel (colfirst)
+      // 5 = 2 rows by 1 panel (rowfirst), 2 cols by 1 panel (colfirst)
+      // 6 = 2 on top, 1 on bottom (rowfirst), 2 on left + 1 on right (colfirst)
+      // 9 = 1 on top, 2 on bottom (rowfirst), 1 on left + 2 on right (colfirst)
       // 10 = 4 panels
       const layout = this.panes.disposition.itempos
       return layout[0].length + 4 * layout[1].length
     },
     sticks () {
-      switch (this.typeLayout) {
-        case 0:
-        case 1:
-        case 4: return ''
-        case 2:
-        case 8: return 'mr'
-        case 6:
-        case 10: return 'br'
-        case 5: return 'bm'
-        case 9: return 'tr'
+      if (this.rowFirst) {
+        switch (this.typeLayout) {
+          case 0:
+          case 1:
+          case 4: return ''
+          case 2:
+          case 8: return 'mr'
+          case 6:
+          case 10: return 'br'
+          case 5: return 'bm'
+          case 9: return 'tr'
+        }
+      } else {
+        switch (this.typeLayout) {
+          case 0:
+          case 1:
+          case 4: return ''
+          case 2:
+          case 8: return 'bm'
+          case 6:
+          case 10: return 'br'
+          case 5: return 'mr'
+          case 9: return 'bl'
+        }
       }
     },
   },
@@ -181,13 +199,14 @@ export default
         case 5: return idx === 0 ? {} : { flex: '1 1 0' }
         case 9: return idx !== 0 && idx2 === 0 ? {} : { flex: '1 1 0' }
         case 6: return idx === 0 && idx2 === 0 ? {} : { flex: '1 1 0' }
-        case 10: return idx === 0 && idx2 === 0 ? {} : idx !== 0 && idx2 === 0 ? { flex: '0 0 ' + this.width + 'px' } : {}
+        case 10: return idx === 0 && idx2 === 0 ? {} : idx !== 0 && idx2 === 0 ? { flex: '0 0 ' + (this.rowFirst ? this.width : this.height) + 'px' } : {}
         default: return { flex: '1 1 0' }
       }
     },
     adjustHeight (idx, len) {
       if (idx ? [2, 5, 6, 8, 10].includes(this.typeLayout) : [1, 4, 9].includes(this.typeLayout)) return {}
-      else return len ? { height: this.height + 'px' } : {}
+      else if (this.rowFirst) return len ? { height: this.height + 'px' } : {}
+      else return len ? { width: this.width + 'px' } : {}
     },
     shouldResize (idx, idx2) {
       switch (this.typeLayout) {
@@ -202,19 +221,36 @@ export default
     },
     computeSize () {
       let rect = this.$refs.layout.getBoundingClientRect()
-      switch (this.typeLayout) {
-        case 2:
-        case 8: // 2 cols by 1 panel
-          this.width = rect.width / 2
-          this.height = rect.height
-          break
-        case 5: // 2 rows by 1 panel
-          this.width = rect.width
-          this.height = rect.height / 2
-          break
-        default:
-          this.width = rect.width / 2
-          this.height = rect.height / 2
+      if (this.rowFirst) {
+        switch (this.typeLayout) {
+          case 2:
+          case 8: // 2 cols by 1 panel
+            this.width = rect.width / 2
+            this.height = rect.height
+            break
+          case 5: // 2 rows by 1 panel
+            this.width = rect.width
+            this.height = rect.height / 2
+            break
+          default:
+            this.width = rect.width / 2
+            this.height = rect.height / 2
+        }
+      } else {
+        switch (this.typeLayout) {
+          case 2:
+          case 8: // 2 rows by 1 panel
+            this.width = rect.width
+            this.height = rect.height / 2
+            break
+          case 5: // 2 cols by 1 panel
+            this.width = rect.width / 2
+            this.height = rect.height
+            break
+          default:
+            this.width = rect.width / 2
+            this.height = rect.height / 2
+        }
       }
     },
   },

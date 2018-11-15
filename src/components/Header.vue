@@ -77,7 +77,8 @@
                       </td>
                       <td>
                         <label for="panel_row_0_column_1">
-                          <input type="checkbox" id="panel_row_0_column_1" name="panel_row_0_column_1" v-model="panels_top" value="1"/>
+                          <input v-if="rowFirst" type="checkbox" id="panel_row_0_column_1" name="panel_row_0_column_1" v-model="panels_top" value="1"/>
+                          <input v-else type="checkbox" id="panel_row_1_column_0" name="panel_row_1_column_0" v-model="panels_bottom" value="2"/>
                         </label>
                       </td>
                     </tr>
@@ -86,7 +87,8 @@
                       </th>
                       <td>
                         <label for="panel_row_1_column_0">
-                          <input type="checkbox" id="panel_row_1_column_0" name="panel_row_1_column_0" v-model="panels_bottom" value="2"/>
+                          <input v-if="rowFirst" type="checkbox" id="panel_row_1_column_0" name="panel_row_1_column_0" v-model="panels_bottom" value="2"/>
+                          <input v-else type="checkbox" id="panel_row_0_column_1" name="panel_row_0_column_1" v-model="panels_top" value="1"/>
                         </label>
                       </td>
                       <td>
@@ -197,6 +199,9 @@ export default
         let active = this.$store.state.panes.activeMobileTab
         return this.allTabs.find(item => item.id === active)
       },
+      rowFirst () {
+        return this.$store.state.panes.disposition.type === 'rowfirst'
+      },
     },
   watch:
     {
@@ -222,7 +227,7 @@ export default
           // a new panel was created
           this.optionsMenuOpen = false
           let panel = oldVal.length ? (oldVal[0] === newVal[0] ? newVal[1] : newVal[0]) : newVal[0]
-          this.$store.state.panes.items[panel].showapps = true
+          if (this.$store.state.panes.items[panel].tabs.length === 0) this.$store.state.panes.items[panel].showapps = true
         }
       },
       clickMenuMobile () {
