@@ -72,12 +72,13 @@
                       </th>
                       <td>
                         <label for="panel_row_0_column_0">
-                          <input type="checkbox" id="panel_row_0_column_0" name="panel_row_0_column_0" v-model="panels_top" value="0" @click="updPanels"/>
+                          <input type="checkbox" id="panel_row_0_column_0" name="panel_row_0_column_0" v-model="panels_top" value="0"/>
                         </label>
                       </td>
                       <td>
                         <label for="panel_row_0_column_1">
-                          <input type="checkbox" id="panel_row_0_column_1" name="panel_row_0_column_1" v-model="panels_top" value="1" @click="updPanels"/>
+                          <input v-if="rowFirst" type="checkbox" id="panel_row_0_column_1" name="panel_row_0_column_1" v-model="panels_top" value="1"/>
+                          <input v-else type="checkbox" id="panel_row_1_column_0" name="panel_row_1_column_0" v-model="panels_bottom" value="2"/>
                         </label>
                       </td>
                     </tr>
@@ -86,12 +87,13 @@
                       </th>
                       <td>
                         <label for="panel_row_1_column_0">
-                          <input type="checkbox" id="panel_row_1_column_0" name="panel_row_1_column_0" v-model="panels_bottom" value="2" @click="updPanels"/>
+                          <input v-if="rowFirst" type="checkbox" id="panel_row_1_column_0" name="panel_row_1_column_0" v-model="panels_bottom" value="2"/>
+                          <input v-else type="checkbox" id="panel_row_0_column_1" name="panel_row_0_column_1" v-model="panels_top" value="1"/>
                         </label>
                       </td>
                       <td>
                         <label for="panel_row_1_column_1">
-                          <input type="checkbox" id="panel_row_1_column_1" name="panel_row_1_column_1" v-model="panels_bottom" value="3" @click="updPanels"/>
+                          <input type="checkbox" id="panel_row_1_column_1" name="panel_row_1_column_1" v-model="panels_bottom" value="3"/>
                         </label>
                       </td>
                     </tr>
@@ -197,6 +199,9 @@ export default
         let active = this.$store.state.panes.activeMobileTab
         return this.allTabs.find(item => item.id === active)
       },
+      rowFirst () {
+        return this.$store.state.panes.disposition.type === 'rowfirst'
+      },
     },
   watch:
     {
@@ -214,14 +219,16 @@ export default
       onCloseMobile () {
         this.mobileMenuOpen = false
       },
-      updPanels () {
+      updPanels (newVal, oldVal) {
         const top = this.panels_top.map(item => Number(item)).sort()
         const bottom = this.panels_bottom.map(item => Number(item)).sort()
         this.$store.commit('panes/changeDisposition', [top, bottom])
-        /*
-          (top.length > 0 && bottom.length > 0) ? [top, bottom]
-            : top.length > 0 ? [top] : bottom.length > 0 ? [bottom] : []);
-            */
+        if (newVal.length > oldVal.length) {
+          // a new panel was created
+          this.optionsMenuOpen = false
+          let panel = oldVal.length ? (oldVal[0] === newVal[0] ? newVal[1] : newVal[0]) : newVal[0]
+          if (this.$store.state.panes.items[panel].tabs.length === 0) this.$store.state.panes.items[panel].showapps = true
+        }
       },
       clickMenuMobile () {
         this.mobileMenuOpen = !this.mobileMenuOpen
