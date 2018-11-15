@@ -46,6 +46,7 @@ export default
     span
     {
       background-color: $pfbgcolor;
+      color: $pfbgcolor;
       display: inline-block;
       width: 18px;
       height: 18px;

@@ -45,6 +45,7 @@
             @touch.self="switchActive(tab.id)"
             @mousedown.self="switchActive(tab.id)">
             <div v-if="tab.logo" :style="{backgroundImage: 'url(' + tab.logo + ')'}" class="tab_logo"/>
+            <div v-if="!tab.logo" class="no_tab_logo"/>
             <div
               class="tab_title"
               @touch.self="switchActive(tab.id)"
@@ -234,6 +235,11 @@ export default
     background-size: contain;
   }
 
+  .no_tab_logo
+  {
+    margin-right: 5px;
+  }
+
   .tab_title
   {
     flex: 1 1 0;
@@ -298,7 +304,7 @@ export default
       right: 0;
       display: flex;
       flex-direction: column;
-      background-color: $appgrey;
+      background-color: $mainbgcolor;
       overflow: hidden;
     }
 
@@ -317,12 +323,12 @@ export default
     .tab_item_mobile
     {
       background-color: $appwhite;
-      height: 30px;
       display: flex;
       align-items: center;
       padding: 0 6px;
       border-radius: 3px;
-      margin: 8px 16px 16px;
+      margin: 4px 8px 8px;
+      padding: 8px 8px 8px;
     }
 
     .active-indicator
@@ -332,6 +338,7 @@ export default
       border-radius: 50%;
       width: 8px;
       height: 8px;
+      margin-left: 3px;
     }
 
     .tab_add_mobile
@@ -381,19 +388,23 @@ export default
       display: block;
       font-weight: bold;
       color: #FFF;
-      background: $tab_bgcolor;
+      background: $mainbgcolor;
       line-height: 20px;
       font-size: 20px;
-      width: 30px;
+      width: 60px;
       min-width: 30px;
       min-height: 30px;
       border: none;
       cursor: pointer;
+      color:$appgrey;
     }
 
     .tab-plus:hover
     {
-      background: $defaulttextcolor;
+      color: $hoverbgcolor;
+      background: $appgreen;
+      border-left:1px solid #fff;
+      width:59px;
     }
 
     .tab-plus:active

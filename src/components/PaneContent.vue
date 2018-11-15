@@ -97,4 +97,7 @@ export default {
       }
     }
   }
+  .static-panel-container:nth-child(2) {
+    border-left: 1px dashed #D6D6D6;
+  }
 </style>

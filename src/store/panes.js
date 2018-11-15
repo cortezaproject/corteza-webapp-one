@@ -11,8 +11,8 @@ Vue.use(Vuex)
 const state = {
   // demo version : 4 panes
   // for full specs see below.
-  nextTabId: 4,
-  maxNumberOfTabsInPanel: 6,
+  nextTabId: 3,
+  maxNumberOfTabsInPanel: 8,
   nowResizing: false,
   activeMobileTab: 0,
   mobileShowApps: false,
@@ -20,7 +20,7 @@ const state = {
   disposition:
     {
       type: 'colfirst',
-      itempos: [ [ 0, 1 ], [ 2 ] ],
+      itempos: [ [ 0 ], [ 1, 2 ] ],
     },
   items:
     [
@@ -33,7 +33,7 @@ const state = {
               id: 0,
               title: 'Temp1',
               src: 'https://www.example.com/',
-              logo: '/img/jira.c6266a81.png',
+              logo: require('@/assets/logos/crust.jpg'),
             },
           ],
       },

@@ -119,7 +119,7 @@
             <i class="icon-message-circle-right-speak"></i>
             <em>Help</em>
           </span>
-          <span class="version">v0.7</span>
+          <span class="version">v1.0</span>
         </div>
       </div>
     </nav>
@@ -279,7 +279,7 @@ export default
 
       i
       {
-        font-size: 32px;
+        font-size: 26px;
         display: inline-block;
         min-width: 1em;
         color: $defaultlinecolor;
@@ -295,6 +295,9 @@ export default
           line-height: 32px;
           color: white;
         }
+      }
+      .icon-grid-interface-close {
+        color:$appyellow;
       }
     }
 
@@ -511,13 +514,14 @@ export default
     text-transform: uppercase;
     border-radius: 10px;
     padding: 5px 10px 3px;
+    margin:33px 0 0;
     position: absolute;
     left: 0;
-    bottom: 5px;
     line-height: 1;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    max-width: 150px;
   }
 
   @media (min-width: $wideminwidth)
@@ -538,6 +542,20 @@ export default
     .toolbox_menu.desktop
     {
       display: none;
+    }
+
+    header
+    {
+      overflow: hidden;
+      background-color: $headerbgcolor;
+      border-bottom: 1px solid rgba($defaulttextcolor, 0.1);
+      height: 6em;
+      max-height: 6em;
+
+      .title-wrap
+      {
+        line-height: 40px;
+      }
     }
   }
 
