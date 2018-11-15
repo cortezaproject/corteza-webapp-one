@@ -20,7 +20,7 @@ const state = {
   disposition:
     {
       type: 'rowfirst',
-      itempos: [ [ 0 ], [ ] ],
+      itempos: [ [ 0 ], [ 1, 2 ] ],
     },
   items:
     [
@@ -32,12 +32,12 @@ const state = {
             {
               id: 0,
               title: 'Temp1',
-              src: '/messaging/',
+              src: 'https://www.example.com/',
               logo: require('@/assets/logos/crust.jpg'),
             },
           ],
       },
-      /*{
+      {
         active: 1,
         showapps: false,
         tabs:
@@ -62,9 +62,8 @@ const state = {
               logo: '/img/jira.c6266a81.png',
             },
           ],
-      },*/
+      },
     ],
-
   /*
   disposition:
   {

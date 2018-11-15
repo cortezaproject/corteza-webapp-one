@@ -272,7 +272,7 @@ export default
 
       i
       {
-        font-size: 32px;
+        font-size: 26px;
         display: inline-block;
         min-width: 1em;
         color: $defaultlinecolor;
