@@ -575,10 +575,10 @@ export default
   computed: {
     style () {
       return {
-        top: this.top + 'px',
-        left: this.left + 'px',
-        width: Math.min(this.width, this.w) + 'px',
-        height: Math.min(this.height, this.h) + 'px',
+        //top: this.top + 'px',
+        //left: this.left + 'px',
+        width: this.isActive ? Math.min(this.width, this.w) + 'px' : '100%',
+        height: this.isActive ? Math.min(this.height, this.h) + 'px' : '100%',
         zIndex: this.zIndex,
       }
     },

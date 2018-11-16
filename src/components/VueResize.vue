@@ -1,5 +1,5 @@
 <template>
-  <VueDragResize ref="vdr" class="vdr-panel" isActive preventActiveBehavior :parentLimitation="false" :isDraggable="false"
+  <VueDragResize ref="vdr" class="vdr-panel" :isActive="active" preventActiveBehavior :parentLimitation="false" :isDraggable="false"
                  :minw="0" :minh="0" :w="width" :h="height" :sticks="sticks ? [sticks] : []"
                  @resizing="onResize" @resizestop="onStopResize">
     <div class="resizable-panel-content">
@@ -20,6 +20,11 @@ export default
     },
   props:
     {
+      active:
+        {
+          type: Boolean,
+          required: true
+        },
       sticks:
         {
           type: String,
