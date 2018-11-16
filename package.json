@@ -15,10 +15,11 @@
     "axios": "^0.18.0",
     "v-tooltip": "^2.0.0-rc.33",
     "vue": "^2.5.17",
+    "vue-cookie-accept-decline": "^5.0.0",
     "vue-drag-resize": "^1.3.2",
-    "vuedraggable": "^2.16.0", 
     "vue-router": "^3.0.1",
     "vue-router-multi-view": "^0.0.4",
+    "vuedraggable": "^2.16.0",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

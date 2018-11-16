@@ -8,10 +8,13 @@ Vue.use(Vuex)
 
 // defines the current status of the different panes of the workspace
 // initial state and default value
+// Important:
+// itempos must can only have the values 0 and 1 in the first array and 2 and 3 in the second array,
+// and both array must always be present.
+// items must always be an array of 4 items (the position is mapped to the numbers in itempos)
 const state = {
-  // demo version : 4 panes
   // for full specs see below.
-  nextTabId: 3,
+  nextTabId: 1,
   maxNumberOfTabsInPanel: 8,
   nowResizing: false,
   activeMobileTab: 0,
@@ -28,9 +31,10 @@ const state = {
           [
             {
               id: 0,
-              title: 'Temp1',
-              src: 'https://www.example.com/',
+              title: 'Messaging',
+              src: 'https://latest.rustbucket.io/messaging/',
               logo: require('@/assets/logos/crust.jpg'),
+              icon: require('@/assets/logos/crust_favicon.png'),
             },
           ],
       },
@@ -42,31 +46,15 @@ const state = {
       },
       {
         visible: true,
-        active: 1,
+        active: null,
         showapps: false,
-        tabs:
-          [
-            {
-              id: 1,
-              title: 'Temp2',
-              src: 'https://www.example.com/',
-              logo: '/img/jira.c6266a81.png',
-            },
-          ],
+        tabs: [],
       },
       {
         visible: true,
-        active: 2,
+        active: null,
         showapps: false,
-        tabs:
-          [
-            {
-              id: 2,
-              title: 'Temp3',
-              src: 'https://www.example.com/',
-              logo: '/img/jira.c6266a81.png',
-            },
-          ],
+        tabs: [],
       },
     ],
 }
@@ -221,6 +209,7 @@ const mutations =
       title: appData.app.name,
       src: appData.app.path,
       logo: appData.app.logo,
+      icon: appData.app.icon,
     })
     state.items[paneId].showapps = false
     state.mobileShowApps = false

@@ -44,8 +44,9 @@
             v-for="tab in tabs" :key="tab.id"
             @touch.self="switchActive(tab.id)"
             @mousedown.self="switchActive(tab.id)">
-            <div v-if="tab.logo" :style="{backgroundImage: 'url(' + tab.logo + ')'}" class="tab_logo"/>
-            <div v-if="!tab.logo" class="no_tab_logo"/>
+            <div v-if="tab.icon" :style="{backgroundImage: 'url(' + tab.icon + ')'}" class="tab_logo"/>
+            <div v-else-if="tab.logo" :style="{backgroundImage: 'url(' + tab.logo + ')'}" class="tab_logo"/>
+            <div v-else class="no_tab_logo"/>
             <div
               class="tab_title"
               @touch.self="switchActive(tab.id)"
