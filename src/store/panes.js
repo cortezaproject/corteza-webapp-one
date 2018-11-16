@@ -35,7 +35,7 @@ const state = {
             {
               id: 0,
               title: 'Messaging',
-              src: 'https://beta.rustbucket.io/messaging/',
+              src: 'https://latest.rustbucket.io/messaging/',
               logo: require('@/assets/logos/crust.jpg'),
               icon: require('@/assets/logos/crust_favicon.png'),
             },

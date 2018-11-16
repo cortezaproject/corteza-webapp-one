@@ -138,7 +138,7 @@ export default {
           logo: require('@/assets/logos/crust.jpg'),
           icon: require('@/assets/logos/crust_favicon.png'),
           color: 'appyellow',
-          path: '/messaging/',
+          path: 'https://latest.rustbucket.io/messaging/',
           allowed_contextes: ['panel', 'tab', 'external'],
           method: 'iframe',
           showOptions: false,

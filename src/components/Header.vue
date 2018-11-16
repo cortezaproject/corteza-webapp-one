@@ -107,7 +107,7 @@
               <div class="menu-panels-alert">
                 <vue-cookie-accept-decline :disableDecline="true">
                   <div slot="message">
-                    Adding or removing panels may reload the tabs, so make sure to don't have unsaved work or open video chats.    
+                    Adding or removing panels may reload the tabs, so make sure to don't have unsaved work or open video chats.
                   </div>
                   <div slot="acceptContent">
                     Ok
@@ -543,11 +543,10 @@ export default
   .menu-panels-alert .cookie {
     margin: 20px 0 0;
     padding: 7px;
-    border: 1px solid $appyellow; 
+    border: 1px solid $appyellow;
     background: rgba($appyellow, 0.2);
     border-radius: 5px;
   }
-
 
   @media (min-width: $wideminwidth)
   {
