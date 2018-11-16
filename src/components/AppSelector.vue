@@ -136,7 +136,7 @@ export default {
         {
           name: 'Crust Messaging',
           logo: require('@/assets/logos/crust.jpg'),
-          icon: 'icon-bubble2',
+          icon: require('@/assets/logos/crust_favicon.png'),
           color: 'appyellow',
           path: '/messaging/',
           allowed_contextes: ['panel', 'tab', 'external'],
@@ -146,8 +146,8 @@ export default {
         {
           name: 'Crust CRM',
           color: 'appgreen',
-          // icon: 'icon-user',
           logo: require('@/assets/logos/crust.jpg'),
+          icon: require('@/assets/logos/crust_favicon.png'),
           path: 'https://example.com/',
           allowed_contextes: ['window', 'panel', 'tab', 'external'],
           method: 'iframe',

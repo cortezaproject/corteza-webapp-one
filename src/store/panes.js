@@ -8,8 +8,11 @@ Vue.use(Vuex)
 
 // defines the current status of the different panes of the workspace
 // initial state and default value
+// Important:
+// itempos must can only have the values 0 and 1 in the first array and 2 and 3 in the second array,
+// and both array must always be present.
+// items must always be an array of 4 items (the position is mapped to the numbers in itempos)
 const state = {
-  // demo version : 4 panes
   // for full specs see below.
   nextTabId: 3,
   maxNumberOfTabsInPanel: 8,
@@ -20,7 +23,7 @@ const state = {
   disposition:
     {
       type: 'colfirst',
-      itempos: [ [ 0 ], [ 1, 2 ] ],
+      itempos: [ [ 0 ], [ 2, 3 ] ],
     },
   items:
     [
@@ -31,10 +34,17 @@ const state = {
           [
             {
               id: 0,
-              title: 'Temp1',
-              src: 'https://www.example.com/',
+              title: 'Messaging',
+              src: 'https://beta.rustbucket.io/messaging/',
               logo: require('@/assets/logos/crust.jpg'),
+              icon: require('@/assets/logos/crust_favicon.png'),
             },
+          ],
+      },
+      {
+        showapps: false,
+        tabs:
+          [
           ],
       },
       {
@@ -237,6 +247,7 @@ const mutations =
       title: appData.app.name,
       src: appData.app.path,
       logo: appData.app.logo,
+      icon: appData.app.icon,
     })
     state.items[paneId].showapps = false
     state.mobileShowApps = false
