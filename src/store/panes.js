@@ -14,7 +14,7 @@ Vue.use(Vuex)
 // items must always be an array of 4 items (the position is mapped to the numbers in itempos)
 const state = {
   // for full specs see below.
-  nextTabId: 3,
+  nextTabId: 1,
   maxNumberOfTabsInPanel: 8,
   nowResizing: false,
   activeMobileTab: 0,
@@ -23,7 +23,7 @@ const state = {
   disposition:
     {
       type: 'colfirst',
-      itempos: [ [ 0 ], [ 2, 3 ] ],
+      itempos: [ [ 0 ], [ ] ],
     },
   items:
     [
@@ -48,29 +48,15 @@ const state = {
           ],
       },
       {
-        active: 1,
         showapps: false,
         tabs:
           [
-            {
-              id: 1,
-              title: 'Temp2',
-              src: 'https://www.example.com/',
-              logo: '/img/jira.c6266a81.png',
-            },
           ],
       },
       {
-        active: 2,
         showapps: false,
         tabs:
           [
-            {
-              id: 2,
-              title: 'Temp3',
-              src: 'https://www.example.com/',
-              logo: '/img/jira.c6266a81.png',
-            },
           ],
       },
     ],

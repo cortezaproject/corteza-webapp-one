@@ -76,9 +76,11 @@
                         </label>
                       </td>
                       <td>
-                        <label for="panel_row_0_column_1">
-                          <input v-if="rowFirst" type="checkbox" id="panel_row_0_column_1" name="panel_row_0_column_1" v-model="panels_top" value="1"/>
-                          <input v-else type="checkbox" id="panel_row_1_column_0" name="panel_row_1_column_0" v-model="panels_bottom" value="2"/>
+                        <label v-if="rowFirst" for="panel_row_0_column_1">
+                          <input type="checkbox" id="panel_row_0_column_1" name="panel_row_0_column_1" v-model="panels_top" value="1"/>
+                        </label>
+                        <label v-else for="panel_row_1_column_0">
+                          <input type="checkbox" id="panel_row_1_column_0" name="panel_row_1_column_0" v-model="panels_bottom" value="2"/>
                         </label>
                       </td>
                     </tr>
@@ -86,9 +88,11 @@
                       <th scope="row"><span>Row 2</span>
                       </th>
                       <td>
-                        <label for="panel_row_1_column_0">
-                          <input v-if="rowFirst" type="checkbox" id="panel_row_1_column_0" name="panel_row_1_column_0" v-model="panels_bottom" value="2"/>
-                          <input v-else type="checkbox" id="panel_row_0_column_1" name="panel_row_0_column_1" v-model="panels_top" value="1"/>
+                        <label v-if="rowFirst" for="panel_row_1_column_0">
+                          <input type="checkbox" id="panel_row_1_column_0" name="panel_row_1_column_0" v-model="panels_bottom" value="2"/>
+                        </label>
+                        <label v-else for="panel_row_0_column_1">
+                          <input type="checkbox" id="panel_row_0_column_1" name="panel_row_0_column_1" v-model="panels_top" value="1"/>
                         </label>
                       </td>
                       <td>
