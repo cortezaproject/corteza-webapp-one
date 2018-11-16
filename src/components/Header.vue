@@ -72,15 +72,13 @@
                       </th>
                       <td>
                         <label for="panel_row_0_column_0">
-                          <input type="checkbox" id="panel_row_0_column_0" name="panel_row_0_column_0" v-model="panels_top" value="0"/>
+                          <input type="checkbox" id="panel_row_0_column_0" name="panel_row_0_column_0" value="0" :checked="panels[0].visible" @input="updPanels"/>
                         </label>
                       </td>
                       <td>
-                        <label v-if="rowFirst" for="panel_row_0_column_1">
-                          <input type="checkbox" id="panel_row_0_column_1" name="panel_row_0_column_1" v-model="panels_top" value="1"/>
-                        </label>
-                        <label v-else for="panel_row_1_column_0">
-                          <input type="checkbox" id="panel_row_1_column_0" name="panel_row_1_column_0" v-model="panels_bottom" value="2"/>
+                        <label for="panel_row_0_column_1">
+                          <input v-if="rowFirst" type="checkbox" id="panel_row_0_column_1" name="panel_row_0_column_1" value="1" :checked="panels[1].visible" @input="updPanels"/>
+                          <input v-else type="checkbox" id="panel_row_0_column_1" name="panel_row_1_column_0" value="2" :checked="panels[2].visible" @input="updPanels"/>
                         </label>
                       </td>
                     </tr>
@@ -88,16 +86,14 @@
                       <th scope="row"><span>Row 2</span>
                       </th>
                       <td>
-                        <label v-if="rowFirst" for="panel_row_1_column_0">
-                          <input type="checkbox" id="panel_row_1_column_0" name="panel_row_1_column_0" v-model="panels_bottom" value="2"/>
-                        </label>
-                        <label v-else for="panel_row_0_column_1">
-                          <input type="checkbox" id="panel_row_0_column_1" name="panel_row_0_column_1" v-model="panels_top" value="1"/>
+                        <label for="panel_row_1_column_0">
+                          <input v-if="rowFirst" type="checkbox" id="panel_row_1_column_0" name="panel_row_1_column_0" value="2" :checked="panels[2].visible" @input="updPanels"/>
+                          <input v-else type="checkbox" id="panel_row_1_column_0" name="panel_row_0_column_1" value="1" :checked="panels[1].visible" @input="updPanels"/>
                         </label>
                       </td>
                       <td>
                         <label for="panel_row_1_column_1">
-                          <input type="checkbox" id="panel_row_1_column_1" name="panel_row_1_column_1" v-model="panels_bottom" value="3"/>
+                          <input type="checkbox" id="panel_row_1_column_1" name="panel_row_1_column_1" value="3" :checked="panels[3].visible" @input="updPanels"/>
                         </label>
                       </td>
                     </tr>
@@ -185,8 +181,6 @@ export default
       optionsMenuOpen: false,
       mobileMenuOpen: false,
       showAppModalPanel: false,
-      panels_top: this.$store.state.panes.disposition.itempos[0] || [],
-      panels_bottom: this.$store.state.panes.disposition.itempos[1] || [],
       mainmenu:
       [
         {
@@ -216,13 +210,11 @@ export default
         return this.allTabs.find(item => item.id === active)
       },
       rowFirst () {
-        return this.$store.state.panes.disposition.type === 'rowfirst'
+        return this.$store.state.panes.disposition === 'rowfirst'
       },
-    },
-  watch:
-    {
-      panels_top: 'updPanels',
-      panels_bottom: 'updPanels',
+      panels () {
+        return this.$store.state.panes.items
+      },
     },
   created () {
     this.$root.$on('closeTabsMobile', this.onCloseMobile)
@@ -235,15 +227,13 @@ export default
       onCloseMobile () {
         this.mobileMenuOpen = false
       },
-      updPanels (newVal, oldVal) {
-        const top = this.panels_top.map(item => Number(item)).sort()
-        const bottom = this.panels_bottom.map(item => Number(item)).sort()
-        this.$store.commit('panes/changeDisposition', [top, bottom])
-        if (newVal.length > oldVal.length) {
-          // a new panel was created
+      updPanels (evt) {
+        const paneID = +evt.target.value
+        this.$store.commit('panes/togglePanel', paneID)
+        if (this.panels[paneID].visible) {
+          // a panel was shown
           this.optionsMenuOpen = false
-          let panel = oldVal.length ? (oldVal[0] === newVal[0] ? newVal[1] : newVal[0]) : newVal[0]
-          if (this.$store.state.panes.items[panel].tabs.length === 0) this.$store.state.panes.items[panel].showapps = true
+          if (this.panels[paneID].tabs.length === 0) this.panels[paneID].showapps = true
         }
       },
       clickMenuMobile () {

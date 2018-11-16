@@ -20,14 +20,11 @@ const state = {
   activeMobileTab: 0,
   mobileShowApps: false,
 
-  disposition:
-    {
-      type: 'colfirst',
-      itempos: [ [ 0 ], [ ] ],
-    },
+  disposition: 'colfirst',
   items:
     [
       {
+        visible: true,
         active: 0,
         showapps: false,
         tabs:
@@ -42,22 +39,22 @@ const state = {
           ],
       },
       {
+        visible: false,
+        active: null,
         showapps: false,
-        tabs:
-          [
-          ],
+        tabs: [],
       },
       {
+        visible: true,
+        active: null,
         showapps: false,
-        tabs:
-          [
-          ],
+        tabs: [],
       },
       {
+        visible: true,
+        active: null,
         showapps: false,
-        tabs:
-          [
-          ],
+        tabs: [],
       },
     ],
 }
@@ -185,13 +182,7 @@ const mutations =
       }
       if (tabItems.length === 0) {
         // hide the panel - no more tabs
-        const paneID = state.items.indexOf(pane)
-        const idx = state.disposition.itempos[0].indexOf(paneID)
-        if (idx !== -1) state.disposition.itempos[0].splice(idx, 1)
-        else {
-          const idx = state.disposition.itempos[1].indexOf(paneID)
-          if (idx !== -1) state.disposition.itempos[1].splice(idx, 1)
-        }
+        pane.visible = false
       }
     }
   },
@@ -212,21 +203,6 @@ const mutations =
   },
   addApp: (state, appData) => {
     var paneId = appData.paneId
-    if (state.items.length === 0) {
-      state.disposition = {
-        type: 'rowfirst',
-        itempos: [ [ 0 ] ],
-      }
-      state.items = [
-        {
-          active: 0,
-          tabs: [],
-          showapps: false,
-        },
-      ]
-      // current pane is the one we just created
-      paneId = 0
-    }
     // add tab to the current pane
     state.items[paneId].tabs.push({
       id: state.nextTabId,
@@ -241,22 +217,9 @@ const mutations =
     state.activeMobileTab = state.nextTabId
     state.nextTabId++
   },
-  changeDisposition (state, payload) {
-    let maxPane = 0
-    payload.forEach(levelOne => {
-      levelOne.forEach(levelTwo => {
-        if (levelTwo > maxPane) maxPane = levelTwo
-      })
-    })
-    while (maxPane >= state.items.length) {
-      // create the missing panel(s)
-      state.items.push({
-        active: null,
-        showapps: false,
-        tabs: [],
-      })
-    }
-    state.disposition.itempos = payload
+  togglePanel (state, paneID) {
+    state.items[paneID].visible = !state.items[paneID].visible
+    console.log('Toggle panel ' + paneID + ' = ' + (state.items[paneID].visible ? 'visible' : 'hidden'))
   },
   setResizing (state, resizing) {
     state.nowResizing = resizing
