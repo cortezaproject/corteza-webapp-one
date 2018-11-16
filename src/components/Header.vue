@@ -228,12 +228,12 @@ export default
         this.mobileMenuOpen = false
       },
       updPanels (evt) {
-        const pane_id = +evt.target.value;
-        this.$store.commit('panes/togglePanel',pane_id)
-        if (this.panels[pane_id].visible) {
+        const paneID = +evt.target.value
+        this.$store.commit('panes/togglePanel', paneID)
+        if (this.panels[paneID].visible) {
           // a panel was shown
           this.optionsMenuOpen = false
-          if (this.panels[pane_id].tabs.length === 0) this.panels[pane_id].showapps = true
+          if (this.panels[paneID].tabs.length === 0) this.panels[paneID].showapps = true
         }
       },
       clickMenuMobile () {

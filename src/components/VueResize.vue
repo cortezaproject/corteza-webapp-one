@@ -23,7 +23,7 @@ export default
       active:
         {
           type: Boolean,
-          required: true
+          required: true,
         },
       sticks:
         {

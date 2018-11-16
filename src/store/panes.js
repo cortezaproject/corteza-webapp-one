@@ -217,9 +217,9 @@ const mutations =
     state.activeMobileTab = state.nextTabId
     state.nextTabId++
   },
-  togglePanel (state, pane_id) {
-    state.items[pane_id].visible = !state.items[pane_id].visible
-    console.log('Toggle panel ' + pane_id + ' = ' +(state.items[pane_id].visible ? 'visible' : 'hidden'))
+  togglePanel (state, paneID) {
+    state.items[paneID].visible = !state.items[paneID].visible
+    console.log('Toggle panel ' + paneID + ' = ' + (state.items[paneID].visible ? 'visible' : 'hidden'))
   },
   setResizing (state, resizing) {
     state.nowResizing = resizing
