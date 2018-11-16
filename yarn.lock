@@ -8012,6 +8012,11 @@ timsort@^0.3.0:
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
 
+tiny-cookie@^2.1.2:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/tiny-cookie/-/tiny-cookie-2.2.0.tgz#b0f8518bf31a942de2189233094d8f842949f507"
+  integrity sha512-rEOhA+POIrFxIQngl475IlfkOhW1lCesZpWkoCP7Bl8b/3aYnuADJdrxvzHnsQF+8ZscxyJBPWg36YvZues3lw==
+
 tmp@^0.0.33:
   version "0.0.33"
   resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.33.tgz#6d34335889768d21b2bcda0aa277ced3b1bfadf9"
@@ -8414,6 +8419,18 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vue-cookie-accept-decline@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/vue-cookie-accept-decline/-/vue-cookie-accept-decline-5.0.0.tgz#b11d448ee6a9b823a576b17a7daaea9de59f132d"
+  integrity sha512-M8+b5KA+cAzBEHt5qGi4lpTeMZQd/lV2nZXq7C8fdQwOnHS64T97qKM+ziSrGB3FP0RZK6YrxnHI/sq0trzgYg==
+  dependencies:
+    tiny-cookie "^2.1.2"
+
+vue-drag-resize@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/vue-drag-resize/-/vue-drag-resize-1.3.2.tgz#99132a99746c878e4596fad08d36c98f604930a3"
+  integrity sha512-XiSEep3PPh9IPQqa4vIy/YENBpYch2SIPNipcPAEGhaSa0V8A8gSq9s7JQ66p/hiINdnR7f5ZqAkOdm6zU/4Gw==
+
 vue-eslint-parser@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-2.0.3.tgz#c268c96c6d94cfe3d938a5f7593959b0ca3360d1"
@@ -8441,16 +8458,6 @@ vue-loader@^15.4.2:
     loader-utils "^1.1.0"
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
-
-vue-multipane@^0.9.5:
-  version "0.9.5"
-  resolved "https://registry.yarnpkg.com/vue-multipane/-/vue-multipane-0.9.5.tgz#10ddaf9092e0a9e761edfd0d1f1db8bbb54b3e9c"
-  integrity sha512-4sr6POXY82VMzprQWGNMzTIBGGYEi7nG0uGQb6AYr8o0ngIsYCDPh/gmgms8NVsZzG28b7kn3tQhKP27cbbLdw==
-
-vue-panel-split@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/vue-panel-split/-/vue-panel-split-1.0.3.tgz#0af5d60e3fb13db4ff2660b89fd96dd80ae9a79d"
-  integrity sha1-CvXWDj+xPbT/JmC4n9lt2Arpp50=
 
 vue-resize@^0.4.3:
   version "0.4.4"
