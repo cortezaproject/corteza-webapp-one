@@ -213,7 +213,7 @@ export default {
         {
           name: 'Wordreference',
           color: '',
-          logo: require('@/assets/logos/etherpad.png'),
+          logo: require('@/assets/logos/wordreference.png'),
           path: 'http://mini.wordreference.com/mini/index.aspx?dict=enes&w=start&u=1',
           allowed_contextes: ['panel', 'tab'],
           showOptions: false,
