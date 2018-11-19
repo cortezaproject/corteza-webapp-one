@@ -1,5 +1,5 @@
-const webpack = require('webpack') 
-const exec = require('child_process').execSync 
+const webpack = require('webpack')
+const exec = require('child_process').execSync
 
 module.exports = {
   configureWebpack: {
@@ -9,7 +9,7 @@ module.exports = {
         CRUST_VERSION: JSON.stringify(('' + exec('git describe --always --tags')).trim()),
         CRUST_BUILD_TIME: JSON.stringify((new Date()).toISOString()),
       }),
-    ], 
+    ],
   },
   // devServer Options don't belong into `configureWebpack`
   devServer: {

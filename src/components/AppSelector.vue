@@ -65,12 +65,12 @@ export default {
     // no fat arrow
     // https://stackoverflow.com/a/43073924
     addApp: function (availableApp, paneId) {
-      console.log('adding app in selector')
+      this.$logger.log('adding app in selector')
       // if we have a paneId,
       // nothing to do, just send add-app
       // otherwise we need to know how to dispose panes,
       // if this is not the first app.
-      console.log('paneId :' + paneId)
+      this.$logger.log('paneId :' + paneId)
       if (!this.firstApp && paneId === null) {
         this.chooseDisposition = true
         return
@@ -145,6 +145,16 @@ export default {
         },
         {
           name: 'Crust CRM',
+          color: 'appgreen',
+          logo: require('@/assets/logos/crust.jpg'),
+          icon: require('@/assets/logos/crust_favicon.png'),
+          path: 'https://example.com/',
+          allowed_contextes: ['window', 'panel', 'tab', 'external'],
+          method: 'iframe',
+          showOptions: false, // should be initalised as false for all
+        },
+        {
+          name: 'Crust Global Search',
           color: 'appgreen',
           logo: require('@/assets/logos/crust.jpg'),
           icon: require('@/assets/logos/crust_favicon.png'),

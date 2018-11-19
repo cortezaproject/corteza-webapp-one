@@ -88,13 +88,13 @@ export default
   },
   // on create init pane data in store
   created: function () {
-    console.log('created')
+    this.$logger.log('created')
   },
   computed:
   {
     panes: {
       get () {
-        console.log('layout getting panes')
+        this.$logger.log('layout getting panes')
         return this.$store.state.panes
       },
       /*
@@ -159,8 +159,8 @@ export default
   methods:
   {
     addTab (appData) {
-      console.log('Adding app from layout')
-      console.log(appData)
+      this.$logger.log('Adding app from layout')
+      this.$logger.log(appData)
       this.$store.commit('panes/addApp', appData)
     },
     tryAddTab (paneID) {

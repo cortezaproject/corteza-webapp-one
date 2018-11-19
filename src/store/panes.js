@@ -136,7 +136,6 @@ const mutations =
 {
   updateTabs: (state, newTabs) => {
     var newTabIs = _.difference(newTabs.tabs, state.items[newTabs.paneId].tabs)
-    console.log(newTabIs)
     state.items[newTabs.paneId].tabs = newTabs.tabs
     if (newTabIs.length !== 0) {
       state.items[newTabs.paneId].active = newTabIs[0].id
@@ -146,7 +145,6 @@ const mutations =
     state.items[pane.paneId].active = state.items[pane.paneId].tabs[0].id
   },
   removeTab: (state, tabID) => {
-    console.log('removing tab = ' + tabID)
     let pane, itemIndexToDel, tabItems
     state.items.every(curPanel => {
       itemIndexToDel = curPanel.tabs.findIndex(item => item.id === tabID)
@@ -157,7 +155,6 @@ const mutations =
       }
       return true
     })
-    console.log('active = ' + pane.active)
     if (itemIndexToDel !== -1) {
       const allTabs = state.items.reduce((acc, panel) => {
         return acc.concat(panel.tabs)
@@ -219,7 +216,6 @@ const mutations =
   },
   togglePanel (state, paneID) {
     state.items[paneID].visible = !state.items[paneID].visible
-    console.log('Toggle panel ' + paneID + ' = ' + (state.items[paneID].visible ? 'visible' : 'hidden'))
   },
   setResizing (state, resizing) {
     state.nowResizing = resizing
@@ -234,8 +230,6 @@ export default {
 }
 
 /*
-console.log('Vuex adding app')
-console.log(appData)
 var inPane = null
 var newPane = {
 active: state.nextTabId,
@@ -250,9 +244,7 @@ src: appData.path,
 inPane = 0
 state.items[inPane] = newPane
 state.disposition = [[inPane]]
-state.nextTabId++
-console.log(state)
-*/
+state.nextTabId++ */
 /*
 state = {
 disposition:

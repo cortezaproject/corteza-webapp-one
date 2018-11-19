@@ -46,8 +46,8 @@ export default {
   methods:
   {
     addTab (appData) {
-      console.log('Adding a app from WkS')
-      console.log(appData)
+      this.$logger.log('Adding a app from WkS')
+      this.$logger.log(appData)
       this.$store.commit('panes/addApp', appData)
     },
     connect () {
@@ -64,14 +64,14 @@ export default {
     hasPanes:
     {
       get () {
-        console.log('currently : ' + this.$store.state.panes.items.length + ' panes')
+        this.$logger.log('currently : ' + this.$store.state.panes.items.length + ' panes')
         return (this.$store.state.panes.items.length > 0)
       },
     },
     panes:
     {
       get () {
-        console.log('WkS getting panes')
+        this.$logger.log('WkS getting panes')
         return this.$store.state.panes
       },
       /*

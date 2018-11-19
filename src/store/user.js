@@ -4,8 +4,6 @@ import Vuex from 'vuex'
 // init vuex
 Vue.use(Vuex)
 
-console.log('user store')
-
 // initial state and default value
 const state = null
 

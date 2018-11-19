@@ -133,9 +133,9 @@ export default
   methods:
   {
     endDrag: function (e) {
-      console.log('endOfDrag')
-      console.log(e)
-      console.log('from ' + e.from.dataset.paneid + ' to ' + e.to.dataset.paneid)
+      this.$logger.log('endOfDrag')
+      this.$logger.log(e)
+      this.$logger.log('from ' + e.from.dataset.paneid + ' to ' + e.to.dataset.paneid)
       // if moving from one pane to another
       if (e.from.dataset.paneid !== e.to.dataset.paneid) {
         this.$store.commit('panes/setFirstTabActive', {
@@ -144,13 +144,11 @@ export default
       }
     },
     switchActive: function (tabID) {
-      // console.log('TabBar says : newActiveTab ' + newActiveTab.id + ' in pane ' + newActiveTab.pane)
       this.$store.commit(this.mobile ? 'panes/changeActiveMobile' : 'panes/changeActive', tabID)
       this.mobileListShown = false
       this.$root.$emit('closeTabsMobile')
     },
     removeTab: function (tabID) {
-      // console.log('TabBar says : newActiveTab ' + newActiveTab.id + ' in pane ' + newActiveTab.pane)
       this.$store.commit('panes/removeTab', tabID)
     },
     onResize () {

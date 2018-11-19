@@ -9,7 +9,6 @@ const storedState = JSON.parse(localStorage.getItem(localStorageKey))
 if (storedState !== null && typeof storedState === 'object') {
   Object.assign(state, storedState)
 } else {
-  console.debug('store.router: state not found in local storage')
 }
 
 // getters
