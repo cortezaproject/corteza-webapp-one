@@ -32,7 +32,7 @@ const state = {
             {
               id: 0,
               title: 'Messaging',
-              src: 'https://latest.rustbucket.io/messaging/',
+              src: '/messaging/',
               logo: require('@/assets/logos/crust.jpg'),
               icon: require('@/assets/logos/crust_favicon.png'),
             },
@@ -45,13 +45,13 @@ const state = {
         tabs: [],
       },
       {
-        visible: true,
+        visible: false,
         active: null,
         showapps: false,
         tabs: [],
       },
       {
-        visible: true,
+        visible: false,
         active: null,
         showapps: false,
         tabs: [],
