@@ -100,16 +100,6 @@
                   </tbody>
                 </table>
               </div>
-              <div class="menu-panels-alert">
-                <vue-cookie-accept-decline :disableDecline="true">
-                  <div slot="message">
-                    Adding or removing panels may reload the tabs, so make sure to don't have unsaved work or open video chats.
-                  </div>
-                  <div slot="acceptContent">
-                    Ok
-                  </div>
-                </vue-cookie-accept-decline>
-              </div>
           </div>
         </section>
       </div>
@@ -143,7 +133,6 @@
 import Avatar from '@/components/Avatar'
 import Capsule from '@/components/Capsule'
 import Modal from '@/components/Modal'
-import VueCookieAcceptDecline from 'vue-cookie-accept-decline'
 
 export default
 {
@@ -154,7 +143,6 @@ export default
     Avatar,
     Capsule,
     Modal,
-    VueCookieAcceptDecline,
   },
   // --------
   props:
@@ -528,14 +516,6 @@ export default
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 150px;
-  }
-
-  .menu-panels-alert .cookie {
-    margin: 20px 0 0;
-    padding: 7px;
-    border: 1px solid $appyellow;
-    background: rgba($appyellow, 0.2);
-    border-radius: 5px;
   }
 
   @media (min-width: $wideminwidth)

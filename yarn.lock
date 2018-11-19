@@ -8012,11 +8012,6 @@ timsort@^0.3.0:
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
 
-tiny-cookie@^2.1.2:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/tiny-cookie/-/tiny-cookie-2.2.0.tgz#b0f8518bf31a942de2189233094d8f842949f507"
-  integrity sha512-rEOhA+POIrFxIQngl475IlfkOhW1lCesZpWkoCP7Bl8b/3aYnuADJdrxvzHnsQF+8ZscxyJBPWg36YvZues3lw==
-
 tmp@^0.0.33:
   version "0.0.33"
   resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.33.tgz#6d34335889768d21b2bcda0aa277ced3b1bfadf9"
@@ -8418,13 +8413,6 @@ vm-browserify@0.0.4:
   integrity sha1-XX6kW7755Kb/ZflUOOCofDV9WnM=
   dependencies:
     indexof "0.0.1"
-
-vue-cookie-accept-decline@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/vue-cookie-accept-decline/-/vue-cookie-accept-decline-5.0.0.tgz#b11d448ee6a9b823a576b17a7daaea9de59f132d"
-  integrity sha512-M8+b5KA+cAzBEHt5qGi4lpTeMZQd/lV2nZXq7C8fdQwOnHS64T97qKM+ziSrGB3FP0RZK6YrxnHI/sq0trzgYg==
-  dependencies:
-    tiny-cookie "^2.1.2"
 
 vue-drag-resize@^1.3.2:
   version "1.3.2"
