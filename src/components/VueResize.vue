@@ -2,7 +2,7 @@
   <VueDragResize ref="vdr" class="vdr-panel" :isActive="active" preventActiveBehavior :parentLimitation="false" :isDraggable="false"
                  :minw="0" :minh="0" :w="width" :h="height" :sticks="sticks ? [sticks] : []"
                  @resizing="onResize" @resizestop="onStopResize">
-    <div class="resizable-panel-content">
+    <div class="resizable-panel-content" :class="{active}">
       <slot/>
     </div>
   </VueDragResize>
@@ -129,6 +129,11 @@ export default
     overflow: hidden;
     display: flex;
     flex-direction: column;
+  }
+
+  .resizable-panel-content.active
+  {
+    border: 1px dashed red;
   }
 
   .resizable-panel-content > *:nth-child(2)
