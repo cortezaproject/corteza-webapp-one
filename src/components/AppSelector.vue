@@ -171,7 +171,7 @@ export default {
           icon: require('@/assets/logos/jitsi_icon.png'),
           logo: require('@/assets/logos/jitsi.png'),
           // path: 'https://meet.jit.si/',
-          path: '/jitsi.html?id=' + this.$store.state.auth.user.ID,
+          path: '/jitsi.html?id=' + this.$store.state.auth.user.ID + '&user=' + this.$store.state.auth.user.email + '&name=' + this.$store.state.auth.user.name,
           allowed_contextes: ['panel', 'tab'],
           showOptions: false,
         },
