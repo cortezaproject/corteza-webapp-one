@@ -1,4 +1,4 @@
-var domain = 'meet.jit.si' // 'localhost:8443' // 
+var domain = 'meet.jit.si' 
 var urlParams = new URLSearchParams(window.location.search)
 var options = {}
 var api, room, user, crustMessageChannels, channels
@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var ch = {
         id: channel.ID,
         name: channel.name.substring(0, 45),
+        // parse out all non alphanumeric char for the value passed to Jitsi
         value: channel.name.substring(0, 30).replace(/\(.+?\)/g, '').replace(/[^a-z0-9+]+/gi, ''),
         memberCount: channel.members.length,
       }
@@ -28,10 +29,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('unload', exitRoom)
 
+// Destroy the Jitsi instance on closing
 function exitRoom () {
   api.dispose()
 }
 
+// Create the new Jitsi instance
 function LoadJitsiRoom (room, user) {
   options = {
     roomName: room,
@@ -59,23 +62,23 @@ function LoadJitsiRoom (room, user) {
   api = new JitsiMeetExternalAPI(domain, options)
 }
 
-function SelectRoomClick (room) {
-  document.getElementById('roomselection').style.display = 'none'
-  LoadJitsiRoom(room, user)
-}
-
+// Loads a Jitsi instance based on a selection from the drop down
 function SelectRoomDropdown (item) {
   document.getElementById('roomselection').style.display = 'none'
   LoadJitsiRoom(item.value, user)
 }
 
+// Loads a Jitsi instance based on a custom room name that was entered
 function SubmitRoomCreator () {
+  // get the room and parse out all non alphanumeric char
   room = 'crust' + document.getElementById('roomInputField').value.replace(/\(.+?\)/g, '').replace(/[^a-z0-9+]+/gi, '')
   document.getElementById('roomselection').style.display = 'none'
   LoadJitsiRoom(room, user)
 }
 
-function ListJitsiRooms() {
+// Display the list of rooms available to use in Jitsi
+// Prepend room names with "crust"
+function ListJitsiRooms () {
   var list = '<div id="roomdropdown"><select id="roomdropdownselect" onchange="SelectRoomDropdown(this)">'
   list += '<option value="">Select a room</option>'
   channels.forEach(function (channel) {
@@ -86,6 +89,7 @@ function ListJitsiRooms() {
   ReplaceElementContentByID('roomdropdown', list)
 }
 
+// Replace a certain element by ID with specified contents
 function ReplaceElementContentByID (id, content) {
   var Obj = document.getElementById(id) // any element to be fully replaced
 
