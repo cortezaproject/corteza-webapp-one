@@ -143,7 +143,7 @@ export default {
     }
   },
   created () {
-    this. available_apps = [
+    this.available_apps = [
       {
         name: 'Crust Messaging',
         logo: require('@/assets/logos/crust.jpg'),
