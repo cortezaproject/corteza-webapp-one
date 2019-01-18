@@ -65,6 +65,8 @@ export default {
 </script>
 
 <style lang="scss">
+  @import "@/assets/sass/_0.declare.scss";
+
   .iFrameWrap
   {
     display: flex;
@@ -89,11 +91,12 @@ export default {
       flex: 1 1 0;
       overflow-x: hidden;
       overflow-y: scroll;
-      background: #CCC;
+      background: $mainbgcolor;
 
       &.active
       {
         display: block;
+        border-left: 2px solid #fff;
       }
     }
   }
