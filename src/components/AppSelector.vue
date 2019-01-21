@@ -270,19 +270,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  // these values makes this standalone
-  $wideminwidth:640px;
-  $crustregular: sans-serif;
-  $appyellow : #FFCC32;
-  $appred    : #E85568;
-  $appgreen  : #2FBC95;
-  $appblue   : #1397CB;
-  $applime   : #00D53E;
-  $appgrey   : #90A3B1;
-  $appcream  : #F3F3F5;
-  $appselectorbg : #EDF1F4;
-  $appselectoritembg : #FFF;
-  // this is the global config
   @import '@/assets/sass/_0.declare.scss';
 
   .new-app-closer

@@ -8,6 +8,14 @@
       </div>
       <div class="toolbox">
         <!-- the header add is for panels, not for now, remove false && to restore -->
+        <section @click="mainMenuOpen=!mainMenuOpen" v-if="user" class="toolbox-item toolbox_profile">
+          <Avatar v-if="!mainMenuOpen" :user="user"></Avatar>
+          <label v-else>
+            <i
+                    class="icon-close user-menu-close"
+                    title="Show main menu"></i>
+          </label>
+        </section>
         <section v-if="false && user && optionalAdd" class="toolbox-item add circle">
           <i class="icon-plus"
             title="Add a pane"
@@ -19,14 +27,6 @@
           <i
             class="icon-bell2"
             :class="(user.has_notifications ? 'toolbox_notification' : '')"></i>
-        </section>
-        <section @click="mainMenuOpen=!mainMenuOpen" v-if="user" class="toolbox-item toolbox_profile">
-          <Avatar v-if="!mainMenuOpen" :user="user"></Avatar>
-          <label v-else>
-            <i
-              class="icon-close user-menu-close"
-              title="Show main menu"></i>
-          </label>
         </section>
         <section @click="optionsMenuOpen=!optionsMenuOpen" class="toolbox-item toolbox_menu desktop">
             <i v-if="optionsMenuOpen"
@@ -233,13 +233,9 @@ export default
 </script>
 
 <style scoped lang="scss">
-  $headerbgcolor : white;
-  $defaulttextcolor : black;
-  $crustregular : Arial, sans-serif;
-  $defaultlinecolor : #CCC;
-  $notificationcolor : red;
-  // import global settings that override previous declarations
   @import '@/assets/sass/_0.declare.scss';
+  $defaultheight: 50px;
+  $iconsize: 18px;
 
   *
   {
@@ -259,7 +255,7 @@ export default
   {
     font-size: 100%;
     float: right;
-    line-height: 6em;
+    line-height: $defaultheight;
     margin-right: 1.5em;
     vertical-align: middle;
 
@@ -269,22 +265,19 @@ export default
       line-height: 1;
       vertical-align: middle;
       margin: 0 0 0 1em;
-      // cursor:pointer;
 
       i
       {
-        font-size: 26px;
+        font-size: $iconsize;
         display: inline-block;
-        min-width: 1em;
         color: $defaultlinecolor;
-        border-radius: 100%;
 
         &.user-menu-close
         {
           border-radius: 32px;
           width: 32px;
           background-color: $appgrey;
-          font-size: 24px;
+          font-size: $iconsize;
           text-align: center;
           line-height: 32px;
           color: white;
@@ -346,7 +339,7 @@ export default
     position: fixed;
     font-size: 13px;
     color: $appgrey;
-    top: 60px;
+    top: $defaultheight;
     right: 0;
     bottom: 0;
     width: 90vw;
@@ -356,11 +349,11 @@ export default
     background-color: $headerbgcolor;
     box-shadow: 0 0.1em 0.2em 0 rgba($defaulttextcolor, 0.1);
     border-left: solid 1px rgba($defaultlinecolor, 0.25);
-    padding: 60px 20px 20px 20px;
+    padding: 10px 20px;
 
     .menu-section-title
     {
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       color: $defaulttextcolor;
       font-weight: 600;
     }
@@ -407,6 +400,7 @@ export default
       color: $appgrey;
       border:none;
       border-collapse: collapse;
+      width: 100%;
     }
 
     .panels-table th,
@@ -426,12 +420,13 @@ export default
     .panels-table td label:hover
     {
       cursor: pointer;
-      background: $appyellow;
+      background: $appcream;
     }
 
     .panels-table th
     {
-      background-color: rgba($defaultitembgcolor, 0.15);
+      background-color: $appgrey;
+      color: $white;
     }
 
     ul
@@ -472,15 +467,13 @@ export default
   {
     overflow: hidden;
     background-color: $headerbgcolor;
-    border-bottom: 1px solid rgba($defaulttextcolor, 0.1);
-    height: 6em;
-    max-height: 6em;
+    height: $defaultheight;
 
     .title-wrap
     {
       float: left;
       display: block;
-      line-height: 6em;
+      line-height: $defaultheight;
       margin: 0 0.5em 0 1.5em;
       position: relative;
     }
@@ -540,12 +533,6 @@ export default
 
     header
     {
-      overflow: hidden;
-      background-color: $headerbgcolor;
-      border-bottom: 1px solid rgba($defaulttextcolor, 0.1);
-      height: 6em;
-      max-height: 6em;
-
       .title-wrap
       {
         line-height: 40px;

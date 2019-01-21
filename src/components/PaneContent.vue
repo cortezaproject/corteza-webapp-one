@@ -82,7 +82,7 @@ export default {
       display: flex;
       flex: 1 1 0;
       min-height: 0;
-      background-color: aliceblue;
+      background-color: $mainbgcolor;
     }
 
     .iframeContent
@@ -92,15 +92,13 @@ export default {
       overflow-x: hidden;
       overflow-y: scroll;
       background: $mainbgcolor;
-
-      &.active
-      {
+      border-left: 2px solid #fff;
+      &:first-child {
+        border: none;
+      }
+      &.active {
         display: block;
-        border-left: 2px solid #fff;
       }
     }
-  }
-  .static-panel-container:nth-child(2) {
-    border-left: 1px dashed #D6D6D6;
   }
 </style>

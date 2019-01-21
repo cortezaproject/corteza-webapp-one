@@ -1,15 +1,18 @@
 <!-- template for the user avatar component -->
 <template>
-  <i v-if="user" class="avatar u-avatar"
-     :class="[ { 'no-avatar' : !user.avatar } ]"
-     :title="user.name || user.username"
-     :style="{ 'background-image': (user.avatar ? `url(${user.avatar})` : '') }">
-      <span aria-hidden="true" v-if="!user.avatar">{{ user.name[0] || user.username[0] }}</span>
-  </i>
-  <i v-else
-     class="avatar u-avatar coward">
-      <span aria-hidden="true">?</span>
-  </i>
+  <span v-if="user">
+    <span class="avatar u-avatar"
+       :class="[ { 'no-avatar' : !user.avatar } ]"
+       :title="user.name || user.username"
+       :style="{ 'background-image': (user.avatar ? `url(${user.avatar})` : '') }">
+        <span aria-hidden="true" v-if="!user.avatar">{{ user.name[0] || user.username[0] }}</span>
+    </span>
+    <label>{{ user.name || user.username }} </label>
+  </span>
+    <i v-else
+       class="avatar u-avatar coward">
+    <span aria-hidden="true">?</span>
+    </i>
 </template>
 
 <script>
@@ -25,31 +28,28 @@ export default
 </script>
 
 <style scoped lang="scss">
-//this import is for variables
 @import '@/assets/sass/_0.declare.scss';
 
-i.u-avatar
-{
-  display: inline-block;
-  font-size: 16px !important;
-  height: 32px;
-  width: 32px;
-  border: solid 2px $defaultlinecolor;
-  border-radius: 100%;
-  background: url('/static/pics/no-profile-pic.png') center center no-repeat;
-  background-size: contain;
-  line-height: 32px;
-  text-align: center;
-  font-style: normal;
-  background-color: $appgrey;
-  color: $appwhite;
-  vertical-align: middle;
-
-  span
-  {
-    color: $appwhite;
-    font-size: 16px;
-    line-height: 1;
-  }
+label {
+  font-size: 13px;
+  margin-left: 5px;
+  cursor: pointer;
+  margin-right: 40px;
+  font-family: $crustheavy;
+}
+.u-avatar {
+  display:inline-block;
+  font-size:16px;
+  height:32px;
+  width:32px;
+  border:solid 1px $appgreen;
+  border-radius:100%;
+  background:url('/static/pics/no-profile-pic.png') center center no-repeat;
+  background-size:contain;
+  line-height:28px;
+  text-align:center;
+  font-style:normal;
+  background-color:rgba($appgreen,0.08);;
+  color:$appgreen;
 }
 </style>
