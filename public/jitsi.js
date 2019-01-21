@@ -51,15 +51,21 @@ function LoadJitsiRoom (room, user) {
       DEFAULT_REMOTE_DISPLAY_NAME: 'Fellow Cruster',
       DEFAULT_LOCAL_DISPLAY_NAME: user,
       TOOLBAR_BUTTONS: [
-        'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
+        'microphone', 'camera', 'closedcaptions', 'desktop',
         'fodeviceselection', 'hangup', 'profile', 'info', 'recording',
-        'settings', 'tileview', 'videoquality', 'filmstrip', 'invite',
+        'settings', 'tileview', 'videoquality', 'filmstrip',
         'shortcuts',
       ],
-      SETTINGS_SECTIONS: ['devices', 'language', 'moderator', 'profile', 'calendar'],
+      SETTINGS_SECTIONS: ['devices', 'language', 'profile'],
     },
   }
   api = new JitsiMeetExternalAPI(domain, options)
+  api.addEventListener('readyToClose', function (event) {
+    // hide Jitsi thank you page and display ours by hiding and showing
+    // corrosponding div elements
+    document.getElementById('meetover').style.display = 'block'
+    document.getElementById('meet').style.display = 'none'
+  })
 }
 
 // Loads a Jitsi instance based on a selection from the drop down
