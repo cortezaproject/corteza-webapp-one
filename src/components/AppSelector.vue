@@ -51,6 +51,7 @@
 <script>
 import Modal from '@/components/Modal'
 import AppSelectorItem from '@/components/AppSelectorItem'
+import { mapGetters } from 'vuex'
 
 export default {
   directives: {},
@@ -58,6 +59,12 @@ export default {
   components: {
     Modal,
     AppSelectorItem,
+  },
+
+  computed: {
+    ...mapGetters({
+      currentUser: 'auth/user',
+    }),
   },
 
   methods:
@@ -132,130 +139,132 @@ export default {
       // if apps can be opened in tabs they will be listed via the "+" in a panel context
       // if apps can be opened in panel/window or external they will be listed via the "+" in header
       popular_apps: [ 0, 1, 2, 3 ],
-      available_apps: [
-        {
-          name: 'Crust Messaging',
-          logo: require('@/assets/logos/crust.jpg'),
-          icon: require('@/assets/logos/crust_favicon.png'),
-          color: 'appyellow',
-          path: '/messaging/',
-          allowed_contextes: ['panel', 'tab', 'external'],
-          method: 'iframe',
-          showOptions: false,
-        },
-        {
-          name: 'Crust CRM',
-          color: 'appgreen',
-          logo: require('@/assets/logos/crust.jpg'),
-          icon: require('@/assets/logos/crust_favicon.png'),
-          path: '/crm/',
-          allowed_contextes: ['window', 'panel', 'tab', 'external'],
-          method: 'iframe',
-          showOptions: false, // should be initalised as false for all
-        },
-        /*
-        {
-          name: 'Crust Global Search',
-          color: 'appgreen',
-          logo: require('@/assets/logos/crust.jpg'),
-          icon: require('@/assets/logos/crust_favicon.png'),
-          path: 'https://example.com/',
-          allowed_contextes: ['window', 'panel', 'tab', 'external'],
-          method: 'iframe',
-          showOptions: false, // should be initalised as false for all
-        },
-        */
-        {
-          name: 'Meet.Jit.Si',
-          color: '',
-          icon: require('@/assets/logos/jitsi_icon.png'),
-          logo: require('@/assets/logos/jitsi.png'),
-          // path: 'https://meet.jit.si/',
-          path: '/jitsi.html?id=' + this.$store.state.auth.user.ID,
-          allowed_contextes: ['panel', 'tab'],
-          showOptions: false,
-        },
-        {
-          name: 'Maps',
-          color: 'appblue',
-          logo: require('@/assets/logos/google_maps.png'),
-          icon: require('@/assets/logos/google_maps_icon.png'),
-          path: 'https://maps.google.com/maps?width=100%&height=600&hl=es&q=Europe&ie=UTF8&t=&z=4&iwloc=B&output=embed',
-          allowed_contextes: ['panel', 'tab'],
-          method: 'iframe',
-          showOptions: false,
-        },
-        {
-          name: 'OpenStreetmap',
-          color: '',
-          icon: require('@/assets/logos/openstreetmap_icon.png'),
-          logo: require('@/assets/logos/openstreetmap.png'),
-          path: 'https://www.openstreetmap.org/export/embed.html?bbox=-11.228027343750002%2C38.39333888832238%2C16.303710937500004%2C51.631657349449995&amp;layer=mapnik',
-          allowed_contextes: ['panel', 'tab'],
-          showOptions: false,
-        },
-        {
-          name: 'Jira',
-          color: '',
-          logo: require('@/assets/logos/jira.png'),
-          path: 'https://example.com/',
-          allowed_contextes: ['panel', 'tab'],
-          showOptions: false,
-        },
-        {
-          name: 'Etherpad from RiseUp',
-          color: '',
-          path: 'https://pad.riseup.net/',
-          logo: require('@/assets/logos/etherpad.png'),
-          allowed_contextes: ['panel', 'tab'],
-          showOptions: false,
-        },
-
-        {
-          name: 'Wordreference',
-          color: '',
-          logo: require('@/assets/logos/wordreference.png'),
-          path: 'https://mini.wordreference.com/mini/index.aspx?dict=enes&w=start&u=1',
-          allowed_contextes: ['panel', 'tab'],
-          showOptions: false,
-        },
-        {
-          name: 'Trading Nasdaq Apple',
-          color: '',
-          logo: require('@/assets/logos/tradingview.png'),
-          path: 'https://www.crust.tech/test-chart/',
-          allowed_contextes: ['panel', 'tab'],
-          showOptions: false,
-        },
-        {
-          name: 'Jenkins',
-          logo: require('@/assets/logos/jenkins.png'),
-          allowed_contextes: ['panel', 'tab'],
-          showOptions: false,
-        },
-        {
-          name: 'Another link',
-          icon: 'icon-earth',
-          path: 'https://example.com/',
-          allowed_contextes: ['panel', 'tab'],
-          showOptions: false,
-        },
-        {
-          name: 'Another link',
-          icon: 'icon-bubbles',
-          path: 'https://example.com/',
-          allowed_contextes: ['panel', 'tab'],
-          showOptions: false,
-        },
-        {
-          name: 'Another link',
-          icon: 'icon-terminal',
-          path: 'https://example.com/',
-          allowed_contextes: ['panel', 'tab'],
-          showOptions: false,
-        },
-      ],
+      available_apps: [],
     }
+  },
+  created () {
+    this.available_apps = [
+      {
+        name: 'Crust Messaging',
+        logo: require('@/assets/logos/crust.jpg'),
+        icon: require('@/assets/logos/crust_favicon.png'),
+        color: 'appyellow',
+        path: '/messaging/',
+        allowed_contextes: ['panel', 'tab', 'external'],
+        method: 'iframe',
+        showOptions: false,
+      },
+      {
+        name: 'Crust CRM',
+        color: 'appgreen',
+        logo: require('@/assets/logos/crust.jpg'),
+        icon: require('@/assets/logos/crust_favicon.png'),
+        path: '/crm/',
+        allowed_contextes: ['window', 'panel', 'tab', 'external'],
+        method: 'iframe',
+        showOptions: false, // should be initalised as false for all
+      },
+      /*
+      {
+        name: 'Crust Global Search',
+        color: 'appgreen',
+        logo: require('@/assets/logos/crust.jpg'),
+        icon: require('@/assets/logos/crust_favicon.png'),
+        path: 'https://example.com/',
+        allowed_contextes: ['window', 'panel', 'tab', 'external'],
+        method: 'iframe',
+        showOptions: false, // should be initalised as false for all
+      },
+      */
+      {
+        name: 'Meet.Jit.Si',
+        color: '',
+        icon: require('@/assets/logos/jitsi_icon.png'),
+        logo: require('@/assets/logos/jitsi.png'),
+        path: '/jitsi.html?id=' + this.currentUser.ID + '&user=' + this.currentUser.email + '&name=' + this.currentUser.name,
+        allowed_contextes: ['panel', 'tab'],
+        showOptions: false,
+      },
+      {
+        name: 'Maps',
+        color: 'appblue',
+        logo: require('@/assets/logos/google_maps.png'),
+        icon: require('@/assets/logos/google_maps_icon.png'),
+        path: 'https://maps.google.com/maps?width=100%&height=600&hl=es&q=Europe&ie=UTF8&t=&z=4&iwloc=B&output=embed',
+        allowed_contextes: ['panel', 'tab'],
+        method: 'iframe',
+        showOptions: false,
+      },
+      {
+        name: 'OpenStreetmap',
+        color: '',
+        icon: require('@/assets/logos/openstreetmap_icon.png'),
+        logo: require('@/assets/logos/openstreetmap.png'),
+        path: 'https://www.openstreetmap.org/export/embed.html?bbox=-11.228027343750002%2C38.39333888832238%2C16.303710937500004%2C51.631657349449995&amp;layer=mapnik',
+        allowed_contextes: ['panel', 'tab'],
+        showOptions: false,
+      },
+      {
+        name: 'Jira',
+        color: '',
+        logo: require('@/assets/logos/jira.png'),
+        path: 'https://example.com/',
+        allowed_contextes: ['panel', 'tab'],
+        showOptions: false,
+      },
+      {
+        name: 'Etherpad from RiseUp',
+        color: '',
+        path: 'https://pad.riseup.net/',
+        logo: require('@/assets/logos/etherpad.png'),
+        allowed_contextes: ['panel', 'tab'],
+        showOptions: false,
+      },
+
+      {
+        name: 'Wordreference',
+        color: '',
+        logo: require('@/assets/logos/wordreference.png'),
+        path: 'https://mini.wordreference.com/mini/index.aspx?dict=enes&w=start&u=1',
+        allowed_contextes: ['panel', 'tab'],
+        showOptions: false,
+      },
+      {
+        name: 'Trading Nasdaq Apple',
+        color: '',
+        logo: require('@/assets/logos/tradingview.png'),
+        path: 'https://www.crust.tech/test-chart/',
+        allowed_contextes: ['panel', 'tab'],
+        showOptions: false,
+      },
+      {
+        name: 'Jenkins',
+        logo: require('@/assets/logos/jenkins.png'),
+        allowed_contextes: ['panel', 'tab'],
+        showOptions: false,
+      },
+      {
+        name: 'Another link',
+        icon: 'icon-earth',
+        path: 'https://example.com/',
+        allowed_contextes: ['panel', 'tab'],
+        showOptions: false,
+      },
+      {
+        name: 'Another link',
+        icon: 'icon-bubbles',
+        path: 'https://example.com/',
+        allowed_contextes: ['panel', 'tab'],
+        showOptions: false,
+      },
+      {
+        name: 'Another link',
+        icon: 'icon-terminal',
+        path: 'https://example.com/',
+        allowed_contextes: ['panel', 'tab'],
+        showOptions: false,
+      },
+    ]
   },
 }
 </script>

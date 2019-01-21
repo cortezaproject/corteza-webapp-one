@@ -1,37 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" type="image/png" href="https://meet.jit.si/images/favicon.ico?v=1">
-    <title>Jitsi</title>
-    <style>
-      body
-      {
-        margin: 0;
-      }
 
-      #meet
-      {
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" type="image/png" href="https://meet.jit.si/images/favicon.ico?v=1">
+  <title>Jitsi</title>
+  <style>
+    body {
+      margin: 0;
+    }
 
-      #meet > iframe
-      {
-        flex: 1 1 auto;
-      }
-    </style>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but chrome doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="meet"></div>
-    <script src="https://meet.jit.si/external_api.js"></script>
-    <script src="/jitsi.js"></script>
-  </body>
+    #meet {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #meet>iframe {
+      flex: 1 1 auto;
+    }
+  </style>
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but chrome doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+  </noscript>
+  <div id="roomselection">
+    <div id="roomdropdown"></div>
+    <p>Create a room</p>
+      Enter a room name:
+      <input type="text" id="roomInputField" name="roomInputField" />
+      <a href="#"><p onClick="JavaScript:SubmitRoomCreator()">Create</p></a>
+
+  </div>
+  <div id="meet"></div>
+  <script src="https://meet.jit.si/external_api.js"></script>
+  <script src="/jitsi.js"></script>
+</body>
+
 </html>
