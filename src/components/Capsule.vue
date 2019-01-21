@@ -31,13 +31,13 @@ export default
       line-height: 1;
       display: inline-block;
       padding: 0.2em 0.5em;
-      vertical-align: middle;
+      vertical-align: baseline;
       border-radius: 2em;
-      font-weight: normal;
       font-size: 1em;
       font-family: $crustsemibold;
       text-transform: uppercase;
-      margin-left: 1em;
+      margin-left: 5px;
+      letter-spacing: 2px;
     }
   }
 
@@ -48,10 +48,10 @@ export default
       background-color: $pfbgcolor;
       color: $pfbgcolor;
       display: inline-block;
-      width: 18px;
-      height: 18px;
+      width: 15px;
+      height: 15px;
       border-radius: 50%;
-      margin-left: 0.85em;
+      margin-left: 5px;
       vertical-align: middle;
       overflow: hidden;
     }

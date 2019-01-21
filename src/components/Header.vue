@@ -301,7 +301,7 @@ export default
         display: inline-block;
         border-radius: 100%;
         content: ".";
-        background-color: $notificationcolor;
+        background-colotitle-wrapr: $notificationcolor;
         height: 1em;
         width: 1em;
         margin-left: -1.5em;
@@ -509,8 +509,8 @@ export default
     color: white;
     text-transform: uppercase;
     border-radius: 10px;
-    padding: 5px 10px 3px;
-    margin:33px 0 0;
+    padding: 3px 10px 3px;
+    margin: 30px 0 0;
     position: absolute;
     left: 0;
     line-height: 1;
@@ -544,7 +544,7 @@ export default
     {
       .title-wrap
       {
-        line-height: 40px;
+        line-height: 25px;
       }
     }
   }
