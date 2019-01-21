@@ -8,19 +8,26 @@
       </div>
       <div class="toolbox">
         <!-- the header add is for panels, not for now, remove false && to restore -->
-        <section @click="mainMenuOpen=!mainMenuOpen" v-if="user" class="toolbox-item toolbox_profile">
-          <Avatar v-if="!mainMenuOpen" :user="user"></Avatar>
-          <label v-else>
-            <i
-                    class="icon-close user-menu-close"
-                    title="Show main menu"></i>
-          </label>
+        <section  v-if="user" class="toolbox-item toolbox_profile">
+          <Avatar :user="user"></Avatar>
+          <a href="/auth/signout">Sign Out</a>
         </section>
+        <!--<section @click="mainMenuOpen=!mainMenuOpen" v-if="user" class="toolbox-item toolbox_profile">-->
+          <!--<Avatar v-if="!mainMenuOpen" :user="user"></Avatar>-->
+          <!--<label v-else>-->
+            <!--<i class="icon-close user-menu-close"-->
+               <!--title="Show main menu"></i>-->
+          <!--</label>-->
+        <!--</section>-->
         <section v-if="false && user && optionalAdd" class="toolbox-item add circle">
           <i class="icon-plus"
             title="Add a pane"
             @click="$emit('apps')"></i>
         </section>
+        <section class="toolbox-item">
+
+        </section>
+        <!--
         <section v-if="user && optionalAdd"
           class="toolbox-item toolbox_notify"
           :class="(user.has_notifications ? 'toolbox_has_notification' : '')">
@@ -28,6 +35,7 @@
             class="icon-bell2"
             :class="(user.has_notifications ? 'toolbox_notification' : '')"></i>
         </section>
+        -->
         <section @click="optionsMenuOpen=!optionsMenuOpen" class="toolbox-item toolbox_menu desktop">
             <i v-if="optionsMenuOpen"
               class="icon-grid-interface-close"
@@ -177,8 +185,6 @@ export default
         {
           label: 'Settings',
         },
-        // no use for login link here... This menu is not shown ifnot logged in
-        // { label: 'Login', link: '/auth/signin' },
         {
           label: 'Logout',
           link: '/auth/signout',
@@ -247,8 +253,8 @@ export default
 
   .toolbox_menu
   {
-    display: none; //for now
     transition: all 0.2s ease;
+    cursor: pointer;
   }
 
   .toolbox
@@ -308,6 +314,16 @@ export default
     &_menu
     {
       margin-top: 1px;
+    }
+
+    &_profile {
+      a {
+        color: $black;
+        position: absolute;
+        margin-left: 37px;
+        margin-top: -13px;
+        text-decoration: none;
+      }
     }
 
     &_has_notification
@@ -485,13 +501,6 @@ export default
       display: inline-block;
       vertical-align: middle;
     }
-  }
-
-  .toolbox_profile,
-  .toolbox_menu,
-  .icon-close
-  {
-    cursor: pointer;
   }
 
   .active_mobile

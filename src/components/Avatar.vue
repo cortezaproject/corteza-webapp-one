@@ -33,9 +33,16 @@ export default
 label {
   font-size: 13px;
   margin-left: 5px;
-  cursor: pointer;
   margin-right: 40px;
   font-family: $crustheavy;
+  /*
+  &:after {
+    border: 4px dashed transparent;
+    border-top: 4px solid $black;
+    content: "";
+    display: inline-block;
+  }
+  */
 }
 .u-avatar {
   display:inline-block;
@@ -51,5 +58,6 @@ label {
   font-style:normal;
   background-color:rgba($appgreen,0.08);;
   color:$appgreen;
+  vertical-align: -webkit-baseline-middle;
 }
 </style>

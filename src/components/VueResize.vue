@@ -62,7 +62,7 @@ export default
   {
     position: relative;
     max-width: 100vw;
-    max-height: calc(100vh - 6em); /* exclude header */
+    max-height: calc(100vh - 50px); /* exclude header */
     top: 0 !important;
     left: 0 !important;
 

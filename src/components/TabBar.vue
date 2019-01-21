@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="tab_add_mobile">
-        <button class="tab-plus" @click="$emit('add')">+</button>
+        <button class="tab-plus" @click="$emit('add')">+ Add</button>
       </div>
     </div>
     <template v-else-if="!mobile">
@@ -324,7 +324,6 @@ export default
       background-color: $appwhite;
       display: flex;
       align-items: center;
-      padding: 0 6px;
       border-radius: 3px;
       margin: 4px 8px 8px;
       padding: 8px 8px 8px;
@@ -342,21 +341,24 @@ export default
 
     .tab_add_mobile
     {
-      padding: 16px 0 20px;
+      padding: 20px;
 
       .tab-plus
       {
-        color: $appwhite;
-        background-color: $appblue;
-        font-size: 28px;
-        border: none;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
+        background: $appgrey;
+        color: $white;
+        font-size: 14px;
+        width: 150px;
+        height: 40px;
         display: flex;
         justify-content: center;
-        align-items: center;
         margin: auto;
+        transition: color .2s,background-color .2s;
+        &:hover {
+          border: 1px solid $appgrey;
+          color: $appgrey;
+          background: transparent;
+        }
       }
     }
   }
