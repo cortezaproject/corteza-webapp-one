@@ -246,7 +246,6 @@ export default
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 12px;
-    line-height: 25px;
     cursor: pointer;
   }
 
@@ -257,15 +256,13 @@ export default
     background-color: transparent;
     width: 16px;
     font-size: 20px;
+    margin-top: -5px;
+    &:hover {
+      transform: scale(1.2);
+    }
   }
 
-  .tab-close:hover
-  {
-    transform: scale(1.2);
-  }
-
-  .tab-prev-next
-  {
+  .tab-prev-next {
     display: block;
     font-weight: bold;
     color: #FFF;
@@ -278,18 +275,14 @@ export default
     border: 1px solid #555;
     border-radius: 2px;
     cursor: pointer;
-  }
-
-  .tab-prev-next:hover
-  {
-    background: $defaulttextcolor;
-  }
-
-  .tab-prev-next:active
-  {
-    padding: 1px 0 0 1px;
-    background: #CCC;
-    color: #555;
+    &:hover {
+      background: $defaulttextcolor;
+    }
+    &:active {
+      padding: 1px 0 0 1px;
+      background: #CCC;
+      color: #555;
+    }
   }
 
   @media (max-width: $wideminwidth - 1px)
@@ -339,12 +332,10 @@ export default
       margin-left: 3px;
     }
 
-    .tab_add_mobile
-    {
+    .tab_add_mobile {
       padding: 20px;
 
-      .tab-plus
-      {
+      .tab-plus {
         background: $appgrey;
         color: $white;
         font-size: 14px;
@@ -388,7 +379,6 @@ export default
     {
       display: block;
       font-weight: bold;
-      color: #FFF;
       background: $mainbgcolor;
       line-height: 20px;
       font-size: 20px;
@@ -398,25 +388,20 @@ export default
       border: none;
       cursor: pointer;
       color:$appgrey;
+      &:hover {
+        color: $hoverbgcolor;
+        background: $appgreen;
+        border-left:1px solid #fff;
+        width:59px;
+      }
+      &:active {
+        padding: 1px 0 0 1px;
+        background: #CCC;
+        color: #555;
+      }
     }
 
-    .tab-plus:hover
-    {
-      color: $hoverbgcolor;
-      background: $appgreen;
-      border-left:1px solid #fff;
-      width:59px;
-    }
-
-    .tab-plus:active
-    {
-      padding: 1px 0 0 1px;
-      background: #CCC;
-      color: #555;
-    }
-
-    .tab_item
-    {
+    .tab_item {
       width: 150px;
       min-width: 150px;
       overflow: hidden;
@@ -424,18 +409,15 @@ export default
       padding: 3px 2px 2px 4px;
       display: flex;
       align-items: center;
-      border: 1px solid #DDD;
-    }
-
-    .tab_item.active
-    {
-      background-color: $appgreen;
-      color: #FFF;
-      border-color: $appgreen;
-
-      .tab-close
-      {
-        color: #FFF;
+      border-bottom: 3px solid white;
+      &.active {
+        background-color: $white;
+        color: $appgreen;
+        border-color: $appgrey;
+        border-bottom: 3px solid $appgreen;
+        .tab-close {
+          color: $appgreen;
+        }
       }
     }
   }
