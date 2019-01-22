@@ -281,6 +281,9 @@ export default
     &:hover {
       transform: scale(1.2);
     }
+    &:focus {
+      outline: none;
+    }
   }
 
   .tab-prev-next,

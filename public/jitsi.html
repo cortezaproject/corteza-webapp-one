@@ -22,6 +22,102 @@
     #meet>iframe {
       flex: 1 1 auto;
     }
+
+    #roomselection {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 40px;
+      background-color: #fff;
+      font-family: Arial;
+    }
+
+    input {
+      height: 30px;
+      width: 100%;
+      border: 1px solid #90A3B1;
+      padding-left: 10px;
+      font-size: 14px;
+      display: block;
+      margin-top: 10px;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+
+    select {
+      height: 30px;
+      width: 100%;
+      margin-top: 10px;
+      background: transparent;
+      padding-left: 10px;
+      font-size: 14px;
+      -webkit-border-radius:0px;
+      -moz-border-radius:0px;
+      border-radius:0px;
+      -webkit-appearance:none;
+      -moz-appearance:none;
+      appearance:none;
+      border: 1px solid #90A3B1;
+    }
+
+    #roomdropdown::after {
+      border: 4px dashed transparent;
+      border-top: 4px solid #90a3b1;
+      content: "";
+      display: inline-block;
+      float: right;
+      margin-right: 10px;
+      margin-top: -15px;
+    }
+
+    select:focus,
+    input:focus {
+      outline: none;
+    }
+
+    a {
+      background: #90A3B1;
+      color: #FFF;
+      font-size: 14px;
+      line-height: 38px;
+      text-decoration: none;
+      display: block;
+      width: 150px;
+      text-align: center;
+      height: 40px;
+      margin: 20px auto 0;
+      -webkit-transition: color .2s,background-color .2s;
+      transition: color .2s,background-color .2s;
+      border: 1px solid #90A3B1;
+    }
+
+    a:hover {
+      border: 1px solid #90A3B1;
+      color: #90A3B1;
+      background: transparent;
+    }
+
+    h4 {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      margin: 30px 0;
+      color: #90A3B1;
+    }
+
+    h4:before,
+    h4:after {
+      content: '';
+      border-top: 1px solid #90A3B1;
+      margin: 0 20px 0 0;
+      flex: 1 0 20px;
+    }
+
+    h4:after {
+      margin: 0 0 0 20px;
+    }
   </style>
 </head>
 
@@ -30,11 +126,12 @@
     <strong>We're sorry but chrome doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
   </noscript>
   <div id="roomselection">
+    <span>To start a video call select from existing channels:</span>
     <div id="roomdropdown"></div>
-    <p>Create a room</p>
-      Enter a room name:
-      <input type="text" id="roomInputField" name="roomInputField" />
-      <a href="#"><p onClick="JavaScript:SubmitRoomCreator()">Create</p></a>
+    <h4>OR</h4>
+    <span>Create a  new room:</span>
+    <input type="text" id="roomInputField" name="roomInputField" value="Room name"/>
+    <a href="#" onClick="JavaScript:SubmitRoomCreator()">Create</a>
 
   </div>
   <div id="meet"></div>

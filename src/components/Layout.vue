@@ -233,7 +233,6 @@ export default
 }
 </script>
 
-<!-- don't scope this ! -->
 <style lang="scss">
   @import '@/assets/sass/_0.declare.scss';
 
