@@ -1,7 +1,7 @@
 <template>
   <div class="tab_list_wrapper" ref="tabbar">
     <div v-if="mobile && mobileListShown" class="tab_bar_mobile">
-      <div class="tab_header_mobile">All tabs</div>
+      <div class="tab_header_mobile">List of Open Tabs</div>
       <div class="tab_list_mobile">
         <div
           class="tab_item_mobile"
@@ -16,7 +16,6 @@
             @mousedown.self="switchActive(tab.id)"
           >
             {{ tab.title }}
-            <i class="active-indicator" v-if="active_tab === tab.id"></i>
           </div>
           <button class="tab-close" @click="removeTab(tab.id)">&times;</button>
         </div>
@@ -213,8 +212,7 @@ export default
 <style scoped lang="scss">
   @import '@/assets/sass/_0.declare.scss';
 
-  .tab_list_wrapper
-  {
+  .tab_list_wrapper {
     font-family: $crustregular;
     background-color: $headerbgcolor;
     z-index: 3;
@@ -222,11 +220,12 @@ export default
     padding: 0;
     overflow: hidden;
     box-shadow: 0 0.1rem 0.2rem 0 rgba($defaulttextcolor, 0.1);
+    display: flex;
+    border-top: 1px solid $appcream;
   }
 
-  .tab_logo
-  {
-    width: 25px;
+  .tab_logo {
+    width: 20px;
     height: 25px;
     margin-right: 5px;
     background-repeat: no-repeat;
@@ -234,13 +233,31 @@ export default
     background-size: contain;
   }
 
-  .no_tab_logo
-  {
+  .tab_item {
+    width: 150px;
+    min-width: 150px;
+    overflow: hidden;
+    padding: 3px 2px 2px 4px;
+    display: flex;
+    align-items: center;
+    border-bottom: 3px solid $white;
+    border-right: 1px solid $appcream;
+    color: $appgrey;
+    font-family: $crustsemibold;
+    &.active {
+      color: $appgreen;
+      border-bottom: 3px solid $appgreen;
+    }
+    .tab-close {
+      color: $appgrey;
+    }
+  }
+
+  .no_tab_logo {
     margin-right: 5px;
   }
 
-  .tab_title
-  {
+  .tab_title {
     flex: 1 1 0;
     white-space: nowrap;
     overflow: hidden;
@@ -249,48 +266,70 @@ export default
     cursor: pointer;
   }
 
-  .tab-close
-  {
+  .tab_list {
+    display: flex;
+    overflow: hidden;
+  }
+
+  .tab-close {
     cursor: pointer;
     border: none;
     background-color: transparent;
     width: 16px;
-    font-size: 20px;
+    font-size: 15px;
     margin-top: -5px;
     &:hover {
       transform: scale(1.2);
     }
   }
 
-  .tab-prev-next {
+  .tab-prev-next,
+  .tab-plus {
     display: block;
-    font-weight: bold;
-    color: #FFF;
-    background: $tab_bgcolor;
-    line-height: 20px;
+    background: $appgrey;
     font-size: 20px;
     width: 30px;
     min-width: 30px;
     min-height: 30px;
-    border: 1px solid #555;
-    border-radius: 2px;
     cursor: pointer;
-    &:hover {
-      background: $defaulttextcolor;
-    }
-    &:active {
-      padding: 1px 0 0 1px;
-      background: #CCC;
-      color: #555;
+    background: $mainbgcolor;
+    line-height: 20px;
+    border: none;
+    color:$appgrey;
+    padding: 0 0 5px;
+    &:hover,
+    &:active{
+      color: $appgreen;
+      background: $hoverbgcolor;
     }
   }
 
-  @media (max-width: $wideminwidth - 1px)
-  {
+  .tab-prev-next {
+    border-right: 1px solid $white;
+    font-size: 15px;
+  }
+
+  .mobile {
+    visibility: hidden;
+  }
+
+  @media (max-width: $wideminwidth - 1px) {
+    .mobile {
+      visibility: visible;
+    }
+
+    .tab_logo {
+      width: 50px;
+    }
+
+    .tab-close {
+      font-size: 18px;
+    }
+
     .tab_bar_mobile
     {
       position: fixed;
-      top: 6em; /* take into account the header */
+      top: 50px;
       bottom: 0;
       left: 0;
       right: 0;
@@ -322,16 +361,6 @@ export default
       padding: 8px 8px 8px;
     }
 
-    .active-indicator
-    {
-      background-color: $error;
-      display: inline-block;
-      border-radius: 50%;
-      width: 8px;
-      height: 8px;
-      margin-left: 3px;
-    }
-
     .tab_add_mobile {
       padding: 20px;
 
@@ -354,71 +383,4 @@ export default
     }
   }
 
-  //using media query to change behaviour if available display area is sufficient.
-  @media (min-width: $wideminwidth)
-  {
-    .mobile
-    {
-      display: none;
-    }
-
-    .tab_list_wrapper
-    {
-      display: flex;
-      overflow: hidden;
-      border-top: 1px solid #DDD;
-    }
-
-    .tab_list
-    {
-      display: flex;
-      overflow: hidden;
-    }
-
-    .tab-plus
-    {
-      display: block;
-      font-weight: bold;
-      background: $mainbgcolor;
-      line-height: 20px;
-      font-size: 20px;
-      width: 60px;
-      min-width: 30px;
-      min-height: 30px;
-      border: none;
-      cursor: pointer;
-      color:$appgrey;
-      &:hover {
-        color: $hoverbgcolor;
-        background: $appgreen;
-        border-left:1px solid #fff;
-        width:59px;
-      }
-      &:active {
-        padding: 1px 0 0 1px;
-        background: #CCC;
-        color: #555;
-      }
-    }
-
-    .tab_item {
-      width: 150px;
-      min-width: 150px;
-      overflow: hidden;
-      background: #FFF;
-      padding: 3px 2px 2px 4px;
-      display: flex;
-      align-items: center;
-      border-bottom: 3px solid white;
-      &.active {
-        background-color: $white;
-        color: $appgreen;
-        border-color: $appgrey;
-        border-bottom: 3px solid $appgreen;
-        .tab-close {
-          color: $appgreen;
-        }
-      }
-    }
-  }
 </style>
