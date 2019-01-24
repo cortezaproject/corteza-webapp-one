@@ -6,7 +6,7 @@
       class="new-app-closer"
       v-if="!firstApp"
       @click="$emit('close')"><i class="icon-close"></i></span>
-    <section class="app-section popular">
+    <!--<section class="app-section popular">
       <div class="section-title">Most popular</div>
       <ul :class="[ 'available-apps' ]">
         <li
@@ -20,9 +20,9 @@
             v-on:doadd="addApp(available_apps[appIndex], paneId)"/>
         </li>
       </ul>
-    </section>
+    </section>-->
     <section class="app-section available">
-      <div class="section-title">Available</div>
+      <div class="section-title"></div>
       <ul :class="[ 'available-apps' ]">
         <li
           v-for="(crustapp, index) in available_apps"
@@ -138,7 +138,7 @@ export default {
       //  - panel : can be opened in crust context
       // if apps can be opened in tabs they will be listed via the "+" in a panel context
       // if apps can be opened in panel/window or external they will be listed via the "+" in header
-      popular_apps: [ 0, 1, 2, 3 ],
+      popular_apps: [],
       available_apps: [],
     }
   },
@@ -164,20 +164,8 @@ export default {
         method: 'iframe',
         showOptions: false, // should be initalised as false for all
       },
-      /*
       {
-        name: 'Crust Global Search',
-        color: 'appgreen',
-        logo: require('@/assets/logos/crust.jpg'),
-        icon: require('@/assets/logos/crust_favicon.png'),
-        path: 'https://example.com/',
-        allowed_contextes: ['window', 'panel', 'tab', 'external'],
-        method: 'iframe',
-        showOptions: false, // should be initalised as false for all
-      },
-      */
-      {
-        name: 'Meet.Jit.Si',
+        name: 'Corteza Jit.Si video',
         color: '',
         icon: require('@/assets/logos/jitsi_icon.png'),
         logo: require('@/assets/logos/jitsi.png'),
@@ -186,7 +174,7 @@ export default {
         showOptions: false,
       },
       {
-        name: 'Maps',
+        name: 'Google Maps',
         color: 'appblue',
         logo: require('@/assets/logos/google_maps.png'),
         icon: require('@/assets/logos/google_maps_icon.png'),
@@ -205,14 +193,6 @@ export default {
         showOptions: false,
       },
       {
-        name: 'Jira',
-        color: '',
-        logo: require('@/assets/logos/jira.png'),
-        path: 'https://example.com/',
-        allowed_contextes: ['panel', 'tab'],
-        showOptions: false,
-      },
-      {
         name: 'Etherpad from RiseUp',
         color: '',
         path: 'https://pad.riseup.net/',
@@ -220,17 +200,8 @@ export default {
         allowed_contextes: ['panel', 'tab'],
         showOptions: false,
       },
-
       {
-        name: 'Wordreference',
-        color: '',
-        logo: require('@/assets/logos/wordreference.png'),
-        path: 'https://mini.wordreference.com/mini/index.aspx?dict=enes&w=start&u=1',
-        allowed_contextes: ['panel', 'tab'],
-        showOptions: false,
-      },
-      {
-        name: 'Trading Nasdaq Apple',
+        name: 'Trading View',
         color: '',
         logo: require('@/assets/logos/tradingview.png'),
         path: 'https://www.crust.tech/test-chart/',
@@ -238,29 +209,16 @@ export default {
         showOptions: false,
       },
       {
-        name: 'Jenkins',
-        logo: require('@/assets/logos/jenkins.png'),
+        name: 'Kansha Boards',
+        logo: require('@/assets/logos/kansha.png'),
+        path: 'http://demo.kansha.org/kansha/SATORI+Project/0f97810e-4a20-468a-b068-4b6a81a88e62',
         allowed_contextes: ['panel', 'tab'],
         showOptions: false,
       },
       {
-        name: 'Another link',
-        icon: 'icon-earth',
-        path: 'https://example.com/',
-        allowed_contextes: ['panel', 'tab'],
-        showOptions: false,
-      },
-      {
-        name: 'Another link',
-        icon: 'icon-bubbles',
-        path: 'https://example.com/',
-        allowed_contextes: ['panel', 'tab'],
-        showOptions: false,
-      },
-      {
-        name: 'Another link',
-        icon: 'icon-terminal',
-        path: 'https://example.com/',
+        name: 'Wiki',
+        logo: require('@/assets/logos/bluespice.png'),
+        path: 'https://en.demo.bluespice.com/wiki/Main_Page',
         allowed_contextes: ['panel', 'tab'],
         showOptions: false,
       },
