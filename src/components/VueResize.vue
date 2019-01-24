@@ -89,7 +89,7 @@ export default
     }
     .vdr-stick:hover
     {
-      opacity: 0.3;
+      opacity: 0.5;
     }
     .vdr-stick-tr
     {
@@ -105,8 +105,8 @@ export default
 
     .vdr-stick-bl
     {
-      bottom: -25px !important;
-      left: -25px !important;
+      bottom: -20px !important;
+      left: -19px !important;
     }
 
     .vdr-stick-bm
@@ -117,7 +117,7 @@ export default
 
     .vdr-stick-br
     {
-      bottom: -36px !important;
+      bottom: -20px !important;
       right: -19px !important;
     }
   }
