@@ -22,7 +22,7 @@
       </ul>
     </section>-->
     <section class="app-section available">
-      <div class="section-title"></div>
+      <div class="section-title">Available applications</div>
       <ul :class="[ 'available-apps' ]">
         <li
           v-for="(crustapp, index) in available_apps"
@@ -165,7 +165,7 @@ export default {
         showOptions: false, // should be initalised as false for all
       },
       {
-        name: 'Corteza Jit.Si video',
+        name: 'Corteza JitsiBridge',
         color: '',
         icon: require('@/assets/logos/jitsi_icon.png'),
         logo: require('@/assets/logos/jitsi.png'),
@@ -210,6 +210,7 @@ export default {
       },
       {
         name: 'Kansha Boards',
+        icon: require('@/assets/logos/kansha_icon.png'),
         logo: require('@/assets/logos/kansha.png'),
         path: 'http://demo.kansha.org/kansha/SATORI+Project/0f97810e-4a20-468a-b068-4b6a81a88e62',
         allowed_contextes: ['panel', 'tab'],
@@ -284,6 +285,7 @@ export default {
     font-size: 2.5em;
     margin-top: 50px;
     padding: 20px 15px 10px 15px;
+    text-align: center;
     clear: both;
   }
 
