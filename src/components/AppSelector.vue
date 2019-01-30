@@ -224,6 +224,15 @@ export default {
         allowed_contextes: ['panel', 'tab'],
         showOptions: false,
       },
+      // Kolab doesn't allow being included via frame
+      // {
+      //   name: 'Kolab',
+      //   icon: require('@/assets/logos/kolab_icon.png'),
+      //   logo: require('@/assets/logos/kolab.png'),
+      //   path: 'https://kolabnow.com/',
+      //   allowed_contextes: ['panel', 'tab', 'external'],
+      //   showOptions: false,
+      // },
     ]
   },
 }
