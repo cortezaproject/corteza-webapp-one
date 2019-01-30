@@ -218,6 +218,7 @@ export default {
       },
       {
         name: 'Wiki',
+        icon: require('@/assets/logos/bluespice_icon.jpeg'),
         logo: require('@/assets/logos/bluespice.png'),
         path: 'https://en.demo.bluespice.com/wiki/Main_Page',
         allowed_contextes: ['panel', 'tab'],
