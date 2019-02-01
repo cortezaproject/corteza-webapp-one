@@ -143,6 +143,10 @@ export default {
     }
   },
   created () {
+    if (!this.currentUser) {
+      return
+    }
+
     this.available_apps = [
       {
         name: 'Crust Messaging',

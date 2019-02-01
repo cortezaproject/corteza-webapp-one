@@ -1,34 +1,26 @@
 <template>
-  <div class="workspace">
+  <div class="workspace" v-if="isAuthenticated">
     <Header :user="user"
       :optionalAdd="hasPanes"
       v-on:apps="showapps=true" />
-      <!-- if user exists display interface -->
-      <template v-if="isAuthenticated">
-        <Layout
-          v-model="panes"
-          :user="user" />
-        <app-selector
-          :displayed="!hasPanes || showapps"
-          :firstApp="!hasPanes"
-          :fullscreen="true"
-          v-on:close="showapps=false"
-          v-on:add-app="addTab"></app-selector>
-      </template>
-      <!-- if user does not exist show loginform -->
-      <div class="login" v-else>
-        <LoginForm />
-      </div>
+    <!-- if user exists display interface -->
+    <Layout
+      v-model="panes"
+      :user="user" />
+    <app-selector
+      :displayed="!hasPanes || showapps"
+      :firstApp="!hasPanes"
+      :fullscreen="true"
+      v-on:close="showapps=false"
+      v-on:add-app="addTab"></app-selector>
   </div>
 </template>
 
 <script>
 import auth from '@/mixins/auth'
-
 import Header from '@/components/Header.vue'
 import Layout from '@/components/Layout.vue'
 import AppSelector from '@/components/AppSelector.vue'
-import LoginForm from '@/components/LoginForm.vue'
 
 import { mapGetters } from 'vuex'
 
@@ -40,7 +32,6 @@ export default {
     Header,
     Layout,
     AppSelector,
-    LoginForm,
   },
 
   methods:
@@ -64,14 +55,14 @@ export default {
     hasPanes:
     {
       get () {
-        this.$logger.log('currently : ' + this.$store.state.panes.items.length + ' panes')
+        // this.$logger.log('currently : ' + this.$store.state.panes.items.length + ' panes')
         return (this.$store.state.panes.items.length > 0)
       },
     },
     panes:
     {
       get () {
-        this.$logger.log('WkS getting panes')
+        // this.$logger.log('WkS getting panes')
         return this.$store.state.panes
       },
       /*
@@ -87,26 +78,21 @@ export default {
     }
   },
   created () {
-    // make channel list available for Jitsi. Is this the best place?
-    this.$sam.channelList().then(list => {
-      localStorage.setItem('crustMessagingChannels', JSON.stringify(list))
-    })
+    if (this.isAuthenticated) {
+      // make channel list available for Jitsi. Is this the best place?
+      this.$sam.channelList().then(list => {
+        localStorage.setItem('crustMessagingChannels', JSON.stringify(list))
+      })
+    }
   },
 }
 </script>
-
 <style lang="scss" scoped>
-  .login
-  {
-    height: 100vh;
-    width: 100%;
-  }
-
-  .workspace
-  {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    height: 100%;
-  }
+.workspace
+{
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+}
 </style>
