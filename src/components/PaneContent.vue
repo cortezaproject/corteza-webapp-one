@@ -93,10 +93,6 @@ export default {
       overflow-y: scroll;
       background: $mainbgcolor;
       border-left: 2px solid #fff;
-
-      &:nth-child(2n) {
-        border: none;
-      }
       &.active {
         display: block;
       }
