@@ -142,7 +142,7 @@ export default {
   mixins: [auth],
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 html, body {
   margin: 0;
   overflow: hidden;
