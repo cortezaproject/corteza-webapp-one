@@ -13,9 +13,11 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "crust-api-client": "crusttech/crust-api-client.js.git#master",
     "v-tooltip": "^2.0.0-rc.33",
     "vue": "^2.5.17",
     "vue-drag-resize": "^1.3.2",
+    "vue-plugin-load-script": "^1.2.0",
     "vue-router": "^3.0.1",
     "vue-router-multi-view": "^0.0.4",
     "vuedraggable": "^2.16.0",

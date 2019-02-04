@@ -77,14 +77,6 @@ export default {
       showapps: false,
     }
   },
-  created () {
-    if (this.isAuthenticated) {
-      // make channel list available for Jitsi. Is this the best place?
-      this.$sam.channelList().then(list => {
-        localStorage.setItem('crustMessagingChannels', JSON.stringify(list))
-      })
-    }
-  },
 }
 </script>
 <style lang="scss" scoped>

@@ -173,7 +173,7 @@ export default {
         color: '',
         icon: require('@/assets/logos/jitsi_icon.png'),
         logo: require('@/assets/logos/jitsi.png'),
-        path: '/jitsi.html?id=' + this.currentUser.ID + '&user=' + this.currentUser.email + '&name=' + this.currentUser.name,
+        path: '/bridge/jitsi',
         allowed_contextes: ['panel', 'tab'],
         showOptions: false,
       },

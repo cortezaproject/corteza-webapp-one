@@ -7,8 +7,11 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/form-elements',
-      component: view('form-elements'),
+      path: '/bridge',
+      component: view('Bridge'),
+      children: [
+        { path: 'jitsi', name: 'bridge-jitsi', component: view('Bridge/Jitsi') },
+      ],
     },
     {
       path: '/:name',
@@ -47,6 +50,6 @@ export default new Router({
 
 function view (name, resolve) {
   return function (resolve) {
-    return require([`./views/${name}.vue`], resolve)
+    return require([`./views/${name}`], resolve)
   }
 }

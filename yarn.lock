@@ -2358,6 +2358,12 @@ cross-spawn@^6.0.0:
     shebang-command "^1.2.0"
     which "^1.2.9"
 
+crust-api-client@crusttech/crust-api-client.js.git#master:
+  version "0.0.0"
+  resolved "https://codeload.github.com/crusttech/crust-api-client.js/tar.gz/1968110661f6f8aaaabcb7dbd8626eceae644618"
+  dependencies:
+    axios "^0.18.0"
+
 crypto-browserify@^3.11.0:
   version "3.12.0"
   resolved "https://registry.yarnpkg.com/crypto-browserify/-/crypto-browserify-3.12.0.tgz#396cf9f3137f03e4b8e532c58f698254e00f80ec"
@@ -8446,6 +8452,11 @@ vue-loader@^15.4.2:
     loader-utils "^1.1.0"
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
+
+vue-plugin-load-script@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/vue-plugin-load-script/-/vue-plugin-load-script-1.2.0.tgz#d8cfb0ed68a78f67e24c6254d864f0c77aa80108"
+  integrity sha512-QbWjZSFRToSP6S0nZFsH618PsTlZgSg8m8Xv602vezznLTHYd0wAXEw0jlYND7L6BMe0KcA7cvUwLROyfBlQ4w==
 
 vue-resize@^0.4.3:
   version "0.4.4"
