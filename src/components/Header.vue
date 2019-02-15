@@ -10,7 +10,7 @@
         <!-- the header add is for panels, not for now, remove false && to restore -->
         <section  v-if="user" class="toolbox-item toolbox_profile">
           <Avatar :user="user"></Avatar>
-          <a href="/auth/signout">Sign Out</a>
+          <router-link :to="{ name: 'signout' }">Sign Out</router-link>
         </section>
         <!--<section @click="mainMenuOpen=!mainMenuOpen" v-if="user" class="toolbox-item toolbox_profile">-->
           <!--<Avatar v-if="!mainMenuOpen" :user="user"></Avatar>-->
