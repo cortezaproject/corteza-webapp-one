@@ -86,15 +86,11 @@ export default
       height: 500,
     }
   },
-  // on create init pane data in store
-  created: function () {
-    this.$logger.log('created')
-  },
+
   computed:
   {
     panes: {
       get () {
-        this.$logger.log('layout getting panes')
         return this.$store.state.panes
       },
       /*
