@@ -1,4 +1,4 @@
-# chrome
+# Crust Unify webapp
 
 ## Project setup
 
@@ -8,7 +8,7 @@ yarn global add @vue/cli
 yarn install
 ```
 
-In `/public` folder, create a copy of `config.sample.js` to `config.js` and modify it according to your needs.
+In `/public` folder, create a copy of `config.example.js` to `config.js` and modify it according to your needs.
 
 ### Compiles and hot-reloads for development
 
