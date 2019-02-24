@@ -11,4 +11,9 @@ window.CrustConfig = {
     },
     baseUrl: `http://${domain}`,
   },
+  google: {
+    maps: {
+      apiKey: '',
+    },
+  },
 }

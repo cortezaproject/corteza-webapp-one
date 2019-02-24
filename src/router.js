@@ -11,6 +11,7 @@ export default new Router({
       component: view('Bridge'),
       children: [
         { path: 'jitsi', name: 'bridge-jitsi', component: view('Bridge/Jitsi') },
+        { path: 'googlemaps', name: 'bridge-googlemaps', component: view('Bridge/GoogleMaps') },
       ],
     },
     {

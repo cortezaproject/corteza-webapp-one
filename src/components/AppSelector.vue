@@ -120,7 +120,6 @@ export default {
     if (!this.currentUser) {
       return
     }
-
     this.$system.applicationList().then(aa => {
       this.available_apps = aa.map(a => {
         return { ...a, ...a.unify }
