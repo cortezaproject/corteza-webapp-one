@@ -19,12 +19,16 @@ logger.log(
 if (window.CrustConfig === undefined) {
   alert('Unexisting or invalid configuration. Make sure there is a public/config.js configuration file.')
 } else {
-  Vue.use(VueGoogleMaps, {
-    load: {
-      key: window.CrustConfig.google.maps.apiKey,
-      libraries: 'places', // necessary for places input
-    },
-  })
+  try {
+    Vue.use(VueGoogleMaps, {
+      load: {
+        key: window.CrustConfig.webapp.apps.googlemaps.apiKey,
+        libraries: 'places', // necessary for places input
+      },
+    })
+  } catch (err) {
+    alert(err.message)
+  }
 
   new Vue({
     router,

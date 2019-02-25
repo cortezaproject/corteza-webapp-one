@@ -72,6 +72,3 @@ export default {
   mixins: [auth],
 }
 </script>
-<style lang="scss" >
-
-</style>
