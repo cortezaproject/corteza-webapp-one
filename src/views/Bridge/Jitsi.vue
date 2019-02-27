@@ -8,11 +8,13 @@
                 :value="c.ID">{{ c.name }}</option>
       </select>
     </div>
+    <button :disabled="jitsi || (!channelID)"
+            @click="onCreate">Join</button>
     <h4>OR</h4>
     <span>Create a  new room:</span>
     <input type="text" id="roomInputField" v-model="roomName" placeholder="Room name" />
 
-    <button :disabled="jitsi || (!channelID && cleanup(roomName).length === 0)"
+    <button :disabled="jitsi || (cleanup(roomName).length === 0)"
             @click="onCreate">Create</button>
 
     <div ref="jitsiInterface"
@@ -143,6 +145,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import "@/assets/sass/_0.declare.scss";
+
 html, body {
   margin: 0;
   overflow: hidden;
@@ -174,7 +178,7 @@ html, body {
 input {
   height: 30px;
   width: 100%;
-  border: 1px solid #90A3B1;
+  border: 1px solid $appgrey;
   padding-left: 10px;
   font-size: 14px;
   display: block;
@@ -197,12 +201,12 @@ select {
   -webkit-appearance:none;
   -moz-appearance:none;
   appearance:none;
-  border: 1px solid #90A3B1;
+  border: 1px solid $appgrey;
 }
 
 #roomdropdown::after {
   border: 4px dashed transparent;
-  border-top: 4px solid #90a3b1;
+  border-top: 4px solid $appgrey;
   content: "";
   display: inline-block;
   float: right;
@@ -217,8 +221,8 @@ input:focus {
 
 button {
   cursor: pointer;
-  background: #90A3B1;
-  color: #FFF;
+  background: transparent;
+  color: $appblue;
   font-size: 14px;
   line-height: 38px;
   text-decoration: none;
@@ -229,13 +233,20 @@ button {
   margin: 20px auto 0;
   -webkit-transition: color .2s,background-color .2s;
   transition: color .2s,background-color .2s;
-  border: 1px solid #90A3B1;
-}
-
-button:hover {
-  border: 1px solid #90A3B1;
-  color: #90A3B1;
-  background: transparent;
+  border: 1px solid $appblue;
+  &:hover {
+    border: 1px solid $appblue;
+    background: $appblue;
+    color: #ffffff;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    color: $appgrey;
+    border-color: $appgrey;
+    &:hover {
+      background: transparent;
+    }
+  }
 }
 
 h4 {
@@ -245,18 +256,17 @@ h4 {
   align-items: center;
   text-align: center;
   margin: 30px 0;
-  color: #90A3B1;
+  color: $appgrey;
+  &:before,
+  &:after {
+    content: '';
+    border-top: 1px solid $appgrey;
+    margin: 0 20px 0 0;
+    flex: 1 0 20px;
+  }
+  &:after {
+    margin: 0 0 0 20px;
+  }
 }
 
-h4:before,
-h4:after {
-  content: '';
-  border-top: 1px solid #90A3B1;
-  margin: 0 20px 0 0;
-  flex: 1 0 20px;
-}
-
-h4:after {
-  margin: 0 0 0 20px;
-}
 </style>
