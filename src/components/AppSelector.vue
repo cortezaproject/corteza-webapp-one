@@ -169,6 +169,16 @@ export default {
         showOptions: false, // should be initalised as false for all
       },
       {
+        name: 'Crust Admin Area',
+        color: 'appgreen',
+        logo: require('@/assets/logos/crust.jpg'),
+        icon: require('@/assets/logos/crust_favicon.png'),
+        path: '/admin/',
+        allowed_contextes: ['window', 'panel', 'tab', 'external'],
+        method: 'iframe',
+        showOptions: false,
+      },
+      {
         name: 'Corteza JitsiBridge',
         color: '',
         icon: require('@/assets/logos/jitsi_icon.png'),
