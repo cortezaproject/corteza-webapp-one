@@ -8,7 +8,7 @@
       </div>
       <div class="toolbox">
         <!-- the header add is for panels, not for now, remove false && to restore -->
-        <section  v-if="user" class="toolbox-item toolbox_profile">
+        <section  v-if="user" class="toolbox-item toolbox-profile">
           <Avatar :user="user"></Avatar>
           <router-link :to="{ name: 'signout' }">Sign Out</router-link>
         </section>
@@ -310,18 +310,18 @@ export default
       }
     }
 
-    &_profile,
+    &-profile,
     &_menu
     {
       margin-top: 1px;
     }
 
-    &_profile {
+    &-profile {
       a {
         color: $black;
         position: absolute;
-        margin-left: 37px;
-        margin-top: -13px;
+        margin-left: -87px;
+        margin-top: 23px;
         text-decoration: none;
       }
     }
