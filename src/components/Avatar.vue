@@ -7,7 +7,6 @@
        :style="{ 'background-image': (user.avatar ? `url(${user.avatar})` : '') }">
         <span aria-hidden="true" v-if="!user.avatar">{{ user.name[0] || user.username[0] }}</span>
     </span>
-    <label>{{ user.name || user.username }} </label>
   </span>
     <i v-else
        class="avatar u-avatar coward">
@@ -30,20 +29,6 @@ export default
 <style scoped lang="scss">
 @import '@/assets/sass/_0.declare.scss';
 
-label {
-  font-size: 13px;
-  margin-left: 5px;
-  margin-right: 40px;
-  font-family: $crustheavy;
-  /*
-  &:after {
-    border: 4px dashed transparent;
-    border-top: 4px solid $black;
-    content: "";
-    display: inline-block;
-  }
-  */
-}
 .u-avatar {
   display:inline-block;
   font-size:16px;

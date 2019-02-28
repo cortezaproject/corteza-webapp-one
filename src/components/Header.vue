@@ -8,34 +8,23 @@
       </div>
       <div class="toolbox">
         <!-- the header add is for panels, not for now, remove false && to restore -->
-        <section  v-if="user" class="toolbox-item toolbox-profile">
+        <section  v-if="user" class="toolbox-item toolbox_profile">
           <Avatar :user="user"></Avatar>
-          <router-link :to="{ name: 'signout' }">Sign Out</router-link>
         </section>
-        <!--<section @click="mainMenuOpen=!mainMenuOpen" v-if="user" class="toolbox-item toolbox_profile">-->
-          <!--<Avatar v-if="!mainMenuOpen" :user="user"></Avatar>-->
-          <!--<label v-else>-->
-            <!--<i class="icon-close user-menu-close"-->
-               <!--title="Show main menu"></i>-->
-          <!--</label>-->
-        <!--</section>-->
+        <span class="user-info">
+          <label>{{ user.name || user.username }} </label>
+          <router-link :to="{ name: 'signout' }">Sign Out</router-link>
+        </span>
+        <span class="toolbox-item profile">
+          <a :href="didmosLink" target= '_blank'>
+            <i class="icon-user"></i>
+          </a>
+        </span>
         <section v-if="false && user && optionalAdd" class="toolbox-item add circle">
           <i class="icon-plus"
             title="Add a pane"
             @click="$emit('apps')"></i>
         </section>
-        <section class="toolbox-item">
-
-        </section>
-        <!--
-        <section v-if="user && optionalAdd"
-          class="toolbox-item toolbox_notify"
-          :class="(user.has_notifications ? 'toolbox_has_notification' : '')">
-          <i
-            class="icon-bell2"
-            :class="(user.has_notifications ? 'toolbox_notification' : '')"></i>
-        </section>
-        -->
         <section @click="optionsMenuOpen=!optionsMenuOpen" class="toolbox-item toolbox_menu desktop">
             <i v-if="optionsMenuOpen"
               class="icon-grid-interface-close"
@@ -112,28 +101,6 @@
         </section>
       </div>
     </nav>
-    <nav class="main-menu" v-if="mainMenuOpen">
-      <div class="main-menu-wrap">
-        <section>
-          <div class="menu-section-title">General</div>
-          <ul>
-            <li v-for="(item, index) in mainmenu" :key="index">
-              <a :href="item.link">{{ item.label }}</a>
-            </li>
-          </ul>
-        </section>
-        <div class="main-menu-footer">
-          <span class="help">
-            <i class="icon-message-circle-right-speak"></i>
-            <em>Help</em>
-          </span>
-          <span class="version">v1.0</span>
-        </div>
-      </div>
-    </nav>
-    <modal v-if="showAppModalPanel" @close="showAppModalPanel = false">
-      <h3 slot="header">custom header</h3>
-    </modal>
   </div>
 </template>
 
@@ -209,6 +176,11 @@ export default
       panels () {
         return this.$store.state.panes.items
       },
+
+      didmosLink () {
+        // @todo make this configurable
+        return window.CrustConfig.webapp.baseUrl.replace('://', '://frontend.didmos.')
+      },
     },
   created () {
     this.$root.$on('closeTabsMobile', this.onCloseMobile)
@@ -249,6 +221,26 @@ export default
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+  }
+
+  .user-info {
+    display: inline-block;
+    margin-left: 5px;
+    label {
+      font-size: 13px;
+      font-family: $crustheavy;
+      display: inline-block;
+    }
+    a {
+      color: $black;
+      text-decoration: none;
+      position: absolute;
+      margin-left: -46px;
+      margin-top: 10px;
+    }
+  }
+  .profile {
+
   }
 
   .toolbox_menu
@@ -310,20 +302,10 @@ export default
       }
     }
 
-    &-profile,
+    &_profile,
     &_menu
     {
       margin-top: 1px;
-    }
-
-    &-profile {
-      a {
-        color: $black;
-        position: absolute;
-        margin-left: -87px;
-        margin-top: 23px;
-        text-decoration: none;
-      }
     }
 
     &_has_notification
@@ -371,7 +353,6 @@ export default
     {
       margin-bottom: 15px;
       color: $defaulttextcolor;
-      font-weight: 600;
     }
 
     .main-menu-footer
