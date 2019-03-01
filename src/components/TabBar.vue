@@ -243,7 +243,7 @@ export default
     border-bottom: 3px solid $white;
     border-right: 1px solid $appcream;
     color: $appgrey;
-    font-family: $crustsemibold;
+    font-family: $crustregular;
     &.active {
       color: $appgreen;
       border-bottom: 3px solid $appgreen;
