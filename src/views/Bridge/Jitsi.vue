@@ -92,6 +92,10 @@ export default {
       this.dispose()
     },
 
+    removeJitsiAfterHangup (object) {
+      this.dispose()
+    },
+
     open ({ roomName, userDisplayName } = {}) {
       this.dispose()
 
@@ -137,6 +141,13 @@ export default {
           ],
         },
       })
+
+      // add an event listner to remove jitsi after the local party has hung up the call.
+      // this is to remove the page that mentions slack after the rating page.
+      this.jitsi.addEventListeners({
+        readyToClose: this.removeJitsiAfterHangup,
+      })
+
       window.jitsi = this.jitsi
     },
   },
