@@ -88,7 +88,6 @@ export default {
   {
     line-height: $appheight - $appvisualheight;
     color: $appgrey;
-    font-weight: bold;
     font-size: 15px;
     max-width: 90%;
     overflow: hidden;
