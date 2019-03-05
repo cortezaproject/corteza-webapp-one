@@ -39,26 +39,19 @@
 export default {
   name: 'LoginForm',
 
-  props:
-    {},
+  methods: {
+    connect () {
+      this.$store.commit('user/connectUser')
+    },
+  },
 
-  methods:
-    {
-      connect () {
-        this.$store.commit('user/connectUser')
+  computed: {
+    user: {
+      get () {
+        return (this.$store.state.user)
       },
     },
-
-  computed:
-    {
-      user:
-        {
-          get () {
-            return (this.$store.state.user)
-          },
-        },
-    },
-
+  },
 }
 </script>
 
@@ -70,38 +63,32 @@ export default {
 
   @import '@/assets/sass/_0.declare.scss';
 
-  .sso-signons
-  {
+  .sso-signons {
     max-width: 100%;
   }
 
-  .manual-signon
-  {
+  .manual-signon {
     text-align: center;
 
-    label
-    {
+    label {
       display: block;
       text-align: left;
     }
 
     label,
     input,
-    button
-    {
+    button {
       margin: 10px 0 0 0;
     }
   }
 
-  .sso-provider-wrap
-  {
+  .sso-provider-wrap {
     max-width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 
-    label
-    {
+    label {
       display: inline-block;
       width: 100%;
       border-radius: 5px;
@@ -112,14 +99,12 @@ export default {
       color: white;
       vertical-align: middle;
 
-      &:hover
-      {
+      &:hover {
         background-color: darken($appgreen, 10);
       }
 
       .text,
-      i
-      {
+      i {
         padding: 0 10px;
         display: inline-block;
         color: white;
@@ -127,8 +112,7 @@ export default {
         vertical-align: middle;
       }
 
-      i
-      {
+      i {
         border-right: solid 1px white;
         font-size: 20px;
         width: 40px;
@@ -136,40 +120,33 @@ export default {
       }
     }
 
-    &.google label
-    {
+    &.google label {
       background-color: $appred;
     }
 
-    &.facebook label
-    {
+    &.facebook label {
       background-color: $appblue;
     }
 
-    &.google label:hover
-    {
+    &.google label:hover {
       background-color: darken($appred, 10);
     }
 
-    &.facebook label:hover
-    {
+    &.facebook label:hover {
       background-color: darken($appblue, 10);
     }
   }
 
-  fieldset
-  {
+  fieldset {
     border: none;
   }
 
-  .login-form
-  {
+  .login-form {
     height: 100%;
     width: 100%;
   }
 
-  .login-fields
-  {
+  .login-fields {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
@@ -185,8 +162,7 @@ export default {
     font-family: Helvetica, Arial, sans-serif;
   }
 
-  .login-btn
-  {
+  .login-btn {
     outline-color: transparent;
     border: none;
     height: 40px;
@@ -198,22 +174,19 @@ export default {
     font-family: $font-family;
     background: $jaune;
 
-    &:hover
-    {
+    &:hover {
       background: darken($jaune, 10);
     }
   }
 
-  .or
-  {
+  .or {
     margin: 10px 0;
     text-align: center;
     width: 100%;
     opacity: 0.5;
 
     &::before,
-    &::after
-    {
+    &::after {
       content: "\00a0";
       border-bottom: solid 1px grey;
       min-width: 30px;
@@ -227,8 +200,7 @@ export default {
 
   input[type="text"],
   input[type="email"],
-  input[type="password"]
-  {
+  input[type="password"] {
     border-radius: 3px;
     width: 100%;
     height: 40px;
@@ -238,30 +210,25 @@ export default {
     font-size: 14px;
     font-family: $font-family;
 
-    &::-webkit-input-placeholder
-    {
+    &::-webkit-input-placeholder {
       color: $gris-bleu;
     }
 
-    &:-moz-placeholder
-    {
+    &:-moz-placeholder {
       color: $gris-bleu;
     }
 
-    &:-ms-input-placeholder
-    {
+    &:-ms-input-placeholder {
       color: $gris-bleu;
     }
 
     &:focus,
-    &.focus
-    {
+    &.focus {
       border-color: $bleu;
       outline: none;
     }
 
-    &:disabled
-    {
+    &:disabled {
       opacity: 0.5;
     }
   }

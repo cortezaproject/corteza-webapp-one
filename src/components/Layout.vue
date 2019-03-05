@@ -67,11 +67,10 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
 */
-export default
-{
+export default {
   name: 'Layout',
-  components:
-  {
+
+  components: {
     TabBar,
     PaneContent,
     AppSelector,
@@ -79,6 +78,7 @@ export default
     VueResize,
     NormalPanel,
   },
+
   data () {
     return {
       cantAddTab: false,
@@ -87,8 +87,7 @@ export default
     }
   },
 
-  computed:
-  {
+  computed: {
     panes: {
       get () {
         return this.$store.state.panes
@@ -99,17 +98,21 @@ export default
       }
       */
     },
+
     panels () {
       return this.panes.items
     },
+
     allTabs () {
       return this.panes.items.reduce((acc, panel) => {
         return acc.concat(panel.tabs)
       }, [])
     },
+
     rowFirst () {
       return this.panes.disposition === 'rowfirst'
     },
+
     typeLayout () {
       // 0 = no panels
       // 1/2/4/8 = 1 panel [1/4]
@@ -121,9 +124,11 @@ export default
       const layout = this.panels
       return layout[0].visible + 2 * layout[1].visible + 4 * layout[2].visible + 8 * layout[3].visible
     },
+
     autosizeFirstSplit () {
       return [1, 2, 3, 13, 14].includes(this.typeLayout)
     },
+
     sticks () {
       switch (this.typeLayout) {
         case 0:
@@ -145,44 +150,50 @@ export default
       }
     },
   },
-  watch:
-    {
-      'typeLayout': 'computeSize',
-    },
+
+  watch: {
+    'typeLayout': 'computeSize',
+  },
+
   mounted () {
     this.computeSize()
   },
-  methods:
-  {
+
+  methods: {
     addTab (appData) {
       this.$logger.log('Adding app from layout')
       this.$logger.log(appData)
       this.$store.commit('panes/addApp', appData)
     },
+
     tryAddTab (paneID) {
       const maxNum = this.panes.maxNumberOfTabsInPanel
       const pane = this.panes.items[paneID]
       if (pane.tabs.length < maxNum) pane.showapps = true
       else this.cantAddTab = true
     },
+
     tryAddTabMobile () {
       const maxNum = this.panes.maxNumberOfTabsInPanel
       const pane = this.panes.items[0]
       if (pane.tabs.length < maxNum) this.panes.mobileShowApps = true
       else this.cantAddTab = true
     },
+
     onResize (newRect) {
       // in order to sync the width of the 1st panel on the 2nd row
       this.width = isNaN(newRect.width) ? 0 : newRect.width
       this.height = isNaN(newRect.height) ? 0 : newRect.height
       this.$root.$emit('panelresized') // to notify TabBar so that it can check whether to show PREV/NEXT buttons on overflow
     },
+
     onStopResize () {
       // otherwise the stick can go outside of the screen (because of the specific layout - markup + styling)
       let rect = this.$refs.layout.getBoundingClientRect()
       if (this.width > rect.width) this.width = rect.width
       if (this.height > rect.height) this.height = rect.height
     },
+
     adjustWidth (idx, idx2) {
       switch (this.typeLayout) {
         case 3:
@@ -199,11 +210,13 @@ export default
         default: return { flex: '1 1 0' }
       }
     },
+
     adjustHeight (idx) {
       if (idx === 2 ? !this.autosizeFirstSplit : this.autosizeFirstSplit) return {}
       else if (this.rowFirst) return this.typeLayout === 3 ? { height: this.height + 'px' } : {}
       else return this.typeLayout === 3 ? { width: this.width + 'px' } : {}
     },
+
     shouldResize (idx, idx2) {
       switch (this.typeLayout) {
         case 3:
@@ -220,6 +233,7 @@ export default
         default: return false
       }
     },
+
     computeSize () {
       let rect = this.$refs.layout.getBoundingClientRect()
       this.width = rect.width / ((this.rowFirst ? [5, 6, 9, 10].includes(this.typeLayout) : [3, 12].includes(this.typeLayout)) ? 1 : 2)
@@ -232,33 +246,28 @@ export default
 <style lang="scss">
   @import '@/assets/sass/_0.declare.scss';
 
-  .layout
-  {
+  .layout {
     flex: 1 1 0;
     font-size: 10px;
     overflow: hidden;
     background-color: #FEFEFE;
   }
 
-  .layout-colfirst
-  {
+  .layout-colfirst {
     display: flex;
     flex-direction: row;
   }
 
-  .layout-rowfirst
-  {
+  .layout-rowfirst {
     display: flex;
     flex-direction: column;
   }
 
-  .layout-autosized
-  {
+  .layout-autosized {
     flex: 1 1 0;
   }
 
-  .static-panel-container
-  {
+  .static-panel-container {
     display: flex;
     flex-direction: column;
     flex: 1 1 0;
@@ -267,30 +276,24 @@ export default
     overflow: hidden;
   }
 
-  .static-panel-container > *:nth-child(2)
-  {
+  .static-panel-container > *:nth-child(2) {
     flex: 1 1 0;
   }
 
-  .cant-add-tab
-  {
+  .cant-add-tab {
     font-size: 16px;
     font-weight: bold;
     color: red;
   }
 
-  @media (max-width: $wideminwidth - 1px)
-  {
-    .layout .desktop
-    {
+  @media (max-width: $wideminwidth - 1px) {
+    .layout .desktop {
       display: none;
     }
   }
 
-  @media (min-width: $wideminwidth)
-  {
-    .layout .mobile
-    {
+  @media (min-width: $wideminwidth) {
+    .layout .mobile {
       display: none;
     }
   }

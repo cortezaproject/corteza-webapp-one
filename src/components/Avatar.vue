@@ -15,9 +15,9 @@
 </template>
 
 <script>
-export default
-{
+export default {
   name: 'avatar',
+
   // require user param
   props: {
     'user': Object,

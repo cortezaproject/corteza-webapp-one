@@ -35,13 +35,14 @@ Vue.loadScript('https://meet.jit.si/external_api.js')
 const domain = 'meet.jit.si'
 
 export default {
-
   params: {
     user: {
       type: Object,
       required: true,
     },
   },
+
+  mixins: [auth],
 
   data () {
     return {
@@ -140,8 +141,6 @@ export default {
       window.jitsi = this.jitsi
     },
   },
-
-  mixins: [auth],
 }
 </script>
 <style lang="scss" scoped>

@@ -4,16 +4,14 @@
 </template>
 
 <script>
-export default
-{
+export default {
   name: 'Capsule',
-  props:
-  {
-    title:
-      {
-        type: String,
-        default: '',
-      },
+
+  props: {
+    title: {
+      type: String,
+      default: '',
+    },
   },
 }
 </script>
@@ -23,10 +21,8 @@ export default
 
   @import '@/assets/sass/_0.declare.scss';
 
-  @media (min-width: $wideminwidth)
-  {
-    span
-    {
+  @media (min-width: $wideminwidth) {
+    span {
       background-color: $pfbgcolor;
       line-height: 1;
       display: inline-block;
@@ -41,10 +37,8 @@ export default
     }
   }
 
-  @media (max-width: $wideminwidth - 1px)
-  {
-    span
-    {
+  @media (max-width: $wideminwidth - 1px) {
+    span {
       background-color: $pfbgcolor;
       color: $pfbgcolor;
       display: inline-block;

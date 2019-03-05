@@ -25,18 +25,13 @@
   </transition>
 </template>
 <script>
-export default
-{
+export default {
   name: 'modal',
 }
 </script>
-<style scoped>
-
-</style>
 
 <style scoped>
-  .modal-mask
-  {
+  .modal-mask {
     position: fixed;
     z-index: 9998;
     top: 0;
@@ -48,14 +43,12 @@ export default
     transition: opacity 0.3s ease;
   }
 
-  .modal-wrapper
-  {
+  .modal-wrapper {
     display: table-cell;
     vertical-align: middle;
   }
 
-  .modal-container
- {
+  .modal-container {
     width: 500px;
     margin: 0px auto;
     background-color: #FFF;
@@ -65,8 +58,7 @@ export default
     font-family: Helvetica, Arial, sans-serif;
   }
 
-  .modal-header
- {
+  .modal-header {
     margin-top: 0;
     color: white;
     font-weight: bold;
@@ -74,14 +66,12 @@ export default
     padding: 20px 20px;
   }
 
-  .modal-body
- {
+  .modal-body {
     margin: 0 0 20px 0;
     padding: 20px 20px;
   }
 
-  .modal-close-button
- {
+  .modal-close-button {
     float: right;
     margin-top: -30px;
     font-size: 2em;
@@ -97,19 +87,16 @@ export default
    * these styles.
    */
 
-  .modal-enter
- {
+  .modal-enter {
     opacity: 0;
   }
 
-  .modal-leave-active
- {
+  .modal-leave-active {
     opacity: 0;
   }
 
   .modal-enter .modal-container,
-  .modal-leave-active .modal-container
- {
+  .modal-leave-active .modal-container {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
   }

@@ -25,42 +25,34 @@ import AppSelector from '@/components/AppSelector.vue'
 import { mapGetters } from 'vuex'
 
 export default {
-  mixins: [auth],
-
-  components:
-  {
+  components: {
     Header,
     Layout,
     AppSelector,
   },
 
-  methods:
-  {
-    addTab (appData) {
-      this.$logger.log('Adding a app from WkS')
-      this.$logger.log(appData)
-      this.$store.commit('panes/addApp', appData)
-    },
-    connect () {
-      this.$store.commit('user/connectUser')
-    },
+  mixins: [auth],
+
+  data () {
+    return {
+      showapps: false,
+    }
   },
 
-  computed:
-  {
+  computed: {
     ...mapGetters('auth', [
       'user',
       'isAuthenticated',
     ]),
-    hasPanes:
-    {
+
+    hasPanes: {
       get () {
         // this.$logger.log('currently : ' + this.$store.state.panes.items.length + ' panes')
         return (this.$store.state.panes.items.length > 0)
       },
     },
-    panes:
-    {
+
+    panes: {
       get () {
         // this.$logger.log('WkS getting panes')
         return this.$store.state.panes
@@ -72,16 +64,22 @@ export default {
       */
     },
   },
-  data () {
-    return {
-      showapps: false,
-    }
+
+  methods: {
+    addTab (appData) {
+      this.$logger.log('Adding a app from WkS')
+      this.$logger.log(appData)
+      this.$store.commit('panes/addApp', appData)
+    },
+
+    connect () {
+      this.$store.commit('user/connectUser')
+    },
   },
 }
 </script>
 <style lang="scss" scoped>
-.workspace
-{
+.workspace {
   display: flex;
   flex-direction: column;
   overflow: hidden;

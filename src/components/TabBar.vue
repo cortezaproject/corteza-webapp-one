@@ -62,33 +62,28 @@
 <script>
 import draggable from 'vuedraggable'
 
-export default
-{
+export default {
   name: 'TabBar',
-  components:
-  {
+
+  components: {
     draggable,
   },
-  props:
-  {
-    showapps:
-    {
+
+  props: {
+    showapps: {
       required: true,
       type: Boolean,
     },
-    pane_id:
-    {
+    pane_id: {
       required: true,
       type: Number,
     },
-    top:
-    {
+    top: {
       required: false,
       type: String,
       default: '',
     },
-    left:
-    {
+    left: {
       required: false,
       type: String,
       default: '',
@@ -97,18 +92,17 @@ export default
       required: true,
       type: Array,
     },
-    active_tab:
-    {
+    active_tab: {
       type: Number,
       required: false,
       default: 0,
     },
-    mobile:
-      {
-        type: Boolean,
-        default: false,
-      },
+    mobile: {
+      type: Boolean,
+      default: false,
+    },
   },
+
   data () {
     return {
       mobileListShown: false,
@@ -118,19 +112,46 @@ export default
       slidingRight: false,
     }
   },
+
+  computed: {
+    tabList: {
+      get () {
+        return this.tabs
+      },
+      set (tabs) {
+        this.$store.commit('panes/updateTabs', {
+          tabs: tabs,
+          paneId: this.pane_id,
+        })
+      },
+    },
+
+    panes () {
+      return this.$store.state.panes
+    },
+
+    activeMobileTitle () {
+      const active = this.panes.activeMobileTab
+      const tab = this.tabs.find(item => item.id === active)
+      return tab ? tab.title : ''
+    },
+  },
+
   created () {
     this.$root.$on('panelresized', this.onResize)
     this.$root.$on('showTabsMobile', this.onShowMobile)
   },
+
   beforeDestroy () {
     this.$root.$off('panelresized', this.onResize)
     this.$root.$off('showTabsMobile', this.onShowMobile)
   },
+
   mounted () {
     this.onResize()
   },
-  methods:
-  {
+
+  methods: {
     endDrag: function (e) {
       this.$logger.log('endOfDrag')
       this.$logger.log(e)
@@ -142,68 +163,56 @@ export default
         })
       }
     },
+
     switchActive: function (tabID) {
       this.$store.commit(this.mobile ? 'panes/changeActiveMobile' : 'panes/changeActive', tabID)
       this.mobileListShown = false
       this.$root.$emit('closeTabsMobile')
     },
+
     removeTab: function (tabID) {
       this.$store.commit('panes/removeTab', tabID)
     },
+
     onResize () {
       this.hasOverflow = this.$refs.dragger ? this.$refs.dragger.$el.scrollWidth > this.$refs.dragger.$el.offsetWidth && this.$refs.dragger.$el.offsetWidth > 0 && this.$refs.tabbar.offsetWidth > 100 : false
     },
+
     onShowMobile (shown) {
       this.mobileListShown = shown
     },
+
     startPrev () {
       this.slidingLeft = true
       this.slidingRight = false
       requestAnimationFrame(this.slideLeft)
     },
+
     stopPrev () {
       this.slidingLeft = false
     },
+
     startNext () {
       this.slidingRight = true
       this.slidingLeft = false
       requestAnimationFrame(this.slideRight)
     },
+
     stopNext () {
       this.slidingRight = false
     },
+
     slideLeft () {
       if (this.posSlider > 0) this.posSlider = this.posSlider - 5
       else this.stopPrev()
       if (this.slidingLeft) requestAnimationFrame(this.slideLeft)
     },
+
     slideRight () {
       let dif = this.$refs.dragger.$el.scrollWidth - this.$refs.dragger.$el.clientWidth
       if (dif > 0) this.posSlider = this.posSlider + (dif >= 5 ? 5 : dif)
       else this.stopNext()
       if (this.slidingRight) requestAnimationFrame(this.slideRight)
-    },
-  },
-  computed: {
-    tabList:
-    {
-      get () {
-        return this.tabs
-      },
-      set (tabs) {
-        this.$store.commit('panes/updateTabs', {
-          tabs: tabs,
-          paneId: this.pane_id,
-        })
-      },
-    },
-    panes () {
-      return this.$store.state.panes
-    },
-    activeMobileTitle () {
-      const active = this.panes.activeMobileTab
-      const tab = this.tabs.find(item => item.id === active)
-      return tab ? tab.title : ''
     },
   },
 }
@@ -329,8 +338,7 @@ export default
       font-size: 18px;
     }
 
-    .tab_bar_mobile
-    {
+    .tab_bar_mobile {
       position: fixed;
       top: 50px;
       bottom: 0;
@@ -342,20 +350,17 @@ export default
       overflow: hidden;
     }
 
-    .tab_header_mobile
-    {
+    .tab_header_mobile {
       padding: 16px 20px;
       font-size: 20px;
     }
 
-    .tab_list_mobile
-    {
+    .tab_list_mobile {
       flex: 1 1 0;
       overflow: auto;
     }
 
-    .tab_item_mobile
-    {
+    .tab_item_mobile {
       background-color: $appwhite;
       display: flex;
       align-items: center;

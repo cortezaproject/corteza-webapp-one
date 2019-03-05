@@ -32,9 +32,9 @@ const styleMapping = {
   },
 }
 
-export default
-{
+export default {
   name: 'vue-drag-resize',
+
   props: {
     parentScaleX: {
       type: Number,
@@ -155,7 +155,7 @@ export default
     },
   },
 
-  data: function () {
+  data () {
     return {
       active: this.isActive,
       rawWidth: this.w,
@@ -177,7 +177,259 @@ export default
     }
   },
 
-  created: function () {
+  computed: {
+    style () {
+      return {
+        // top: this.top + 'px',
+        // left: this.left + 'px',
+        width: this.isActive ? Math.min(this.width, this.w) + 'px' : '100%',
+        height: this.isActive ? Math.min(this.height, this.h) + 'px' : '100%',
+        zIndex: this.zIndex,
+      }
+    },
+
+    vdrStick () {
+      return (stick) => {
+        const stickStyle = {
+          width: `${stickSize / this.parentScaleX}px`,
+          height: `${stickSize / this.parentScaleY}px`,
+        }
+        stickStyle[styleMapping.y[stick[0]]] = `${stickSize / this.parentScaleX / -2}px`
+        stickStyle[styleMapping.x[stick[1]]] = `${stickSize / this.parentScaleX / -2}px`
+        return stickStyle
+      }
+    },
+
+    width () {
+      return this.parentWidth - this.left - this.right
+    },
+
+    height () {
+      return this.parentHeight - this.top - this.bottom
+    },
+
+    rect () {
+      return {
+        left: Math.round(this.left),
+        top: Math.round(this.top),
+        width: Math.round(this.width),
+        height: Math.round(this.height),
+      }
+    },
+  },
+
+  watch: {
+    rawLeft (newLeft) {
+      const limits = this.limits
+      const stickAxis = this.stickAxis
+      const aspectFactor = this.aspectFactor
+      const aspectRatio = this.aspectRatio
+      const left = this.left
+      const bottom = this.bottom
+      const top = this.top
+
+      if (limits.minLeft !== null && newLeft < limits.minLeft) {
+        newLeft = limits.minLeft
+      } else if (limits.maxLeft !== null && limits.maxLeft < newLeft) {
+        newLeft = limits.maxLeft
+      }
+
+      if (aspectRatio && stickAxis === 'x') {
+        const delta = left - newLeft
+        this.rawTop = top - (delta / aspectFactor) / 2
+        this.rawBottom = bottom - (delta / aspectFactor) / 2
+      }
+
+      this.left = newLeft
+    },
+
+    rawRight (newRight) {
+      const limits = this.limits
+      const stickAxis = this.stickAxis
+      const aspectFactor = this.aspectFactor
+      const aspectRatio = this.aspectRatio
+      const right = this.right
+      const bottom = this.bottom
+      const top = this.top
+
+      if (limits.minRight !== null && newRight < limits.minRight) {
+        newRight = limits.minRight
+      } else if (limits.maxRight !== null && limits.maxRight < newRight) {
+        newRight = limits.maxRight
+      }
+
+      if (aspectRatio && stickAxis === 'x') {
+        const delta = right - newRight
+        this.rawTop = top - (delta / aspectFactor) / 2
+        this.rawBottom = bottom - (delta / aspectFactor) / 2
+      }
+
+      this.right = newRight
+    },
+
+    rawTop (newTop) {
+      const limits = this.limits
+      const stickAxis = this.stickAxis
+      const aspectFactor = this.aspectFactor
+      const aspectRatio = this.aspectRatio
+      const right = this.right
+      const left = this.left
+      const top = this.top
+
+      if (limits.minTop !== null && newTop < limits.minTop) {
+        newTop = limits.minTop
+      } else if (limits.maxTop !== null && limits.maxTop < newTop) {
+        newTop = limits.maxTop
+      }
+
+      if (aspectRatio && stickAxis === 'y') {
+        const delta = top - newTop
+        this.rawLeft = left - (delta * aspectFactor) / 2
+        this.rawRight = right - (delta * aspectFactor) / 2
+      }
+
+      this.top = newTop
+    },
+
+    rawBottom (newBottom) {
+      const limits = this.limits
+      const stickAxis = this.stickAxis
+      const aspectFactor = this.aspectFactor
+      const aspectRatio = this.aspectRatio
+      const right = this.right
+      const left = this.left
+      const bottom = this.bottom
+
+      if (limits.minBottom !== null && newBottom < limits.minBottom) {
+        newBottom = limits.minBottom
+      } else if (limits.maxBottom !== null && limits.maxBottom < newBottom) {
+        newBottom = limits.maxBottom
+      }
+
+      if (aspectRatio && stickAxis === 'y') {
+        const delta = bottom - newBottom
+        this.rawLeft = left - (delta * aspectFactor) / 2
+        this.rawRight = right - (delta * aspectFactor) / 2
+      }
+
+      this.bottom = newBottom
+    },
+
+    width () {
+      this.aspectRatioCorrection()
+    },
+
+    height () {
+      this.aspectRatioCorrection()
+    },
+
+    active (isActive) {
+      if (isActive) {
+        this.$emit('activated')
+      } else {
+        this.$emit('deactivated')
+      }
+    },
+
+    isActive (val) {
+      this.active = val
+    },
+
+    z (val) {
+      if (val >= 0 || val === 'auto') {
+        this.zIndex = val
+      }
+    },
+
+    aspectRatio (val) {
+      if (val) {
+        this.aspectFactor = this.width / this.height
+      }
+    },
+
+    minw (val) {
+      if (val >= 0 && val <= this.width) {
+        this.minWidth = val
+      }
+    },
+
+    minh (val) {
+      if (val >= 0 && val <= this.height) {
+        this.minHeight = val
+      }
+    },
+
+    x () {
+      if (this.stickDrag || this.bodyDrag) {
+        return
+      }
+      if (this.parentLimitation) {
+        this.limits = this.calcDragLimitation()
+      }
+
+      let delta = this.x - this.left
+      this.rawLeft = this.x
+      this.rawRight = this.right - delta
+    },
+
+    y () {
+      if (this.stickDrag || this.bodyDrag) {
+        return
+      }
+
+      if (this.parentLimitation) {
+        this.limits = this.calcDragLimitation()
+      }
+
+      let delta = this.y - this.top
+      this.rawTop = this.y
+      this.rawBottom = this.bottom - delta
+    },
+
+    w () {
+      if (this.stickDrag || this.bodyDrag) {
+        return
+      }
+
+      this.currentStick = ['m', 'r']
+      this.stickAxis = 'x'
+
+      if (this.parentLimitation) {
+        this.limits = this.calcResizeLimitation()
+      }
+
+      let delta = this.width - this.w
+      this.rawRight = this.right + delta
+    },
+
+    h () {
+      if (this.stickDrag || this.bodyDrag) {
+        return
+      }
+
+      this.currentStick = ['b', 'm']
+      this.stickAxis = 'y'
+
+      if (this.parentLimitation) {
+        this.limits = this.calcResizeLimitation()
+      }
+
+      let delta = this.height - this.h
+      this.rawBottom = this.bottom + delta
+    },
+
+    parentW (val) {
+      this.right = val - this.width - this.left
+      this.parentWidth = val
+    },
+
+    parentH (val) {
+      this.bottom = val - this.height - this.top
+      this.parentHeight = val
+    },
+  },
+
+  created () {
     this.stickDrag = false
     this.bodyDrag = false
     this.stickAxis = null
@@ -203,7 +455,7 @@ export default
     this.currentStick = []
   },
 
-  mounted: function () {
+  mounted () {
     this.parentElement = this.$el.parentNode
     this.parentWidth = this.parentW ? this.parentW : this.parentElement.clientWidth
     this.parentHeight = this.parentH ? this.parentH : this.parentElement.clientHeight
@@ -236,7 +488,7 @@ export default
     }
   },
 
-  beforeDestroy: function () {
+  beforeDestroy () {
     document.documentElement.removeEventListener('mousemove', this.move)
     document.documentElement.removeEventListener('mouseup', this.up)
     document.documentElement.removeEventListener('mouseleave', this.up)
@@ -571,270 +823,16 @@ export default
       }
     },
   },
-
-  computed: {
-    style () {
-      return {
-        // top: this.top + 'px',
-        // left: this.left + 'px',
-        width: this.isActive ? Math.min(this.width, this.w) + 'px' : '100%',
-        height: this.isActive ? Math.min(this.height, this.h) + 'px' : '100%',
-        zIndex: this.zIndex,
-      }
-    },
-
-    vdrStick () {
-      return (stick) => {
-        const stickStyle = {
-          width: `${stickSize / this.parentScaleX}px`,
-          height: `${stickSize / this.parentScaleY}px`,
-        }
-        stickStyle[styleMapping.y[stick[0]]] = `${stickSize / this.parentScaleX / -2}px`
-        stickStyle[styleMapping.x[stick[1]]] = `${stickSize / this.parentScaleX / -2}px`
-        return stickStyle
-      }
-    },
-
-    width () {
-      return this.parentWidth - this.left - this.right
-    },
-
-    height () {
-      return this.parentHeight - this.top - this.bottom
-    },
-
-    rect () {
-      return {
-        left: Math.round(this.left),
-        top: Math.round(this.top),
-        width: Math.round(this.width),
-        height: Math.round(this.height),
-      }
-    },
-  },
-
-  watch: {
-    rawLeft (newLeft) {
-      const limits = this.limits
-      const stickAxis = this.stickAxis
-      const aspectFactor = this.aspectFactor
-      const aspectRatio = this.aspectRatio
-      const left = this.left
-      const bottom = this.bottom
-      const top = this.top
-
-      if (limits.minLeft !== null && newLeft < limits.minLeft) {
-        newLeft = limits.minLeft
-      } else if (limits.maxLeft !== null && limits.maxLeft < newLeft) {
-        newLeft = limits.maxLeft
-      }
-
-      if (aspectRatio && stickAxis === 'x') {
-        const delta = left - newLeft
-        this.rawTop = top - (delta / aspectFactor) / 2
-        this.rawBottom = bottom - (delta / aspectFactor) / 2
-      }
-
-      this.left = newLeft
-    },
-
-    rawRight (newRight) {
-      const limits = this.limits
-      const stickAxis = this.stickAxis
-      const aspectFactor = this.aspectFactor
-      const aspectRatio = this.aspectRatio
-      const right = this.right
-      const bottom = this.bottom
-      const top = this.top
-
-      if (limits.minRight !== null && newRight < limits.minRight) {
-        newRight = limits.minRight
-      } else if (limits.maxRight !== null && limits.maxRight < newRight) {
-        newRight = limits.maxRight
-      }
-
-      if (aspectRatio && stickAxis === 'x') {
-        const delta = right - newRight
-        this.rawTop = top - (delta / aspectFactor) / 2
-        this.rawBottom = bottom - (delta / aspectFactor) / 2
-      }
-
-      this.right = newRight
-    },
-
-    rawTop (newTop) {
-      const limits = this.limits
-      const stickAxis = this.stickAxis
-      const aspectFactor = this.aspectFactor
-      const aspectRatio = this.aspectRatio
-      const right = this.right
-      const left = this.left
-      const top = this.top
-
-      if (limits.minTop !== null && newTop < limits.minTop) {
-        newTop = limits.minTop
-      } else if (limits.maxTop !== null && limits.maxTop < newTop) {
-        newTop = limits.maxTop
-      }
-
-      if (aspectRatio && stickAxis === 'y') {
-        const delta = top - newTop
-        this.rawLeft = left - (delta * aspectFactor) / 2
-        this.rawRight = right - (delta * aspectFactor) / 2
-      }
-
-      this.top = newTop
-    },
-
-    rawBottom (newBottom) {
-      const limits = this.limits
-      const stickAxis = this.stickAxis
-      const aspectFactor = this.aspectFactor
-      const aspectRatio = this.aspectRatio
-      const right = this.right
-      const left = this.left
-      const bottom = this.bottom
-
-      if (limits.minBottom !== null && newBottom < limits.minBottom) {
-        newBottom = limits.minBottom
-      } else if (limits.maxBottom !== null && limits.maxBottom < newBottom) {
-        newBottom = limits.maxBottom
-      }
-
-      if (aspectRatio && stickAxis === 'y') {
-        const delta = bottom - newBottom
-        this.rawLeft = left - (delta * aspectFactor) / 2
-        this.rawRight = right - (delta * aspectFactor) / 2
-      }
-
-      this.bottom = newBottom
-    },
-
-    width () {
-      this.aspectRatioCorrection()
-    },
-
-    height () {
-      this.aspectRatioCorrection()
-    },
-
-    active (isActive) {
-      if (isActive) {
-        this.$emit('activated')
-      } else {
-        this.$emit('deactivated')
-      }
-    },
-
-    isActive (val) {
-      this.active = val
-    },
-
-    z (val) {
-      if (val >= 0 || val === 'auto') {
-        this.zIndex = val
-      }
-    },
-
-    aspectRatio (val) {
-      if (val) {
-        this.aspectFactor = this.width / this.height
-      }
-    },
-
-    minw (val) {
-      if (val >= 0 && val <= this.width) {
-        this.minWidth = val
-      }
-    },
-
-    minh (val) {
-      if (val >= 0 && val <= this.height) {
-        this.minHeight = val
-      }
-    },
-
-    x () {
-      if (this.stickDrag || this.bodyDrag) {
-        return
-      }
-      if (this.parentLimitation) {
-        this.limits = this.calcDragLimitation()
-      }
-
-      let delta = this.x - this.left
-      this.rawLeft = this.x
-      this.rawRight = this.right - delta
-    },
-
-    y () {
-      if (this.stickDrag || this.bodyDrag) {
-        return
-      }
-
-      if (this.parentLimitation) {
-        this.limits = this.calcDragLimitation()
-      }
-
-      let delta = this.y - this.top
-      this.rawTop = this.y
-      this.rawBottom = this.bottom - delta
-    },
-
-    w () {
-      if (this.stickDrag || this.bodyDrag) {
-        return
-      }
-
-      this.currentStick = ['m', 'r']
-      this.stickAxis = 'x'
-
-      if (this.parentLimitation) {
-        this.limits = this.calcResizeLimitation()
-      }
-
-      let delta = this.width - this.w
-      this.rawRight = this.right + delta
-    },
-
-    h () {
-      if (this.stickDrag || this.bodyDrag) {
-        return
-      }
-
-      this.currentStick = ['b', 'm']
-      this.stickAxis = 'y'
-
-      if (this.parentLimitation) {
-        this.limits = this.calcResizeLimitation()
-      }
-
-      let delta = this.height - this.h
-      this.rawBottom = this.bottom + delta
-    },
-
-    parentW (val) {
-      this.right = val - this.width - this.left
-      this.parentWidth = val
-    },
-
-    parentH (val) {
-      this.bottom = val - this.height - this.top
-      this.parentHeight = val
-    },
-  },
 }
 </script>
 
 <style>
-  .vdr
-  {
+  .vdr {
     position: absolute;
     box-sizing: border-box;
   }
 
-  .vdr.active::before
-  {
+  .vdr.active::before {
     content: '';
     width: 100%;
     height: 100%;
@@ -845,8 +843,7 @@ export default
     outline: 1px dashed #D6D6D6;
   }
 
-  .vdr-stick
-  {
+  .vdr-stick {
     box-sizing: border-box;
     position: absolute;
     font-size: 1px;
@@ -855,39 +852,33 @@ export default
     box-shadow: 0 0 2px #BBB;
   }
 
-  .inactive .vdr-stick
-  {
+  .inactive .vdr-stick {
     display: none;
   }
 
   .vdr-stick-tl,
-  .vdr-stick-br
-  {
+  .vdr-stick-br {
     cursor: nwse-resize;
   }
 
   .vdr-stick-tm,
-  .vdr-stick-bm
-  {
+  .vdr-stick-bm {
     left: 50%;
     cursor: ns-resize;
   }
 
   .vdr-stick-tr,
-  .vdr-stick-bl
-  {
+  .vdr-stick-bl {
     cursor: nesw-resize;
   }
 
   .vdr-stick-ml,
-  .vdr-stick-mr
-  {
+  .vdr-stick-mr {
     top: 50%;
     cursor: ew-resize;
   }
 
-  .vdr-stick.not-resizable
-  {
+  .vdr-stick.not-resizable {
     display: none;
   }
 </style>

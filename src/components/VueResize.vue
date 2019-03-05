@@ -11,68 +11,61 @@
 <script>
 import VueDragResize from '@/library/vue-drag-resize'
 
-export default
-{
+export default {
   name: 'ResizablePanel',
-  components:
-    {
-      VueDragResize,
+
+  components: {
+    VueDragResize,
+  },
+
+  props: {
+    active: {
+      type: Boolean,
+      required: true,
     },
-  props:
-    {
-      active:
-        {
-          type: Boolean,
-          required: true,
-        },
-      sticks:
-        {
-          type: String,
-          default: '',
-        },
-      width:
-        {
-          type: Number,
-          default: 500,
-        },
-      height:
-        {
-          type: Number,
-          default: 500,
-        },
+    sticks: {
+      type: String,
+      default: '',
     },
-  methods:
-    {
-      onResize (newRect) {
-        this.$store.commit('panes/setResizing', true)
-        this.$emit('resize', newRect)
-      },
-      onStopResize () {
-        this.$store.commit('panes/setResizing', false)
-        this.$emit('stopresize')
-      },
+    width: {
+      type: Number,
+      default: 500,
     },
+    height: {
+      type: Number,
+      default: 500,
+    },
+  },
+
+  methods: {
+    onResize (newRect) {
+      this.$store.commit('panes/setResizing', true)
+      this.$emit('resize', newRect)
+    },
+
+    onStopResize () {
+      this.$store.commit('panes/setResizing', false)
+      this.$emit('stopresize')
+    },
+  },
 }
 </script>
 
 <style lang="scss">
   @import '@/assets/sass/_0.declare.scss';
 
-  .vdr.vdr-panel
-  {
+  .vdr.vdr-panel {
     position: relative;
     max-width: 100vw;
     max-height: calc(100vh - 50px); /* exclude header */
     top: 0 !important;
     left: 0 !important;
 
-    &::before
-    {
+    &::before {
       z-index: -2;
     }
 
-    .vdr-stick
-    {
+    .vdr-stick {
       z-index: 4;
       width: 32px !important;
       height: 32px !important;
@@ -88,43 +81,36 @@ export default
       -webkit-box-shadow: 0 0.1rem 0.2rem 0 rgba(30, 34, 36, 0.1);
       box-shadow: 0 0.1rem 0.2rem 0 rgba(30, 34, 36, 0.1);
     }
-    .vdr-stick:hover
-    {
+    .vdr-stick:hover {
       opacity: 0.5;
     }
-    .vdr-stick-tr
-    {
+    .vdr-stick-tr {
       top: -2px !important;
       right: -16px !important;
     }
 
-    .vdr-stick-mr
-    {
+    .vdr-stick-mr {
       right: -16px !important;
       margin-top: -4px !important;
     }
 
-    .vdr-stick-bl
-    {
+    .vdr-stick-bl {
       bottom: -16px !important;
       left: -16px !important;
     }
 
-    .vdr-stick-bm
-    {
+    .vdr-stick-bm {
       bottom: -16px !important;
       margin-left: -16px !important;
     }
 
-    .vdr-stick-br
-    {
+    .vdr-stick-br {
       bottom: -16px !important;
       right: -16px !important;
     }
   }
 
-  .resizable-panel-content
-  {
+  .resizable-panel-content {
     min-height: 0;
     height: 100%;
     overflow: hidden;
@@ -132,8 +118,7 @@ export default
     flex-direction: column;
   }
 
-  .resizable-panel-content > *:nth-child(2)
-  {
+  .resizable-panel-content > *:nth-child(2) {
     flex: 1 1 0;
   }
 

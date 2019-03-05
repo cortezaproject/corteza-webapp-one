@@ -35,27 +35,16 @@
 
 <script>
 export default {
-  data: function () {
-    return {}
-  },
-
-  methods:
-  {},
-
-  props:
-  {
-    paneId:
-    {
+  props: {
+    paneId: {
       required: false,
       default: null,
     },
-    appIndex:
-    {
+    appIndex: {
       type: Number,
       required: true,
     },
-    crustapp:
-    {
+    crustapp: {
       type: Object,
       required: true,
     },
@@ -78,14 +67,12 @@ export default {
 
   .app-visual,
   .app-text,
-  .app-display-options
-  {
+  .app-display-options {
     display: block;
     text-align: center;
   }
 
-  .app-text
-  {
+  .app-text {
     line-height: $appheight - $appvisualheight;
     color: $appgrey;
     font-size: 15px;
@@ -96,21 +83,18 @@ export default {
     margin: 0 auto;
   }
 
-  .app-visual
-  {
+  .app-visual {
     height: $appvisualheight;
     line-height: $appvisualheight;
     transition: opacity 0.5s;
   }
 
-  .app-display-options
-  {
+  .app-display-options {
     line-height: $appheight/2; //50% of app-visual
     transition: opacity 0.75s;
     opacity: 0;
 
-    .display-option
-    {
+    .display-option {
       border: solid 1px $defaultlinecolor;
       padding: 0;
       font-size: 11px;
@@ -120,8 +104,7 @@ export default {
       max-width: 80%;
       color: $defaulttextcolor;
 
-      .link
-      {
+      .link {
         color: darken($appgrey, 25);
         text-decoration: none;
         display: inline-block;
@@ -130,23 +113,19 @@ export default {
         cursor: pointer;
       }
 
-      &:hover
-      {
+      &:hover {
         background-color: $appgrey;
         border-color: $appselectorbg;
 
-        .link
-        {
+        .link {
           color: $appselectoritembg;
         }
       }
     }
   }
 
-  .app-logo
-  {
-    i
-    {
+  .app-logo {
+    i {
       top: 50%;
       transform: translateY(10px);
       display: block;
@@ -162,13 +141,11 @@ export default {
   }
 
   .app-icon,
-  .app-letter
-  {
+  .app-letter {
     color: $appselectoritembg;
     padding-top: 10px;
 
-    i
-    {
+    i {
       color: $appselectoritembg;
       display: block;
       width: 64px;
@@ -181,49 +158,39 @@ export default {
     }
   }
 
-  .app-letter i
-  {
+  .app-letter i {
     font-weight: 600;
   }
 
-  .app-wrap
-  {
+  .app-wrap {
     min-height: 115px;
     max-height: 115px;
     max-width: 100%;
     overflow: hidden;
 
-    .app-label
-    {
+    .app-label {
       transition: all 0.2s;
     }
 
     &:hover,
-    &:focus
-    {
-      .app-label
-      {
+    &:focus {
+      .app-label {
         margin-top: -70px;
       }
 
-      .app-visual
-      {
+      .app-visual {
         opacity: 0;
       }
 
-      .app-display-options
-      {
+      .app-display-options {
         opacity: 1;
       }
     }
   }
 
-  @media (min-width: $wideminwidth)
-  {
-    .app-display-options
-    {
-      .display-option
-      {
+  @media (min-width: $wideminwidth) {
+    .app-display-options {
+      .display-option {
         font-size: 13px;
       }
     }

@@ -26,32 +26,23 @@
 <script>
 export default {
   name: 'PaneContent',
-  computed: {
-    isResizing () {
-      return this.$store.state.panes.nowResizing
-    },
-  },
-  props:
-  {
-    pane_id:
-    {
+
+  props: {
+    pane_id: {
       required: true,
       type: Number,
     },
-    top:
-    {
+    top: {
       required: false,
       type: String,
       default: '',
     },
-    left:
-    {
+    left: {
       required: false,
       type: String,
       default: '',
     },
-    active_tab:
-    {
+    active_tab: {
       type: Number,
       required: false,
       default: 0,
@@ -61,32 +52,34 @@ export default {
       type: Array,
     },
   },
+
+  computed: {
+    isResizing () {
+      return this.$store.state.panes.nowResizing
+    },
+  },
 }
 </script>
 
 <style lang="scss">
   @import "@/assets/sass/_0.declare.scss";
 
-  .iFrameWrap
-  {
+  .iFrameWrap {
     display: flex;
     flex-direction: column;
 
-    *
-    {
+    * {
       box-sizing: border-box;
     }
 
-    .iFrameContainer
-    {
+    .iFrameContainer {
       display: flex;
       flex: 1 1 0;
       min-height: 0;
       background-color: $mainbgcolor;
     }
 
-    .iframeContent
-    {
+    .iframeContent {
       display: none;
       flex: 1 1 0;
       overflow-x: hidden;

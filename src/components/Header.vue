@@ -109,35 +109,30 @@ import Avatar from '@/components/Avatar'
 import Capsule from '@/components/Capsule'
 import Modal from '@/components/Modal'
 
-export default
-{
+export default {
   name: 'Header',
-  // --------
-  components:
-  {
+
+  components: {
     Avatar,
     Capsule,
     Modal,
   },
-  // --------
-  props:
-  {
-    user:
-    {
+
+  props: {
+    user: {
       required: true,
       validator: function (prop) {
         return ((typeof prop) === 'object' || prop === null)
       },
     },
-    optionalAdd:
-    {
+    optionalAdd: {
       type: Boolean,
       required: false,
       default: true,
     },
   },
-  // --------
-  data: function () {
+
+  data () {
     return {
       var: false,
       mainMenuOpen: false,
@@ -159,54 +154,61 @@ export default
       ],
     }
   },
-  computed:
-    {
-      allTabs () {
-        return this.$store.state.panes.items.reduce((acc, panel) => {
-          return acc.concat(panel.tabs)
-        }, [])
-      },
-      activeTab () {
-        let active = this.$store.state.panes.activeMobileTab
-        return this.allTabs.find(item => item.id === active)
-      },
-      rowFirst () {
-        return this.$store.state.panes.disposition === 'rowfirst'
-      },
-      panels () {
-        return this.$store.state.panes.items
-      },
 
-      didmosLink () {
-        // @todo make this configurable
-        return window.CrustConfig.webapp.baseUrl.replace('://', '://frontend.didmos.')
-      },
+  computed: {
+    allTabs () {
+      return this.$store.state.panes.items.reduce((acc, panel) => {
+        return acc.concat(panel.tabs)
+      }, [])
     },
+
+    activeTab () {
+      let active = this.$store.state.panes.activeMobileTab
+      return this.allTabs.find(item => item.id === active)
+    },
+
+    rowFirst () {
+      return this.$store.state.panes.disposition === 'rowfirst'
+    },
+
+    panels () {
+      return this.$store.state.panes.items
+    },
+
+    didmosLink () {
+      // @todo make this configurable
+      return window.CrustConfig.webapp.baseUrl.replace('://', '://frontend.didmos.')
+    },
+  },
+
   created () {
     this.$root.$on('closeTabsMobile', this.onCloseMobile)
   },
+
   beforeDestroy () {
     this.$root.$off('closeTabsMobile', this.onCloseMobile)
   },
-  methods:
-    {
-      onCloseMobile () {
-        this.mobileMenuOpen = false
-      },
-      updPanels (evt) {
-        const paneID = +evt.target.value
-        this.$store.commit('panes/togglePanel', paneID)
-        if (this.panels[paneID].visible) {
-          // a panel was shown
-          this.optionsMenuOpen = false
-          if (this.panels[paneID].tabs.length === 0) this.panels[paneID].showapps = true
-        }
-      },
-      clickMenuMobile () {
-        this.mobileMenuOpen = !this.mobileMenuOpen
-        this.$root.$emit('showTabsMobile', this.mobileMenuOpen)
-      },
+
+  methods: {
+    onCloseMobile () {
+      this.mobileMenuOpen = false
     },
+
+    updPanels (evt) {
+      const paneID = +evt.target.value
+      this.$store.commit('panes/togglePanel', paneID)
+      if (this.panels[paneID].visible) {
+        // a panel was shown
+        this.optionsMenuOpen = false
+        if (this.panels[paneID].tabs.length === 0) this.panels[paneID].showapps = true
+      }
+    },
+
+    clickMenuMobile () {
+      this.mobileMenuOpen = !this.mobileMenuOpen
+      this.$root.$emit('showTabsMobile', this.mobileMenuOpen)
+    },
+  },
 }
 </script>
 
@@ -215,8 +217,7 @@ export default
   $defaultheight: 50px;
   $iconsize: 18px;
 
-  *
-  {
+  * {
     font-family: $crustregular;
     box-sizing: border-box;
     margin: 0;
@@ -240,39 +241,31 @@ export default
       margin-top: 10px;
     }
   }
-  .profile {
 
-  }
-
-  .toolbox_menu
-  {
+  .toolbox_menu {
     transition: all 0.2s ease;
     cursor: pointer;
   }
 
-  .toolbox
-  {
+  .toolbox {
     font-size: 100%;
     float: right;
     line-height: $defaultheight;
     margin-right: 1.5em;
     vertical-align: middle;
 
-    &-item
-    {
+    &-item {
       display: inline-block;
       line-height: 1;
       vertical-align: middle;
       margin: 0 0 0 1em;
 
-      i
-      {
+      i {
         font-size: $iconsize;
         display: inline-block;
         color: $defaultlinecolor;
 
-        &.user-menu-close
-        {
+        &.user-menu-close {
           border-radius: 32px;
           width: 32px;
           background-color: $appgrey;
@@ -287,10 +280,8 @@ export default
       }
     }
 
-    &_notification
-    {
-      &::after
-      {
+    &_notification {
+      &::after {
         display: inline-block;
         border-radius: 100%;
         content: ".";
@@ -304,21 +295,17 @@ export default
     }
 
     &_profile,
-    &_menu
-    {
+    &_menu {
       margin-top: 1px;
     }
 
-    &_has_notification
-    {
+    &_has_notification {
       margin-top: -2px;
     }
   }
 
-  .add
-  {
-    i
-    {
+  .add {
+    i {
       border-radius: 50%;
       background-color: $headerbgcolor;
       text-align: center;
@@ -326,15 +313,13 @@ export default
       vertical-align: middle;
     }
 
-    &:hover i
-    {
+    &:hover i {
       background-color: $defaultlinecolor;
       color: $headerbgcolor;
     }
   }
 
-  .main-menu
-  {
+  .main-menu {
     position: fixed;
     font-size: 13px;
     color: $appgrey;
@@ -350,14 +335,12 @@ export default
     border-left: solid 1px rgba($defaultlinecolor, 0.25);
     padding: 10px 20px;
 
-    .menu-section-title
-    {
+    .menu-section-title {
       margin-bottom: 15px;
       color: $defaulttextcolor;
     }
 
-    .main-menu-footer
-    {
+    .main-menu-footer {
       position: absolute;
       bottom: 20px;
       right: 20px;
@@ -367,34 +350,29 @@ export default
 
       i,
       span,
-      em
-      {
+      em {
         line-height: 20px;
         vertical-align: top;
         font-style: normal;
       }
 
-      i
-      {
+      i {
         font-size: 18px;
         margin-right: 5px;
       }
 
-      .version
-      {
+      .version {
         float: right;
       }
     }
 
-    .menu-panels-text-big
-    {
+    .menu-panels-text-big {
       margin-bottom: 20px;
       color: $defaulttextcolor;
       font-size: 14px;
     }
 
-    .panels-table
-    {
+    .panels-table {
       color: $appgrey;
       border:none;
       border-collapse: collapse;
@@ -402,38 +380,32 @@ export default
     }
 
     .panels-table th,
-    .panels-table td
-    {
+    .panels-table td {
       text-align: center;
       vertical-align: middle;
       border:1px solid #fff;
     }
 
     .panels-table th span,
-    .panels-table td label
-    {
+    .panels-table td label {
       padding:10px;
       display: block;
     }
-    .panels-table td label:hover
-    {
+    .panels-table td label:hover {
       cursor: pointer;
       background: $appcream;
     }
 
-    .panels-table th
-    {
+    .panels-table th {
       background-color: $appgrey;
       color: $white;
     }
 
-    ul
-    {
+    ul {
       list-style: none;
     }
 
-    li
-    {
+    li {
       height: 35px;
       line-height: 35px;
       padding: 0 9px;
@@ -441,14 +413,12 @@ export default
       background-color: rgba($defaultitembgcolor, 0.15);
       margin-bottom: 10px;
 
-      a
-      {
+      a {
         text-decoration: none;
         color: $appgrey;
       }
 
-      &:hover
-      {
+      &:hover {
         cursor: pointer;
         color: darken($appgrey, 50);
         background-color: rgba($defaultitembgcolor, 0.25);
@@ -456,19 +426,16 @@ export default
     }
   }
 
-  .header-wrap
-  {
+  .header-wrap {
     font-size: 10px;
   }
 
-  header
-  {
+  header {
     overflow: hidden;
     background-color: $headerbgcolor;
     height: $defaultheight;
 
-    .title-wrap
-    {
+    .title-wrap {
       float: left;
       display: block;
       line-height: $defaultheight;
@@ -476,8 +443,7 @@ export default
       position: relative;
     }
 
-    .title
-    {
+    .title {
       font-size: 2.4em;
       line-height: 1;
       display: inline-block;
@@ -485,8 +451,7 @@ export default
     }
   }
 
-  .active_mobile
-  {
+  .active_mobile {
     background-color: $appgrey;
     color: white;
     text-transform: uppercase;
@@ -502,30 +467,23 @@ export default
     max-width: 150px;
   }
 
-  @media (min-width: $wideminwidth)
-  {
-    .active_mobile
-    {
+  @media (min-width: $wideminwidth) {
+    .active_mobile {
       display: none;
     }
 
-    .toolbox_menu.mobile
-    {
+    .toolbox_menu.mobile {
       display: none;
     }
   }
 
-  @media (max-width: $wideminwidth - 1px)
-  {
-    .toolbox_menu.desktop
-    {
+  @media (max-width: $wideminwidth - 1px) {
+    .toolbox_menu.desktop {
       display: none;
     }
 
-    header
-    {
-      .title-wrap
-      {
+    header {
+      .title-wrap {
         line-height: 25px;
       }
     }

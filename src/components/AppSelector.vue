@@ -61,50 +61,18 @@ export default {
     AppSelectorItem,
   },
 
-  computed: {
-    ...mapGetters({
-      currentUser: 'auth/user',
-    }),
-  },
-
-  methods:
-  {
-    // no fat arrow
-    // https://stackoverflow.com/a/43073924
-    addApp: function (availableApp, paneId) {
-      this.$logger.log('adding app in selector')
-      // if we have a paneId,
-      // nothing to do, just send add-app
-      // otherwise we need to know how to dispose panes,
-      // if this is not the first app.
-      this.$logger.log('paneId :' + paneId)
-      if (!this.firstApp && paneId === null) {
-        this.chooseDisposition = true
-        return
-      }
-      this.$emit('add-app', {
-        app: availableApp,
-        paneId: paneId,
-      })
-    },
-  },
-
-  props:
-  {
-    paneId:
-    {
+  props: {
+    paneId: {
       type: Number,
       required: false,
       default: null,
     },
-    displayed:
-    {
+    displayed: {
       type: Boolean,
       required: false,
       default: false,
     },
-    fullscreen:
-    {
+    fullscreen: {
       type: Boolean,
       required: false,
       default: false,
@@ -112,13 +80,13 @@ export default {
     // if true this is the first app we add,
     // we cannot close the app window selection
     // and we do not need to ask disposition.
-    firstApp:
-    {
+    firstApp: {
       type: Boolean,
       required: false,
       default: false,
     },
   },
+
   data: function () {
     return {
       // if this is not the first app we will use this structure to
@@ -142,6 +110,13 @@ export default {
       available_apps: [],
     }
   },
+
+  computed: {
+    ...mapGetters({
+      currentUser: 'auth/user',
+    }),
+  },
+
   created () {
     if (!this.currentUser) {
       return
@@ -249,22 +224,41 @@ export default {
       // },
     ]
   },
+
+  methods: {
+    // no fat arrow
+    // https://stackoverflow.com/a/43073924
+    addApp: function (availableApp, paneId) {
+      this.$logger.log('adding app in selector')
+      // if we have a paneId,
+      // nothing to do, just send add-app
+      // otherwise we need to know how to dispose panes,
+      // if this is not the first app.
+      this.$logger.log('paneId :' + paneId)
+      if (!this.firstApp && paneId === null) {
+        this.chooseDisposition = true
+        return
+      }
+      this.$emit('add-app', {
+        app: availableApp,
+        paneId: paneId,
+      })
+    },
+  },
 }
 </script>
 
 <style scoped lang="scss">
   @import '@/assets/sass/_0.declare.scss';
 
-  .new-app-closer
-  {
+  .new-app-closer {
     position: fixed;
     top: 10px;
     right: 15px;
     font-size: 32px;
   }
 
-  .app-list
-  {
+  .app-list {
     position: fixed;
     top: 0;
     left: 0;
@@ -278,22 +272,19 @@ export default {
     overflow: hidden auto;
     padding-bottom: 30px;
 
-    *
-    {
+    * {
       font-family: $crustregular;
       box-sizing: border-box;
     }
 
-    .available-apps
-    {
+    .available-apps {
       list-style: none;
       padding: 10px;
       clear: both;
     }
   }
 
-  .available-app
-  {
+  .available-app {
     display: block;
     width: calc(50% - 10px);
     max-width: 180px;
@@ -304,8 +295,7 @@ export default {
     border-radius: 3px;
   }
 
-  .section-title
-  {
+  .section-title {
     font-size: 2.5em;
     margin-top: 50px;
     padding: 20px 15px 10px 15px;
@@ -313,15 +303,12 @@ export default {
     clear: both;
   }
 
-  @media (min-width: $wideminwidth)
-  {
-    .section-title
-    {
+  @media (min-width: $wideminwidth) {
+    .section-title {
       padding-top: 60px;
     }
 
-    .app-section
-    {
+    .app-section {
       max-width: 4*(180px + 5px + 10px); // app width + margin + list padding
       margin: 0 auto;
     }
