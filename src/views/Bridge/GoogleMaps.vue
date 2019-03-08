@@ -1,23 +1,17 @@
 <template>
   <div>
-    <div>
-      <h2>Address Lookup</h2>
+    <div class="address-lookup">
       <label>
         <gmap-autocomplete
           @place_changed="setPlace">
         </gmap-autocomplete>
         <button @click="addMarker">Search</button>
       </label>
-      <br/>
-
     </div>
-    <br>
     <div id="map">
       <gmap-map
         :center="center"
-        :zoom="12"
-        style="width: 100%; height: 100%; position: absolute; top: 50px; bottom: 0;"
-      >
+        :zoom="12" >
         <gmap-marker
           :key="index"
           v-for="(m, index) in markers"
@@ -33,6 +27,8 @@ import auth from '@/mixins/auth'
 
 export default {
   name: 'GoogleMap',
+
+  mixins: [auth],
   data () {
     return {
       center: { lat: 45.508, lng: -73.587 },
@@ -68,7 +64,52 @@ export default {
       })
     },
   },
-
-  mixins: [auth],
 }
 </script>
+<style lang="scss" scoped>
+@import '@/assets/sass/_0.declare.scss';
+
+.address-lookup {
+  position: absolute;
+  z-index: 1;
+  top: 80px;
+  left: 15px;
+  /deep/ button {
+    height: 40px;
+    background: #fff;
+    padding: 10px;
+    border: 1px solid $appgrey;
+    cursor: pointer;
+    font-size: 15px;
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+}
+/deep/ input {
+  height: 40px;
+  padding: 10px;
+  margin-left: -5px;
+  width: 200px;
+  font-size: 15px;
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+/deep/ .gm-style-mtc {
+  div {
+    height: 30px!important;
+  }
+}
+
+.vue-map-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  top: 0;
+}
+</style>
