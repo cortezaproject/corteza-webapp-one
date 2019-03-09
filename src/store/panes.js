@@ -33,8 +33,8 @@ const state = {
               id: 0,
               title: 'Messaging',
               src: '/messaging/',
-              logo: require('@/assets/logos/crust.jpg'),
-              icon: require('@/assets/logos/crust_favicon.png'),
+              logo: '/applications/crust.jpg',
+              icon: '/applications/crust_favicon.png',
             },
           ],
       },
@@ -204,7 +204,7 @@ const mutations =
     state.items[paneId].tabs.push({
       id: state.nextTabId,
       title: appData.app.name,
-      src: appData.app.path,
+      src: appData.app.url,
       logo: appData.app.logo,
       icon: appData.app.icon,
     })

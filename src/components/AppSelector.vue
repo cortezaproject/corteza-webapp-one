@@ -27,8 +27,7 @@
         <li
           v-for="(crustapp, index) in available_apps"
           :class="[ 'available-app' ]"
-          :key="index"
-          v-if="-1 === popular_apps.indexOf(index)">
+          :key="index">
           <AppSelectorItem
             :crustapp="crustapp"
             :paneId="paneId"
@@ -53,6 +52,7 @@ import Modal from '@/components/Modal'
 import AppSelectorItem from '@/components/AppSelectorItem'
 import { mapGetters } from 'vuex'
 
+// @todo this component is loaded 6 times due to improper implementation, rewrite
 export default {
   directives: {},
 
@@ -106,7 +106,6 @@ export default {
       //  - panel : can be opened in crust context
       // if apps can be opened in tabs they will be listed via the "+" in a panel context
       // if apps can be opened in panel/window or external they will be listed via the "+" in header
-      popular_apps: [],
       available_apps: [],
     }
   },
@@ -122,107 +121,11 @@ export default {
       return
     }
 
-    this.available_apps = [
-      {
-        name: 'Crust Messaging',
-        logo: require('@/assets/logos/crust.jpg'),
-        icon: require('@/assets/logos/crust_favicon.png'),
-        color: 'appyellow',
-        path: '/messaging/',
-        allowed_contextes: ['panel', 'tab', 'external'],
-        method: 'iframe',
-        showOptions: false,
-      },
-      {
-        name: 'Crust CRM',
-        color: 'appgreen',
-        logo: require('@/assets/logos/crust.jpg'),
-        icon: require('@/assets/logos/crust_favicon.png'),
-        path: '/crm/',
-        allowed_contextes: ['window', 'panel', 'tab', 'external'],
-        method: 'iframe',
-        showOptions: false, // should be initalised as false for all
-      },
-      {
-        name: 'Crust Admin Area',
-        color: 'appgreen',
-        logo: require('@/assets/logos/crust.jpg'),
-        icon: require('@/assets/logos/crust_favicon.png'),
-        path: '/admin/',
-        allowed_contextes: ['window', 'panel', 'tab', 'external'],
-        method: 'iframe',
-        showOptions: false,
-      },
-      {
-        name: 'Corteza JitsiBridge',
-        color: '',
-        icon: require('@/assets/logos/jitsi_icon.png'),
-        logo: require('@/assets/logos/jitsi.png'),
-        path: '/bridge/jitsi',
-        allowed_contextes: ['panel', 'tab'],
-        showOptions: false,
-      },
-      {
-        name: 'Google Maps',
-        color: 'appblue',
-        logo: require('@/assets/logos/google_maps.png'),
-        icon: require('@/assets/logos/google_maps_icon.png'),
-        path: 'https://maps.google.com/maps?width=100%&height=600&hl=es&q=Europe&ie=UTF8&t=&z=4&iwloc=B&output=embed',
-        allowed_contextes: ['panel', 'tab'],
-        method: 'iframe',
-        showOptions: false,
-      },
-      {
-        name: 'OpenStreetmap',
-        color: '',
-        icon: require('@/assets/logos/openstreetmap_icon.png'),
-        logo: require('@/assets/logos/openstreetmap.png'),
-        path: 'https://www.openstreetmap.org/export/embed.html?bbox=-11.228027343750002%2C38.39333888832238%2C16.303710937500004%2C51.631657349449995&amp;layer=mapnik',
-        allowed_contextes: ['panel', 'tab'],
-        showOptions: false,
-      },
-      {
-        name: 'Etherpad from RiseUp',
-        color: '',
-        path: 'https://pad.riseup.net/',
-        logo: require('@/assets/logos/etherpad.png'),
-        allowed_contextes: ['panel', 'tab'],
-        showOptions: false,
-      },
-      {
-        name: 'Trading View',
-        color: '',
-        logo: require('@/assets/logos/tradingview.png'),
-        path: 'https://www.crust.tech/test-chart/',
-        allowed_contextes: ['panel', 'tab'],
-        showOptions: false,
-      },
-      {
-        name: 'Kansha Boards',
-        icon: require('@/assets/logos/kansha_icon.png'),
-        logo: require('@/assets/logos/kansha.png'),
-        path: 'http://demo.kansha.org/kansha/SATORI+Project/0f97810e-4a20-468a-b068-4b6a81a88e62',
-        allowed_contextes: ['panel', 'tab'],
-        showOptions: false,
-      },
-      {
-        name: 'Wiki',
-        icon: require('@/assets/logos/bluespice_icon.jpeg'),
-        logo: require('@/assets/logos/bluespice.png'),
-        path: 'https://en.demo.bluespice.com/wiki/Main_Page',
-        allowed_contextes: ['panel', 'tab'],
-        showOptions: false,
-      },
-      // Kolab doesn't allow being included via frame
-      // {
-      //   name: 'Kolab',
-      //   icon: require('@/assets/logos/kolab_icon.png'),
-      //   logo: require('@/assets/logos/kolab.png'),
-      //   path: 'https://kolabnow.com/',
-      //   allowed_contextes: ['panel', 'tab', 'external'],
-      //   showOptions: false,
-      // },
-    ]
+    this.$system.applicationList().then(aa => {
+      this.available_apps = aa.map(a => {
+        return { ...a, ...a.unify }
+      }).filter(a => a.listed)
+    })
   },
 
   methods: {
