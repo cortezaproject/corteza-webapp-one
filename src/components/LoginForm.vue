@@ -39,17 +39,17 @@
 export default {
   name: 'LoginForm',
 
-  methods: {
-    connect () {
-      this.$store.commit('user/connectUser')
-    },
-  },
-
   computed: {
     user: {
       get () {
         return (this.$store.state.user)
       },
+    },
+  },
+
+  methods: {
+    connect () {
+      this.$store.commit('user/connectUser')
     },
   },
 }
