@@ -3,19 +3,26 @@
     <div class="address-lookup">
       <label>
         <gmap-autocomplete
-          @place_changed="setPlace">
+          @place_changed="setPlace"
+          @keyup.enter="addMarker"
+          :select-first-on-enter="true"
+        >
         </gmap-autocomplete>
         <button @click="addMarker">Search</button>
       </label>
     </div>
     <div id="map">
       <gmap-map
-        :center="{lat:50, lng:10}"
-        :zoom="6">
+        :center="center"
+        :zoom="7"
+        :options="{gestureHandling: 'greedy'}"
+      >
         <gmap-marker
           :key="index"
           v-for="(m, index) in markers"
           :position="m.position"
+          :clickable="false"
+          :draggable="false"
           @click="center=m.position"
         ></gmap-marker>
       </gmap-map>
@@ -31,10 +38,11 @@ export default {
   mixins: [auth],
   data () {
     return {
-      center: { lat: 45.508, lng: -73.587 },
+      center: { lat: 50, lng: 10 },
       markers: [],
       places: [],
       currentPlace: null,
+      gestureHandling: 'greedy',
     }
   },
 
