@@ -134,7 +134,7 @@ export default {
 
     &.facebook label:hover {
       background-color: darken($appblue, 10);
-    }z
+    }
   }
 
   fieldset {
