@@ -11,7 +11,7 @@
     <div id="map">
       <gmap-map
         :center="{lat:50, lng:10}"
-        :zoom="6" >
+        :zoom="6">
         <gmap-marker
           :key="index"
           v-for="(m, index) in markers"

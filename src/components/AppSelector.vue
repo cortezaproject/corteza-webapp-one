@@ -124,6 +124,7 @@ export default {
       this.available_apps = aa.map(a => {
         return { ...a, ...a.unify }
       }).filter(a => a.listed)
+        .filter(this.gMapsCheck)
     })
   },
 
@@ -145,6 +146,20 @@ export default {
         app: availableApp,
         paneId: paneId,
       })
+    },
+
+    // Checks if google maps app can be displayed
+    // we're doing this due to limitations of vue2-google-map plugin
+    gMapsCheck (app) {
+      if (app.url.indexOf('/bridge/google-maps/') === 0) {
+        try {
+          return !!window.CrustConfig.webapp.apps.googlemaps.apiKey
+        } catch (e) {
+          return false
+        }
+      }
+
+      return true
     },
   },
 }
