@@ -10,5 +10,10 @@ window.CrustConfig = {
       adtSignOutUrl: `https://satosa.didmos.${domain}/didmos/logout/`,
     },
     baseUrl: `http://${domain}`,
+    apps: {
+      googlemaps: {
+        apiKey: '',
+      },
+    },
   },
 }
