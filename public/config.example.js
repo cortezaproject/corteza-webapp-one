@@ -15,5 +15,6 @@ window.CrustConfig = {
         apiKey: '',
       },
     },
+    defaultLocale: 'en',
   },
 }

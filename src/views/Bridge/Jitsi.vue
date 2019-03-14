@@ -1,6 +1,6 @@
 <template>
   <div id="roomselection">
-    <span>To start a video call select from existing channels:</span>
+    <span>{{ $t('app.jitsi.toStart') }}</span>
     <div id="roomdropdown">
       <select v-model="channelID">
         <option v-for="(c) in channels"
@@ -9,13 +9,13 @@
       </select>
     </div>
     <button :disabled="jitsi || (!channelID)"
-            @click="onCreate">Join</button>
-    <h4>OR</h4>
-    <span>Create a  new room:</span>
-    <input type="text" id="roomInputField" v-model="roomName" placeholder="Room name" />
+            @click="onCreate">{{ $t('app.jitsi.join') }}</button>
+    <h4>{{ $t('app.jitsi.or') }}</h4>
+    <span>{{ $t('app.jitsi.createNewRoom') }}</span>
+    <input type="text" id="roomInputField" v-model="roomName" :placeholder="$t('app.jitsi.roomName')" />
 
     <button :disabled="jitsi || (cleanup(roomName).length === 0)"
-            @click="onCreate">Create</button>
+            @click="onCreate">{{ $t('app.jitsi.create') }}</button>
 
     <div ref="jitsiInterface"
          v-show="jitsi"
@@ -100,6 +100,8 @@ export default {
     open ({ roomName, userDisplayName } = {}) {
       this.dispose()
 
+      const $t = (k) => this.$t(k)
+
       /* eslint-disable no-undef */
       this.jitsi = new JitsiMeetExternalAPI(domain, {
         roomName: `crust_${this.cleanup(roomName || 'unnamed')}`,
@@ -113,8 +115,8 @@ export default {
           SHOW_BRAND_WATERMARK: false,
           BRAND_WATERMARK_LINK: '',
           SHOW_POWERED_BY: false,
-          DEFAULT_REMOTE_DISPLAY_NAME: 'Fellow Cruster',
-          DEFAULT_LOCAL_DISPLAY_NAME: userDisplayName || 'Anonymous',
+          DEFAULT_REMOTE_DISPLAY_NAME: $t('app.jitsi.defaultRemoteDisplayName'),
+          DEFAULT_LOCAL_DISPLAY_NAME: userDisplayName || $t('app.jitsi.defaultLocalDisplayName'),
           TOOLBAR_BUTTONS: [
             'microphone',
             'camera',

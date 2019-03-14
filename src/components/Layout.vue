@@ -49,8 +49,8 @@
         @close="panes.mobileShowApps = false"/>
     </div>
     <modal v-if="cantAddTab" @close="cantAddTab = false">
-      <h3 slot="header">Warning</h3>
-      <div class="cant-add-tab">You cannot add more tabs to this panel</div>
+      <h3 slot="header">{{ $t('general.labelwarning') }}</h3>
+      <div class="cant-add-tab">{{ $t('notification.panel.cantAddTab') }}</div>
     </modal>
   </div>
 </template>

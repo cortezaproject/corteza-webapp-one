@@ -8,7 +8,7 @@
           :select-first-on-enter="true"
         >
         </gmap-autocomplete>
-        <button @click="addMarker">Search</button>
+        <button @click="addMarker">{{ $t('app.googleMaps.search') }}</button>
       </label>
     </div>
     <div id="map">

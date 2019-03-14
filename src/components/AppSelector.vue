@@ -22,7 +22,7 @@
       </ul>
     </section>-->
     <section class="app-section available">
-      <div class="section-title">Available applications</div>
+      <div class="section-title">{{ $t('app.general.availableApps') }}</div>
       <ul :class="[ 'available-apps' ]">
         <li
           v-for="(crustapp, index) in available_apps"
@@ -37,7 +37,7 @@
       </ul>
     </section>
     <modal v-if="chooseDisposition" @close="addApp">
-      <h3 slot="header">Where should we add it ?</h3>
+      <h3 slot="header">{{ $t('app.general.availableApps') }}</h3>
       <div class="chooseDisposition">
         <ul class="split2ways">
           <li class="h"></li>

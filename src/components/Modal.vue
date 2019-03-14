@@ -6,7 +6,7 @@
         <div class="modal-container">
 
           <div class="modal-header">
-            <slot name="header">&lt;Header&gt;</slot>
+            <slot name="header">&lt;{{ $t('general.labelheader') }}&gt;</slot>
             <span class="modal-close-button" @click="$emit('close')">
               &times;
             </span>

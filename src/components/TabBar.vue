@@ -1,7 +1,7 @@
 <template>
   <div class="tab_list_wrapper" ref="tabbar">
     <div v-if="mobile && mobileListShown" class="tab_bar_mobile">
-      <div class="tab_header_mobile">List of Open Tabs</div>
+      <div class="tab_header_mobile">{{ $t('layout.listOfTabs') }}</div>
       <div class="tab_list_mobile">
         <div
           class="tab_item_mobile"
@@ -21,11 +21,11 @@
         </div>
       </div>
       <div class="tab_add_mobile">
-        <button class="tab-plus" @click="$emit('add')">+ Add</button>
+        <button class="tab-plus" @click="$emit('add')">+ {{ $t('layout.add') }}</button>
       </div>
     </div>
     <template v-else-if="!mobile">
-      <button v-if="hasOverflow" class="tab-prev-next" aria-label="Slide left" title="Slide left" @mousedown.self="startPrev" @mouseup.self="stopPrev" @mouseleave="stopPrev">&lt;</button>
+      <button v-if="hasOverflow" class="tab-prev-next" :aria-label="$t('layout.tabSlideLeftTooltip')" :title="$t('layout.tabSlideLeftTooltip')" @mousedown.self="startPrev" @mouseup.self="stopPrev" @mouseleave="stopPrev">&lt;</button>
       <div class="tab_list" @mousedown.stop>
         <draggable
           ref="dragger"
@@ -54,8 +54,8 @@
           </div>
         </draggable>
       </div>
-      <button v-if="hasOverflow" class="tab-prev-next" aria-label="Slide right" title="Slide right" @mousedown.self="startNext" @mouseup.self="stopNext" @mouseleave="stopNext">&gt;</button>
-      <button class="tab-plus" aria-label="Add tab" title="Add tab" @click="$emit('add')">+</button>
+      <button v-if="hasOverflow" class="tab-prev-next" :aria-label="$t('layout.tabSlideRightTooltip')" :title="$t('layout.tabSlideRightTooltip')" @mousedown.self="startNext" @mouseup.self="stopNext" @mouseleave="stopNext">&gt;</button>
+      <button class="tab-plus" :aria-label="$t('layout.addTab')" :title="$t('layout.addTab')" @click="$emit('add')">+</button>
     </template>
   </div>
 </template>

@@ -4,7 +4,7 @@ var exec = require('child_process').execSync
 const baseUrl = '/'
 
 let optimization
-if (process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV !== 'production') {
   // Enabling optimization when running unit testing confuses
   // mocha (it does not find any tests)
   optimization = {
