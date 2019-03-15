@@ -2,8 +2,8 @@
   <div class="header-wrap">
     <header>
       <div class="title-wrap">
-        <strong class="title">Crust</strong>
-        <Capsule title="Platform">Unify</Capsule>
+        <strong class="title">{{ $t('header.crust') }}</strong>
+        <Capsule title="Platform">{{ $t('header.unify') }}</Capsule>
         <span class="active_mobile">{{ (activeTab || {}).title }}</span>
       </div>
       <div class="toolbox">
@@ -13,7 +13,7 @@
         </section>
         <span class="user-info">
           <label>{{ user.name || user.username }} </label>
-          <router-link :to="{ name: 'signout' }">Sign Out</router-link>
+          <router-link :to="{ name: 'signout' }">{{ $t('header.signOut') }}</router-link>
         </span>
         <span class="toolbox-item profile">
           <a :href="didmosLink" target= '_blank'>
@@ -22,51 +22,47 @@
         </span>
         <section v-if="false && user && optionalAdd" class="toolbox-item add circle">
           <i class="icon-plus"
-            title="Add a pane"
+            :title="$t('header.addPane')"
             @click="$emit('apps')"></i>
         </section>
         <section @click="optionsMenuOpen=!optionsMenuOpen" class="toolbox-item toolbox_menu desktop">
             <i v-if="optionsMenuOpen"
               class="icon-grid-interface-close"
-              title="Show options menu"></i>
+              :title="$t('header.showOptionsMenu')"></i>
             <i v-else
               class="icon-grid-interface-open"
-              title="Show options menu"></i>
+              :title="$t('header.hideOptionsMenu')"></i>
         </section>
         <section @click="clickMenuMobile" class="toolbox-item toolbox_menu mobile">
           <i v-if="mobileMenuOpen"
              class="icon-grid-interface-close"
-             title="Show options menu"></i>
+             :title="$t('header.showOptionsMenu')"></i>
           <i v-else
              class="icon-grid-interface-open"
-             title="Show options menu"></i>
+             :title="$t('header.hideOptionsMenu')"></i>
         </section>
       </div>
     </header>
     <nav class="main-menu" v-if="optionsMenuOpen">
       <div class="main-menu-wrap">
         <section>
-          <div class="menu-section-title">Panels</div>
+          <div class="menu-section-title">{{ $t('header.panel.title') }}</div>
           <div class="menu-panels">
               <div class="menu-panels-text-big">
-                Select or deselect the panels you want work in during this session:
+                {{ $t('header.panel.selectOrDeselect') }}
               </div>
               <div class="menu-panels-grid">
                 <table class="panels-table">
                   <thead>
                     <tr>
-                      <th>&nbsp;
-                      </th>
-                      <th scope="col"><span>Column 1</span>
-                      </th>
-                      <th scope="col"><span>Column 2</span>
-                      </th>
+                      <th>&nbsp;</th>
+                      <th scope="col"><span>{{ $t('header.panel.column', { number: 1 }) }}</span></th>
+                      <th scope="col"><span>{{ $t('header.panel.column', { number: 2 }) }}</span></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <th scope="row"><span>Row 1</span>
-                      </th>
+                      <th scope="row"><span>{{ $t('header.panel.row', { number: 2 }) }}</span></th>
                       <td>
                         <label for="panel_row_0_column_0">
                           <input type="checkbox" id="panel_row_0_column_0" name="panel_row_0_column_0" value="0" :checked="panels[0].visible" @input="updPanels"/>
@@ -80,8 +76,7 @@
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row"><span>Row 2</span>
-                      </th>
+                      <th scope="row"><span>{{ $t('header.panel.row', { number: 2 }) }}</span></th>
                       <td>
                         <label for="panel_row_1_column_0">
                           <input v-if="rowFirst" type="checkbox" id="panel_row_1_column_0" name="panel_row_1_column_0" value="2" :checked="panels[2].visible" @input="updPanels"/>
@@ -135,10 +130,12 @@ export default {
   data () {
     return {
       var: false,
+      // NOTE: Depricated?
       mainMenuOpen: false,
       optionsMenuOpen: false,
       mobileMenuOpen: false,
       showAppModalPanel: false,
+      // NOTE: Depricated?
       mainmenu:
       [
         {
