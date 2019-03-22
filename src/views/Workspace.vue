@@ -1,12 +1,11 @@
 <template>
   <div class="workspace" v-if="isAuthenticated">
-    <Header :user="user"
+    <Header :user="getCurrentUser()"
       :optionalAdd="hasPanes"
       v-on:apps="showapps=true" />
     <!-- if user exists display interface -->
     <Layout
-      v-model="panes"
-      :user="user" />
+      v-model="panes" />
     <app-selector
       :displayed="!hasPanes || showapps"
       :firstApp="!hasPanes"
@@ -21,8 +20,6 @@ import auth from '@/mixins/auth'
 import Header from '@/components/Header.vue'
 import Layout from '@/components/Layout.vue'
 import AppSelector from '@/components/AppSelector.vue'
-
-import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -40,11 +37,6 @@ export default {
   },
 
   computed: {
-    ...mapGetters('auth', [
-      'user',
-      'isAuthenticated',
-    ]),
-
     hasPanes: {
       get () {
         // this.$logger.log('currently : ' + this.$store.state.panes.items.length + ' panes')
@@ -63,6 +55,14 @@ export default {
       }
       */
     },
+  },
+
+  created () {
+    this.checkAuthentication().then(() => {
+      // ...
+    }).catch(() => {
+      window.location = '/auth'
+    })
   },
 
   methods: {

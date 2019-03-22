@@ -28,7 +28,7 @@ const state = {
         active: 0,
         showapps: false,
         tabs:
-          window.CrustConfig.webapp.tabs || [
+          [
             {
               id: 0,
               title: 'Messaging',

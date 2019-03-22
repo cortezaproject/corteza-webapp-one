@@ -17,21 +17,27 @@ logger.log(
   'background-color: #1397CB; color: white; padding: 3px 10px; border: 1px solid black; font: Courier',
 )
 
-if (window.CrustConfig === undefined) {
+if (window.CrustSystemAPI === undefined) {
   alert('Unexisting or invalid configuration. Make sure there is a public/config.js configuration file.')
 } else {
-  let key = ''
-  try {
-    key = window.CrustConfig.webapp.apps.googlemaps.apiKey
-  } catch (err) {}
-
-  if (key) {
-    Vue.use(VueGoogleMaps, {
-      load: {
-        key,
-        libraries: 'places', // necessary for places input
-      },
-    })
+  // An uglyhack to get gmaps working
+  // this plugin does not allow us to pass key inside the component
+  //
+  // Since we load gmaps bridge inside an iframe anyway, let's pass
+  // the key as GET param (location.search).
+  console.log(window.location.pathname, window.location.pathname.indexOf('/bridge/google-maps'))
+  if (window.location.pathname.indexOf('/bridge/google-maps') === 0) {
+    const qs = window.location.search
+    if (qs.length < 30) {
+      console.error('Expecting a valid Google Maps API key in query-string: /bridge/google-maps?{api-key}', { qs })
+    } else {
+      Vue.use(VueGoogleMaps, {
+        load: {
+          key: qs.substring(1),
+          libraries: 'places', // necessary for places input
+        },
+      })
+    }
   }
 
   new Vue({

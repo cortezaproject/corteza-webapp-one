@@ -6,6 +6,14 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   routes: [
+    { path: '/auth', name: 'auth', component: view('Auth') },
+
+    {
+      path: '/',
+      name: 'root',
+      component: view('Workspace'),
+    },
+
     {
       path: '/bridge',
       component: view('Bridge'),
@@ -14,38 +22,8 @@ export default new Router({
         { path: 'google-maps', name: 'bridge-google-maps', component: view('Bridge/GoogleMaps') },
       ],
     },
-    {
-      path: '/:name',
-      component: view('Workspace'),
-    },
-    {
-      path: '/',
-      name: 'root',
-      component: view('Workspace'),
-    },
-    {
-      path: '/auth',
-      component: view('IndexNested'),
-      redirect: '/auth/signin',
-      children: [
-        {
-          path: 'signin',
-          name: 'signin',
-          component: view('Auth/SignIn'),
-        },
-        {
-          path: 'signout',
-          name: 'signout',
-          component: view('Auth/SignOut'),
-        },
-      ],
-    },
-    {
-      path: '*',
-      redirect: {
-        name: 'root',
-      },
-    },
+
+    { path: '*', component: view('NoApp') },
   ],
 })
 

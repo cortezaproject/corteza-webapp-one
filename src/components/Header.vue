@@ -13,10 +13,10 @@
         </section>
         <span class="user-info">
           <label>{{ user.name || user.username }} </label>
-          <router-link :to="{ name: 'signout' }">{{ $t('header.signOut') }}</router-link>
+          <a href="/auth/logout">{{ $t('header.signOut') }}</a>
         </span>
         <span class="toolbox-item profile">
-          <a :href="didmosLink" target= '_blank'>
+          <a href="/auth" target= '_blank'>
             <i class="icon-user"></i>
           </a>
         </span>
@@ -168,11 +168,6 @@ export default {
 
     panels () {
       return this.$store.state.panes.items
-    },
-
-    didmosLink () {
-      // @todo make this configurable
-      return window.CrustConfig.webapp.baseUrl.replace('://', '://frontend.didmos.')
     },
   },
 

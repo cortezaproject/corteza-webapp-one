@@ -26,7 +26,6 @@
 import auth from '@/mixins/auth'
 import Vue from 'vue'
 import LoadScript from 'vue-plugin-load-script'
-import { mapGetters } from 'vuex'
 
 Vue.use(LoadScript)
 
@@ -51,12 +50,6 @@ export default {
       jitsi: null,
       channels: null,
     }
-  },
-
-  computed: {
-    ...mapGetters({
-      currentUser: 'auth/user',
-    }),
   },
 
   beforeCreate () {
@@ -85,7 +78,7 @@ export default {
     onCreate () {
       this.open({
         roomName: this.channelID || this.roomName,
-        userDisplayName: this.currentUser.name || this.currentUser.username,
+        userDisplayName: this.getCurrentUser().name || this.getCurrentUser().username,
       })
     },
 

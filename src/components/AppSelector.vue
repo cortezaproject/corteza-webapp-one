@@ -50,7 +50,6 @@
 <script>
 import Modal from '@/components/Modal'
 import AppSelectorItem from '@/components/AppSelectorItem'
-import { mapGetters } from 'vuex'
 
 // @todo this component is loaded 6 times due to improper implementation, rewrite
 export default {
@@ -110,21 +109,11 @@ export default {
     }
   },
 
-  computed: {
-    ...mapGetters({
-      currentUser: 'auth/user',
-    }),
-  },
-
   created () {
-    if (!this.currentUser) {
-      return
-    }
     this.$system.applicationList().then(aa => {
       this.available_apps = aa.map(a => {
         return { ...a, ...a.unify }
       }).filter(a => a.listed)
-        .filter(this.gMapsCheck)
     })
   },
 
@@ -151,6 +140,7 @@ export default {
     // Checks if google maps app can be displayed
     // we're doing this due to limitations of vue2-google-map plugin
     gMapsCheck (app) {
+      console.log(app)
       if (app.url.indexOf('/bridge/google-maps/') === 0) {
         try {
           return !!window.CrustConfig.webapp.apps.googlemaps.apiKey

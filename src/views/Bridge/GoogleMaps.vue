@@ -6,6 +6,7 @@
           @place_changed="setPlace"
           @keyup.enter="addMarker"
           :select-first-on-enter="true"
+          ref="gmap"
         >
         </gmap-autocomplete>
         <button @click="addMarker">{{ $t('app.googleMaps.search') }}</button>
@@ -15,8 +16,7 @@
       <gmap-map
         :center="center"
         :zoom="7"
-        :options="{gestureHandling: 'greedy'}"
-      >
+        :options="{gestureHandling: 'greedy'}">
         <gmap-marker
           :key="index"
           v-for="(m, index) in markers"
@@ -51,6 +51,7 @@ export default {
     setPlace (place) {
       this.currentPlace = place
     },
+
     addMarker () {
       if (this.currentPlace) {
         const marker = {
@@ -63,6 +64,7 @@ export default {
         this.currentPlace = null
       }
     },
+
     geolocate: function () {
       navigator.geolocation.getCurrentPosition(position => {
         this.center = {
