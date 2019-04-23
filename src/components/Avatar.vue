@@ -1,11 +1,11 @@
 <!-- template for the user avatar component -->
 <template>
-  <span v-if="user">
+  <span v-if="letter">
     <span class="avatar u-avatar"
        :class="[ { 'no-avatar' : !user.avatar } ]"
        :title="user.name || user.username"
        :style="{ 'background-image': (user.avatar ? `url(${user.avatar})` : '') }">
-        <span aria-hidden="true" v-if="!user.avatar">{{ user.name[0] || user.username[0] }}</span>
+        <span aria-hidden="true" v-if="!user.avatar">{{ letter }}</span>
     </span>
   </span>
     <i v-else
@@ -23,6 +23,13 @@ export default {
     user: {
       type: Object,
       required: true,
+    },
+  },
+
+  computed: {
+    letter () {
+      const l = this.user.name[0] || this.user.username[0] || this.user.email[0] || ''
+      return l.toLocaleUpperCase()
     },
   },
 }

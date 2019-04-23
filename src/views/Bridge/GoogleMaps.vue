@@ -30,12 +30,9 @@
   </div>
 </template>
 <script>
-import auth from '@/mixins/auth'
-
 export default {
   name: 'GoogleMap',
 
-  mixins: [auth],
   data () {
     return {
       center: { lat: 50, lng: 10 },

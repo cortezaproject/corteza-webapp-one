@@ -12,7 +12,7 @@
           <Avatar :user="user"></Avatar>
         </section>
         <span class="user-info">
-          <label>{{ user.name || user.username }} </label>
+          <label>{{ user.name || user.username || user.email }} </label>
           <a href="/auth/logout">{{ $t('header.signOut') }}</a>
         </span>
         <span class="toolbox-item profile">
@@ -227,8 +227,8 @@ export default {
       color: $black;
       text-decoration: none;
       position: absolute;
-      margin-left: -46px;
-      margin-top: 10px;
+      margin-left: -40px;
+      margin-top: 15px;
     }
   }
 

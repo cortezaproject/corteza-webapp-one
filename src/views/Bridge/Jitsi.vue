@@ -23,7 +23,6 @@
   </div>
 </template>
 <script>
-import auth from '@/mixins/auth'
 import Vue from 'vue'
 import LoadScript from 'vue-plugin-load-script'
 
@@ -40,8 +39,6 @@ export default {
       required: true,
     },
   },
-
-  mixins: [auth],
 
   data () {
     return {
@@ -78,7 +75,7 @@ export default {
     onCreate () {
       this.open({
         roomName: this.channelID || this.roomName,
-        userDisplayName: this.getCurrentUser().name || this.getCurrentUser().username,
+        userDisplayName: this.$auth.user.name || this.$auth.user.username,
       })
     },
 

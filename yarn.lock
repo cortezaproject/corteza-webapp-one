@@ -2631,11 +2631,15 @@ cross-spawn@^6.0.0, cross-spawn@^6.0.5:
     shebang-command "^1.2.0"
     which "^1.2.9"
 
-crust-api-client.js@crusttech/crust-api-client.js.git#master, crust-api-client@crusttech/crust-api-client.js.git#master:
+crust-api-client@crusttech/crust-api-client.js.git#master:
   version "2019.3.1"
   resolved "https://codeload.github.com/crusttech/crust-api-client.js/tar.gz/f510b993779fd4fe2311012d94c8ec0ab16571b4"
   dependencies:
     axios "^0.18.0"
+
+crust-common.vue@crusttech/crust-common.vue.git#master:
+  version "2019.3.1"
+  resolved "https://codeload.github.com/crusttech/crust-common.vue/tar.gz/f8e389ff57c81f8c9d17b3d1e1670a221803e093"
 
 crypto-browserify@^3.11.0:
   version "3.12.0"

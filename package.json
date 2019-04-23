@@ -16,7 +16,7 @@
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
     "crust-api-client": "crusttech/crust-api-client.js.git#master",
-    "crust-api-client.js": "crusttech/crust-api-client.js.git#master",
+    "crust-common.vue": "crusttech/crust-common.vue.git#master",
     "i18next": "^15.0.9",
     "i18next-browser-languagedetector": "^3.0.1",
     "i18next-xhr-backend": "^2.0.1",

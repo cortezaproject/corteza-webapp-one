@@ -1,6 +1,6 @@
 <template>
-  <div class="workspace" v-if="isAuthenticated">
-    <Header :user="getCurrentUser()"
+  <div class="workspace" v-if="$auth.is()">
+    <Header :user="$auth.user"
       :optionalAdd="hasPanes"
       v-on:apps="showapps=true" />
     <!-- if user exists display interface -->
@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import auth from '@/mixins/auth'
 import Header from '@/components/Header.vue'
 import Layout from '@/components/Layout.vue'
 import AppSelector from '@/components/AppSelector.vue'
@@ -27,8 +26,6 @@ export default {
     Layout,
     AppSelector,
   },
-
-  mixins: [auth],
 
   data () {
     return {
@@ -58,9 +55,7 @@ export default {
   },
 
   created () {
-    this.checkAuthentication().then(() => {
-      // ...
-    }).catch(() => {
+    this.$auth.check(this.$system).catch(() => {
       window.location = '/auth'
     })
   },
