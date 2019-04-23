@@ -102,7 +102,6 @@
 <script>
 import Avatar from '@/components/Avatar'
 import Capsule from '@/components/Capsule'
-import Modal from '@/components/Modal'
 
 export default {
   name: 'Header',
@@ -110,7 +109,6 @@ export default {
   components: {
     Avatar,
     Capsule,
-    Modal,
   },
 
   props: {

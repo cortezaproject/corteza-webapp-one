@@ -61,7 +61,6 @@ import PaneContent from '@/components/PaneContent.vue'
 import AppSelector from '@/components/AppSelector.vue'
 import Modal from '@/components/Modal'
 import VueResize from '@/components/VueResize.vue'
-import NormalPanel from '@/components/NormalPanel'
 /*
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -76,7 +75,6 @@ export default {
     AppSelector,
     Modal,
     VueResize,
-    NormalPanel,
   },
 
   data () {
@@ -148,6 +146,7 @@ export default {
         case 13:
         case 14: return this.rowFirst ? 'tr' : 'bl'
       }
+      return ''
     },
   },
 
