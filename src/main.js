@@ -25,7 +25,6 @@ if (window.CrustSystemAPI === undefined) {
   //
   // Since we load gmaps bridge inside an iframe anyway, let's pass
   // the key as GET param (location.search).
-  console.log(window.location.pathname, window.location.pathname.indexOf('/bridge/google-maps'))
   if (window.location.pathname.indexOf('/bridge/google-maps') === 0) {
     const qs = window.location.search
     if (qs.length < 30) {

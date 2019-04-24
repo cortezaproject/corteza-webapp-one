@@ -136,21 +136,6 @@ export default {
         paneId: paneId,
       })
     },
-
-    // Checks if google maps app can be displayed
-    // we're doing this due to limitations of vue2-google-map plugin
-    gMapsCheck (app) {
-      console.log(app)
-      if (app.url.indexOf('/bridge/google-maps/') === 0) {
-        try {
-          return !!window.CrustConfig.webapp.apps.googlemaps.apiKey
-        } catch (e) {
-          return false
-        }
-      }
-
-      return true
-    },
   },
 }
 </script>

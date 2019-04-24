@@ -39,15 +39,9 @@ module.exports = {
 
   // Do not copy config files (deployment procedure will do that)
   chainWebpack: config => {
-    config.plugin('copy').tap(([cfg]) => {
-      const { to, from } = cfg[0]
-
-      cfg[0].force = true // so the original `/public` folder keeps priority
-      cfg[0].ignore.push('config*js')
-
-      cfg.unshift({ from: from + '/applications', to })
-
-      return [cfg]
+    config.plugin('copy').tap(options => {
+      options[0][0].ignore.push('config*js')
+      return options
     })
   },
 
