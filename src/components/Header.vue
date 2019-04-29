@@ -220,6 +220,8 @@ export default {
     margin-left: 5px;
     label {
       font-size: 13px;
+      min-width: 40px;
+      text-align: right;
       font-family: $crustheavy;
       display: inline-block;
     }
@@ -227,6 +229,7 @@ export default {
       color: $black;
       text-decoration: none;
       position: absolute;
+      max-height: 0px;
       margin-left: -40px;
       margin-top: 15px;
     }
