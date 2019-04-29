@@ -8,7 +8,7 @@
       <VueResize v-for="levelTwo in 2" :key="levelTwo" :active="shouldResize(levelOne,levelTwo)"
                  :class="{'static-panel-container': !shouldResize(levelOne,levelTwo)}" :style="adjustWidth(levelOne,levelTwo)"
                  v-show="panels[(levelOne-1)*2+(levelTwo-1)].visible" :width="width" :height="height" :sticks="sticks"
-                 @resize="onResize" @stopresize="onStopResize">
+                 @resize="onResize" @stopresize="onStopResize" @activated="onActivation">
         <TabBar
           :pane_id="(levelOne-1)*2+(levelTwo-1)"
           :tabs="panels[(levelOne-1)*2+(levelTwo-1)].tabs"
@@ -191,6 +191,10 @@ export default {
       let rect = this.$refs.layout.getBoundingClientRect()
       if (this.width > rect.width) this.width = rect.width
       if (this.height > rect.height) this.height = rect.height
+    },
+
+    onActivation () {
+      this.$root.$emit('panelresized') // to notify TabBar so that it can check whether to show PREV/NEXT buttons on overflow
     },
 
     adjustWidth (idx, idx2) {

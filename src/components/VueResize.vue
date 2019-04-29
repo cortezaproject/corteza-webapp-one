@@ -1,7 +1,7 @@
 <template>
   <VueDragResize ref="vdr" class="vdr-panel" :isActive="active" preventActiveBehavior :parentLimitation="false" :isDraggable="false"
                  :minw="0" :minh="0" :w="width" :h="height" :sticks="sticks ? [sticks] : []"
-                 @resizing="onResize" @resizestop="onStopResize">
+                 @resizing="onResize" @resizestop="onStopResize" @activated="onActivation">
     <div class="resizable-panel-content">
       <slot/>
     </div>
@@ -46,6 +46,10 @@ export default {
     onStopResize () {
       this.$store.commit('panes/setResizing', false)
       this.$emit('stopresize')
+    },
+
+    onActivation () {
+      this.$emit('activated')
     },
   },
 }
