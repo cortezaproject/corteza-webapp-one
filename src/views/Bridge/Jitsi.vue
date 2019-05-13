@@ -4,12 +4,12 @@
     <div id="roomdropdown">
       <select v-model="channelID">
         <option v-for="(c) in channels"
-                :key="c.ID"
-                :value="c.ID">{{ c.name }}</option>
+                :key="c.channelID"
+                :value="c.channelID">{{ c.name }}</option>
       </select>
     </div>
     <button :disabled="jitsi || (!channelID)"
-            @click="onCreate">{{ $t('app.jitsi.join') }}</button>
+            @click="onJoin">{{ $t('app.jitsi.join') }}</button>
     <h4>{{ $t('app.jitsi.or') }}</h4>
     <span>{{ $t('app.jitsi.createNewRoom') }}</span>
     <input type="text" id="roomInputField" v-model="roomName" :placeholder="$t('app.jitsi.roomName')" />
@@ -33,6 +33,8 @@ Vue.loadScript('https://meet.jit.si/external_api.js')
 const domain = 'meet.jit.si'
 
 export default {
+  name: 'JitsiBridge',
+
   params: {
     user: {
       type: Object,
@@ -50,9 +52,15 @@ export default {
   },
 
   beforeCreate () {
+    const userID = this.$auth.user.userID
+    const filter = (c) => {
+      return (c.type === 'public' || c.type === 'private') &&
+        (c.membershipFlag !== 'hidden') &&
+        (c.members || []).findIndex((uID) => uID === userID) > -1
+    }
+
     this.$messaging.channelList().then((cc) => {
-      // @todo make a proper filter & label
-      this.channels = cc.filter((c) => c.name.length > 0)
+      this.channels = cc.filter(filter)
     })
   },
 
@@ -72,10 +80,17 @@ export default {
       return str.replace(/[^a-z0-9+]+/gi, '')
     },
 
+    onJoin () {
+      this.open({
+        roomName: this.channelID,
+        userDisplayName: this.$auth.user.name || this.$auth.user.email,
+      })
+    },
+
     onCreate () {
       this.open({
-        roomName: this.channelID || this.roomName,
-        userDisplayName: this.$auth.user.name || this.$auth.user.username,
+        roomName: this.roomName,
+        userDisplayName: this.$auth.user.name || this.$auth.user.email,
       })
     },
 
