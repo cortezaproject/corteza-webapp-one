@@ -1,34 +1,39 @@
 <template>
   <div ref="layout" class="layout" :class="{'layout-rowfirst': rowFirst, 'layout-colfirst': !rowFirst}">
-    <div v-for="levelOne in 2" :key="levelOne" class="desktop"
-         :class="{'layout-autosized': levelOne === 2 ? !autosizeFirstSplit : autosizeFirstSplit,
-          'layout-colfirst': rowFirst, 'layout-rowfirst': !rowFirst}"
-         :style="adjustHeight(levelOne)"
-    >
-      <VueResize v-for="levelTwo in 2" :key="levelTwo" :active="shouldResize(levelOne,levelTwo)"
-                 :class="{'static-panel-container': !shouldResize(levelOne,levelTwo)}" :style="adjustWidth(levelOne,levelTwo)"
-                 v-show="panels[(levelOne-1)*2+(levelTwo-1)].visible" :width="width" :height="height" :sticks="sticks"
-                 @resize="onResize" @stopresize="onStopResize" @activated="onActivation">
-        <TabBar
-          :pane_id="(levelOne-1)*2+(levelTwo-1)"
-          :tabs="panels[(levelOne-1)*2+(levelTwo-1)].tabs"
-          :active_tab="panels[(levelOne-1)*2+(levelTwo-1)].active"
-          :showapps="false"
-          @add="tryAddTab((levelOne-1)*2+(levelTwo-1))" />
-        <PaneContent
-          :pane_id="(levelOne-1)*2+(levelTwo-1)"
-          :tabs="panels[(levelOne-1)*2+(levelTwo-1)].tabs"
-          :active_tab="panels[(levelOne-1)*2+(levelTwo-1)].active"
-          class="pane-content" />
-        <app-selector
-          :class="'app-selector-' + (levelOne-1)*2+(levelTwo-1)"
-          :paneId="(levelOne-1)*2+(levelTwo-1)"
-          :displayed="panels[(levelOne-1)*2+(levelTwo-1)].showapps"
-          @add-app="addTab"
-          @close="panels[(levelOne-1)*2+(levelTwo-1)].showapps=false"></app-selector>
-      </VueResize>
-    </div>
-    <div class="static-panel-container mobile">
+    <template v-if="!mobile">
+      <div v-for="levelOne in 2" :key="levelOne" class="desktop"
+          :class="{'layout-autosized': levelOne === 2 ? !autosizeFirstSplit : autosizeFirstSplit,
+            'layout-colfirst': rowFirst, 'layout-rowfirst': !rowFirst}"
+          :style="adjustHeight(levelOne)"
+      >
+        <VueResize v-for="levelTwo in 2" :key="levelTwo" :active="shouldResize(levelOne,levelTwo)"
+                  :class="{'static-panel-container': !shouldResize(levelOne,levelTwo)}" :style="adjustWidth(levelOne,levelTwo)"
+                  v-show="panels[(levelOne-1)*2+(levelTwo-1)].visible" :width="width" :height="height" :sticks="sticks"
+                  @resize="onResize" @stopresize="onStopResize" @activated="onActivation">
+          <TabBar
+            :pane_id="(levelOne-1)*2+(levelTwo-1)"
+            :tabs="panels[(levelOne-1)*2+(levelTwo-1)].tabs"
+            :active_tab="panels[(levelOne-1)*2+(levelTwo-1)].active"
+            :showapps="false"
+            @add="tryAddTab((levelOne-1)*2+(levelTwo-1))" />
+          <PaneContent
+            :pane_id="(levelOne-1)*2+(levelTwo-1)"
+            :tabs="panels[(levelOne-1)*2+(levelTwo-1)].tabs"
+            :active_tab="panels[(levelOne-1)*2+(levelTwo-1)].active"
+            class="pane-content" />
+          <app-selector
+            :class="'app-selector-' + (levelOne-1)*2+(levelTwo-1)"
+            :paneId="(levelOne-1)*2+(levelTwo-1)"
+            :displayed="panels[(levelOne-1)*2+(levelTwo-1)].showapps"
+            @add-app="addTab"
+            @close="panels[(levelOne-1)*2+(levelTwo-1)].showapps=false"></app-selector>
+        </VueResize>
+      </div>
+    </template>
+    <div
+      v-else
+      class="static-panel-container mobile">
+
       <TabBar
         mobile
         :pane_id="0"
@@ -61,6 +66,9 @@ import PaneContent from '@/components/PaneContent.vue'
 import AppSelector from '@/components/AppSelector.vue'
 import Modal from '@/components/Modal'
 import VueResize from '@/components/VueResize.vue'
+
+// src/assets/sass/_0.declare.scss > $wideminwidth
+const wideMinWidth = 768
 /*
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -82,6 +90,7 @@ export default {
       cantAddTab: false,
       width: 500,
       height: 500,
+      mobile: false,
     }
   },
 
@@ -156,6 +165,16 @@ export default {
 
   mounted () {
     this.computeSize()
+
+    // Check if on mobile or not
+    // @note this is temporary until the entire layout is reworked.
+    const onResize = () => {
+      const { innerWidth } = window
+      this.mobile = !isNaN(innerWidth) && innerWidth < wideMinWidth
+    }
+
+    window.onresize = onResize
+    setTimeout(onResize, 1)
   },
 
   methods: {
@@ -287,17 +306,5 @@ export default {
     font-size: 16px;
     font-weight: bold;
     color: red;
-  }
-
-  @media (max-width: $wideminwidth - 1px) {
-    .layout .desktop {
-      display: none;
-    }
-  }
-
-  @media (min-width: $wideminwidth) {
-    .layout .mobile {
-      display: none;
-    }
   }
 </style>
