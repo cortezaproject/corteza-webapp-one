@@ -17,11 +17,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  $pfbgcolor : yellow;
-
   @media (min-width: $wideminwidth) {
     span {
-      background-color: $pfbgcolor;
+      background-color: $warning;
       line-height: 1;
       display: inline-block;
       padding: 0.2em 0.5em;
@@ -37,8 +35,8 @@ export default {
 
   @media (max-width: $wideminwidth - 1px) {
     span {
-      background-color: $pfbgcolor;
-      color: $pfbgcolor;
+      background-color: $warning;
+      color: $warning;
       display: inline-block;
       width: 15px;
       height: 15px;

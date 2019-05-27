@@ -53,14 +53,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  $wideminwidth:720px;
-  $appgrey   : #90A3B1;
-  $appselectoritembg : #FFF;
-  $appselectorbg : #EDF1F4;
-  $defaultlinecolor : #CCC;
-  $defaulttextcolor : #000;
-  $appgreen: green;
-  //local vars
   $appheight: 115px;
   $appvisualheight: 80px;
 
@@ -73,7 +65,7 @@ export default {
 
   .app-text {
     line-height: $appheight - $appvisualheight;
-    color: $appgrey;
+    color: $secondary;
     font-size: 15px;
     max-width: 90%;
     overflow: hidden;
@@ -89,22 +81,22 @@ export default {
   }
 
   .app-display-options {
-    line-height: $appheight/2; //50% of app-visual
+    line-height: $appheight/2;
     transition: opacity 0.75s;
     opacity: 0;
 
     .display-option {
-      border: solid 1px $defaultlinecolor;
+      border: solid 1px $white;
       padding: 0;
       font-size: 11px;
       line-height: 1;
       border-radius: $appheight/2;
       margin: 5px auto;
       max-width: 80%;
-      color: $defaulttextcolor;
+      color: $black;
 
       .link {
-        color: darken($appgrey, 25);
+        color: darken($secondary, 25);
         text-decoration: none;
         display: inline-block;
         width: 100%;
@@ -113,11 +105,11 @@ export default {
       }
 
       &:hover {
-        background-color: $appgrey;
-        border-color: $appselectorbg;
+        background-color: $secondary;
+        border-color: $white;
 
         .link {
-          color: $appselectoritembg;
+          color: $white;
         }
       }
     }
@@ -141,17 +133,17 @@ export default {
 
   .app-icon,
   .app-letter {
-    color: $appselectoritembg;
+    color: $white;
     padding-top: 10px;
 
     i {
-      color: $appselectoritembg;
+      color: $white;
       display: block;
       width: 64px;
       height: 64px;
       line-height: 64px;
       margin: 0 auto;
-      background-color: $appgrey;
+      background-color: $secondary;
       font-size: 32px;
       font-style: normal;
     }

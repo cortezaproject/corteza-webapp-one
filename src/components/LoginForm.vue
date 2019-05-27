@@ -56,9 +56,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
-  $gris-bleu: #90A3B1;
-  $bleu: #1397CB;
   $font-family: Arial, sans-serif;
 
   .sso-signons {
