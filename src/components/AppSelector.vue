@@ -154,8 +154,8 @@ export default {
     left: 0;
     bottom: 0;
     right: 0;
-    background-color: $appselectorbg;
-    font-family: $crustregular;
+    background-color: $white;
+    font-family: $regular;
     font-size: 10px;
     box-sizing: border-box;
     z-index: 99;
@@ -163,7 +163,7 @@ export default {
     padding-bottom: 30px;
 
     * {
-      font-family: $crustregular;
+      font-family: $regular;
       box-sizing: border-box;
     }
 
@@ -179,7 +179,7 @@ export default {
     width: calc(50% - 10px);
     max-width: 180px;
     height: 115px;
-    background-color: $appselectoritembg;
+    background-color: $white;
     float: left;
     margin: 5px;
     border-radius: 3px;

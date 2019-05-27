@@ -220,15 +220,15 @@ export default {
 
 <style scoped lang="scss">
   .tab_list_wrapper {
-    font-family: $crustregular;
-    background-color: $headerbgcolor;
+    font-family: $regular;
+    background-color: $white;
     z-index: 3;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    box-shadow: 0 0.1rem 0.2rem 0 rgba($defaulttextcolor, 0.1);
+    box-shadow: 0 0.1rem 0.2rem 0 rgba($dark, 0.1);
     display: flex;
-    border-top: 1px solid $appcream;
+    border-top: 1px solid $light;
   }
 
   .tab_logo {
@@ -248,15 +248,15 @@ export default {
     display: flex;
     align-items: center;
     border-bottom: 3px solid $white;
-    border-right: 1px solid $appcream;
-    color: $appgrey;
-    font-family: $crustregular;
+    border-right: 1px solid $light;
+    color: $secondary;
+    font-family: $regular;
     &.active {
-      color: $appgreen;
-      border-bottom: 3px solid $appgreen;
+      color: $success;
+      border-bottom: 3px solid $success;
     }
     .tab-close {
-      color: $appgrey;
+      color: $secondary;
     }
   }
 
@@ -296,21 +296,21 @@ export default {
   .tab-prev-next,
   .tab-plus {
     display: block;
-    background: $appgrey;
+    background: $secondary;
     font-size: 20px;
     width: 30px;
     min-width: 30px;
     min-height: 30px;
     cursor: pointer;
-    background: $mainbgcolor;
+    background: $white;
     line-height: 20px;
     border: none;
-    color:$appgrey;
+    color: $secondary;
     padding: 0 0 5px;
     &:hover,
     &:active{
-      color: $appgreen;
-      background: $hoverbgcolor;
+      color: $success;
+      background: $white;
     }
   }
 
@@ -344,7 +344,7 @@ export default {
       right: 0;
       display: flex;
       flex-direction: column;
-      background-color: $mainbgcolor;
+      background-color: $white;
       overflow: hidden;
     }
 
@@ -359,7 +359,7 @@ export default {
     }
 
     .tab_item_mobile {
-      background-color: $appwhite;
+      background-color: $white;
       display: flex;
       align-items: center;
       border-radius: 3px;
@@ -371,7 +371,7 @@ export default {
       padding: 20px;
 
       .tab-plus {
-        background: $appgrey;
+        background: $secondary;
         color: $white;
         font-size: 14px;
         width: 150px;
@@ -381,8 +381,8 @@ export default {
         margin: auto;
         transition: color .2s,background-color .2s;
         &:hover {
-          border: 1px solid $appgrey;
-          color: $appgrey;
+          border: 1px solid $secondary;
+          color: $secondary;
           background: transparent;
         }
       }

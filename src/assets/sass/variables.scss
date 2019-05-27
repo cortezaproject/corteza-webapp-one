@@ -1,90 +1,22 @@
-// All future configurable elements colors and dimensions reside here.
-
 $wideminwidth: 768px;
 
-//paths
+// Paths
 $fonts_dir : './assets/fonts/';
 $icomoon-font-path: $fonts_dir + 'crust-icomoon' !default;
 $icomoon-font-family: "crust-icomoon" !default;
 
-//variabilize fonts, so we can change theme easily
-$crustregular: 'nunito_sansregular';
-$crustheavy : 'nunito_sansbold';
-$crustsemibold : 'nunito_sanssemibold';
+// Typography
+$regular: 'nunito_sansregular';
+$bold: 'nunito_sansbold';
+$semibold: 'nunito_sanssemibold';
 
-$gris-bleu: #90A3B1;
-$bleu: #1397CB;
-$white: #FFF;
-$black: #1E2224;
-$error: #E85568;
-$success: #00D53E;
-$jaune: #FFCC32;
-$vert-bleu: #2FBC95;
-$gris: #F3F3F5;
-
-$appyellow : #FFCC32;
-$appred    : #E85568;
-$appgreen  : #2FBC95;
-$appblue   : #1397CB;
-$applime   : #00D53E;
-$appgrey   : #90A3B1;
-$appcream  : #F3F3F5;
-$appwhite  : #FFF;
-
-$appselectorbg : #EDF1F4;
-$appselectoritembg : #FFF;
-
-//generics
-$mainbgcolor      : #EEF1F3;
-$inactivebgcolor  : #F3F3F5;
-$hoverbgcolor     : #F3F3F5;
-$defaulttextcolor : #1E2224;
-$defaultlinkcolor : #1397CB;
-$defaultbodysize  : 10px;
-$defaultlinecolor   : $gris-bleu;
-$defaulticoncolor   : $gris-bleu;
-$defaultitembgcolor : $gris-bleu;
-
-//header
-$headerbgcolor    : #FFF;
-$pfbgcolor        : #FFCC32;
-
-//menupanes
-$menupanebgcolor  : #FFF;
-
-//forms
-$defaultbuttonbkg : #1397CB;
-$defaultbuttontxt : #FFF;
-$focusbordercolor : #1397CB;
-
-//messages
-$errorbkgcolor:#E85568;
-$errortxtcolor:#FFF;
-
-//tabs
-//background-tab
-$tab_bgcolor             : $appgrey;
-$tab_hoverbg             : #1E2224;
-$tab_hovercolor          : #FFF;
-
-//current tab
-$curtab_topbordercolor   : #FFCC32;
-$curtab_bgcolor          : $appgreen;
-
-//footer
-$footerbgcolor    : #FFF;
-
-//items :
-$notificationcolor : #E85568;
-$projectbgcolor    : #1397CB;
-$projecttxtcolor   : #FFF;
-$tabbgcolor        : #1E2224;
-
-$tabtitletxtcolor  : #FFCC32;
-$tabitemtxtcolor   : #FFF;
-$tabcurrentbgcolor : #1397CB;
-
-$messagebgcolor          : #FFF;
-$currentmessagebgcolor   : $tabcurrentbgcolor;
-$currentmessagetxtcolor  : #FFF;
-$currentmymessagebgcolor : lighten(rgba($appblue, 1), 40%);
+// Color system
+$white:         #fff !default;
+$black:         #000 !default;
+$primary:       #1397CB;
+$secondary:     #90A3B1;
+$success:       #2FBC95;
+$warning:       #FFCC32;
+$danger:        #E85568;
+$light:         #F3F3F5;
+$dark:          #1e2224;

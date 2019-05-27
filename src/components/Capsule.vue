@@ -28,7 +28,7 @@ export default {
       vertical-align: baseline;
       border-radius: 2em;
       font-size: 1em;
-      font-family: $crustsemibold;
+      font-family: $semibold;
       text-transform: uppercase;
       margin-left: 5px;
       letter-spacing: 2px;

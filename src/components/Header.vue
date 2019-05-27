@@ -207,7 +207,7 @@ export default {
   $iconsize: 18px;
 
   * {
-    font-family: $crustregular;
+    font-family: $regular;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -221,7 +221,7 @@ export default {
       font-size: 13px;
       min-width: 40px;
       text-align: right;
-      font-family: $crustheavy;
+      font-family: $bold;
       display: inline-block;
     }
     a {
@@ -255,12 +255,12 @@ export default {
       i {
         font-size: $iconsize;
         display: inline-block;
-        color: $defaultlinecolor;
+        color: $secondary;
 
         &.user-menu-close {
           border-radius: 32px;
           width: 32px;
-          background-color: $appgrey;
+          background-color: $secondary;
           font-size: $iconsize;
           text-align: center;
           line-height: 32px;
@@ -268,7 +268,7 @@ export default {
         }
       }
       .icon-grid-interface-close {
-        color:$appyellow;
+        color: $warning;
       }
     }
 
@@ -277,12 +277,12 @@ export default {
         display: inline-block;
         border-radius: 100%;
         content: ".";
-        background-colotitle-wrapr: $notificationcolor;
+        background-colotitle-wrapr: $danger;
         height: 1em;
         width: 1em;
         margin-left: -1.5em;
-        color: $headerbgcolor;
-        border: solid 2px $headerbgcolor;
+        color: $white;
+        border: solid 2px $white;
       }
     }
 
@@ -299,22 +299,22 @@ export default {
   .add {
     i {
       border-radius: 50%;
-      background-color: $headerbgcolor;
+      background-color: $white;
       text-align: center;
       line-height: 1;
       vertical-align: middle;
     }
 
     &:hover i {
-      background-color: $defaultlinecolor;
-      color: $headerbgcolor;
+      background-color: $secondary;
+      color: $white;
     }
   }
 
   .main-menu {
     position: fixed;
     font-size: 13px;
-    color: $appgrey;
+    color: $secondary;
     top: $defaultheight;
     right: 0;
     bottom: 0;
@@ -322,14 +322,14 @@ export default {
     max-width: 320px;
     z-index: 100;
     overflow: hidden auto;
-    background-color: $headerbgcolor;
-    box-shadow: 0 0.1em 0.2em 0 rgba($defaulttextcolor, 0.1);
-    border-left: solid 1px rgba($defaultlinecolor, 0.25);
+    background-color: $white;
+    box-shadow: 0 0.1em 0.2em 0 rgba($dark, 0.1);
+    border-left: solid 1px rgba($secondary, 0.25);
     padding: 10px 20px;
 
     .menu-section-title {
       margin-bottom: 15px;
-      color: $defaulttextcolor;
+      color: $dark;
     }
 
     .main-menu-footer {
@@ -360,12 +360,12 @@ export default {
 
     .menu-panels-text-big {
       margin-bottom: 20px;
-      color: $defaulttextcolor;
+      color: $dark;
       font-size: 14px;
     }
 
     .panels-table {
-      color: $appgrey;
+      color: $secondary;
       border:none;
       border-collapse: collapse;
       width: 100%;
@@ -385,11 +385,11 @@ export default {
     }
     .panels-table td label:hover {
       cursor: pointer;
-      background: $appcream;
+      background: $light;
     }
 
     .panels-table th {
-      background-color: $appgrey;
+      background-color: $secondary;
       color: $white;
     }
 
@@ -402,18 +402,18 @@ export default {
       line-height: 35px;
       padding: 0 9px;
       border-radius: 3px;
-      background-color: rgba($defaultitembgcolor, 0.15);
+      background-color: rgba($secondary, 0.15);
       margin-bottom: 10px;
 
       a {
         text-decoration: none;
-        color: $appgrey;
+        color: $secondary;
       }
 
       &:hover {
         cursor: pointer;
-        color: darken($appgrey, 50);
-        background-color: rgba($defaultitembgcolor, 0.25);
+        color: darken($secondary, 50);
+        background-color: rgba($secondary, 0.25);
       }
     }
   }
@@ -424,7 +424,7 @@ export default {
 
   header {
     overflow: hidden;
-    background-color: $headerbgcolor;
+    background-color: $white;
     height: $defaultheight;
 
     .title-wrap {
@@ -444,7 +444,7 @@ export default {
   }
 
   .active_mobile {
-    background-color: $appgrey;
+    background-color: $secondary;
     color: white;
     text-transform: uppercase;
     border-radius: 10px;

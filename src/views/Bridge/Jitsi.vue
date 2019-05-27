@@ -193,7 +193,7 @@ html, body {
 input {
   height: 30px;
   width: 100%;
-  border: 1px solid $appgrey;
+  border: 1px solid $secondary;
   padding-left: 10px;
   font-size: 14px;
   display: block;
@@ -216,12 +216,12 @@ select {
   -webkit-appearance:none;
   -moz-appearance:none;
   appearance:none;
-  border: 1px solid $appgrey;
+  border: 1px solid $secondary;
 }
 
 #roomdropdown::after {
   border: 4px dashed transparent;
-  border-top: 4px solid $appgrey;
+  border-top: 4px solid $secondary;
   content: "";
   display: inline-block;
   float: right;
@@ -237,7 +237,7 @@ input:focus {
 button {
   cursor: pointer;
   background: transparent;
-  color: $appblue;
+  color: $primary;
   font-size: 14px;
   line-height: 38px;
   text-decoration: none;
@@ -248,16 +248,16 @@ button {
   margin: 20px auto 0;
   -webkit-transition: color .2s,background-color .2s;
   transition: color .2s,background-color .2s;
-  border: 1px solid $appblue;
+  border: 1px solid $primary;
   &:hover {
-    border: 1px solid $appblue;
-    background: $appblue;
+    border: 1px solid $primary;
+    background: $primary;
     color: #ffffff;
   }
   &:disabled {
     cursor: not-allowed;
-    color: $appgrey;
-    border-color: $appgrey;
+    color: $secondary;
+    border-color: $secondary;
     &:hover {
       background: transparent;
     }
@@ -271,11 +271,11 @@ h4 {
   align-items: center;
   text-align: center;
   margin: 30px 0;
-  color: $appgrey;
+  color: $secondary;
   &:before,
   &:after {
     content: '';
-    border-top: 1px solid $appgrey;
+    border-top: 1px solid $secondary;
     margin: 0 20px 0 0;
     flex: 1 0 20px;
   }

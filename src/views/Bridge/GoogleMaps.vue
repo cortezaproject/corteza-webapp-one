@@ -83,7 +83,7 @@ export default {
     height: 40px;
     background: #fff;
     padding: 10px;
-    border: 1px solid $appgrey;
+    border: 1px solid $secondary;
     cursor: pointer;
     font-size: 15px;
     &:focus {

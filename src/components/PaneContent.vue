@@ -74,7 +74,7 @@ export default {
       display: flex;
       flex: 1 1 0;
       min-height: 0;
-      background-color: $mainbgcolor;
+      background-color: $white;
     }
 
     .iframeContent {
@@ -82,7 +82,7 @@ export default {
       flex: 1 1 0;
       overflow-x: hidden;
       overflow-y: scroll;
-      background: $mainbgcolor;
+      background: $white;
       border-left: 2px solid #fff;
       &.active {
         display: block;

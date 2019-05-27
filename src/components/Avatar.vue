@@ -41,15 +41,15 @@ export default {
   font-size:16px;
   height:32px;
   width:32px;
-  border:solid 1px $appgreen;
+  border:solid 1px $success;
   border-radius:100%;
   background:url('/static/pics/no-profile-pic.png') center center no-repeat;
   background-size:contain;
   line-height:28px;
   text-align:center;
   font-style:normal;
-  background-color:rgba($appgreen,0.08);;
-  color:$appgreen;
+  background-color:rgba($success,0.08);;
+  color: $success;
   vertical-align: -webkit-baseline-middle;
 }
 </style>

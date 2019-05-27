@@ -90,7 +90,7 @@ export default {
       display: inline-block;
       width: 100%;
       border-radius: 5px;
-      background-color: $appgreen;
+      background-color: $success;
       height: 40px;
       line-height: 40px;
       margin: 0 0 10px 0;
@@ -98,7 +98,7 @@ export default {
       vertical-align: middle;
 
       &:hover {
-        background-color: darken($appgreen, 10);
+        background-color: darken($success, 10);
       }
 
       .text,
@@ -119,19 +119,19 @@ export default {
     }
 
     &.google label {
-      background-color: $appred;
+      background-color: $danger;
     }
 
     &.facebook label {
-      background-color: $appblue;
+      background-color: $primary;
     }
 
     &.google label:hover {
-      background-color: darken($appred, 10);
+      background-color: darken($danger, 10);
     }
 
     &.facebook label:hover {
-      background-color: darken($appblue, 10);
+      background-color: darken($primary, 10);
     }
   }
 
@@ -170,10 +170,10 @@ export default {
     font-size: 16px;
     cursor: pointer;
     font-family: $font-family;
-    background: $jaune;
+    background: $warning;
 
     &:hover {
-      background: darken($jaune, 10);
+      background: darken($warning, 10);
     }
   }
 
