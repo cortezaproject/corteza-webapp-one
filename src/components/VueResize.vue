@@ -56,8 +56,6 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '@/assets/sass/_0.declare.scss';
-
   .vdr.vdr-panel {
     position: relative;
     max-width: 100vw;

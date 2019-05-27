@@ -36,8 +36,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '@/assets/sass/_0.declare.scss';
-
 .u-avatar {
   display:inline-block;
   font-size:16px;

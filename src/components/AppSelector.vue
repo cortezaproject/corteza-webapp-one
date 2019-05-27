@@ -5,7 +5,7 @@
     <span
       class="new-app-closer"
       v-if="!firstApp"
-      @click="$emit('close')"><i class="icon-close"></i></span>
+      @click="$emit('close')"><i class="icon-x"></i></span>
     <!--<section class="app-section popular">
       <div class="section-title">Most popular</div>
       <ul :class="[ 'available-apps' ]">
@@ -141,8 +141,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  @import '@/assets/sass/_0.declare.scss';
-
   .new-app-closer {
     position: fixed;
     top: 10px;

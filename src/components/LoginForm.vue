@@ -61,8 +61,6 @@ export default {
   $bleu: #1397CB;
   $font-family: Arial, sans-serif;
 
-  @import '@/assets/sass/_0.declare.scss';
-
   .sso-signons {
     max-width: 100%;
   }

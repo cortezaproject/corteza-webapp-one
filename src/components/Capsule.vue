@@ -19,8 +19,6 @@ export default {
 <style scoped lang="scss">
   $pfbgcolor : yellow;
 
-  @import '@/assets/sass/_0.declare.scss';
-
   @media (min-width: $wideminwidth) {
     span {
       background-color: $pfbgcolor;

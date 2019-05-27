@@ -67,7 +67,6 @@ import AppSelector from '@/components/AppSelector.vue'
 import Modal from '@/components/Modal'
 import VueResize from '@/components/VueResize.vue'
 
-// src/assets/sass/_0.declare.scss > $wideminwidth
 const wideMinWidth = 768
 /*
 import Vue from 'vue'
@@ -266,8 +265,6 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '@/assets/sass/_0.declare.scss';
-
   .layout {
     flex: 1 1 0;
     font-size: 10px;

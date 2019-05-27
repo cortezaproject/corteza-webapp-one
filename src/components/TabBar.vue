@@ -219,8 +219,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  @import '@/assets/sass/_0.declare.scss';
-
   .tab_list_wrapper {
     font-family: $crustregular;
     background-color: $headerbgcolor;

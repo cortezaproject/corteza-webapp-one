@@ -74,8 +74,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '@/assets/sass/_0.declare.scss';
-
 .address-lookup {
   position: absolute;
   z-index: 1;

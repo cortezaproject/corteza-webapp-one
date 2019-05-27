@@ -203,7 +203,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  @import '@/assets/sass/_0.declare.scss';
   $defaultheight: 50px;
   $iconsize: 18px;
 

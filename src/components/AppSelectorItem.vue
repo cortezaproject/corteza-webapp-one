@@ -60,7 +60,6 @@ export default {
   $defaultlinecolor : #CCC;
   $defaulttextcolor : #000;
   $appgreen: green;
-  // @import '@/assets/sass/_0.declare.scss';
   //local vars
   $appheight: 115px;
   $appvisualheight: 80px;

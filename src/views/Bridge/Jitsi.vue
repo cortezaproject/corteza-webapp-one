@@ -162,8 +162,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import "@/assets/sass/_0.declare.scss";
-
 html, body {
   margin: 0;
   overflow: hidden;

@@ -62,8 +62,6 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "@/assets/sass/_0.declare.scss";
-
   .iFrameWrap {
     display: flex;
     flex-direction: column;
