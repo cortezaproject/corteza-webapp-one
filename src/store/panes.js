@@ -1,10 +1,5 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
 // lodash used in tab actions
 import _ from 'lodash'
-
-// init vuex
-Vue.use(Vuex)
 
 // defines the current status of the different panes of the workspace
 // initial state and default value
@@ -135,14 +130,15 @@ const state = {
 const mutations =
 {
   updateTabs: (state, newTabs) => {
-    var newTabIs = _.difference(newTabs.tabs, state.items[newTabs.paneId].tabs)
+    var newTabIs = _.differenceWith(newTabs.tabs, state.items[newTabs.paneId].tabs, _.isEqual)
     state.items[newTabs.paneId].tabs = newTabs.tabs
+    // Make new one active
     if (newTabIs.length !== 0) {
       state.items[newTabs.paneId].active = newTabIs[0].id
     }
   },
   setFirstTabActive: (state, pane) => {
-    state.items[pane.paneId].active = state.items[pane.paneId].tabs[0].id
+    state.items[pane.paneId].active = (state.items[pane.paneId].tabs[0] || {}).id
   },
   removeTab: (state, tabID) => {
     let pane, itemIndexToDel, tabItems

@@ -114,6 +114,7 @@ export default {
   props: {
     user: {
       required: true,
+      default: () => ({}),
       validator: function (prop) {
         return ((typeof prop) === 'object' || prop === null)
       },
@@ -153,7 +154,7 @@ export default {
   computed: {
     allTabs () {
       return this.$store.state.panes.items.reduce((acc, panel) => {
-        return acc.concat(panel.tabs)
+        return acc.concat(panel.tabs || [])
       }, [])
     },
 
@@ -185,6 +186,7 @@ export default {
     },
 
     updPanels (evt) {
+      // Converts str to int
       const paneID = +evt.target.value
       this.$store.commit('panes/togglePanel', paneID)
       if (this.panels[paneID].visible) {

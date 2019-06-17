@@ -1,35 +1,33 @@
 <template>
   <div id="roomselection">
-    <span>{{ $t('app.jitsi.toStart') }}</span>
-    <div id="roomdropdown">
-      <select v-model="channelID">
-        <option v-for="(c) in channels"
-                :key="c.channelID"
-                :value="c.channelID">{{ c.name }}</option>
-      </select>
-    </div>
-    <button :disabled="jitsi || (!channelID)"
-            @click="onJoin">{{ $t('app.jitsi.join') }}</button>
-    <h4>{{ $t('app.jitsi.or') }}</h4>
-    <span>{{ $t('app.jitsi.createNewRoom') }}</span>
-    <input type="text" id="roomInputField" v-model="roomName" :placeholder="$t('app.jitsi.roomName')" />
+    <p v-if="jistsiScriptErr || promiseError" class="error">{{ jistsiScriptErr || promiseError }}</p>
+    <br />
+    <template v-if="!jistsiScriptErr && !promiseError">
+      <span>{{ $t('app.jitsi.toStart') }}</span>
+      <div id="roomdropdown">
+        <select v-model="channelID">
+          <option v-for="(c) in channels"
+                  :key="c.channelID"
+                  :value="c.channelID">{{ c.name }}</option>
+        </select>
+      </div>
+      <button :disabled="jitsi || (!channelID) || !jistsiScriptLoaded || jistsiScriptErr !== null"
+              @click="onJoin">{{ $t('app.jitsi.join') }}</button>
+      <h4>{{ $t('app.jitsi.or') }}</h4>
+      <span>{{ $t('app.jitsi.createNewRoom') }}</span>
+      <input type="text" id="roomInputField" v-model="roomName" :placeholder="$t('app.jitsi.roomName')" />
 
-    <button :disabled="jitsi || (cleanup(roomName).length === 0)"
-            @click="onCreate">{{ $t('app.jitsi.create') }}</button>
+      <button :disabled="jitsi || (cleanup(roomName).length === 0) || !jistsiScriptLoaded || jistsiScriptErr !== null"
+              @click="onCreate">{{ $t('app.jitsi.create') }}</button>
 
-    <div ref="jitsiInterface"
-         v-show="jitsi"
-         class="jitsiInterface"></div>
+      <div ref="jitsiInterface"
+          v-show="jitsi"
+          class="jitsiInterface"></div>
+
+    </template>
   </div>
 </template>
 <script>
-import Vue from 'vue'
-import LoadScript from 'vue-plugin-load-script'
-
-Vue.use(LoadScript)
-
-Vue.loadScript('https://meet.jit.si/external_api.js')
-
 const domain = 'meet.jit.si'
 
 export default {
@@ -47,7 +45,11 @@ export default {
       channelID: null,
       roomName: '',
       jitsi: null,
-      channels: null,
+      channels: [],
+
+      jistsiScriptLoaded: false,
+      jistsiScriptErr: null,
+      promiseError: null,
     }
   },
 
@@ -62,6 +64,21 @@ export default {
     this.$messaging.channelList().then((cc) => {
       this.channels = cc.filter(filter)
     })
+      .catch(({ message }) => {
+        this.promiseError = message
+      })
+  },
+
+  created () {
+    this.$loadScript('https://meet.jit.si/external_api.js')
+      .then(() => {
+        this.jistsiScriptLoaded = true
+        this.jistsiScriptErr = null
+      })
+      .catch(({ message }) => {
+        this.jistsiScriptLoaded = false
+        this.jistsiScriptErr = message
+      })
   },
 
   destroyed () {
@@ -77,7 +94,7 @@ export default {
     },
 
     cleanup (str) {
-      return str.replace(/[^a-z0-9+]+/gi, '')
+      return str.replace(/[^a-zA-Z0-9+]+/gi, '')
     },
 
     onJoin () {
@@ -105,7 +122,7 @@ export default {
     open ({ roomName, userDisplayName } = {}) {
       this.dispose()
 
-      const $t = (k) => this.$t(k)
+      const $t = (k, opts) => this.$t(k, opts)
 
       /* eslint-disable no-undef */
       this.jitsi = new JitsiMeetExternalAPI(domain, {
@@ -188,6 +205,10 @@ html, body {
   padding: 40px;
   background-color: #fff;
   font-family: Arial;
+
+  .error {
+    text-align: center;
+  }
 }
 
 input {

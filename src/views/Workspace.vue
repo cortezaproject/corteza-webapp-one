@@ -4,8 +4,7 @@
       :optionalAdd="hasPanes"
       v-on:apps="showapps=true" />
     <!-- if user exists display interface -->
-    <Layout
-      v-model="panes" />
+    <Layout />
     <app-selector
       :displayed="!hasPanes || showapps"
       :firstApp="!hasPanes"
@@ -40,18 +39,6 @@ export default {
         return (this.$store.state.panes.items.length > 0)
       },
     },
-
-    panes: {
-      get () {
-        // this.$logger.log('WkS getting panes')
-        return this.$store.state.panes
-      },
-      /*
-      set (tabs) {
-        this.$store.commit('panes/updateTabs', tabs);
-      }
-      */
-    },
   },
 
   created () {
@@ -65,10 +52,6 @@ export default {
       this.$logger.log('Adding a app from WkS')
       this.$logger.log(appData)
       this.$store.commit('panes/addApp', appData)
-    },
-
-    connect () {
-      this.$store.commit('user/connectUser')
     },
   },
 }

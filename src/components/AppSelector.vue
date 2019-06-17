@@ -106,6 +106,8 @@ export default {
       // if apps can be opened in tabs they will be listed via the "+" in a panel context
       // if apps can be opened in panel/window or external they will be listed via the "+" in header
       available_apps: [],
+
+      err: null,
     }
   },
 
@@ -115,6 +117,9 @@ export default {
         return { ...a, ...a.unify }
       }).filter(a => a.listed)
     })
+      .catch(({ message }) => {
+        this.err = message
+      })
   },
 
   methods: {

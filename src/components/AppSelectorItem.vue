@@ -18,17 +18,17 @@
       <label
         v-else
         class="app-visual app-letter">
-        <i>{{ crustapp.name[0] }}</i></label>
+        <i>{{ appName[0] }}</i></label>
       <!-- and the name -->
       <label
         class='app-text'>
-        {{ crustapp.name }}
+        {{ appName }}
       </label>
     </div>
     <!-- this should appear on hover -->
     <div class="app-display-options">
-      <div class="display-option"><a class="link" @click="$emit('doadd')">{{ $t('app.general.openTab') }}</a></div>
-      <div class="display-option"><a class="link" target="_blank" :href="crustapp.url">{{ $t('app.general.openWindow') }}</a></div>
+      <div class="display-option open-tab"><a class="link" @click="$emit('doadd')">{{ $t('app.general.openTab') }}</a></div>
+      <div class="display-option open-window"><a class="link" target="_blank" :href="crustapp.url">{{ $t('app.general.openWindow') }}</a></div>
     </div>
   </div>
 </template>
@@ -47,6 +47,13 @@ export default {
     crustapp: {
       type: Object,
       required: true,
+      default: () => ({}),
+    },
+  },
+
+  computed: {
+    appName () {
+      return this.crustapp.name || ''
     },
   },
 }

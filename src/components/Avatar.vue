@@ -28,7 +28,7 @@ export default {
 
   computed: {
     letter () {
-      const l = this.user.name[0] || this.user.username[0] || this.user.email[0] || ''
+      const l = (this.user.name || '')[0] || (this.user.username || '')[0] || (this.user.email || '')[0] || ''
       return l.toLocaleUpperCase()
     },
   },
