@@ -1,6 +1,12 @@
 var webpack = require('webpack')
 var exec = require('child_process').execSync
 
+if (process.env.NODE_ENV === 'test') {
+  var Vue = require('vue')
+  Vue.config.devtools = false
+  Vue.config.productionTip = false
+}
+
 const publicPath = '/'
 
 let optimization

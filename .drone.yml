@@ -7,6 +7,11 @@ steps:
     commands:
       - yarn install
 
+  - name: test
+    image: crusttech/webapp-builder
+    commands:
+      - yarn test:unit
+
   - name: build
     image: crusttech/webapp-builder
     commands:
