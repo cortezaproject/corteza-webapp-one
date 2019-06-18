@@ -59,7 +59,7 @@ export default {
         (c.members || []).findIndex((uID) => uID === userID) > -1
     }
 
-    this.$messaging.channelList().then((cc) => {
+    this.$MessagingAPI.channelList().then((cc) => {
       this.channels = cc.filter(filter)
     })
   },
