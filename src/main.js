@@ -13,11 +13,11 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 
 /* eslint-disable no-undef */
 logger.log(
-  `%cCrust CRM, version: ${CRUST_VERSION}, build time: ${CRUST_BUILD_TIME}`,
+  `%cUnify, version: ${VERSION}, build time: ${BUILD_TIME}`,
   'background-color: #1397CB; color: white; padding: 3px 10px; border: 1px solid black; font: Courier',
 )
 
-if (window.CrustSystemAPI === undefined) {
+if (window.SystemAPI === undefined) {
   alert('Unexisting or invalid configuration. Make sure there is a public/config.js configuration file.')
 } else {
   // An uglyhack to get gmaps working

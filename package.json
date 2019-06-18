@@ -1,6 +1,11 @@
 {
-  "name": "webapp-unify",
-  "version": "0.1.0",
+  "name": "corteza-webapp-unify",
+  "description": "Unify WebApp",
+  "version": "2019.6.1",
+  "license": "Apache-2.0",
+  "contributors": [
+    "Denis Arh <denis.arh@gmail.com>"
+  ],
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -15,8 +20,7 @@
     "@panter/vue-i18next": "^0.15.0",
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
-    "crust-api-client": "crusttech/crust-api-client.js.git#master",
-    "crust-common.vue": "crusttech/crust-common.vue.git#master",
+    "corteza-webapp-common": "cortezaproject/corteza-webapp-common.git#master",
     "i18next": "^15.0.9",
     "i18next-browser-languagedetector": "^3.0.1",
     "i18next-xhr-backend": "^2.0.1",

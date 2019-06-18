@@ -1,4 +1,4 @@
-# Crust Unify webapp
+# Unify webapp
 
 ## Project setup
 

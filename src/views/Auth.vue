@@ -1,6 +1,6 @@
 <template>
   <main>
-    <h1>Hello Crust developer.</h1>
+    <h1>Hello developer.</h1>
 
     <p><b>It looks like you need to login</b></p>
 
@@ -13,7 +13,7 @@
     </p>
 
     <p>
-      Crust System API:<br/>
+      System API:<br/>
       <code>{{ backend }}</code>
     </p>
 
@@ -44,7 +44,7 @@ export default {
 
   computed: {
     backend () {
-      return window.CrustSystemAPI
+      return window.SystemAPI
     },
   },
 
@@ -59,7 +59,7 @@ export default {
 
   methods: {
     check () {
-      this.$auth.check(this.$system, this.newJWT).then(() => {
+      this.$auth.check(this.$SystemAPI, this.newJWT).then(() => {
         this.checkRsp = 'Valid JWT.'
       }).catch(({ message }) => {
         this.checkRsp = message
@@ -68,11 +68,6 @@ export default {
   },
 }
 </script>
-<style lang="scss">
-#crust-messenger {
-  position: inherit;
-}
-</style>
 <style scoped lang="scss">
 main {
   font-size: 16px;

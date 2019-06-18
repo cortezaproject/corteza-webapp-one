@@ -55,7 +55,7 @@ export default {
   },
 
   created () {
-    this.$auth.check(this.$system).catch(() => {
+    this.$auth.check(this.$SystemAPI).catch(() => {
       window.location = '/auth'
     })
   },

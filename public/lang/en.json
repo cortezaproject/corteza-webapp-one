@@ -1,8 +1,8 @@
 {
   "header": {
     "signOut": "Sign Out",
-    "crust": "Crust",
-    "unify": "Unify",
+    "app-name": "Corteza",
+    "app-tag": "Unify",
     "addPane": "Add a pane",
     "showOptionsMenu": "Show options menu",
     "hideOptionsMenu": "Hide options menu",
@@ -25,7 +25,7 @@
     "general": {
       "availableApps": "Available applications",
       "whereToAdd": "Where should we add it ?",
-      "openTab": "open in a Crust tab",
+      "openTab": "open in a Unify tab",
       "openWindow": "open in a new window"
     },
     "jitsi": {
@@ -34,7 +34,7 @@
       "or": "OR",
       "createNewRoom": "Create a new room:",
       "roomName": "Room name",
-      "defaultRemoteDisplayName": "Fellow Cruster",
+      "defaultRemoteDisplayName": "Fellow Cortezer",
       "defaultLocalDisplayName": "Anonymous",
       "create": "Create"
     },

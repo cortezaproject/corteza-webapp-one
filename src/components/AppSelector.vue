@@ -110,7 +110,7 @@ export default {
   },
 
   created () {
-    this.$system.applicationList().then(aa => {
+    this.$SystemAPI.applicationList().then(aa => {
       this.available_apps = aa.map(a => {
         return { ...a, ...a.unify }
       }).filter(a => a.listed)

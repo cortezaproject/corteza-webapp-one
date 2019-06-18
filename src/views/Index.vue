@@ -1,5 +1,5 @@
 <template>
-  <div id="crust-chrome" class="crust">
+  <div id="unify" class="crust">
     <router-multi-view/>
   </div>
 </template>
@@ -23,7 +23,7 @@ export default {
     margin: 0;
   }
 
-  #crust-chrome > *
+  #unify > *
   {
     width: 100vw;
     height: 100vh;

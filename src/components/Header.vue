@@ -2,8 +2,8 @@
   <div class="header-wrap">
     <header>
       <div class="title-wrap">
-        <strong class="title">{{ $t('header.crust') }}</strong>
-        <Capsule title="Platform">{{ $t('header.unify') }}</Capsule>
+        <strong class="title">{{ $t('header.app-name') }}</strong>
+        <Capsule title="Platform">{{ $t('header.app-tag') }}</Capsule>
         <span class="active_mobile">{{ (activeTab || {}).title }}</span>
       </div>
       <div class="toolbox">

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-const localStorageKey = 'crust.route'
+const localStorageKey = 'route'
 
 // Initial state
 const state = {}
