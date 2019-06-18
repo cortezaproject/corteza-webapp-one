@@ -7,6 +7,12 @@ steps:
     commands:
       - yarn install
 
+  - name: test
+    image: cortezaproject/corteza-webapp-builder
+    commands:
+      - yarn lint
+      - yarn test:unit
+
   - name: build
     image: cortezaproject/corteza-webapp-builder
     commands:
