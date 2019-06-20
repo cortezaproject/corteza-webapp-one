@@ -2,7 +2,7 @@
   "header": {
     "signOut": "Sign Out",
     "app-name": "Corteza",
-    "app-tag": "Unify",
+    "app-tag": "One",
     "addPane": "Add a pane",
     "showOptionsMenu": "Show options menu",
     "hideOptionsMenu": "Hide options menu",
@@ -25,7 +25,7 @@
     "general": {
       "availableApps": "Available applications",
       "whereToAdd": "Where should we add it ?",
-      "openTab": "open in a Unify tab",
+      "openTab": "open in a One tab",
       "openWindow": "open in a new window"
     },
     "jitsi": {
