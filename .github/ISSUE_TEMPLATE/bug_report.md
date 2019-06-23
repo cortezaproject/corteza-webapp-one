@@ -1,14 +1,12 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Create a report to help us improve. Please use the search option to make sure
+  the issue doesn’t already exist.
 title: ''
 labels: ''
 assignees: ''
 
 ---
-
-**Avoid duplication**
-Use the search option to make sure the issue doesn’t already exist.
 
 **Describe the bug**
 A clear and concise description of what the bug is.
