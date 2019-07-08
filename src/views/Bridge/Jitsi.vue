@@ -115,7 +115,7 @@ export default {
         parentNode: this.$refs.jitsiInterface,
         interfaceConfigOverwrite: {
           DEFAULT_BACKGROUND: '#232323',
-          SHOW_JITSI_WATERMARK: false,
+          SHOW_JITSI_WATERMARK: true,
           SHOW_WATERMARK_FOR_GUESTS: false,
           SHOW_BRAND_WATERMARK: false,
           BRAND_WATERMARK_LINK: '',
