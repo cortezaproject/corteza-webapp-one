@@ -48,8 +48,8 @@
 </template>
 
 <script>
-import Modal from '@/components/Modal'
-import AppSelectorItem from '@/components/AppSelectorItem'
+import Modal from 'corteza-webapp-one/src/components/Modal'
+import AppSelectorItem from 'corteza-webapp-one/src/components/AppSelectorItem'
 
 // @todo this component is loaded 6 times due to improper implementation, rewrite
 export default {
@@ -121,12 +121,10 @@ export default {
     // no fat arrow
     // https://stackoverflow.com/a/43073924
     addApp: function (availableApp, paneId) {
-      this.$logger.log('adding app in selector')
       // if we have a paneId,
       // nothing to do, just send add-app
       // otherwise we need to know how to dispose panes,
       // if this is not the first app.
-      this.$logger.log('paneId :' + paneId)
       if (!this.firstApp && paneId === null) {
         this.chooseDisposition = true
         return

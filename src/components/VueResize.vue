@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import VueDragResize from '@/library/vue-drag-resize'
+import VueDragResize from 'corteza-webapp-one/src/library/vue-drag-resize'
 
 export default {
   name: 'ResizablePanel',

@@ -16,9 +16,9 @@
 </template>
 
 <script>
-import Header from '@/components/Header.vue'
-import Layout from '@/components/Layout.vue'
-import AppSelector from '@/components/AppSelector.vue'
+import Header from 'corteza-webapp-one/src/components/Header.vue'
+import Layout from 'corteza-webapp-one/src/components/Layout.vue'
+import AppSelector from 'corteza-webapp-one/src/components/AppSelector.vue'
 
 export default {
   components: {
@@ -62,8 +62,6 @@ export default {
 
   methods: {
     addTab (appData) {
-      this.$logger.log('Adding a app from WkS')
-      this.$logger.log(appData)
       this.$store.commit('panes/addApp', appData)
     },
 

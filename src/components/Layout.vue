@@ -61,11 +61,11 @@
 </template>
 
 <script>
-import TabBar from '@/components/TabBar.vue'
-import PaneContent from '@/components/PaneContent.vue'
-import AppSelector from '@/components/AppSelector.vue'
-import Modal from '@/components/Modal'
-import VueResize from '@/components/VueResize.vue'
+import TabBar from 'corteza-webapp-one/src/components/TabBar.vue'
+import PaneContent from 'corteza-webapp-one/src/components/PaneContent.vue'
+import AppSelector from 'corteza-webapp-one/src/components/AppSelector.vue'
+import Modal from 'corteza-webapp-one/src/components/Modal'
+import VueResize from 'corteza-webapp-one/src/components/VueResize.vue'
 
 const wideMinWidth = 768
 /*
@@ -178,8 +178,6 @@ export default {
 
   methods: {
     addTab (appData) {
-      this.$logger.log('Adding app from layout')
-      this.$logger.log(appData)
       this.$store.commit('panes/addApp', appData)
     },
 

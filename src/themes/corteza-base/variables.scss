@@ -1,0 +1,22 @@
+$wideminwidth: 768px !default;
+
+// Paths
+$fonts_dir : '/fonts/' !default;
+$icomoon-font-path: $fonts_dir + 'icomoon' !default;
+$icomoon-font-family: "icomoon" !default;
+
+// Typography
+$regular: 'nunito_sansregular' !default;
+$bold: 'nunito_sansbold' !default;
+$semibold: 'nunito_sanssemibold' !default;
+
+// Color system
+$white:         #fff !default;
+$black:         #000 !default;
+$primary:       #1397CB !default;
+$secondary:     #90A3B1 !default;
+$success:       #719430 !default;
+$warning:       #F5D380 !default;
+$danger:        #E85568 !default;
+$light:         #F3F3F5 !default;
+$dark:          #1e2224 !default;

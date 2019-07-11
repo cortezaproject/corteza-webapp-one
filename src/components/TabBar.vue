@@ -153,9 +153,6 @@ export default {
 
   methods: {
     endDrag: function (e) {
-      this.$logger.log('endOfDrag')
-      this.$logger.log(e)
-      this.$logger.log('from ' + e.from.dataset.paneid + ' to ' + e.to.dataset.paneid)
       // if moving from one pane to another
       if (e.from.dataset.paneid !== e.to.dataset.paneid) {
         this.$store.commit('panes/setFirstTabActive', {

@@ -2,8 +2,8 @@
   <div class="header-wrap">
     <header>
       <div class="title-wrap">
-        <strong class="title">{{ $t('header.app-name') }}</strong>
-        <Capsule title="Platform">{{ $t('header.app-tag') }}</Capsule>
+        <strong class="title">{{ $t('header.appName') }}</strong>
+        <Capsule title="Platform">{{ $t('header.appTag') }}</Capsule>
         <span class="active_mobile">{{ (activeTab || {}).title }}</span>
       </div>
       <div class="toolbox">
@@ -100,8 +100,8 @@
 </template>
 
 <script>
-import Avatar from '@/components/Avatar'
-import Capsule from '@/components/Capsule'
+import Avatar from 'corteza-webapp-one/src/components/Avatar'
+import Capsule from 'corteza-webapp-one/src/components/Capsule'
 
 export default {
   name: 'Header',
