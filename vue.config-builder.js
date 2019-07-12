@@ -4,7 +4,6 @@ var path = require('path')
 
 module.exports = ({ appName, appLabel, version, theme, packageAlias, root = path.resolve('.'), env = process.env.NODE_ENV }) => {
   const isDevelopment = (env === 'development')
-  const isProduction = (env === 'production')
   const isTest = (env === 'test')
 
   if (isTest) {
@@ -13,7 +12,6 @@ module.exports = ({ appName, appLabel, version, theme, packageAlias, root = path
     Vue.config.productionTip = false
   }
 
-  const publicPath = isProduction ? '/' + appName : '/'
   const optimization = isTest ? {} : {
     usedExports: true,
     runtimeChunk: 'single',
@@ -29,7 +27,7 @@ module.exports = ({ appName, appLabel, version, theme, packageAlias, root = path
   }
 
   return {
-    publicPath,
+    publicPath: '/',
     lintOnSave: true,
     runtimeCompiler: true,
 
