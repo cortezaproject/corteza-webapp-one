@@ -37,7 +37,7 @@ steps:
         # Dynamically constructs Drone repo name that will be notified
         #  - namespace (cortezaproject/crusttech),
         #  - removing suffix (auth) from repo name (corteza-webapp..., crust-webapp...)
-        - "${DRONE_REPO_NAMESPACE}/${DRONE_REPO_NAME%%-unify}@${DRONE_BRANCH}"
+        - "${DRONE_REPO_NAMESPACE}/${DRONE_REPO_NAME%%-one}@${DRONE_BRANCH}"
 
 trigger:
   branch:
