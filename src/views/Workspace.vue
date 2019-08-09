@@ -56,7 +56,7 @@ export default {
 
   created () {
     this.$auth.check(this.$SystemAPI).catch(() => {
-      window.location = '/auth'
+      this.$auth.open()
     })
   },
 
