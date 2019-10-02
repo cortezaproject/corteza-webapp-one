@@ -1,7 +1,7 @@
 {
   "name": "corteza-webapp-one",
   "description": "Unify WebApp",
-  "version": "2019.9.0-rc.1",
+  "version": "2019.10.0-rc.1",
   "license": "Apache-2.0",
   "contributors": [
     "Denis Arh <denis.arh@gmail.com>"
