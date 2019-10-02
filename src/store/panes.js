@@ -36,6 +36,13 @@ const state = {
               logo: '/applications/crust.jpg',
               icon: '/applications/crust_favicon.png',
             },
+            {
+              id: 1,
+              title: 'CRM',
+              src: '/compose/ns/crm/',
+              logo: '/applications/crust.jpg',
+              icon: '/applications/crust_favicon.png',
+            },
           ],
       },
       {
