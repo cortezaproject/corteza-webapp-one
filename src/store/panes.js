@@ -14,7 +14,7 @@ Vue.use(Vuex)
 // items must always be an array of 4 items (the position is mapped to the numbers in itempos)
 const state = {
   // for full specs see below.
-  nextTabId: 1,
+  nextTabId: 2,
   maxNumberOfTabsInPanel: 8,
   nowResizing: false,
   activeMobileTab: 0,
