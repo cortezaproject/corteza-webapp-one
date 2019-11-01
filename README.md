@@ -33,3 +33,8 @@ yarn run lint
 ```bash
 yarn run test:unit
 ```
+
+### Run your unit tests with coverage report
+```bash
+yarn test:unit:cc
+```
