@@ -36,8 +36,10 @@
         </li>
       </ul>
     </section>
-    <modal v-if="chooseDisposition" @close="addApp">
-      <h3 slot="header">{{ $t('app.general.availableApps') }}</h3>
+    <modal v-if="chooseDisposition"
+           @close="addApp"
+           :title="$t('app.general.availableApps')">
+
       <div class="chooseDisposition">
         <ul class="split2ways">
           <li class="h"></li>

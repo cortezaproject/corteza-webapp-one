@@ -1,36 +1,78 @@
 <!-- template for the modal component -->
 <template>
   <transition name="modal">
-    <div class="modal-mask">
-      <div class="modal-wrapper">
-        <div class="modal-container">
+    <div class="modal-mask"
+         @click="closeModal">
 
-          <div class="modal-header">
-            <slot name="header">&lt;{{ $t('general.labelheader') }}&gt;</slot>
-            <span class="modal-close-button" @click="$emit('close')">
+      <div class="modal-wrapper">
+        <div class="modal-container p-3 m-3"
+             @click.stop.prevent>
+
+          <div class="modal-header pb-3"
+               :class="headerClass">
+
+            <h5 v-html="title" />
+
+            <span class="modal-close-button"
+                  @click="closeModal">
               &times;
             </span>
           </div>
 
           <div class="modal-body">
-            <slot></slot>
+            <slot />
           </div>
 
           <div class="modal-footer">
-            <slot name="footer"></slot>
+            <slot name="footer" />
           </div>
         </div>
       </div>
     </div>
   </transition>
 </template>
+
 <script>
 export default {
   name: 'modal',
+  props: {
+    title: {
+      type: String,
+      required: false,
+      default: null,
+    },
+    headerClass: {
+      type: String,
+      required: false,
+      default: null,
+    },
+  },
+
+  methods: {
+    /**
+     * Emits close event
+     */
+    closeModal () {
+      this.$emit('close')
+    },
+  },
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  .m-3 {
+    margin: 1rem;
+  }
+  .p-3 {
+    padding: 1rem;
+  }
+  .pb-3 {
+    padding-bottom: 1rem;
+  }
+  .text-danger {
+    color: $danger;
+  }
+
   .modal-mask {
     position: fixed;
     z-index: 9998;
@@ -38,42 +80,39 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: transparentize(black,.2);
     display: table;
     transition: opacity 0.3s ease;
   }
 
   .modal-wrapper {
-    display: table-cell;
-    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
   }
 
   .modal-container {
-    width: 500px;
-    margin: 0px auto;
-    background-color: #FFF;
+    max-width: 500px;
+    width: 100%;
+    background-color: $white;
     border-radius: 2px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
     font-family: Helvetica, Arial, sans-serif;
+
+    h5 {
+      font-size: 1.0625rem;
+    }
   }
 
   .modal-header {
-    margin-top: 0;
-    color: white;
-    font-weight: bold;
-    background: #1E2224;
-    padding: 20px 20px;
-  }
-
-  .modal-body {
-    margin: 0 0 20px 0;
-    padding: 20px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .modal-close-button {
     float: right;
-    margin-top: -30px;
     font-size: 2em;
     cursor: pointer;
   }
