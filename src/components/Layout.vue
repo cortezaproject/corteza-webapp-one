@@ -53,9 +53,16 @@
         @add-app="addTab"
         @close="panes.mobileShowApps = false"/>
     </div>
-    <modal v-if="cantAddTab" @close="cantAddTab = false">
-      <h3 slot="header">{{ $t('general.labelwarning') }}</h3>
-      <div class="cant-add-tab">{{ $t('notification.panel.cantAddTab') }}</div>
+
+    <modal
+      v-if="cantAddTab"
+      @close="cantAddTab = false"
+      :title="$t('general.label.warning')"
+      header-class="text-danger">
+
+      <p>
+        {{ $t('notification.panel.cantAddTab') }}
+      </p>
     </modal>
   </div>
 </template>
@@ -297,9 +304,4 @@ export default {
     flex: 1 1 0;
   }
 
-  .cant-add-tab {
-    font-size: 16px;
-    font-weight: bold;
-    color: red;
-  }
 </style>
