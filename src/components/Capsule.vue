@@ -1,6 +1,6 @@
 <template>
   <!-- slot gets the content of holder div -->
-  <span :title="title"><slot/></span>
+  <span :title="title"><slot /></span>
 </template>
 
 <script>

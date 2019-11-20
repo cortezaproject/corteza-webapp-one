@@ -12,13 +12,15 @@
       contenu : {{ tab.src }}
       </div -->
       <iframe
-      v-for="(tab, index) in tabs" :key="index"
-      style=""
-      class="iframeContent"
-      :class="{ active : active_tab === tab.id }"
-      :style="{pointerEvents: isResizing ? 'none' : 'auto'}"
-      frameborder="0"
-      :src="tab.src" />
+        v-for="(tab, index) in tabs"
+        :key="index"
+        style=""
+        class="iframeContent"
+        :class="{ active : active_tab === tab.id }"
+        :style="{pointerEvents: isResizing ? 'none' : 'auto'}"
+        frameborder="0"
+        :src="tab.src"
+      />
     </div>
   </div>
 </template>

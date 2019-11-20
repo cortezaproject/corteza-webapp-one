@@ -1,17 +1,24 @@
 <template>
-  <div class="workspace" v-if="$auth.is()">
-    <Header :user="$auth.user"
-      :optionalAdd="hasPanes"
-      v-on:apps="showapps=true" />
+  <div
+    v-if="$auth.is()"
+    class="workspace"
+  >
+    <w-header
+      :user="$auth.user"
+      :optional-add="hasPanes"
+      @apps="showapps=true"
+    />
     <!-- if user exists display interface -->
-    <Layout
-      v-model="panes" />
+    <layout
+      v-model="panes"
+    />
     <app-selector
       :displayed="!hasPanes || showapps"
-      :firstApp="!hasPanes"
+      :first-app="!hasPanes"
       :fullscreen="true"
-      v-on:close="showapps=false"
-      v-on:add-app="addTab"></app-selector>
+      @close="showapps=false"
+      @add-app="addTab"
+    />
   </div>
 </template>
 
@@ -22,7 +29,7 @@ import AppSelector from 'corteza-webapp-one/src/components/AppSelector.vue'
 
 export default {
   components: {
-    Header,
+    'w-header': Header,
     Layout,
     AppSelector,
   },

@@ -1,6 +1,6 @@
 <template>
   <div id="unify">
-    <router-multi-view/>
+    <router-multi-view />
   </div>
 </template>
 <style lang="scss">

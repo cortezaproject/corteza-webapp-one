@@ -1,9 +1,12 @@
 <template>
-  <div class="vdr" :style="style"
-       :class="active || isActive ? 'active' : 'inactive'"
-       @mousedown.stop.prevent="bodyDown($event)"
-       @touchstart.stop.prevent="bodyDown($event)">
-    <slot></slot>
+  <div
+    class="vdr"
+    :style="style"
+    :class="active || isActive ? 'active' : 'inactive'"
+    @mousedown.stop.prevent="bodyDown($event)"
+    @touchstart.stop.prevent="bodyDown($event)"
+  >
+    <slot />
     <div
       v-for="stick in sticks"
       :key="stick"
@@ -12,8 +15,7 @@
       :style="vdrStick(stick)"
       @mousedown.stop.prevent="stickDown(stick, $event)"
       @touchstart.stop.prevent="stickDown(stick, $event)"
-      >
-    </div>
+    />
   </div>
 </template>
 

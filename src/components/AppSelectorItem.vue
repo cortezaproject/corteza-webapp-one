@@ -2,33 +2,49 @@
   <div
     class="app-wrap"
     :class="[ { active : crustapp.showOptions } ]"
-    @touch="crustapp.showOptions=!crustapp.showOptions">
+    @touch="crustapp.showOptions=!crustapp.showOptions"
+  >
     <div class="app-label">
       <!-- logos have precedence -->
       <label
         v-if="crustapp.logo && crustapp.logo!==''"
-        class="app-visual app-logo">
-        <i :style="'background-image:url(' + crustapp.logo + ');'" ></i></label>
+        class="app-visual app-logo"
+      >
+        <i :style="'background-image:url(' + crustapp.logo + ');'" /></label>
       <!-- if no logo but icon -->
       <label
         v-else-if="crustapp.icon && crustapp.icon!==''"
-        class="app-visual app-icon">
-        <i :class="crustapp.icon"></i></label>
+        class="app-visual app-icon"
+      >
+        <i :class="crustapp.icon" /></label>
       <!-- if no logo or icon : first letter of app -->
       <label
         v-else
-        class="app-visual app-letter">
+        class="app-visual app-letter"
+      >
         <i>{{ crustapp.name[0] }}</i></label>
       <!-- and the name -->
       <label
-        class='app-text'>
+        class="app-text"
+      >
         {{ crustapp.name }}
       </label>
     </div>
     <!-- this should appear on hover -->
     <div class="app-display-options">
-      <div class="display-option"><a class="link" @click="$emit('doadd')">{{ $t('app.general.openTab') }}</a></div>
-      <div class="display-option"><a class="link" target="_blank" :href="crustapp.url">{{ $t('app.general.openWindow') }}</a></div>
+      <div class="display-option">
+        <a
+          class="link"
+          @click="$emit('doadd')"
+        >{{ $t('app.general.openTab') }}</a>
+      </div>
+      <div class="display-option">
+        <a
+          class="link"
+          target="_blank"
+          :href="crustapp.url"
+        >{{ $t('app.general.openWindow') }}</a>
+      </div>
     </div>
   </div>
 </template>
@@ -37,6 +53,7 @@
 export default {
   props: {
     paneId: {
+      type: Number,
       required: false,
       default: null,
     },

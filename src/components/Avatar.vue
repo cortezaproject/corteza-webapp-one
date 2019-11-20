@@ -1,17 +1,24 @@
 <!-- template for the user avatar component -->
 <template>
   <span v-if="letter">
-    <span class="avatar u-avatar"
-       :class="[ { 'no-avatar' : !user.avatar } ]"
-       :title="user.name || user.username"
-       :style="{ 'background-image': (user.avatar ? `url(${user.avatar})` : '') }">
-        <span aria-hidden="true" v-if="!user.avatar">{{ letter }}</span>
+    <span
+      class="avatar u-avatar"
+      :class="[ { 'no-avatar' : !user.avatar } ]"
+      :title="user.name || user.username"
+      :style="{ 'background-image': (user.avatar ? `url(${user.avatar})` : '') }"
+    >
+      <span
+        v-if="!user.avatar"
+        aria-hidden="true"
+      >{{ letter }}</span>
     </span>
   </span>
-    <i v-else
-       class="avatar u-avatar coward">
+  <i
+    v-else
+    class="avatar u-avatar coward"
+  >
     <span aria-hidden="true">?</span>
-    </i>
+  </i>
 </template>
 
 <script>

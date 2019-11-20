@@ -3,12 +3,11 @@
     <div class="address-lookup">
       <label>
         <gmap-autocomplete
+          ref="gmap"
+          :select-first-on-enter="true"
           @place_changed="setPlace"
           @keyup.enter="addMarker"
-          :select-first-on-enter="true"
-          ref="gmap"
-        >
-        </gmap-autocomplete>
+        />
         <button @click="addMarker">{{ $t('app.googleMaps.search') }}</button>
       </label>
     </div>
@@ -16,15 +15,16 @@
       <gmap-map
         :center="center"
         :zoom="7"
-        :options="{gestureHandling: 'greedy'}">
+        :options="{gestureHandling: 'greedy'}"
+      >
         <gmap-marker
-          :key="index"
           v-for="(m, index) in markers"
+          :key="index"
           :position="m.position"
           :clickable="false"
           :draggable="false"
           @click="center=m.position"
-        ></gmap-marker>
+        />
       </gmap-map>
     </div>
   </div>

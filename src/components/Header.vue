@@ -3,95 +3,181 @@
     <header>
       <div class="title-wrap">
         <strong class="title">{{ $t('header.appName') }}</strong>
-        <Capsule title="Platform">{{ $t('header.appTag') }}</Capsule>
+        <capsule title="Platform">
+          {{ $t('header.appTag') }}
+        </capsule>
         <span class="active_mobile">{{ (activeTab || {}).title }}</span>
       </div>
       <div class="toolbox">
         <!-- the header add is for panels, not for now, remove false && to restore -->
-        <section  v-if="user" class="toolbox-item toolbox_profile">
-          <Avatar :user="user"></Avatar>
+        <section
+          v-if="user"
+          class="toolbox-item toolbox_profile"
+        >
+          <avatar :user="user" />
         </section>
         <span class="user-info">
           <label>{{ user.name || user.username || user.email }} </label>
           <a href="/auth/logout">{{ $t('header.signOut') }}</a>
         </span>
         <span class="toolbox-item profile">
-          <a href="/auth" target= '_blank'>
-            <i class="icon-user"></i>
+          <a
+            href="/auth"
+            target="_blank"
+          >
+            <i class="icon-user" />
           </a>
         </span>
-        <section v-if="false && user && optionalAdd" class="toolbox-item add circle">
-          <i class="icon-plus"
+        <section
+          v-if="false && user && optionalAdd"
+          class="toolbox-item add circle"
+        >
+          <i
+            class="icon-plus"
             :title="$t('header.addPane')"
-            @click="$emit('apps')"></i>
+            @click="$emit('apps')"
+          />
         </section>
-        <section @click="optionsMenuOpen=!optionsMenuOpen" class="toolbox-item toolbox_menu desktop">
-            <i v-if="optionsMenuOpen"
-              class="icon-grid-interface-close"
-              :title="$t('header.showOptionsMenu')"></i>
-            <i v-else
-              class="icon-grid-interface-open"
-              :title="$t('header.hideOptionsMenu')"></i>
+        <section
+          class="toolbox-item toolbox_menu desktop"
+          @click="optionsMenuOpen=!optionsMenuOpen"
+        >
+          <i
+            v-if="optionsMenuOpen"
+            class="icon-grid-interface-close"
+            :title="$t('header.showOptionsMenu')"
+          />
+          <i
+            v-else
+            class="icon-grid-interface-open"
+            :title="$t('header.hideOptionsMenu')"
+          />
         </section>
-        <section @click="clickMenuMobile" class="toolbox-item toolbox_menu mobile">
-          <i v-if="mobileMenuOpen"
-             class="icon-grid-interface-close"
-             :title="$t('header.showOptionsMenu')"></i>
-          <i v-else
-             class="icon-grid-interface-open"
-             :title="$t('header.hideOptionsMenu')"></i>
+        <section
+          class="toolbox-item toolbox_menu mobile"
+          @click="clickMenuMobile"
+        >
+          <i
+            v-if="mobileMenuOpen"
+            class="icon-grid-interface-close"
+            :title="$t('header.showOptionsMenu')"
+          />
+          <i
+            v-else
+            class="icon-grid-interface-open"
+            :title="$t('header.hideOptionsMenu')"
+          />
         </section>
       </div>
     </header>
-    <nav class="main-menu" v-if="optionsMenuOpen">
+    <nav
+      v-if="optionsMenuOpen"
+      class="main-menu"
+    >
       <div class="main-menu-wrap">
         <section>
-          <div class="menu-section-title">{{ $t('header.panel.title') }}</div>
+          <div class="menu-section-title">
+            {{ $t('header.panel.title') }}
+          </div>
           <div class="menu-panels">
-              <div class="menu-panels-text-big">
-                {{ $t('header.panel.selectOrDeselect') }}
-              </div>
-              <div class="menu-panels-grid">
-                <table class="panels-table">
-                  <thead>
-                    <tr>
-                      <th>&nbsp;</th>
-                      <th scope="col"><span>{{ $t('header.panel.column', { number: 1 }) }}</span></th>
-                      <th scope="col"><span>{{ $t('header.panel.column', { number: 2 }) }}</span></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row"><span>{{ $t('header.panel.row', { number: 2 }) }}</span></th>
-                      <td>
-                        <label for="panel_row_0_column_0">
-                          <input type="checkbox" id="panel_row_0_column_0" name="panel_row_0_column_0" value="0" :checked="panels[0].visible" @input="updPanels"/>
-                        </label>
-                      </td>
-                      <td>
-                        <label for="panel_row_0_column_1">
-                          <input v-if="rowFirst" type="checkbox" id="panel_row_0_column_1" name="panel_row_0_column_1" value="1" :checked="panels[1].visible" @input="updPanels"/>
-                          <input v-else type="checkbox" id="panel_row_0_column_1" name="panel_row_1_column_0" value="2" :checked="panels[2].visible" @input="updPanels"/>
-                        </label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row"><span>{{ $t('header.panel.row', { number: 2 }) }}</span></th>
-                      <td>
-                        <label for="panel_row_1_column_0">
-                          <input v-if="rowFirst" type="checkbox" id="panel_row_1_column_0" name="panel_row_1_column_0" value="2" :checked="panels[2].visible" @input="updPanels"/>
-                          <input v-else type="checkbox" id="panel_row_1_column_0" name="panel_row_0_column_1" value="1" :checked="panels[1].visible" @input="updPanels"/>
-                        </label>
-                      </td>
-                      <td>
-                        <label for="panel_row_1_column_1">
-                          <input type="checkbox" id="panel_row_1_column_1" name="panel_row_1_column_1" value="3" :checked="panels[3].visible" @input="updPanels"/>
-                        </label>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div class="menu-panels-text-big">
+              {{ $t('header.panel.selectOrDeselect') }}
+            </div>
+            <div class="menu-panels-grid">
+              <table class="panels-table">
+                <thead>
+                  <tr>
+                    <th>&nbsp;</th>
+                    <th scope="col">
+                      <span>{{ $t('header.panel.column', { number: 1 }) }}</span>
+                    </th>
+                    <th scope="col">
+                      <span>{{ $t('header.panel.column', { number: 2 }) }}</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">
+                      <span>{{ $t('header.panel.row', { number: 2 }) }}</span>
+                    </th>
+                    <td>
+                      <label for="panel_row_0_column_0">
+                        <input
+                          id="panel_row_0_column_0"
+                          type="checkbox"
+                          name="panel_row_0_column_0"
+                          value="0"
+                          :checked="panels[0].visible"
+                          @input="updPanels"
+                        >
+                      </label>
+                    </td>
+                    <td>
+                      <label for="panel_row_0_column_1">
+                        <input
+                          v-if="rowFirst"
+                          id="panel_row_0_column_1"
+                          type="checkbox"
+                          name="panel_row_0_column_1"
+                          value="1"
+                          :checked="panels[1].visible"
+                          @input="updPanels"
+                        >
+                        <input
+                          v-else
+                          id="panel_row_0_column_1"
+                          type="checkbox"
+                          name="panel_row_1_column_0"
+                          value="2"
+                          :checked="panels[2].visible"
+                          @input="updPanels"
+                        >
+                      </label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <span>{{ $t('header.panel.row', { number: 2 }) }}</span>
+                    </th>
+                    <td>
+                      <label for="panel_row_1_column_0">
+                        <input
+                          v-if="rowFirst"
+                          id="panel_row_1_column_0"
+                          type="checkbox"
+                          name="panel_row_1_column_0"
+                          value="2"
+                          :checked="panels[2].visible"
+                          @input="updPanels"
+                        >
+                        <input
+                          v-else
+                          id="panel_row_1_column_0"
+                          type="checkbox"
+                          name="panel_row_0_column_1"
+                          value="1"
+                          :checked="panels[1].visible"
+                          @input="updPanels"
+                        >
+                      </label>
+                    </td>
+                    <td>
+                      <label for="panel_row_1_column_1">
+                        <input
+                          id="panel_row_1_column_1"
+                          type="checkbox"
+                          name="panel_row_1_column_1"
+                          value="3"
+                          :checked="panels[3].visible"
+                          @input="updPanels"
+                        >
+                      </label>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </section>
       </div>

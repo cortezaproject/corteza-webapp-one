@@ -1,11 +1,14 @@
 <template>
   <div
-    class="selector app-list" v-if="displayed"
-    :class="fullscreen?'fullscreen':'tabbed'">
+    v-if="displayed"
+    class="selector app-list"
+    :class="fullscreen?'fullscreen':'tabbed'"
+  >
     <span
-      class="new-app-closer"
       v-if="!firstApp"
-      @click="$emit('close')"><i class="icon-x"></i></span>
+      class="new-app-closer"
+      @click="$emit('close')"
+    ><i class="icon-x" /></span>
     <!--<section class="app-section popular">
       <div class="section-title">Most popular</div>
       <ul :class="[ 'available-apps' ]">
@@ -22,27 +25,32 @@
       </ul>
     </section>-->
     <section class="app-section available">
-      <div class="section-title">{{ $t('app.general.availableApps') }}</div>
+      <div class="section-title">
+        {{ $t('app.general.availableApps') }}
+      </div>
       <ul :class="[ 'available-apps' ]">
         <li
           v-for="(crustapp, index) in available_apps"
+          :key="index"
           :class="[ 'available-app' ]"
-          :key="index">
-          <AppSelectorItem
+        >
+          <app-selector-item
             :crustapp="crustapp"
-            :paneId="paneId"
-            :appIndex="index"
-            v-on:doadd="addApp(crustapp, paneId)" />
+            :pane-id="paneId"
+            :app-index="index"
+            @doadd="addApp(crustapp, paneId)"
+          />
         </li>
       </ul>
     </section>
-    <modal v-if="chooseDisposition"
-           @close="addApp"
-           :title="$t('app.general.availableApps')">
-
+    <modal
+      v-if="chooseDisposition"
+      :title="$t('app.general.availableApps')"
+      @close="addApp"
+    >
       <div class="chooseDisposition">
         <ul class="split2ways">
-          <li class="h"></li>
+          <li class="h" />
         </ul>
       </div>
     </modal>

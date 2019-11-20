@@ -1,20 +1,25 @@
 <!-- template for the modal component -->
 <template>
   <transition name="modal">
-    <div class="modal-mask"
-         @click="closeModal">
-
+    <div
+      class="modal-mask"
+      @click="closeModal"
+    >
       <div class="modal-wrapper">
-        <div class="modal-container p-3 m-3"
-             @click.stop.prevent>
-
-          <div class="modal-header pb-3"
-               :class="headerClass">
-
+        <div
+          class="modal-container p-3 m-3"
+          @click.stop.prevent
+        >
+          <div
+            class="modal-header pb-3"
+            :class="headerClass"
+          >
             <h5 v-html="title" />
 
-            <span class="modal-close-button"
-                  @click="closeModal">
+            <span
+              class="modal-close-button"
+              @click="closeModal"
+            >
               &times;
             </span>
           </div>

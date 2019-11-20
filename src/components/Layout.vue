@@ -1,65 +1,88 @@
 <template>
-  <div ref="layout" class="layout" :class="{'layout-rowfirst': rowFirst, 'layout-colfirst': !rowFirst}">
+  <div
+    ref="layout"
+    class="layout"
+    :class="{'layout-rowfirst': rowFirst, 'layout-colfirst': !rowFirst}"
+  >
     <template v-if="!mobile">
-      <div v-for="levelOne in 2" :key="levelOne" class="desktop"
-          :class="{'layout-autosized': levelOne === 2 ? !autosizeFirstSplit : autosizeFirstSplit,
-            'layout-colfirst': rowFirst, 'layout-rowfirst': !rowFirst}"
-          :style="adjustHeight(levelOne)"
+      <div
+        v-for="levelOne in 2"
+        :key="levelOne"
+        class="desktop"
+        :class="{'layout-autosized': levelOne === 2 ? !autosizeFirstSplit : autosizeFirstSplit,
+                 'layout-colfirst': rowFirst, 'layout-rowfirst': !rowFirst}"
+        :style="adjustHeight(levelOne)"
       >
-        <VueResize v-for="levelTwo in 2" :key="levelTwo" :active="shouldResize(levelOne,levelTwo)"
-                  :class="{'static-panel-container': !shouldResize(levelOne,levelTwo)}" :style="adjustWidth(levelOne,levelTwo)"
-                  v-show="panels[(levelOne-1)*2+(levelTwo-1)].visible" :width="width" :height="height" :sticks="sticks"
-                  @resize="onResize" @stopresize="onStopResize" @activated="onActivation">
-          <TabBar
+        <vue-resize
+          v-for="levelTwo in 2"
+          v-show="panels[(levelOne-1)*2+(levelTwo-1)].visible"
+          :key="levelTwo"
+          :active="shouldResize(levelOne,levelTwo)"
+          :class="{'static-panel-container': !shouldResize(levelOne,levelTwo)}"
+          :style="adjustWidth(levelOne,levelTwo)"
+          :width="width"
+          :height="height"
+          :sticks="sticks"
+          @resize="onResize"
+          @stopresize="onStopResize"
+          @activated="onActivation"
+        >
+          <tab-bar
             :pane_id="(levelOne-1)*2+(levelTwo-1)"
             :tabs="panels[(levelOne-1)*2+(levelTwo-1)].tabs"
             :active_tab="panels[(levelOne-1)*2+(levelTwo-1)].active"
             :showapps="false"
-            @add="tryAddTab((levelOne-1)*2+(levelTwo-1))" />
-          <PaneContent
+            @add="tryAddTab((levelOne-1)*2+(levelTwo-1))"
+          />
+          <pane-content
             :pane_id="(levelOne-1)*2+(levelTwo-1)"
             :tabs="panels[(levelOne-1)*2+(levelTwo-1)].tabs"
             :active_tab="panels[(levelOne-1)*2+(levelTwo-1)].active"
-            class="pane-content" />
+            class="pane-content"
+          />
           <app-selector
             :class="'app-selector-' + (levelOne-1)*2+(levelTwo-1)"
-            :paneId="(levelOne-1)*2+(levelTwo-1)"
+            :pane-id="(levelOne-1)*2+(levelTwo-1)"
             :displayed="panels[(levelOne-1)*2+(levelTwo-1)].showapps"
             @add-app="addTab"
-            @close="panels[(levelOne-1)*2+(levelTwo-1)].showapps=false"></app-selector>
-        </VueResize>
+            @close="panels[(levelOne-1)*2+(levelTwo-1)].showapps=false"
+          />
+        </vue-resize>
       </div>
     </template>
     <div
       v-else
-      class="static-panel-container mobile">
-
-      <TabBar
+      class="static-panel-container mobile"
+    >
+      <tab-bar
         mobile
         :pane_id="0"
         :tabs="allTabs"
         :active_tab="panes.activeMobileTab"
         :showapps="false"
-        @add="tryAddTabMobile" />
-      <PaneContent
+        @add="tryAddTabMobile"
+      />
+      <pane-content
         :pane_id="0"
         :tabs="allTabs"
         :active_tab="panes.activeMobileTab"
-        class="pane-content" />
+        class="pane-content"
+      />
       <app-selector
         class="app-selector-mobile"
-        :paneId="0"
+        :pane-id="0"
         :displayed="panes.mobileShowApps"
         @add-app="addTab"
-        @close="panes.mobileShowApps = false"/>
+        @close="panes.mobileShowApps = false"
+      />
     </div>
 
     <modal
       v-if="cantAddTab"
-      @close="cantAddTab = false"
       :title="$t('general.label.warning')"
-      header-class="text-danger">
-
+      header-class="text-danger"
+      @close="cantAddTab = false"
+    >
       <p>
         {{ $t('notification.panel.cantAddTab') }}
       </p>

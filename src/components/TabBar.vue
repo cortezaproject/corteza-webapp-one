@@ -1,15 +1,29 @@
 <template>
-  <div class="tab_list_wrapper" ref="tabbar">
-    <div v-if="mobile && mobileListShown" class="tab_bar_mobile">
-      <div class="tab_header_mobile">{{ $t('layout.listOfTabs') }}</div>
+  <div
+    ref="tabbar"
+    class="tab_list_wrapper"
+  >
+    <div
+      v-if="mobile && mobileListShown"
+      class="tab_bar_mobile"
+    >
+      <div class="tab_header_mobile">
+        {{ $t('layout.listOfTabs') }}
+      </div>
       <div class="tab_list_mobile">
         <div
+          v-for="tab in tabs"
+          :key="tab.id"
           class="tab_item_mobile"
           :class="{ active : active_tab === tab.id }"
-          v-for="tab in tabs" :key="tab.id"
           @touch.self="switchActive(tab.id)"
-          @mousedown.self="switchActive(tab.id)">
-          <div v-if="tab.logo" :style="{backgroundImage: 'url(' + tab.logo + ')'}" class="tab_logo"/>
+          @mousedown.self="switchActive(tab.id)"
+        >
+          <div
+            v-if="tab.logo"
+            :style="{backgroundImage: 'url(' + tab.logo + ')'}"
+            class="tab_logo"
+          />
           <div
             class="tab_title"
             @touch.self="switchActive(tab.id)"
@@ -17,45 +31,107 @@
           >
             {{ tab.title }}
           </div>
-          <button class="tab-close" @click="removeTab(tab.id)">&times;</button>
+          <button
+            class="tab-close"
+            @click="removeTab(tab.id)"
+          >
+            &times;
+          </button>
         </div>
       </div>
       <div class="tab_add_mobile">
-        <button class="tab-plus" @click="$emit('add')">+ {{ $t('layout.add') }}</button>
+        <button
+          class="tab-plus"
+          @click="$emit('add')"
+        >
+          + {{ $t('layout.add') }}
+        </button>
       </div>
     </div>
     <template v-else-if="!mobile">
-      <button v-if="hasOverflow" class="tab-prev-next" :aria-label="$t('layout.tabSlideLeftTooltip')" :title="$t('layout.tabSlideLeftTooltip')" @mousedown.self="startPrev" @mouseup.self="stopPrev" @mouseleave="stopPrev">&lt;</button>
-      <div class="tab_list" @mousedown.stop>
+      <button
+        v-if="hasOverflow"
+        class="tab-prev-next"
+        :aria-label="$t('layout.tabSlideLeftTooltip')"
+        :title="$t('layout.tabSlideLeftTooltip')"
+        @mousedown.self="startPrev"
+        @mouseup.self="stopPrev"
+        @mouseleave="stopPrev"
+      >
+        &lt;
+      </button>
+      <div
+        class="tab_list"
+        @mousedown.stop
+      >
         <draggable
+          :id="'tabs_in_pane_'+pane_id"
           ref="dragger"
           v-model="tabList"
           :options="{ group:'tabs' }"
           class="tab_list"
           :style="{marginLeft: -posSlider + 'px'}"
-          :id="'tabs_in_pane_'+pane_id"
           :data-paneid="pane_id"
           @start="drag=true"
-          @end="endDrag">
+          @end="endDrag"
+        >
           <div
+            v-for="tab in tabs"
+            :key="tab.id"
             class="tab_item"
             :class="{ active : active_tab === tab.id }"
-            v-for="tab in tabs" :key="tab.id"
             @touch.self="switchActive(tab.id)"
-            @mousedown.self="switchActive(tab.id)">
-            <div v-if="tab.icon" :style="{backgroundImage: 'url(' + tab.icon + ')'}" class="tab_logo"/>
-            <div v-else-if="tab.logo" :style="{backgroundImage: 'url(' + tab.logo + ')'}" class="tab_logo"/>
-            <div v-else class="no_tab_logo"/>
+            @mousedown.self="switchActive(tab.id)"
+          >
+            <div
+              v-if="tab.icon"
+              :style="{backgroundImage: 'url(' + tab.icon + ')'}"
+              class="tab_logo"
+            />
+            <div
+              v-else-if="tab.logo"
+              :style="{backgroundImage: 'url(' + tab.logo + ')'}"
+              class="tab_logo"
+            />
+            <div
+              v-else
+              class="no_tab_logo"
+            />
             <div
               class="tab_title"
               @touch.self="switchActive(tab.id)"
-              @mousedown.self="switchActive(tab.id)">{{ tab.title }}</div>
-            <button class="tab-close" @click="removeTab(tab.id)">&times;</button>
+              @mousedown.self="switchActive(tab.id)"
+            >
+              {{ tab.title }}
+            </div>
+            <button
+              class="tab-close"
+              @click="removeTab(tab.id)"
+            >
+              &times;
+            </button>
           </div>
         </draggable>
       </div>
-      <button v-if="hasOverflow" class="tab-prev-next" :aria-label="$t('layout.tabSlideRightTooltip')" :title="$t('layout.tabSlideRightTooltip')" @mousedown.self="startNext" @mouseup.self="stopNext" @mouseleave="stopNext">&gt;</button>
-      <button class="tab-plus" :aria-label="$t('layout.addTab')" :title="$t('layout.addTab')" @click="$emit('add')">+</button>
+      <button
+        v-if="hasOverflow"
+        class="tab-prev-next"
+        :aria-label="$t('layout.tabSlideRightTooltip')"
+        :title="$t('layout.tabSlideRightTooltip')"
+        @mousedown.self="startNext"
+        @mouseup.self="stopNext"
+        @mouseleave="stopNext"
+      >
+        &gt;
+      </button>
+      <button
+        class="tab-plus"
+        :aria-label="$t('layout.addTab')"
+        :title="$t('layout.addTab')"
+        @click="$emit('add')"
+      >
+        +
+      </button>
     </template>
   </div>
 </template>

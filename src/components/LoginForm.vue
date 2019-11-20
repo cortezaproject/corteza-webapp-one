@@ -3,32 +3,101 @@
     method="post"
     class="login-form"
     enctype="application/x-www-form-urlencoded"
-    action="https://auth.crust-poc.daasi.de/handle_discovery_response">
+    action="https://auth.crust-poc.daasi.de/handle_discovery_response"
+  >
     <section class="login-fields">
       <fieldset class="manual-signon">
-        <input type="hidden" id="internal" name="target" value="ldap" checked/>
+        <input
+          id="internal"
+          type="hidden"
+          name="target"
+          value="ldap"
+          checked
+        >
         <label for="internal"> Login with username/password</label>
         <!-- label for="username"> Username: </label -->
-        <input type="text" name="ldap-username" placeholder="Username" value="">
+        <input
+          type="text"
+          name="ldap-username"
+          placeholder="Username"
+          value=""
+        >
         <!-- label for="password"> Password: </label -->
-        <input type="password" name="ldap-password" placeholder="Password" value="">
-        <button type="button" @click="connect" class="login-btn">Connect</button>
+        <input
+          type="password"
+          name="ldap-password"
+          placeholder="Password"
+          value=""
+        >
+        <button
+          type="button"
+          class="login-btn"
+          @click="connect"
+        >
+          Connect
+        </button>
       </fieldset>
-      <div class="or">or</div>
+      <div class="or">
+        or
+      </div>
       <fieldset class="sso-signons">
         <div class="sso-provider-wrap google">
-          <input type="radio" hidden id="google" name="target" value="google"/>
-          <label for="google" @click="connect"><i class="icon-google"></i><span
-            class="text">Login with <strong>Google</strong></span></label>
+          <input
+            id="google"
+            type="radio"
+            hidden
+            name="target"
+            value="google"
+          >
+          <label
+            for="google"
+            @click="connect"
+          >
+            <i class="icon-google" />
+            <span
+              class="text"
+            >
+              Login with <strong>Google</strong>
+            </span>
+          </label>
         </div>
         <div class="sso-provider-wrap facebook">
-          <input type="radio" hidden id="facebook" name="target" value="facebook"/>
-          <label for="facebook" @click="connect"><i class="icon-facebook"></i><span class="text">Login with <strong>Facebook</strong></span></label>
+          <input
+            id="facebook"
+            type="radio"
+            hidden
+            name="target"
+            value="facebook"
+          >
+          <label
+            for="facebook"
+            @click="connect"
+          >
+            <i class="icon-facebook" />
+            <span class="text">
+              Login with <strong>Facebook</strong>
+            </span>
+          </label>
         </div>
         <div class="sso-provider-wrap saml2">
-          <input type="radio" hidden id="Saml2" name="target" value="Saml2"/>
-          <label for="Saml2" @click="connect"><i class="icon-fatlock"></i><span
-            class="text">Login with <strong>SAML2</strong></span></label>
+          <input
+            id="Saml2"
+            type="radio"
+            hidden
+            name="target"
+            value="Saml2"
+          >
+          <label
+            for="Saml2"
+            @click="connect"
+          >
+            <i class="icon-fatlock" />
+            <span
+              class="text"
+            >
+              Login with <strong>SAML2</strong>
+            </span>
+          </label>
         </div>
       </fieldset>
     </section>

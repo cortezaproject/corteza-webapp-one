@@ -3,23 +3,42 @@
     <span>{{ $t('app.jitsi.toStart') }}</span>
     <div id="roomdropdown">
       <select v-model="channelID">
-        <option v-for="(c) in channels"
-                :key="c.channelID"
-                :value="c.channelID">{{ c.name }}</option>
+        <option
+          v-for="(c) in channels"
+          :key="c.channelID"
+          :value="c.channelID"
+        >
+          {{ c.name }}
+        </option>
       </select>
     </div>
-    <button :disabled="jitsi || (!channelID)"
-            @click="onJoin">{{ $t('app.jitsi.join') }}</button>
+    <button
+      :disabled="jitsi || (!channelID)"
+      @click="onJoin"
+    >
+      {{ $t('app.jitsi.join') }}
+    </button>
     <h4>{{ $t('app.jitsi.or') }}</h4>
     <span>{{ $t('app.jitsi.createNewRoom') }}</span>
-    <input type="text" id="roomInputField" v-model="roomName" :placeholder="$t('app.jitsi.roomName')" />
+    <input
+      id="roomInputField"
+      v-model="roomName"
+      type="text"
+      :placeholder="$t('app.jitsi.roomName')"
+    >
 
-    <button :disabled="jitsi || (cleanup(roomName).length === 0)"
-            @click="onCreate">{{ $t('app.jitsi.create') }}</button>
+    <button
+      :disabled="jitsi || (cleanup(roomName).length === 0)"
+      @click="onCreate"
+    >
+      {{ $t('app.jitsi.create') }}
+    </button>
 
-    <div ref="jitsiInterface"
-         v-show="jitsi"
-         class="jitsiInterface"></div>
+    <div
+      v-show="jitsi"
+      ref="jitsiInterface"
+      class="jitsiInterface"
+    />
   </div>
 </template>
 <script>
