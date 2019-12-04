@@ -99,7 +99,7 @@
                 <tbody>
                   <tr>
                     <th scope="row">
-                      <span>{{ $t('header.panel.row', { number: 2 }) }}</span>
+                      <span>{{ $t('header.panel.row', { number: 1 }) }}</span>
                     </th>
                     <td>
                       <label for="panel_row_0_column_0">
