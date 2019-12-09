@@ -2806,7 +2806,7 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
 
 corteza-webapp-common@cortezaproject/corteza-webapp-common.git#master:
   version "2019.12.1"
-  resolved "https://codeload.github.com/cortezaproject/corteza-webapp-common/tar.gz/a9b7141c4efe88b820b21d0b0aa600d86d6a42de"
+  resolved "https://codeload.github.com/cortezaproject/corteza-webapp-common/tar.gz/5675465e46d462df207a193676cef8e447645b33"
   dependencies:
     diff "4.0.1"
     mime-types "^2.1.25"
