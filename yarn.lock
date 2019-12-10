@@ -2804,9 +2804,9 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
   integrity sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
 
-corteza-webapp-common@cortezaproject/corteza-webapp-common.git#master:
-  version "2019.12.1"
-  resolved "https://codeload.github.com/cortezaproject/corteza-webapp-common/tar.gz/5675465e46d462df207a193676cef8e447645b33"
+corteza-webapp-common@cortezaproject/corteza-webapp-common.git#2019.12.0:
+  version "2019.12.0"
+  resolved "https://codeload.github.com/cortezaproject/corteza-webapp-common/tar.gz/5e795bd232391fa9d8eedb09f3115d51b80de163"
   dependencies:
     diff "4.0.1"
     mime-types "^2.1.25"
