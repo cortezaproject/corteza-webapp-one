@@ -62,7 +62,7 @@ export default {
   },
 
   created () {
-    this.$auth.check(this.$SystemAPI).catch(() => {
+    this.$auth.check().catch(() => {
       this.$auth.open()
     })
   },

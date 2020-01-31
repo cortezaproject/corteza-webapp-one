@@ -5,6 +5,7 @@ function view (name, resolve) {
 }
 
 export default [
+  // we're stucked with ol'school dev-auth view (no bootstrap)
   { path: '/auth', name: 'auth', component: view('Auth') },
 
   {

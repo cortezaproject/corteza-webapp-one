@@ -68,10 +68,12 @@ export default {
 
   methods: {
     check () {
-      this.$auth.check(this.$SystemAPI, this.newJWT).then(() => {
+      this.newJWT = this.newJWT.replace(/["']+/, '')
+      this.$auth.check(this.newJWT).then(() => {
         this.checkRsp = 'Valid JWT.'
-      }).catch(({ message }) => {
-        this.checkRsp = message
+      }).catch((e) => {
+        console.error(e)
+        this.checkRsp = e.message
       })
     },
   },
