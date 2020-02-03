@@ -1,3 +1,5 @@
+import { components } from '@cortezaproject/corteza-vue'
+
 function view (name, resolve) {
   return function (resolve) {
     return require([`./${name}`], resolve)
@@ -5,8 +7,8 @@ function view (name, resolve) {
 }
 
 export default [
-  // we're stucked with ol'school dev-auth view (no bootstrap)
-  { path: '/auth', name: 'auth', component: view('Auth') },
+  // we're stuck with ol'school dev-auth view (no bootstrap)
+  { path: '/auth', name: 'auth', component: components.CDevAuthLite },
 
   {
     path: '/',
