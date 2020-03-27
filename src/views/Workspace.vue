@@ -62,9 +62,17 @@ export default {
   },
 
   created () {
-    this.$auth.check().catch(() => {
-      this.$auth.open()
-    })
+    this.$auth.check()
+      .then((user) => {
+        if (!user) {
+          // check performed: no error & no user,
+          // redirect to auth
+          throw new Error()
+        }
+      })
+      .catch(() => {
+        this.$auth.open()
+      })
   },
 
   methods: {
