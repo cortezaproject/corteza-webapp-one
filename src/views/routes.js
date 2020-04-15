@@ -1,29 +1,40 @@
 import { components } from '@cortezaproject/corteza-vue'
 
-function view (name, resolve) {
-  return function (resolve) {
-    return require([`./${name}`], resolve)
+/**
+ * Simple route generator
+ *
+ * @param name {String}
+ * @param path {String}
+ * @param component {String}
+ * @returns {Object}
+ */
+function r (name, path, component) {
+  return {
+    path,
+    name,
+    component: () => import('./' + component + '.vue'),
+    props: true,
+    // canReuse: false,
   }
 }
 
 export default [
-  // we're stuck with ol'school dev-auth view (no bootstrap)
-  { path: '/auth', name: 'auth', component: components.CDevAuthLite },
-
   {
-    path: '/',
-    name: 'root',
-    component: view('Workspace'),
-  },
-
-  {
-    path: '/bridge',
-    component: view('Bridge'),
+    ...r('layout', '/', 'Layout'),
     children: [
-      { path: 'jitsi', name: 'bridge-jitsi', component: view('Bridge/Jitsi') },
-      { path: 'google-maps', name: 'bridge-google-maps', component: view('Bridge/GoogleMaps') },
+      r('panels', '/', 'Panels'),
+      {
+        ...r('bridge', '/bridge', 'Bridge'),
+        children: [
+          r('bridge-jitsi', 'jitsi', 'Bridge/Jitsi'),
+          r('bridge-google-maps', 'google-maps', 'Bridge/GoogleMaps'),
+        ],
+      },
     ],
   },
 
-  { path: '*', component: view('NoApp') },
+  // we're stuck with ol'school dev-auth view (no bootstrap)
+  { path: '/auth', name: 'auth', component: components.CDevAuthLite },
+
+  r('default', '*', 'NoApp'),
 ]

@@ -1,29 +1,17 @@
 export default {
   header: {
-    signOut: 'Sign Out',
     appName: 'Corteza',
-    appTag: 'One',
-    addPane: 'Add a pane',
-    showOptionsMenu: 'Show options menu',
-    hideOptionsMenu: 'Hide options menu',
-    panel: {
-      title: 'Panels',
-      selectOrDeselect: 'Select or deselect the panels you want work in during this session:',
-      column: 'Column {{number}}',
-      row: 'Row {{number}}',
+    layoutSwitcherTitle: 'Panel layout',
+    user: {
+      logout: 'Logout',
     },
   },
   layout: {
-    listOfTabs: 'List of Open Tabs',
-    add: 'Add',
-    addTab: 'Add tab',
-    tabSlideLeftTooltip: 'Slide left',
-    tabSlideRightTooltip: 'Slide right',
+    defaultTabTitle: 'Untitled',
   },
   app: {
     general: {
       availableApps: 'Available applications',
-      whereToAdd: 'Where should we add it ?',
       openTab: 'open in Corteza One',
       openWindow: 'open in a new window',
     },
@@ -39,17 +27,6 @@ export default {
     },
     googleMaps: {
       search: 'Search',
-    },
-  },
-  general: {
-    label: {
-      warning: 'Warning',
-      header: 'Header',
-    },
-  },
-  notification: {
-    panel: {
-      cantAddTab: 'You cannot add more tabs to this panel',
     },
   },
 }

@@ -13,13 +13,11 @@ import i18n from './i18n'
 import store from './store'
 import router from './router'
 
-import Index from './views/Index'
-
 export default (options = {}) => {
   options = {
     el: '#app',
     name: 'one',
-    render: h => h(Index),
+    template: '<router-view />',
 
     router,
     store,

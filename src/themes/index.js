@@ -1,1 +1,1 @@
-import(/* webpackChunkName: 'corteza-base' */ './corteza-base')
+import /* webpackChunkName: 'corteza-base' */ './corteza-base'
