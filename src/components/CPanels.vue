@@ -1,5 +1,6 @@
 <template>
   <div
+    class="stretch"
     :class="{ 'multi-panel': enableMultiplePanels }"
   >
     <div

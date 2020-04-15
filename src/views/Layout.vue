@@ -11,11 +11,22 @@
       </div>
       <div class="settings">
         <c-user-settings />
-        <c-panel-settings />
+        <i
+          v-if="mobile"
+          class="icon-menu1"
+          @click="mobileTabsVisible = !mobileTabsVisible"
+        />
+        <c-panel-settings
+          v-else
+        />
       </div>
     </header>
+    <c-mobile
+      v-if="mobile"
+      :tabs-visible.sync="mobileTabsVisible"
+    />
     <c-panels
-      class="stretch"
+      v-else
     />
   </div>
   <div
@@ -31,9 +42,11 @@
 import CPanelSettings from '../components/CPanelSettings'
 import CUserSettings from '../components/CUserSettings'
 import CPanels from '../components/CPanels'
+import CMobile from '../components/CMobile'
 
 export default {
   components: {
+    CMobile,
     CPanelSettings,
     CUserSettings,
     CPanels,
@@ -42,6 +55,8 @@ export default {
   data () {
     return {
       loaded: false,
+      mobile: false,
+      mobileTabsVisible: false,
     }
   },
 
@@ -96,6 +111,10 @@ export default {
     & > .settings {
       align-content: flex-end;
       display: flex;
+    }
+
+    .icon-menu1 {
+      margin: 10px 8px 0;
     }
   }
 }

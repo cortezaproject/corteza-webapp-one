@@ -29,8 +29,6 @@ export default [
   //   ],
   // },
 
-  r('layout2', '/layout2', 'Layout2'),
-
   // we're stuck with ol'school dev-auth view (no bootstrap)
   { path: '/auth', name: 'auth', component: components.CDevAuthLite },
 
