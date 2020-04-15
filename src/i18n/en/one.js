@@ -4,6 +4,7 @@ export default {
     layoutSwitcherTitle: 'Panel layout',
     user: {
       logout: 'Logout',
+      settings: 'Settings',
     },
   },
   layout: {

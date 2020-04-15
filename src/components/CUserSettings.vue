@@ -13,6 +13,9 @@
       />
     </div>
     <ul>
+      <li @click="handleSettings">
+        {{ $t('settings') }}
+      </li>
       <li @click="handleLogout">
         {{ $t('logout') }}
       </li>
@@ -54,6 +57,9 @@ export default {
       this.$auth.logout().then(() => {
         this.$auth.open()
       })
+    },
+    handleSettings () {
+      window.open('/auth/profile', '_blank')
     },
   },
 }
