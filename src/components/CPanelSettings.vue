@@ -85,7 +85,7 @@ export default {
     apply (mask) {
       this.expanded = false
       this.applyVisibilityMask(mask)
-      this.$root.$emit('panels-resized')
+      this.$root.$emit('panels-resize')
     },
   },
 }

@@ -12,9 +12,14 @@ function C (i) {
  * Sanitize panel objects, set defaults
  */
 function sanitizePanelInput (panels = []) {
+  /**
+   * Default panel props
+   */
   const dp = {
     visible: false,
     sticky: false,
+    width: undefined,
+    height: undefined,
     activeTabIndex: 0,
     tabs: [{}],
   }
@@ -29,8 +34,8 @@ function sanitizePanelInput (panels = []) {
     out[index] = C({
       index,
       ...dp,
-      ...panel,
       visible: index === 0,
+      ...panel,
       tabs: tabs || [{}],
     })
   }
@@ -99,6 +104,10 @@ const actions = {
 
   togglePanelVisibility ({ commit, getters }, { panelIndex, visible }) {
     commit('updatePanel', { ...getters.panel(panelIndex), visible })
+  },
+
+  setPanelSize ({ commit, getters }, { panelIndex, width, height }) {
+    commit('updatePanel', { ...getters.panel(panelIndex), width, height })
   },
 
   addTab ({ commit, getters }, { panelIndex, tab = {} }) {

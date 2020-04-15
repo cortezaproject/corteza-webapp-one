@@ -121,7 +121,7 @@ export default {
   },
 
   mounted () {
-    this.$root.$on('panels-resized', () => this.handleResize())
+    this.$root.$on('panels-resize', () => this.handleResize())
     this.handleResize()
   },
 

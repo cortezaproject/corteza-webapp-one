@@ -90,8 +90,8 @@ export default {
         parent: true,
         w,
         h,
-        x: this.centerX - 300 + (w / 2),
-        y: this.centerY - 300 - (h / 2),
+        x: this.centerX - 300,
+        y: this.centerY - 300,
       }
     },
 
@@ -190,6 +190,10 @@ export default {
   },
 
   created () {
+    const { width, height } = this.panels[0]
+    this.centerX = width
+    this.centerY = height
+    this.$root.$emit('panels-resize')
     this.handleWindowResize()
   },
 
@@ -210,30 +214,43 @@ export default {
       updatePanelTab: 'layout/updateTab',
       removePanelTab: 'layout/removeTab',
       activatePanelTab: 'layout/activateTab',
+      setPanelSize: 'layout/setPanelSize',
     }),
 
     /**
      * Update coordinates of the grid center
      */
     handleResize (left, top) {
+      this.resizing = true
+
       // Correct position with panel element offset (this takes
       // into account any top/left menu, toolbars etc..
 
       const draggableAreaOffset = 300
-      const handleW = 20
-      const handleH = 20
+      // const handleW = 20
+      // const handleH = 20
 
-      this.centerX = left + draggableAreaOffset - (handleW / 2)
-      this.centerY = top + draggableAreaOffset + (handleH / 2)
+      this.centerX = left + draggableAreaOffset
+      this.centerY = top + draggableAreaOffset
 
-      this.resizing = true
       // emit panel-resize to allow components
       // adjust their dimensions
-      this.$root.$emit('panels-resized')
+      this.$root.$emit('panels-resize')
     },
 
     handleResizeStop () {
+      // Stop resizing
       this.resizing = false
+
+      // Send one last udpate
+      this.$root.$emit('panels-resize')
+
+      // And save the size of the 1st panel
+      this.setPanelSize({
+        panelIndex: 0,
+        width: this.centerX,
+        height: this.centerY,
+      })
     },
 
     handleWindowResize () {
@@ -257,7 +274,7 @@ export default {
 
       // emit panel-resize to allow components
       // adjust their dimensions
-      this.$root.$emit('panels-resized')
+      this.$root.$emit('panels-resize')
     },
 
     handlePanelTabAdd (panelIndex, { tab } = { tab: {} }) {
@@ -340,9 +357,6 @@ export default {
     width: calc(100% - (#{$offset}px - #{$handle}px) * 2);
     height: calc(100% - (#{$offset}px - #{$handle}px) * 2);
 
-    // enable this for draggable area debugging
-    // border: 2px dotted blue;
-
     // Prevent pointer events
     // this makes area "invisible" to clicks and other pointer events
     pointer-events: none;
@@ -355,15 +369,22 @@ export default {
       cursor: move;
       border-top-right-radius: 10px;
 
+      margin-left: 10px;
+      margin-top: -10px;
+
       opacity: .1;
 
       color: $white;
       &:hover {
         opacity: 1;
+
+        .drag-icon {
+          fill: $primary;
+        }
       }
 
       .drag-icon {
-        fill: black;
+        fill: $dark;
       }
     }
   }
