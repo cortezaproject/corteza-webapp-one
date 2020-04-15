@@ -22,7 +22,7 @@
         class="close"
         @click.prevent="$emit('close-tab')"
       >
-        &times;
+        <i class="icon-cross" />
       </button>
     </div>
   </div>
@@ -142,14 +142,11 @@ export default {
 
   button.close {
     border: 0;
-    font-size: 1rem;
+    padding-top: 5px;
+    font-size: .5rem;
     color: $secondary;
     background: transparent;
-
-    &:hover {
-      cursor: pointer;
-      transform: scale(1.2);
-    }
+    cursor: pointer;
   }
 }
 
