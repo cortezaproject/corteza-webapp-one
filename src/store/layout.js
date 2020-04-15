@@ -15,7 +15,7 @@ function sanitizePanelInput (panels = []) {
   const dp = {
     visible: false,
     sticky: false,
-    activeTab: 0,
+    activeTabIndex: 0,
     tabs: [{}],
   }
 
@@ -110,7 +110,7 @@ const actions = {
     panel.tabs.push(tab)
 
     // Activate the tab
-    panel.activeTab = panel.tabs.length - 1
+    panel.activeTabIndex = panel.tabs.length - 1
 
     commit('updatePanel', panel)
   },
@@ -143,7 +143,7 @@ const actions = {
 
     // Activate left-side tab if possible
     const l = panel.tabs.length
-    panel.activeTab = l > 0 ? l : l - 1
+    panel.activeTabIndex = l > 0 ? l : l - 1
 
     commit('updatePanel', panel)
   },
@@ -154,8 +154,8 @@ const actions = {
       throw new RangeError('tab index out of range')
     }
 
-    if (panel.activeTab !== tabIndex) {
-      panel.activeTab = tabIndex
+    if (panel.activeTabIndex !== tabIndex) {
+      panel.activeTabIndex = tabIndex
       // Activate tab will return true if any tab was activated
       commit('updatePanel', panel)
     }

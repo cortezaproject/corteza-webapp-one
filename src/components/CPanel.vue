@@ -7,12 +7,27 @@
       v-if="showTabBar"
       v-bind="$attrs"
       :tabs="tabs"
-      :active-tab="activeTab"
+      :active-tab-index="activeTabIndex"
+      :resizing="resizing"
       v-on="$listeners"
     />
+    <!--
+      Important:
+      we're intentionally using v-show here
+      v-if causes component redraw and
+      refresh of the iframe content
+    -->
+    <div
+      v-show="resizing"
+      class="resizing-placeholder"
+    >
+      <img
+        :src="resizingPlaceholderLogo"
+      >
+    </div>
     <div
       v-for="(tab, i) in tabs"
-      v-show="i === activeTab"
+      v-show="!resizing && i === activeTabIndex"
       :key="i"
       class="content"
       :class="{ 'app-selector-shown': !tab.url }"
@@ -47,7 +62,10 @@ export default {
       default: () => [{}],
     },
 
-    activeTab: {
+    /**
+     * ID if the active tab
+     */
+    activeTabIndex: {
       type: Number,
       required: false,
       default: () => 0,
@@ -60,10 +78,38 @@ export default {
       type: Boolean,
       default: () => true,
     },
+
+    /**
+     * Hide the tab bar
+     */
+    resizing: {
+      type: Boolean,
+      required: true,
+      default: () => false,
+    },
   },
 
   data () {
     return {}
+  },
+
+  computed: {
+    activeTab () {
+      if (this.activeTabIndex >= 0 && this.activeTabIndex < this.tabs.length) {
+        return this.tabs[this.activeTabIndex]
+      }
+
+      return undefined
+    },
+
+    resizingPlaceholderLogo () {
+      const tab = this.activeTab
+      if (tab && tab.logo) {
+        return tab.logo
+      }
+
+      return '/applications/crust.jpg'
+    },
   },
 
   methods: {
@@ -92,6 +138,19 @@ section {
     align-self: end;
     overflow: hidden;
     height: 2rem;
+  }
+
+  div.resizing-placeholder {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    background: $light;
+
+    img {
+      opacity: .1;
+      max-width: 200px;
+      margin: auto;
+    }
   }
 
   div.content {

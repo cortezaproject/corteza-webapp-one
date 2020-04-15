@@ -26,7 +26,7 @@
           :key="i"
           ref="tab"
           v-bind="tab"
-          :active="activeTab === i"
+          :active="activeTabIndex === i"
           :sticky="staticTabs || tab.sticky || tabs.length === 1"
           @activate-tab="handleActivateTab(i)"
           @close-tab="handleCloseTab(i)"
@@ -88,7 +88,7 @@ export default {
       default: () => [],
     },
 
-    activeTab: {
+    activeTabIndex: {
       type: Number,
       required: false,
       default: () => 0,
