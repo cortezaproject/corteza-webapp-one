@@ -1,17 +1,17 @@
 <template>
   <div
     class="tab-bar"
-    :class="{ overflowing }"
+    :class="{ overflowing, resizing }"
   >
     <div
       class="scroll-wrap scroll-left-wrap"
     >
       <button
-        v-if="overflowing && !resizing"
+        v-if="overflowing"
         class="scroll"
         @click="handleScroll(-1)"
       >
-        &lt;
+        <i class="icon-chevron-left" />
       </button>
     </div>
     <div
@@ -32,11 +32,11 @@
           @close-tab="handleCloseTab(i)"
         />
         <button
-          v-if="!staticTabs && !overflowing && !resizing"
+          v-if="!staticTabs && !overflowing"
           class="add sticky"
           @click="handleAddTab()"
         >
-          +
+          <i class="icon-plus" />
         </button>
       </draggable>
     </div>
@@ -44,18 +44,18 @@
       class="scroll-wrap scroll-right-wrap"
     >
       <button
-        v-if="overflowing && !resizing"
+        v-if="overflowing"
         class="scroll"
         @click="handleScroll(1)"
       >
-        &gt;
+        <i class="icon-chevron-right" />
       </button>
       <button
-        v-if="!staticTabs && overflowing && !resizing"
+        v-if="!staticTabs && overflowing"
         class="add"
         @click="$emit('add-tab')"
       >
-        +
+        <i class="icon-plus" />
       </button>
     </div>
   </div>
@@ -176,6 +176,12 @@ export default {
     grid-template-columns: 2rem auto 4rem;
   }
 
+  &.resizing {
+    button {
+      visibility: hidden;
+    }
+  }
+
   .tabs-wrap {
     overflow: hidden;
     white-space: nowrap;
@@ -183,17 +189,20 @@ export default {
   }
 
   button {
+    overflow: hidden;
+    white-space: nowrap;
     cursor: pointer;
     border: none;
     background: $white;
     vertical-align: middle;
-    &.add {
-      width: 2.5rem;
-      font-size: 1.3rem;
+    font-size: 1.2rem;
+    width: 2rem;
+    padding-top: .3rem;
+
+    &.add i {
       color: $primary;
     }
-    &.scroll {
-      font-size: 1rem;
+    &.scroll i {
       color: $secondary;
     }
   }
