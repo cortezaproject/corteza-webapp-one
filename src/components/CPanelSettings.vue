@@ -100,7 +100,7 @@ div.panels {
     margin: 10px 20px 0 20px;
   }
 
-  &:hover, &.expanded {
+  &:hover, &:active, &.expanded {
     form {
       visibility: visible !important;
     }

@@ -1,12 +1,14 @@
 <template>
-  <div class="wrap">
+  <div
+    class="wrap"
+    :class="{ 'mobile': mobile }"
+  >
     <div
       class="tab"
       :class="{ 'active': active, 'sticky': sticky }"
       @click.prevent="$emit('activate-tab')"
     >
       <div
-        v-if="icon"
         class="icon"
         :style="iconStyle"
       />
@@ -49,10 +51,16 @@ export default {
       default: () => false,
     },
 
+    mobile: {
+      type: Boolean,
+      required: false,
+      default: () => false,
+    },
+
     icon: {
       type: String,
       required: false,
-      default: () => undefined,
+      default: () => '/applications/crust_favicon.png',
     },
   },
 
@@ -72,6 +80,21 @@ export default {
 <style lang="scss" scoped>
 .wrap {
   display: inline-flex;
+  &.mobile {
+    display: block;
+    .tab {
+      border-radius: 0;
+      button.close {
+        float: right;
+        margin-right: 1rem;
+      }
+      &:active, &.active {
+        color: $dark;
+        border-left: 3px solid $primary;
+        border-bottom: none;
+      }
+    }
+  }
 }
 
 .tab {

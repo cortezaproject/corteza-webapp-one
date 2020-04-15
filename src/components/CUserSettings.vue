@@ -83,8 +83,7 @@ div.user {
     height: 20px;
     overflow: hidden;
 
-    // padding: 5px 10px;
-    border: 1px solid $light;
+    border: 1px solid $secondary;
     border-radius: 20px;
 
     width: $max-width;
@@ -105,7 +104,7 @@ div.user {
     }
   }
 
-  &:hover, &.expanded {
+  &:hover, &:active, &.expanded {
     ul {
       visibility: visible !important;
     }

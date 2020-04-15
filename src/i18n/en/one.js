@@ -2,6 +2,7 @@ export default {
   header: {
     appName: 'Corteza',
     layoutSwitcherTitle: 'Panel layout',
+    tabsSwitcherTitle: 'Select tab',
     user: {
       logout: 'Logout',
       settings: 'Settings',
@@ -15,6 +16,7 @@ export default {
       availableApps: 'Available applications',
       openTab: 'open in Corteza One',
       openWindow: 'open in a new window',
+      openTabs: 'List of open tabs:',
     },
     jitsi: {
       toStart: 'To start a video call select from existing channels:',
