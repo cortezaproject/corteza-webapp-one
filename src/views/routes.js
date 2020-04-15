@@ -19,19 +19,15 @@ function r (name, path, component) {
 }
 
 export default [
-  {
-    ...r('layout', '/', 'Layout'),
-    children: [
-      r('panels', '/', 'Panels'),
-      {
-        ...r('bridge', '/bridge', 'Bridge'),
-        children: [
-          r('bridge-jitsi', 'jitsi', 'Bridge/Jitsi'),
-          r('bridge-google-maps', 'google-maps', 'Bridge/GoogleMaps'),
-        ],
-      },
-    ],
-  },
+  r('layout', '/', 'Layout'),
+
+  // {
+  //   ...r('bridge', '/bridge', 'Bridge'),
+  //   children: [
+  //     r('bridge-jitsi', 'jitsi', 'Bridge/Jitsi'),
+  //     r('bridge-google-maps', 'google-maps', 'Bridge/GoogleMaps'),
+  //   ],
+  // },
 
   // we're stuck with ol'school dev-auth view (no bootstrap)
   { path: '/auth', name: 'auth', component: components.CDevAuthLite },

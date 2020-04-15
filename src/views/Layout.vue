@@ -14,7 +14,7 @@
         <c-panel-settings />
       </div>
     </header>
-    <router-view
+    <c-panels
       class="stretch"
     />
   </div>
@@ -30,11 +30,13 @@
 <script>
 import CPanelSettings from '../components/CPanelSettings'
 import CUserSettings from '../components/CUserSettings'
+import CPanels from '../components/CPanels'
 
 export default {
   components: {
     CPanelSettings,
     CUserSettings,
+    CPanels,
   },
 
   data () {
