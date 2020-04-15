@@ -30,6 +30,7 @@ export default {
 
   data () {
     return {
+      expanded: false,
       active: false,
     }
   },
