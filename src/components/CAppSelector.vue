@@ -52,7 +52,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-$open-icon-height: 1rem;
+$open-icon-height: .8rem;
 
 .app-selector {
   text-align: center;
@@ -65,22 +65,22 @@ $open-icon-height: 1rem;
 
     .app-item {
       position: relative;
-      a {
-        width: 100%;
-        display: block;
-      }
       &:hover {
         background: $light;
-        .open-icon {
-          fill: $secondary;
+        .open-url {
+          .open-icon {
+            fill: $secondary;
+          }
         }
       }
-      .open-icon {
-        fill: white;
-        height: $open-icon-height;
+      .open-url {
         position: absolute;
-        top: .2rem;
         right: .2rem;
+        padding: .2rem;
+        .open-icon {
+          fill: white;
+          height: $open-icon-height;
+        }
       }
     }
 

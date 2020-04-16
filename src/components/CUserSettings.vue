@@ -92,10 +92,11 @@ div.user {
     div {
       width: calc(#{$max-width} - 40px);
       display: inline-block;
-      padding: 1px .2rem 0 .7rem;
+      padding: .1rem .2rem 0 .7rem;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+      line-height: 1rem;
     }
 
     .icon-chevron-down {
