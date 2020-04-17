@@ -4,7 +4,6 @@
     :class="{ 'multi-panel': enableMultiplePanels }"
   >
     <div
-      ref="panels"
       class="panels"
       :style="panelsStyle"
     >
@@ -46,8 +45,7 @@ import CPanel from './CPanel'
 import VueDraggableResizable from 'vue-draggable-resizable'
 import { mapGetters, mapActions } from 'vuex'
 
-// Returns strings as-is (50%), appends px to numeric values
-const dim = (n, fix = 0) => Number(n) ? (n + fix) + 'px' : n
+const draggableOffset = 300
 
 export default {
   components: {
@@ -61,14 +59,20 @@ export default {
       type: Number,
       default: () => 800,
     },
+
+    width: {
+      type: Number,
+      required: true,
+    },
+
+    height: {
+      type: Number,
+      required: true,
+    },
   },
 
   data () {
     return {
-      windowWidth: undefined,
-      windowHeight: undefined,
-      offsetTop: 0,
-      offsetLeft: 0,
       centerX: undefined,
       centerY: undefined,
       resizing: false,
@@ -86,14 +90,28 @@ export default {
       const w = 20
       const h = w
 
-      return {
+      let [x, y] = [this.centerX, this.centerY]
+      if (x === undefined || y === undefined) {
+        // Use window's dimensions to calculate center if
+        // nothing is preset
+        x = Math.floor(this.width / 2)
+        y = Math.floor(this.height / 2)
+      }
+
+      // Offset coordinates
+      x -= draggableOffset
+      y -= draggableOffset
+
+      const props = {
         resizable: false,
         parent: true,
         w,
         h,
-        x: this.centerX - 300,
-        y: this.centerY - 300,
+        x,
+        y,
       }
+
+      return props
     },
 
     /**
@@ -103,7 +121,7 @@ export default {
      * Two panels: only columns
      * Three panels: columns & rows
      *
-     * We're intentionaly not using "Xpx + auto" format
+     * We're intentionally not using "XYpx + auto" format
      * because of the height/overflow/scroll issues
      * in lower panels
      */
@@ -117,14 +135,16 @@ export default {
 
       const columns = {
         'grid-template-columns':
-          dim(this.centerX, this.offsetLeft) + ' ' +
-          dim(this.windowWidth - this.centerX),
+          this.centerX === undefined
+            ? '50% 50%'
+            : `${this.centerX}px ${this.width - this.centerX}px`,
       }
 
       const rows = {
         'grid-template-rows':
-          dim(this.centerY, this.offsetTop * -1) + ' ' +
-          dim(this.windowHeight - this.centerY),
+          this.centerY === undefined
+            ? '50% 50%'
+            : `${this.centerY}px ${this.height - this.centerY}px`,
       }
 
       if (visible > 1 && emp) {
@@ -148,9 +168,9 @@ export default {
     },
 
     /**
-     * Assigns .span-rows class to
-     * 2nd panel when there are 3 panels
-     * @param index
+     * Returns handler that assigns style clases
+     * to each pannel, depending on current actions (resizing),
+     * if it is first or not, if it needs to span rows or columns
      */
     panelClasses () {
       // quick checker if a specific panel is visible
@@ -186,27 +206,22 @@ export default {
     },
 
     enableMultiplePanels () {
-      return this.windowWidth >= this.multiPanelMinWindowWidth
+      return this.width >= this.multiPanelMinWindowWidth
     },
-  },
-
-  created () {
-    const { width, height } = this.panels[0]
-    this.centerX = width
-    this.centerY = height
-    this.$root.$emit('panels-resize')
-    this.handleWindowResize()
   },
 
   mounted () {
     this.$nextTick(() => {
-      this.handleWindowResize()
-      window.addEventListener('resize', this.handleWindowResize)
-    })
-  },
+      if (this.centerX === undefined || this.centerY === undefined) {
+        // Set center from the dimensions of the 1st panel
+        const { width, height } = this.panels[0]
 
-  beforeDestroy () {
-    window.removeEventListener('resize', this.handleWindowResize)
+        this.centerX = width
+        this.centerY = height
+      }
+
+      this.$root.$emit('panels-resize')
+    })
   },
 
   methods: {
@@ -227,12 +242,11 @@ export default {
       // Correct position with panel element offset (this takes
       // into account any top/left menu, toolbars etc..
 
-      const draggableAreaOffset = 300
       // const handleW = 20
       // const handleH = 20
 
-      this.centerX = left + draggableAreaOffset
-      this.centerY = top + draggableAreaOffset
+      this.centerX = left + draggableOffset
+      this.centerY = top + draggableOffset
 
       // emit panel-resize to allow components
       // adjust their dimensions
@@ -252,30 +266,6 @@ export default {
         width: this.centerX,
         height: this.centerY,
       })
-    },
-
-    handleWindowResize () {
-      this.windowWidth = window.innerWidth
-      this.windowHeight = window.innerHeight
-
-      if (this.$refs['panels'] !== undefined) {
-        // We'll need panel offset for
-        this.offsetTop = this.$refs['panels'].offsetTop
-        this.offsetLeft = this.$refs['panels'].offsetLeft
-
-        // Recalculate center when panels are loaded
-        if (this.centerX === undefined) {
-          this.centerX = (this.windowWidth + this.offsetLeft) / 2
-        }
-
-        if (this.centerY === undefined) {
-          this.centerY = (this.windowHeight + this.offsetTop) / 2
-        }
-      }
-
-      // emit panel-resize to allow components
-      // adjust their dimensions
-      this.$root.$emit('panels-resize')
     },
 
     handlePanelTabAdd (panelIndex, { tab } = { tab: {} }) {
@@ -315,6 +305,9 @@ export default {
 
 .multi-panel {
   // Only support panels on big screens
+  position: relative;
+  height: 100%;
+
   .panels {
     display: grid;
 
@@ -349,14 +342,14 @@ export default {
 
   .draggable-area {
     visibility: visible;
-    $offset: 300;
-    $handle:  20;
+    $offset: 300px;
+    $handler: 20px;
 
-    position: fixed;
-    left: calc(#{$offset}px - #{$handle}px);
-    top: calc(#{$offset}px);
-    width: calc(100% - (#{$offset}px - #{$handle}px) * 2);
-    height: calc(100% - (#{$offset}px - #{$handle}px) * 2);
+    position: absolute;
+    top: $offset;
+    left: $offset;
+    height: calc(100% - 2 * #{$offset} + #{$handler});
+    width: calc(100% - 2 * #{$offset} + #{$handler});
 
     // Prevent pointer events
     // this makes area "invisible" to clicks and other pointer events
@@ -370,7 +363,10 @@ export default {
       cursor: move;
       border-top-right-radius: 10px;
 
-      margin-left: 10px;
+      width: $handler;
+      height: $handler;
+
+      margin-left: -10px;
       margin-top: -10px;
 
       opacity: .1;
@@ -387,6 +383,17 @@ export default {
       .drag-icon {
         fill: $dark;
       }
+    }
+  }
+}
+
+.debug {
+  .draggable-area {
+    background: rgba(37, 37, 172, 0.1);
+    border: 1px dotted blue;
+    .resize-handler {
+      border: 1px dotted blue;
+      background: rgba(0, 255, 0, .5);
     }
   }
 }

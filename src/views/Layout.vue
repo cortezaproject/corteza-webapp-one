@@ -27,6 +27,9 @@
     />
     <c-panels
       v-else
+      ref="panels"
+      :width="windowWidth - panelOffsetLeft"
+      :height="windowHeight - panelOffsetTop"
     />
   </div>
   <div
@@ -55,8 +58,19 @@ export default {
 
   data () {
     return {
+      // Are panels loaded?
       loaded: false,
-      mobile: false,
+
+      // Window dimensions & panel position
+      windowWidth: undefined,
+      windowHeight: undefined,
+      panelOffsetTop: 0,
+      panelOffsetLeft: 0,
+
+      // Are be mobile tabs visible
+      //
+      // this is set when user clicks on top-right icon
+      // on mobile view
       mobileTabsVisible: false,
     }
   },
@@ -65,6 +79,10 @@ export default {
     ...mapGetters({
       layoutLoaded: 'layout/loaded',
     }),
+
+    mobile () {
+      return false
+    },
   },
 
   created () {
@@ -91,8 +109,20 @@ export default {
         }
       })
       .finally(() => {
+        this.handleWindowResize()
         this.loaded = true
       })
+  },
+
+  mounted () {
+    this.$nextTick(() => {
+      this.handleWindowResize()
+      window.addEventListener('resize', this.handleWindowResize)
+    })
+  },
+
+  beforeDestroy () {
+    window.removeEventListener('resize', this.handleWindowResize)
   },
 
   methods: {
@@ -100,6 +130,18 @@ export default {
       setLayout: 'layout/set',
       preloadApplications: 'applications/preload',
     }),
+
+    handleWindowResize () {
+      this.windowWidth = window.innerWidth
+      this.windowHeight = window.innerHeight
+
+      if (this.$refs['panels'] !== undefined) {
+        const { offsetTop = 0, offsetLeft = 0 } = this.$refs['panels'].$el
+
+        this.panelOffsetTop = offsetTop
+        this.panelOffsetLeft = offsetLeft
+      }
+    },
   },
 }
 
