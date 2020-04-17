@@ -37,17 +37,13 @@
   </div>
 </template>
 <script>
-export default {
-  data () {
-    return {
-      apps: [],
-    }
-  },
+import { mapGetters } from 'vuex'
 
-  mounted () {
-    this.$SystemAPI.applicationList().then(({ set }) => {
-      this.apps = set.filter(a => a.unify.listed)
-    })
+export default {
+  computed: {
+    ...mapGetters({
+      apps: 'applications/unifyOnly',
+    }),
   },
 }
 </script>

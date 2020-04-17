@@ -43,6 +43,7 @@ import CPanelSettings from '../components/CPanelSettings'
 import CUserSettings from '../components/CUserSettings'
 import CPanels from '../components/CPanels'
 import CMobile from '../components/CMobile'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {
@@ -60,6 +61,12 @@ export default {
     }
   },
 
+  computed: {
+    ...mapGetters({
+      layoutLoaded: 'layout/loaded',
+    }),
+  },
+
   created () {
     this.loaded = false
 
@@ -74,15 +81,25 @@ export default {
       .catch(() => {
         this.$auth.open()
       })
-      .then(() => this.$Settings.init({ api: this.$SystemAPI }))
       .then((s) => {
-        if (!this.$store.getters['layout/loaded'] && s && s.ui && s.ui.one) {
-          this.$store.dispatch('layout/set', s.ui.one)
+        // Preload appplications
+        this.preloadApplications()
+
+        // Preload layout
+        if (!this.layoutLoaded && s && s.ui && s.ui.one) {
+          this.setLayout(s.ui.one)
         }
       })
       .finally(() => {
         this.loaded = true
       })
+  },
+
+  methods: {
+    ...mapActions({
+      setLayout: 'layout/set',
+      preloadApplications: 'applications/preload',
+    }),
   },
 }
 
