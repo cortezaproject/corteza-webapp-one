@@ -48,6 +48,8 @@ import CPanels from '../components/CPanels'
 import CMobile from '../components/CMobile'
 import { mapGetters, mapActions } from 'vuex'
 
+const mobileMaxWidth = 450
+
 export default {
   components: {
     CMobile,
@@ -81,11 +83,13 @@ export default {
     }),
 
     mobile () {
-      return false
+      return this.windowWidth <= mobileMaxWidth
     },
   },
 
   created () {
+    window.addEventListener('resize', this.handleWindowResize)
+
     this.loaded = false
 
     this.$auth.check()
@@ -117,7 +121,6 @@ export default {
   mounted () {
     this.$nextTick(() => {
       this.handleWindowResize()
-      window.addEventListener('resize', this.handleWindowResize)
     })
   },
 
@@ -157,6 +160,10 @@ export default {
     display: flex;
     height: 40px;
     overflow: hidden;
+
+    // Make sure header (and all panels that might float over
+    // child elements) is not covered by panels
+    z-index: 1000;
 
     .logo {
       flex-grow: 1;

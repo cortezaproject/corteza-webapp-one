@@ -1,11 +1,9 @@
 <template>
   <div
     class="panels"
-    :class="{ expanded }"
   >
     <i
       class="icon-grid-interface-open"
-      @click="handleExpand"
     />
     <form>
       <span>{{ $t('header.layoutSwitcherTitle') }}</span>
@@ -51,7 +49,6 @@ const grid = {
 export default {
   data () {
     return {
-      expanded: false,
       grid: Object.getOwnPropertyNames(grid).map(mask => ({
         img: grid[mask],
         mask,
@@ -66,24 +63,13 @@ export default {
     }),
   },
 
-  created () {
-    this.$root.$on('header-settings-collapse', (origin) => {
-      if (origin !== 'panel') this.expanded = false
-    })
-  },
-
   methods: {
     ...mapActions({
       applyVisibilityMask: 'layout/applyVisibilityMask',
     }),
 
-    handleExpand () {
-      this.$root.$emit('header-settings-collapse', 'panel')
-      this.expanded = !this.expanded
-    },
-
     apply (mask) {
-      this.expanded = false
+      document.activeElement && document.activeElement.blur()
       this.applyVisibilityMask(mask)
       this.$root.$emit('panels-resize')
     },
@@ -100,7 +86,7 @@ div.panels {
     margin: 10px 20px 0 20px;
   }
 
-  &:hover, &:active, &.expanded {
+  &:hover, &:active {
     form {
       visibility: visible !important;
     }

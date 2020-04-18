@@ -1,11 +1,9 @@
 <template>
   <div
     class="user"
-    :class="{ expanded }"
   >
     <div
       class="label"
-      @click="handleExpand"
     >
       <div>{{ user.name || user.handle || user.email }}</div>
       <i
@@ -28,33 +26,14 @@ export default {
     keyPrefix: 'header.user',
   },
 
-  data () {
-    return {
-      expanded: false,
-      active: false,
-    }
-  },
-
   computed: {
     user () {
       return this.$auth.user
     },
   },
 
-  created () {
-    this.$root.$on('header-settings-collapse', (origin) => {
-      if (origin !== 'user') this.expanded = false
-    })
-  },
-
   methods: {
-    handleExpand () {
-      this.$root.$emit('header-settings-collapse', 'user')
-      this.expanded = !this.expanded
-    },
-
     handleLogout () {
-      this.expanded = false
       this.$auth.logout().then(() => {
         this.$auth.open()
       })
@@ -106,7 +85,7 @@ div.user {
     }
   }
 
-  &:hover, &:active, &.expanded {
+  &:hover, &:active {
     ul {
       visibility: visible !important;
     }
