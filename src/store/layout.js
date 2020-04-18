@@ -16,7 +16,6 @@ function sanitizePanelInput (panels = []) {
    * Default panel props
    */
   const dp = {
-    visible: false,
     sticky: false,
     width: undefined,
     height: undefined,
@@ -30,13 +29,14 @@ function sanitizePanelInput (panels = []) {
 
   const out = [{}, {}, {}, {}]
   for (let index = 0; index < MAX; index++) {
-    let { tabs, ...panel } = (panels[index] || {})
+    let { tabs = [{}], visible, ...panel } = (panels[index] || {})
     out[index] = C({
       index,
+      // First panel is always visible!
+      visible: visible || index === 0,
       ...dp,
-      visible: index === 0,
       ...panel,
-      tabs: tabs || [{}],
+      tabs,
     })
   }
 

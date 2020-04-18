@@ -135,14 +135,14 @@ export default {
 
       const columns = {
         'grid-template-columns':
-          this.centerX === undefined
+          this.centerX < draggableOffset
             ? '50% 50%'
             : `${this.centerX}px ${this.width - this.centerX}px`,
       }
 
       const rows = {
         'grid-template-rows':
-          this.centerY === undefined
+          this.centerY < draggableOffset
             ? '50% 50%'
             : `${this.centerY}px ${this.height - this.centerY}px`,
       }
@@ -210,16 +210,30 @@ export default {
     },
   },
 
+  watch: {
+    width: {
+      immediate: true,
+      handler (w) {
+        if (w > 0 && !this.centerX) {
+          this.centerX = Math.floor(w / 2)
+          this.$root.$emit('panels-resize')
+        }
+      },
+    },
+
+    height: {
+      immediate: true,
+      handler (h) {
+        if (h > 0 && !this.centerY) {
+          this.centerY = Math.floor(h / 2)
+          this.$root.$emit('panels-resize')
+        }
+      },
+    },
+  },
+
   mounted () {
     this.$nextTick(() => {
-      if (this.centerX === undefined || this.centerY === undefined) {
-        // Set center from the dimensions of the 1st panel
-        const { width, height } = this.panels[0]
-
-        this.centerX = width
-        this.centerY = height
-      }
-
       this.$root.$emit('panels-resize')
     })
   },

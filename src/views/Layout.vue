@@ -103,14 +103,16 @@ export default {
       .catch(() => {
         this.$auth.open()
       })
-      .then((s) => {
-        // Preload appplications
-        this.preloadApplications()
-
-        // Preload layout
-        if (!this.layoutLoaded && s && s.ui && s.ui.one) {
-          this.setLayout(s.ui.one)
+      // Load UI settings (layout, logo)
+      .then(() => this.$Settings.init({ api: this.$SystemAPI }))
+      .then(({ ui = {} }) => {
+        if (!this.layoutLoaded && ui && ui.one) {
+          this.setLayout(ui.one)
+          this.$root.$emit('panels-resize')
         }
+
+        // Preload applications
+        this.preloadApplications()
       })
       .finally(() => {
         this.handleWindowResize()
