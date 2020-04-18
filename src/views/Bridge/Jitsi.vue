@@ -1,45 +1,52 @@
 <template>
-  <div id="roomselection">
-    <span>{{ $t('app.jitsi.toStart') }}</span>
-    <div id="roomdropdown">
-      <select v-model="channelID">
-        <option
-          v-for="(c) in channels"
-          :key="c.channelID"
-          :value="c.channelID"
-        >
-          {{ c.name }}
-        </option>
-      </select>
+  <main>
+    <div class="logo">
+      <img
+        src="/applications/jitsi.png"
+      >
     </div>
-    <button
-      :disabled="jitsi || (!channelID)"
-      @click="onJoin"
-    >
-      {{ $t('app.jitsi.join') }}
-    </button>
-    <h4>{{ $t('app.jitsi.or') }}</h4>
-    <span>{{ $t('app.jitsi.createNewRoom') }}</span>
-    <input
-      id="roomInputField"
-      v-model="roomName"
-      type="text"
-      :placeholder="$t('app.jitsi.roomName')"
-    >
+    <div id="roomselection">
+      <span>{{ $t('app.jitsi.toStart') }}</span>
+      <div id="roomdropdown">
+        <select v-model="channelID">
+          <option
+            v-for="(c) in channels"
+            :key="c.channelID"
+            :value="c.channelID"
+          >
+            {{ c.name }}
+          </option>
+        </select>
+      </div>
+      <button
+        :disabled="jitsi || (!channelID)"
+        @click="onJoin"
+      >
+        {{ $t('app.jitsi.join') }}
+      </button>
+      <h4>{{ $t('app.jitsi.or') }}</h4>
+      <span>{{ $t('app.jitsi.createNewRoom') }}</span>
+      <input
+        id="roomInputField"
+        v-model="roomName"
+        type="text"
+        :placeholder="$t('app.jitsi.roomName')"
+      >
 
-    <button
-      :disabled="jitsi || (cleanup(roomName).length === 0)"
-      @click="onCreate"
-    >
-      {{ $t('app.jitsi.create') }}
-    </button>
+      <button
+        :disabled="jitsi || (cleanup(roomName).length === 0)"
+        @click="onCreate"
+      >
+        {{ $t('app.jitsi.create') }}
+      </button>
 
-    <div
-      v-show="jitsi"
-      ref="jitsiInterface"
-      class="jitsiInterface"
-    />
-  </div>
+      <div
+        v-show="jitsi"
+        ref="jitsiInterface"
+        class="jitsiInterface"
+      />
+    </div>
+  </main>
 </template>
 <script>
 import Vue from 'vue'
@@ -181,125 +188,127 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-html, body {
-  margin: 0;
-  overflow: hidden;
-}
+main {
 
-.jitsiInterface {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background: #232323;
-
-  & > iframe {
-    flex: 1 1 auto;
+  .logo {
+    text-align: center;
+    margin-top: 4rem;
   }
-}
 
-#roomselection {
-  max-width: 600px;
-  margin: 50px auto;
-  padding: 40px;
-  background-color: #fff;
-  font-family: Arial;
-}
+  .jitsiInterface {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #232323;
 
-input {
-  height: 30px;
-  width: 100%;
-  border: 1px solid $secondary;
-  padding-left: 10px;
-  font-size: 14px;
-  display: block;
-  margin-top: 10px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-select {
-  height: 30px;
-  width: 100%;
-  margin-top: 10px;
-  background: transparent;
-  padding-left: 10px;
-  font-size: 14px;
-  -webkit-border-radius:0px;
-  -moz-border-radius:0px;
-  border-radius:0px;
-  -webkit-appearance:none;
-  -moz-appearance:none;
-  appearance:none;
-  border: 1px solid $secondary;
-}
-
-#roomdropdown::after {
-  border: 4px dashed transparent;
-  border-top: 4px solid $secondary;
-  content: "";
-  display: inline-block;
-  float: right;
-  margin-right: 10px;
-  margin-top: -15px;
-}
-
-select:focus,
-input:focus {
-  outline: none;
-}
-
-button {
-  cursor: pointer;
-  background: transparent;
-  color: $primary;
-  font-size: 14px;
-  line-height: 38px;
-  text-decoration: none;
-  display: block;
-  width: 150px;
-  text-align: center;
-  height: 40px;
-  margin: 20px auto 0;
-  -webkit-transition: color .2s,background-color .2s;
-  transition: color .2s,background-color .2s;
-  border: 1px solid $primary;
-  &:hover {
-    border: 1px solid $primary;
-    background: $primary;
-    color: #ffffff;
-  }
-  &:disabled {
-    cursor: not-allowed;
-    color: $secondary;
-    border-color: $secondary;
-    &:hover {
-      background: transparent;
+    & > iframe {
+      flex: 1 1 auto;
     }
   }
-}
 
-h4 {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  margin: 30px 0;
-  color: $secondary;
-  &:before,
-  &:after {
-    content: '';
-    border-top: 1px solid $secondary;
-    margin: 0 20px 0 0;
-    flex: 1 0 20px;
+  #roomselection {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 50px;
+    background: $white;
   }
-  &:after {
-    margin: 0 0 0 20px;
+
+  input {
+    height: 30px;
+    width: 100%;
+    border: 1px solid $secondary;
+    padding-left: 10px;
+    font-size: 14px;
+    display: block;
+    margin-top: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  select {
+    height: 30px;
+    width: 100%;
+    margin-top: 10px;
+    background: transparent;
+    padding-left: 10px;
+    font-size: 14px;
+    -webkit-border-radius:0px;
+    -moz-border-radius:0px;
+    border-radius:0px;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    border: 1px solid $secondary;
+  }
+
+  #roomdropdown::after {
+    border: 4px dashed transparent;
+    border-top: 4px solid $secondary;
+    content: "";
+    display: inline-block;
+    float: right;
+    margin-right: 10px;
+    margin-top: -15px;
+  }
+
+  select:focus,
+  input:focus {
+    outline: none;
+  }
+
+  button {
+    cursor: pointer;
+    background: transparent;
+    color: $primary;
+    font-size: 14px;
+    line-height: 38px;
+    text-decoration: none;
+    display: block;
+    width: 150px;
+    text-align: center;
+    height: 40px;
+    margin: 20px auto 0;
+    -webkit-transition: color .2s,background-color .2s;
+    transition: color .2s,background-color .2s;
+    border: 1px solid $primary;
+    &:hover {
+      border: 1px solid $primary;
+      background: $primary;
+      color: #ffffff;
+    }
+    &:disabled {
+      cursor: not-allowed;
+      color: $secondary;
+      border-color: $secondary;
+      &:hover {
+        background: transparent;
+      }
+    }
+  }
+
+  h4 {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 30px 0;
+    color: $secondary;
+    &:before,
+    &:after {
+      content: '';
+      border-top: 1px solid $secondary;
+      margin: 0 20px 0 0;
+      flex: 1 0 20px;
+    }
+    &:after {
+      margin: 0 0 0 20px;
+    }
   }
 }
 
