@@ -63,15 +63,15 @@ const getters = {
   visiblePanels (state) {
     return state.panels
       .filter(({ visible }) => visible)
-      .slice(0, state.enableMultiplePanels ? MAX : 1)
+      .slice(0, state.panelsEnabled ? MAX : 1)
   },
 
   visibilityMask (state) {
     return state.panels.map(({ visible }) => visible ? '1' : '0').join('')
   },
 
-  enableMultiplePanels (state) {
-    return state.enableMultiplePanels
+  panelsEnabled (state) {
+    return state.panelsEnabled
   },
 
   panel (state) {
@@ -164,6 +164,7 @@ const actions = {
     }
 
     if (panel.activeTabIndex !== tabIndex) {
+      panel.tabs[tabIndex].loaded = true
       panel.activeTabIndex = tabIndex
       // Activate tab will return true if any tab was activated
       commit('updatePanel', panel)
@@ -174,7 +175,7 @@ const actions = {
 export default ({ localStorage }) => {
   let state = {
     // Self explanatory
-    enableMultiplePanels: true,
+    panelsEnabled: true,
 
     // List of panels and tabs
     panels: C(defaultPanels),
@@ -221,10 +222,17 @@ export default ({ localStorage }) => {
         if (localStorage && localStorage.setItem) {
           // If local storage is enabled, extract
           // props that we want to keep
-          const { enableMultiplePanels, panels } = state
+          const { panelsEnabled } = state
+          const panels = C(state.panels).map(({ tabs, ...panel }) => ({
+            ...panel,
 
+            // Copy all tab info but "loaded" flag
+            tabs: tabs.map(({ loaded, ...tab }) => tab),
+          }))
+
+          // Make sure we do not store session-variables
           localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({
-            enableMultiplePanels,
+            panelsEnabled,
             panels,
           }))
         }

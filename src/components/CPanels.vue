@@ -1,7 +1,7 @@
 <template>
   <div
     class="stretch"
-    :class="{ 'multi-panel': enableMultiplePanels }"
+    :class="{ 'multi-panel': panelsEnabled }"
   >
     <div
       class="panels"
@@ -83,7 +83,7 @@ export default {
     ...mapGetters({
       panels: 'layout/panels',
       visiblePanels: 'layout/visiblePanels',
-      enableMultiplePanels: 'layout/enableMultiplePanels',
+      panelsEnabled: 'layout/panelsEnabled',
     }),
 
     dragHandleProps () {
@@ -127,9 +127,9 @@ export default {
      */
     panelsStyle () {
       const visible = this.visiblePanels.length
-      const emp = this.enableMultiplePanels
+      const pe = this.panelsEnabled
 
-      if (visible < 2 || !emp) {
+      if (visible < 2 || !pe) {
         return {}
       }
 
@@ -147,7 +147,7 @@ export default {
             : `${this.centerY}px ${this.height - this.centerY}px`,
       }
 
-      if (visible > 1 && emp) {
+      if (visible > 1 && pe) {
         // if panels visible & enabled, calculate orientation
         switch (true) {
           case visible > 2:
@@ -205,7 +205,7 @@ export default {
       }
     },
 
-    enableMultiplePanels () {
+    panelsEnabled () {
       return this.width >= this.multiPanelMinWindowWidth
     },
   },

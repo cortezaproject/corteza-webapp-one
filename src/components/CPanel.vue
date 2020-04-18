@@ -37,7 +37,7 @@
         @selected="handleAppSelection($event, i)"
       />
       <iframe
-        v-else
+        v-else-if="isLoaded(tab, i)"
         :src="tab.url"
       />
     </div>
@@ -89,10 +89,6 @@ export default {
     },
   },
 
-  data () {
-    return {}
-  },
-
   computed: {
     activeTab () {
       if (this.activeTabIndex >= 0 && this.activeTabIndex < this.tabs.length) {
@@ -113,6 +109,23 @@ export default {
   },
 
   methods: {
+    /**
+     * Is tab loaded?
+     *
+     * Tab is considered loaded if it was
+     * activated in the current session
+     *
+     * We do this extra check to ensure that
+     * we do not load pages on tabs/panels on app load
+     *
+     * @param {object} tab
+     * @param {number} tabIndex
+     * @returns {boolean}
+     */
+    isLoaded (tab, tabIndex) {
+      return tab.loaded || tabIndex === this.activeTabIndex
+    },
+
     handleAppSelection (app, tabIndex = -1) {
       const { name, url, icon, logo } = app.unify || {}
       const tab = {
