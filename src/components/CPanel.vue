@@ -104,7 +104,7 @@ export default {
         return tab.logo
       }
 
-      return '/applications/crust.jpg'
+      return '/applications/default_logo.jpg'
     },
   },
 

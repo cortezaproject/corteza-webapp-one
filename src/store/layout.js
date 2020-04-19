@@ -44,7 +44,7 @@ function sanitizePanelInput (panels = []) {
 }
 
 const defaultTabs = [
-  { title: 'Messaging', icon: '/applications/crust_favicon.png', url: '/messaging' },
+  { title: 'Messaging', icon: '/applications/default_icon.png', url: '/messaging' },
 ]
 
 const defaultPanels = sanitizePanelInput([

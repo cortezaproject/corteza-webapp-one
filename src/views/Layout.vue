@@ -5,9 +5,7 @@
   >
     <header>
       <div class="logo">
-        <img
-          src="/applications/crust.jpg"
-        >
+        <img :src="logo">
       </div>
       <div class="settings">
         <c-user-settings />
@@ -36,9 +34,7 @@
     v-else
     class="loader-logo"
   >
-    <img
-      src="/applications/crust.jpg"
-    >
+    <img :src="logo">
   </div>
 </template>
 <script>
@@ -74,6 +70,8 @@ export default {
       // this is set when user clicks on top-right icon
       // on mobile view
       mobileTabsVisible: false,
+
+      logo: '/applications/default_logo.jpg',
     }
   },
 
@@ -105,9 +103,22 @@ export default {
       })
       // Load UI settings (layout, logo)
       .then(() => this.$Settings.init({ api: this.$SystemAPI }))
-      .then(({ ui = {} }) => {
-        if (!this.layoutLoaded && ui && ui.one) {
-          this.setLayout(ui.one)
+      .then(({ ui: { one = {} } }) => {
+        const localAttachment = /^attachment:(\d+)/
+        if (one.logo && localAttachment.test(one.logo)) {
+          // Assuming that this is URL to an uploaded image file
+          const [, attachmentID] = localAttachment.exec(one.logo)
+
+          this.logo = this.$SystemAPI.baseURL +
+            this.$SystemAPI.attachmentOriginalEndpoint({
+              attachmentID,
+              kind: 'settings',
+              name: 'logo',
+            })
+        }
+
+        if (!this.layoutLoaded && one) {
+          this.setLayout(one)
           this.$root.$emit('panels-resize')
         }
 
@@ -186,6 +197,7 @@ export default {
     }
   }
 }
+
 .loader-logo {
   display: flex;
   height: 100%;
