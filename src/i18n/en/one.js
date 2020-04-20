@@ -1,37 +1,28 @@
 export default {
   header: {
-    signOut: 'Sign Out',
     appName: 'Corteza',
-    appTag: 'One',
-    addPane: 'Add a pane',
-    showOptionsMenu: 'Show options menu',
-    hideOptionsMenu: 'Hide options menu',
-    panel: {
-      title: 'Panels',
-      selectOrDeselect: 'Select or deselect the panels you want work in during this session:',
-      column: 'Column {{number}}',
-      row: 'Row {{number}}',
+    layoutSwitcherTitle: 'Panel layout',
+    tabsSwitcherTitle: 'Select tab',
+    user: {
+      logout: 'Logout',
+      settings: 'Settings',
     },
   },
   layout: {
-    listOfTabs: 'List of Open Tabs',
-    add: 'Add',
-    addTab: 'Add tab',
-    tabSlideLeftTooltip: 'Slide left',
-    tabSlideRightTooltip: 'Slide right',
+    defaultTabTitle: 'Untitled',
   },
   app: {
     general: {
       availableApps: 'Available applications',
-      whereToAdd: 'Where should we add it ?',
       openTab: 'open in Corteza One',
       openWindow: 'open in a new window',
+      openTabs: 'List of open tabs:',
     },
     jitsi: {
-      toStart: 'To start a video call select from existing channels:',
+      toStart: 'To start a video call select from existing messaging channels',
       join: 'Join',
       or: 'OR',
-      createNewRoom: 'Create a new room:',
+      createNewRoom: 'Create a new room',
       roomName: 'Room name',
       defaultRemoteDisplayName: 'Fellow Cortezer',
       defaultLocalDisplayName: 'Anonymous',
@@ -39,17 +30,6 @@ export default {
     },
     googleMaps: {
       search: 'Search',
-    },
-  },
-  general: {
-    label: {
-      warning: 'Warning',
-      header: 'Header',
-    },
-  },
-  notification: {
-    panel: {
-      cantAddTab: 'You cannot add more tabs to this panel',
     },
   },
 }

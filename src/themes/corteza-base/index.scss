@@ -1,3 +1,35 @@
 @import "variables";
 @import "nunito";
 @import "icons";
+
+body {
+  // Make sure page does not bounce when on scroll
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-family: $regular;
+}
+
+.grid {
+  display: grid;
+}
+
+.stretch {
+  align-self: stretch;
+  justify-items: stretch;
+}
+
+:focus {
+  outline: none;
+  border: none;
+}
+
+a {
+  &:link,
+  &:visited,
+  &:hover,
+  &:active {
+    color: $dark;
+  }
+}

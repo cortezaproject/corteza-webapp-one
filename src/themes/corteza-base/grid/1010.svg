@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="25px" height="25px" viewBox="0 0 25 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>grid-1-1h</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-161.000000, -82.000000)" fill="#000000" fill-rule="nonzero">
+            <g id="grid-1-1h" transform="translate(161.000000, 82.000000)">
+                <path d="M15.25,7 L7,7 L7,31 L15.25,31 C16.7687831,31 18,30.1045695 18,29 L18,9 C18,7.8954305 16.7687831,7 15.25,7 Z" id="Path" transform="translate(12.500000, 19.000000) rotate(-270.000000) translate(-12.500000, -19.000000) "></path>
+                <path d="M15.25,-6 L7,-6 L7,18 L15.25,18 C16.7687831,18 18,17.1045695 18,16 L18,-4 C18,-5.1045695 16.7687831,-6 15.25,-6 Z" id="Path" transform="translate(12.500000, 6.000000) scale(-1, 1) rotate(-90.000000) translate(-12.500000, -6.000000) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

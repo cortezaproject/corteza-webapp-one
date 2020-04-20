@@ -46,6 +46,9 @@ module.exports = ({ appFlavour, appName, appLabel, version, theme, packageAlias,
     },
 
     chainWebpack: config => {
+      // https://cli.vuejs.org/guide/troubleshooting.html#symbolic-links-in-node-modules
+      config.resolve.symlinks(false)
+
       // Do not copy config files (deployment procedure will do that)
       config.plugin('copy').tap(options => {
         options[0][0].ignore.push('config*js')
