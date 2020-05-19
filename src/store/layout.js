@@ -151,8 +151,8 @@ const actions = {
     }
 
     // Activate left-side tab if possible
-    const l = panel.tabs.length
-    panel.activeTabIndex = l > 0 ? l : l - 1
+    const l = panel.tabs.length - 1
+    panel.activeTabIndex = l === 0 ? l : l
 
     commit('updatePanel', panel)
   },
