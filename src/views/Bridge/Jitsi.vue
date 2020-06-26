@@ -189,6 +189,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 main {
+  // we need explicitly overflow&height settings here because app's html/body does not scroll
+  // this way we keep the entire app layout in order
+  overflow: auto;
+  height: 100vh;
 
   .logo {
     text-align: center;
