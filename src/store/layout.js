@@ -170,6 +170,18 @@ const actions = {
       commit('updatePanel', panel)
     }
   },
+
+  markTabAsLoaded ({ commit, getters }, { panelIndex, tabIndex }) {
+    const panel = C(getters.panel(panelIndex))
+    if (tabIndex < 0 || panel.tabs.length < tabIndex) {
+      throw new RangeError('tab index out of range')
+    }
+
+    if (!panel.tabs[tabIndex].loaded) {
+      panel.tabs[tabIndex].loaded = true
+      commit('updatePanel', panel)
+    }
+  },
 }
 
 export default ({ localStorage }) => {

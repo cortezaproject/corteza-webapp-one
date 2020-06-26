@@ -39,11 +39,13 @@
       <iframe
         v-else-if="isLoaded(tab, i)"
         :src="tab.url"
+        @load="handleLoad(i)"
       />
     </div>
   </section>
 </template>
 <script>
+import { mapActions } from 'vuex'
 import CTabBar from './CTabBar'
 import CAppSelector from './CAppSelector'
 
@@ -54,6 +56,14 @@ export default {
   },
 
   props: {
+    /**
+     * Panel index
+     */
+    index: {
+      type: Number,
+      required: true,
+    },
+
     /**
      * Hide the tab bar
      */
@@ -109,6 +119,10 @@ export default {
   },
 
   methods: {
+    ...mapActions({
+      markTabAsLoaded: 'layout/markTabAsLoaded',
+    }),
+
     /**
      * Is tab loaded?
      *
@@ -136,6 +150,10 @@ export default {
       }
 
       this.$emit(tabIndex < 0 ? 'add-tab' : 'update-tab', { tab, tabIndex })
+    },
+
+    handleLoad (tabIndex) {
+      this.markTabAsLoaded({ panelIndex: this.index, tabIndex })
     },
   },
 }
