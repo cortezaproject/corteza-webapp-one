@@ -1,7 +1,7 @@
 {
   "name": "corteza-webapp-one",
-  "description": "Unify WebApp",
-  "version": "2020.3.0-rc.4",
+  "description": "Corteza One WebApp",
+  "version": "2020.6.0",
   "license": "Apache-2.0",
   "contributors": [
     "Denis Arh <denis.arh@gmail.com>"
@@ -19,8 +19,8 @@
     "pre-commit": "yarn lint"
   },
   "dependencies": {
-    "@cortezaproject/corteza-js": "^2020.3.0-rc.20",
-    "@cortezaproject/corteza-vue": "^2020.3.0-rc.18",
+    "@cortezaproject/corteza-js": "^2020.6.1",
+    "@cortezaproject/corteza-vue": "^2020.6.1",
     "@panter/vue-i18next": "^0.15.0",
     "acorn": "^7.1.1",
     "i18next": "^15.0.9",

@@ -675,37 +675,42 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@cortezaproject/corteza-js@^2020.3.0-rc.20":
-  version "2020.3.0-rc.20"
-  resolved "https://registry.yarnpkg.com/@cortezaproject/corteza-js/-/corteza-js-2020.3.0-rc.20.tgz#6f26126fcb069de99136453c5758fbdeb436d226"
-  integrity sha512-dQ4uhWEILwAnSqszUy46ngYwQqHbiQxn4nmpCzdIQJV+CpP5Fnvw3bJxFRAKqj8KQ7qqPWrNpdky9oY/y5LNzg==
+"@cortezaproject/corteza-js@^2020.6.1":
+  version "2020.6.1"
+  resolved "https://registry.yarnpkg.com/@cortezaproject/corteza-js/-/corteza-js-2020.6.1.tgz#1775054bfe5622a0e57dc9c729854ee4a9aa90b1"
+  integrity sha512-64nMYRkh5g3dvTbZxE2EOBjw8GCtugG+ZWvK33mDc35sdrg87XH3P7RZik49f/Kn7HIWezTy/lVvJDboW8EQdQ==
   dependencies:
     axios "^0.19.1"
     chart.js "^2.7.3"
     hex-rgb "^4.1.0"
     lodash "^4.17.15"
+    minimalist "^1.0.0"
     minimatch "^3.0.4"
     moment "^2.24.0"
     numeral "^2.0.6"
     pino "^5.16.0"
     ts-sinon "^1.0.25"
 
-"@cortezaproject/corteza-vue@^2020.3.0-rc.18":
-  version "2020.3.0-rc.18"
-  resolved "https://registry.yarnpkg.com/@cortezaproject/corteza-vue/-/corteza-vue-2020.3.0-rc.18.tgz#00ac91a69cb0aa2ecdea774f322968418524fd5b"
-  integrity sha512-YUw8co3w9hBa6KqK8fwikReYBnBtTzNkelG21aU2ycJv2LkRz2hLTWm0TiirCfvpXGe1ha6S1RhsT9N23ybBqw==
+"@cortezaproject/corteza-vue@^2020.6.1":
+  version "2020.6.1"
+  resolved "https://registry.yarnpkg.com/@cortezaproject/corteza-vue/-/corteza-vue-2020.6.1.tgz#61bd278abdae3255ab6066cf0d92808491244b0c"
+  integrity sha512-RxSrXo3s2lQ/333inICEcTDErB3KQfvAxt8zpJ69qWd3He79KIjv/yYXw6p2TYuLJ+KhPJdAIDLHWm/XbwiYgg==
   dependencies:
-    "@cortezaproject/corteza-js" "^2020.3.0-rc.20"
+    "@cortezaproject/corteza-js" "^2020.6.1"
     "@fortawesome/fontawesome-svg-core" "^1.2.26"
     "@fortawesome/free-solid-svg-icons" "^5.12.0"
     "@fortawesome/vue-fontawesome" "^0.1.9"
+    acorn "^7.3.1"
     bootstrap-vue "2.2.2"
+    kind-of "^6.0.3"
+    minimist "^1.2.5"
     moment "^2.24.0"
     pdfjs-dist "^2.2.228"
     pino "^5.16.0"
     qs "^6.9.1"
     v-photoswipe "^1.0.3-1"
     vue "^2.6.11"
+    websocket-extensions "^0.1.4"
 
 "@fortawesome/fontawesome-common-types@^0.2.28":
   version "0.2.28"
@@ -1387,6 +1392,11 @@ acorn@^7.1.1:
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.1.1.tgz#e35668de0b402f359de515c5482a1ab9f89a69bf"
   integrity sha512-add7dgA5ppRPxCFJoAGfMDi7PIBXq1RtGo7BhbLaxwrXPOmw8gq48Y9ozT01hUKy9byMjlR20EJhu5zlkErEkg==
+
+acorn@^7.3.1:
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.3.1.tgz#85010754db53c3fbaf3b9ea3e083aa5c5d147ffd"
+  integrity sha512-tLc0wSnatxAQHVHUapaHdz72pi9KUyHjq5KyHjGg9Y8Ifdc79pTh2XvI6I1/chZbnM7QtNKzh66ooDogPZSleA==
 
 address@^1.0.3:
   version "1.1.2"
@@ -6125,6 +6135,11 @@ mini-css-extract-plugin@^0.8.0:
     schema-utils "^1.0.0"
     webpack-sources "^1.1.0"
 
+minimalist@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/minimalist/-/minimalist-1.0.0.tgz#66bfe4fd625b568cc16acc9421154e66bfcd7218"
+  integrity sha1-Zr/k/WJbVozBasyUIRVOZr/Nchg=
+
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz#2e194de044626d4a10e7f7fbc00ce73e83e4d5c7"
@@ -9860,7 +9875,7 @@ websocket-driver@>=0.5.1:
     safe-buffer ">=5.1.0"
     websocket-extensions ">=0.1.1"
 
-websocket-extensions@>=0.1.1:
+websocket-extensions@>=0.1.1, websocket-extensions@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.4.tgz#7f8473bc839dfd87608adb95d7eb075211578a42"
   integrity sha512-OqedPIGOfsDlo31UNwYbCFMSaO9m9G/0faIHj5/dZFDMFqPTcx6UwqyOy3COEaEOg/9VsGIpdqn62W5KhoKSpg==
