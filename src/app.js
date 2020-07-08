@@ -9,7 +9,7 @@ import './plugins'
 import './mixins'
 import './components'
 
-import i18n from './i18n'
+import i18n, { options as i18nOptions } from './i18n'
 import store from './store'
 import router from './router'
 
@@ -21,7 +21,7 @@ export default (options = {}) => {
 
     router,
     store,
-    i18n: i18n(),
+    i18n: i18n(options.i18nOptions || i18nOptions),
 
     // Any additional options we want to merge
     ...options,

@@ -7,6 +7,7 @@
       v-if="showTabBar"
       v-bind="$attrs"
       :tabs="tabs"
+      :index="index"
       :active-tab-index="activeTabIndex"
       :resizing="resizing"
       v-on="$listeners"
