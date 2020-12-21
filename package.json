@@ -19,8 +19,8 @@
     "pre-commit": "yarn lint"
   },
   "dependencies": {
-    "@cortezaproject/corteza-js": "^2020.12.0-rc.2",
-    "@cortezaproject/corteza-vue": "^2020.12.0-rc.2",
+    "@cortezaproject/corteza-js": "^2020.12.0-rc.5",
+    "@cortezaproject/corteza-vue": "^2020.12.0-rc.5",
     "@panter/vue-i18next": "^0.15.0",
     "acorn": "^7.1.1",
     "i18next": "^15.0.9",
