@@ -38,7 +38,7 @@ export default {
     },
 
     handleSettings () {
-      window.open('/auth/profile', '_blank')
+      window.open(this.$auth.cortezaAuthURL, '_blank')
     },
   },
 }

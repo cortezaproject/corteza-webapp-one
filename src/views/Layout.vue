@@ -90,16 +90,8 @@ export default {
 
     this.loaded = false
 
-    this.$auth.check()
-      .then(() => {
-        return this.$auth.refresh()
-      })
-      .catch(() => {
-        this.$auth.open()
-        throw new Error()
-      })
-      // Load UI settings (layout, logo)
-      .then(() => this.$Settings.init({ api: this.$SystemAPI }))
+    // Load UI settings (layout, logo)
+    this.$Settings.init({ api: this.$SystemAPI })
       .then(({ ui: { one = {} } }) => {
         const localAttachment = /^attachment:(\d+)/
         if (one.logo && localAttachment.test(one.logo)) {

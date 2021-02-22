@@ -20,27 +20,21 @@ export default (options = {}) => {
     template: '<div v-if="loaded"><router-view/></div>',
 
     data: () => ({ loaded: false }),
-    async created () {
-      const urlParams = new URLSearchParams(window.location.search)
-      const code = urlParams.getAll('code')[0]
 
-      if (code) {
-        await this.$auth.useCode(code)
-          .then(async () => {
-            await this.$auth.check()
-            // In case the api client jwt hasn't been set yet
-            this.$SystemAPI.setJWT(this.$auth.JWT)
-          })
-          .catch(() => {
-            this.$auth.open()
-          })
-          .finally(() => {
-            this.loaded = true
-            this.$router.push({ name: 'layout' })
-          })
-      } else {
+    async created () {
+      this.$auth.handle().then(({ accessTokenFn, user }) => {
         this.loaded = true
-      }
+        this.$router.push({ name: 'layout' })
+      }).catch((err) => {
+        if (err instanceof Error && err.message === 'Unauthenticated') {
+          // user not logged-in,
+          // start with authentication flow
+          this.$auth.startAuthenticationFlow()
+          return
+        }
+
+        throw err
+      })
     },
 
     router,
