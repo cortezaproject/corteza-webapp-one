@@ -17,7 +17,31 @@ export default (options = {}) => {
   options = {
     el: '#app',
     name: 'one',
-    template: '<router-view />',
+    template: '<div v-if="loaded"><router-view/></div>',
+
+    data: () => ({ loaded: false }),
+    async created () {
+      const urlParams = new URLSearchParams(window.location.search)
+      const code = urlParams.getAll('code')[0]
+
+      if (code) {
+        await this.$auth.useCode(code)
+          .then(async () => {
+            await this.$auth.check()
+            // In case the api client jwt hasn't been set yet
+            this.$SystemAPI.setJWT(this.$auth.JWT)
+          })
+          .catch(() => {
+            this.$auth.open()
+          })
+          .finally(() => {
+            this.loaded = true
+            this.$router.push({ name: 'layout' })
+          })
+      } else {
+        this.loaded = true
+      }
+    },
 
     router,
     store,

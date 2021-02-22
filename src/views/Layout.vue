@@ -91,15 +91,12 @@ export default {
     this.loaded = false
 
     this.$auth.check()
-      .then((user) => {
-        if (!user) {
-          // check performed: no error & no user,
-          // redirect to auth
-          throw new Error()
-        }
+      .then(() => {
+        return this.$auth.refresh()
       })
       .catch(() => {
         this.$auth.open()
+        throw new Error()
       })
       // Load UI settings (layout, logo)
       .then(() => this.$Settings.init({ api: this.$SystemAPI }))
@@ -124,8 +121,7 @@ export default {
 
         // Preload applications
         this.preloadApplications()
-      })
-      .finally(() => {
+
         this.handleWindowResize()
         this.loaded = true
       })

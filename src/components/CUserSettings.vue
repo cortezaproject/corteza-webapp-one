@@ -34,10 +34,9 @@ export default {
 
   methods: {
     handleLogout () {
-      this.$auth.logout().then(() => {
-        this.$auth.open()
-      })
+      this.$auth.logout()
     },
+
     handleSettings () {
       window.open('/auth/profile', '_blank')
     },

@@ -11,5 +11,8 @@ Vue.use(Vuex)
 Vue.use(plugins.CortezaAPI('system'))
 Vue.use(plugins.CortezaAPI('messaging'))
 
-Vue.use(plugins.Auth(), { api: Vue.prototype.$SystemAPI })
 Vue.use(plugins.Settings, { api: Vue.prototype.$SystemAPI })
+Vue.use(plugins.Auth(), {
+  baseURL: window.authURL,
+  redirectURI: `${window.location.origin}/compose/auth`,
+})

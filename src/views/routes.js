@@ -1,5 +1,3 @@
-import { components } from '@cortezaproject/corteza-vue'
-
 /**
  * Simple route generator
  *
@@ -28,9 +26,6 @@ export default [
       r('bridge-google-maps', 'google-maps', 'Bridge/GoogleMaps'),
     ],
   },
-
-  // we're stuck with ol'school dev-auth view (no bootstrap)
-  { path: '/auth', name: 'auth', component: components.CDevAuthLite },
 
   r('default', '*', 'NoApp'),
 ]
