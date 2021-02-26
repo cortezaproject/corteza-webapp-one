@@ -33,9 +33,15 @@ export default ({ api }) => {
     actions: {
       async preload ({ commit }) {
         if (api && api.applicationList) {
-          return api.applicationList()
+          return api.applicationList({ sort: 'weight' })
             .then(({ set }) => commit('updateSet', set))
         }
+      },
+
+      async reorder ({ commit, dispatch }, applicationIDs) {
+        return api.applicationReorder({ applicationIDs }).then(() => {
+          return dispatch('preload')
+        })
       },
     },
   }

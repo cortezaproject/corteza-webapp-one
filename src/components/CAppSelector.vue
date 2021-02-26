@@ -3,13 +3,22 @@
     class="app-selector"
   >
     <h1>{{ $t('app.general.availableApps') }}</h1>
-    <section>
+    <draggable
+      v-model="appList"
+      group="apps"
+      class="section"
+      :disabled="!canCreateApplication"
+      @end="onDrop"
+    >
       <div
-        v-for="(app) in apps"
-        :key="app.ID"
+        v-for="app in appList"
+        :key="app.applicationID"
         class="app-item"
+        @mouseover="hovered = app.applicationID"
+        @mouseleave="hovered = undefined"
       >
         <a
+          v-if="app.enabled && hovered === app.applicationID"
           :href="app.unify.url"
           target="_blank"
           class="open-url"
@@ -23,27 +32,78 @@
             />
           </svg>
         </a>
-        <button @click.prevent="$emit('selected', app)">
+        <button
+          :disabled="!app.enabled"
+          :style="[{ cursor: `${ app.enabled ? 'pointer': canCreateApplication ? 'grab' : 'default'}` }]"
+          @click.prevent="$emit('selected', app)"
+        >
           <div
             class="app-logo"
-            :style="'background-image:url('+ app.unify.logo +');'"
+            :class="{ 'opacity-3': !app.enabled }"
+            :style="`background-image:url('${app.unify.logo}');opacity:${app.enabled ? '1' : '0.4'}`"
           />
           <label class="app-name">
             {{ app.unify.name || app.name }}
           </label>
         </button>
       </div>
-    </section>
+    </draggable>
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+import Draggable from 'vuedraggable'
 
 export default {
+  components: {
+    Draggable,
+  },
+
+  data () {
+    return {
+      appList: [],
+
+      canCreateApplication: false,
+
+      hovered: undefined,
+    }
+  },
+
   computed: {
     ...mapGetters({
       apps: 'applications/unifyOnly',
     }),
+  },
+
+  watch: {
+    'apps': {
+      immediate: true,
+      handler (apps) {
+        this.appList = apps
+      },
+    },
+  },
+
+  created () {
+    this.fetchEffective()
+  },
+
+  methods: {
+    ...mapActions({
+      reorderApp: 'applications/reorder',
+    }),
+
+    fetchEffective () {
+      this.$SystemAPI.permissionsEffective({ resource: 'application' })
+        .then(p => {
+          this.canCreateApplication = p.find(per => per.operation === 'application.create').allow || false
+        })
+    },
+
+    async onDrop () {
+      const applicationIDs = this.appList.map(({ applicationID }) => applicationID)
+      await this.reorderApp(applicationIDs)
+    },
   },
 }
 </script>
@@ -53,7 +113,7 @@ $open-icon-height: .8rem;
 .app-selector {
   text-align: center;
 
-  section {
+  .section {
     max-width: 610px;
     margin: 2rem auto;
     display: flex;
@@ -84,7 +144,6 @@ $open-icon-height: .8rem;
       margin-top: calc(#{$open-icon-height} / 2);
       height: 110px;
       background: none;
-      cursor: pointer;
       border: 0;
       width:  200px;
 
