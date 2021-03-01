@@ -132,7 +132,7 @@ export default {
   methods: {
     ...mapActions({
       setLayout: 'layout/set',
-      preloadApplications: 'applications/preload',
+      preloadApplications: 'applications/load',
     }),
 
     handleWindowResize () {
