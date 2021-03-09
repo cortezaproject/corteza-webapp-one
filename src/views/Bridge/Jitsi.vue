@@ -7,25 +7,6 @@
     </div>
     <div id="roomselection">
       <span>{{ $t('app.jitsi.toStart') }}</span>
-      <div id="roomdropdown">
-        <select v-model="channelID">
-          <option
-            v-for="(c) in channels"
-            :key="c.channelID"
-            :value="c.channelID"
-          >
-            {{ c.name }}
-          </option>
-        </select>
-      </div>
-      <button
-        :disabled="jitsi || (!channelID)"
-        @click="onJoin"
-      >
-        {{ $t('app.jitsi.join') }}
-      </button>
-      <h4>{{ $t('app.jitsi.or') }}</h4>
-      <span>{{ $t('app.jitsi.createNewRoom') }}</span>
       <input
         id="roomInputField"
         v-model="roomName"
@@ -75,19 +56,6 @@ export default {
       jitsi: null,
       channels: null,
     }
-  },
-
-  beforeCreate () {
-    const userID = this.$auth.user.userID
-    const filter = (c) => {
-      return (c.type === 'public' || c.type === 'private') &&
-        (c.membershipFlag !== 'hidden') &&
-        (c.members || []).findIndex((uID) => uID === userID) > -1
-    }
-
-    this.$MessagingAPI.channelList().then((cc) => {
-      this.channels = cc.filter(filter)
-    })
   },
 
   destroyed () {

@@ -24,7 +24,10 @@ export default (options = {}) => {
     async created () {
       this.$auth.handle().then(({ accessTokenFn, user }) => {
         this.loaded = true
-        this.$router.push({ name: 'layout' })
+
+        if (this.$route.query.code !== undefined) {
+          this.$router.push({ ...this.$route, query: { ...this.$route.query, code: undefined } })
+        }
       }).catch((err) => {
         if (err instanceof Error && err.message === 'Unauthenticated') {
           // user not logged-in,

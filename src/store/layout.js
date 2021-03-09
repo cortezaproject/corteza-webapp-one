@@ -44,7 +44,7 @@ function sanitizePanelInput (panels = []) {
 }
 
 const defaultTabs = [
-  { title: 'Messaging', icon: '/applications/default_icon.png', url: '/messaging' },
+  { title: 'Low Code', icon: '/applications/default_icon.png', url: '/compose' },
 ]
 
 const defaultPanels = sanitizePanelInput([

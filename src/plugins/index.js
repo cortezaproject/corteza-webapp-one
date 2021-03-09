@@ -11,5 +11,4 @@ Vue.use(Router)
 Vue.use(Vuex)
 
 Vue.use(plugins.CortezaAPI('system'))
-Vue.use(plugins.CortezaAPI('messaging'))
 Vue.use(plugins.Settings, { api: Vue.prototype.$SystemAPI })

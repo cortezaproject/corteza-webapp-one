@@ -19,10 +19,7 @@ export default {
       openTabs: 'List of open tabs:',
     },
     jitsi: {
-      toStart: 'To start a video call select from existing messaging channels',
-      join: 'Join',
-      or: 'OR',
-      createNewRoom: 'Create a new room',
+      toStart: 'To start a video call create a new room',
       roomName: 'Room name',
       defaultRemoteDisplayName: 'Fellow Cortezer',
       defaultLocalDisplayName: 'Anonymous',
