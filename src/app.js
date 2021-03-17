@@ -22,15 +22,27 @@ export default (options = {}) => {
     data: () => ({ loaded: false }),
 
     async created () {
-      this.$auth.handle().then(({ accessTokenFn, user }) => {
+      return this.$auth.handle().then(({ accessTokenFn, user }) => {
         this.loaded = true
 
-        if (this.$route.query.code !== undefined) {
-          this.$router.push({ ...this.$route, query: { ...this.$route.query, code: undefined } })
+        const url = new URL(window.location.href)
+        let redir = false
+        if (url.searchParams.get('code')) {
+          url.searchParams.delete('code')
+          redir = true
+        }
+
+        if (url.pathname === '/auth/callback') {
+          url.pathname = ''
+          redir = true
+        }
+
+        if (redir) {
+          window.location.assign(url)
         }
       }).catch((err) => {
         if (err instanceof Error && err.message === 'Unauthenticated') {
-          // user not logged-in,
+          // user not loggsed-in,
           // start with authentication flow
           this.$auth.startAuthenticationFlow()
           return

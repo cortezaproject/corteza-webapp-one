@@ -26,6 +26,4 @@ export default [
       r('bridge-google-maps', 'google-maps', 'Bridge/GoogleMaps'),
     ],
   },
-
-  r('default', '*', 'NoApp'),
 ]
