@@ -11,7 +11,6 @@ Vue.use(plugins.Auth(), {
 })
 
 Vue.use(Router)
-Vue.use(Router)
 Vue.use(Vuex)
 
 Vue.use(plugins.CortezaAPI('system'))
