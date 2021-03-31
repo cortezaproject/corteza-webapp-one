@@ -17,25 +17,6 @@
         @mouseover="hovered = app.applicationID"
         @mouseleave="hovered = undefined"
       >
-        <button
-          class="star"
-          :disabled="!canPin || !app.canUpdateApplication"
-          @click="handlePin((app.flags || []).includes('pinned'), app.applicationID)"
-        >
-          <svg
-            viewBox="0 0 16 16"
-            class="star-icon"
-          >
-            <path
-              v-if="(app.flags || []).includes('pinned')"
-              d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"
-            />
-            <path
-              v-else-if="hovered === app.applicationID && canPin && app.canUpdateApplication"
-              d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"
-            />
-          </svg>
-        </button>
         <a
           v-if="app.enabled && hovered === app.applicationID"
           :href="app.unify.url"
@@ -62,9 +43,9 @@
             :class="{ 'opacity-3': !app.enabled }"
             :style="`background-image:url('${app.unify.logo}');opacity:${app.enabled ? '1' : '0.4'}`"
           />
-          <label class="app-name">
+          <h2 class="app-name">
             {{ app.unify.name || app.name }}
-          </label>
+          </h2>
         </button>
       </div>
     </draggable>
@@ -144,17 +125,20 @@ $open-icon-height: .8rem;
 
 .app-selector {
   text-align: center;
-
   .section {
-    max-width: 610px;
+    max-width: 1200px;
     margin: 2rem auto;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 
     .app-item {
       position: relative;
+      background-color: #fff;
+      border-radius: 20px;
+      margin: 20px;
+      padding-bottom: 20px;
       &:hover {
-        background: $light;
         .open-url {
           .open-icon {
             fill: $secondary;
@@ -187,23 +171,28 @@ $open-icon-height: .8rem;
     }
 
     .app-button {
-      margin-top: calc(#{$open-icon-height} / 2);
-      height: 110px;
+      height: 160px;
       background: none;
       border: 0;
-      width:  200px;
+      width:  280px;
+      padding: 0;
 
       .app-logo {
-        height: 75%;
-        max-width: 75%;
+        height: 100%;
+        max-width: 100%;
         display: block;
         margin: 0 auto;
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
       }
       .app-name {
-        height: 25%;
+        height: auto;
+        text-align: left;
+        padding: 20px;
+        margin-top: 0;
       }
     }
 

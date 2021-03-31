@@ -124,11 +124,16 @@ export default {
 
 </script>
 <style lang="scss" scoped>
+$bg-color: #F3F3F5;
 
 .content, iframe {
   width: 100%;
   height: 100%;
   border: 0;
+}
+
+.content {
+  background-color: $bg-color;
 }
 
 .open-tabs {

@@ -160,6 +160,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+$bg-color: #F3F3F5;
+
 section {
   &.show-tab-bar {
     display: grid;
@@ -188,6 +190,7 @@ section {
   div.content {
     width: 100%;
     height: 100%;
+    background-color: $bg-color;
 
     &.app-selector-shown {
       overflow: auto;
