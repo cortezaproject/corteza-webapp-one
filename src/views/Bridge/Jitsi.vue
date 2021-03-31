@@ -165,6 +165,9 @@ main {
   .logo {
     text-align: center;
     margin-top: 4rem;
+    img {
+      max-width: 200px;
+    }
   }
 
   .jitsiInterface {
