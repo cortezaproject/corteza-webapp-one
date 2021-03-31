@@ -48,6 +48,7 @@ export default {
 div.user {
   cursor: pointer;
   display: inline-block;
+  margin-right: 20px;
 
   // Panel settings is opened with hover on header item
   // settings are opened even if mouse moves out of header

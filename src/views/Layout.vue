@@ -14,9 +14,6 @@
           class="icon-menu1"
           @click="mobileTabsVisible = !mobileTabsVisible"
         />
-        <c-panel-settings
-          v-else
-        />
       </div>
     </header>
     <c-mobile
@@ -38,7 +35,6 @@
   </div>
 </template>
 <script>
-import CPanelSettings from '../components/CPanelSettings'
 import CUserSettings from '../components/CUserSettings'
 import CPanels from '../components/CPanels'
 import CMobile from '../components/CMobile'
@@ -49,7 +45,6 @@ const mobileMaxWidth = 450
 export default {
   components: {
     CMobile,
-    CPanelSettings,
     CUserSettings,
     CPanels,
   },
