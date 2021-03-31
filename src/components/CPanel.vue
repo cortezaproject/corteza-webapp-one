@@ -3,15 +3,6 @@
     ref="panel"
     :class="{ 'show-tab-bar': showTabBar }"
   >
-    <c-tab-bar
-      v-if="showTabBar"
-      v-bind="$attrs"
-      :tabs="tabs"
-      :index="index"
-      :active-tab-index="activeTabIndex"
-      :resizing="resizing"
-      v-on="$listeners"
-    />
     <!--
       Important:
       we're intentionally using v-show here
@@ -47,13 +38,11 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
-import CTabBar from './CTabBar'
 import CAppSelector from './CAppSelector'
 
 export default {
   components: {
     CAppSelector,
-    CTabBar,
   },
 
   props: {
@@ -189,7 +178,7 @@ section {
 
   div.content {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background-color: $bg-color;
 
     &.app-selector-shown {

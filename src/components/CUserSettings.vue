@@ -59,7 +59,6 @@ div.user {
   font-size: .8rem;
   .label {
     display: inline-block;
-    margin: 8px 0 0 10px;
     height: 20px;
     overflow: hidden;
 

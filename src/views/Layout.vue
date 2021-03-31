@@ -146,15 +146,18 @@ export default {
 
 </script>
 <style lang="scss" scoped>
+$header-height: 60px;
+
 .layout {
   display: grid;
-  grid-template-rows: 40px auto;
+  grid-template-rows: $header-height auto;
   height: 100vh;
   width: 100vw;
 
   header {
     display: flex;
-    height: 40px;
+    align-items: center;
+    height: $header-height;
     overflow: hidden;
 
     // Make sure header (and all panels that might float over
@@ -166,7 +169,7 @@ export default {
       padding: 10px 10px;
 
       img {
-        max-height: 20px;
+        max-height: calc(#{$header-height} / 2);
       }
     }
 

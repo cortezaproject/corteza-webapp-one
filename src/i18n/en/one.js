@@ -9,7 +9,7 @@ export default {
     },
   },
   layout: {
-    defaultTabTitle: 'Untitled',
+    defaultTabTitle: 'App selector',
   },
   app: {
     general: {
