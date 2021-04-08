@@ -305,6 +305,7 @@ export default {
   display: block;
   width: 100%;
   height: 100%;
+  position: sticky;
 
   .panel {
     &.extra {
@@ -321,6 +322,7 @@ export default {
   // Only support panels on big screens
   position: relative;
   height: 100%;
+  overflow: auto;
 
   .panels {
     display: grid;
@@ -331,6 +333,7 @@ export default {
       justify-items: stretch;
       border: 1px solid $light;
       border-top: none;
+      overflow: auto;
 
       &.span-rows {
         grid-row: span 2;
