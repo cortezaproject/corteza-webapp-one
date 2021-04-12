@@ -36,6 +36,7 @@
           :disabled="!app.enabled"
           :style="[{ cursor: `${app.enabled ? 'pointer': canCreateApplication ? 'grab' : 'default'}` }]"
           class="app-button"
+          :value="$t(app.unify.name || app.name)"
           @click.prevent="$emit('selected', app)"
         >
           <div
@@ -193,6 +194,7 @@ $open-icon-height: .8rem;
         text-align: left;
         padding: 20px;
         margin-top: 0;
+        position: relative;
       }
     }
 
