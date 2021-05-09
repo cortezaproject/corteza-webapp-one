@@ -66,7 +66,7 @@ export default {
       // on mobile view
       mobileTabsVisible: false,
 
-      logo: '/applications/default_logo.jpg',
+      logo: 'applications/default_logo.jpg',
     }
   },
 

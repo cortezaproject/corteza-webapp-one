@@ -115,7 +115,7 @@ export default {
         return tab.logo
       }
 
-      return '/applications/default_logo.jpg'
+      return 'applications/default_logo.jpg'
     },
   },
 

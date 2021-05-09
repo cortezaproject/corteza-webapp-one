@@ -60,7 +60,7 @@ export default {
     icon: {
       type: String,
       required: false,
-      default: () => '/applications/default_icon.png',
+      default: () => 'applications/default_icon.png',
     },
   },
 

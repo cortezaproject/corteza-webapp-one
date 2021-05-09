@@ -6,8 +6,7 @@ import { plugins } from '@cortezaproject/corteza-vue'
 
 Vue.use(plugins.Auth(), {
   app: 'unify',
-  // A tiny exception we need to
-  callbackURL: `${location.protocol}//${location.host}/auth/callback`,
+  rootApp: true,
 })
 
 Vue.use(Router)

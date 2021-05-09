@@ -2,7 +2,7 @@ var webpack = require('webpack')
 var exec = require('child_process').execSync
 var path = require('path')
 
-module.exports = ({ appFlavour, appName, appLabel, version, theme, packageAlias, root = path.resolve('.'), env = process.env.NODE_ENV }) => {
+module.exports = ({ appFlavour, appLabel, version, theme, packageAlias, root = path.resolve('.'), env = process.env.NODE_ENV }) => {
   const isDevelopment = (env === 'development')
   const isTest = (env === 'test')
 
@@ -27,7 +27,7 @@ module.exports = ({ appFlavour, appName, appLabel, version, theme, packageAlias,
   }
 
   return {
-    publicPath: '/',
+    publicPath: './',
     lintOnSave: true,
     runtimeCompiler: true,
 

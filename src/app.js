@@ -24,25 +24,9 @@ export default (options = {}) => {
     async created () {
       return this.$auth.handle().then(({ accessTokenFn, user }) => {
         this.loaded = true
-
-        const url = new URL(window.location.href)
-        let redir = false
-        if (url.searchParams.get('code')) {
-          url.searchParams.delete('code')
-          redir = true
-        }
-
-        if (url.pathname === '/auth/callback') {
-          url.pathname = ''
-          redir = true
-        }
-
-        if (redir) {
-          window.location.assign(url)
-        }
       }).catch((err) => {
         if (err instanceof Error && err.message === 'Unauthenticated') {
-          // user not loggsed-in,
+          // user not logged-in,
           // start with authentication flow
           this.$auth.startAuthenticationFlow()
           return
