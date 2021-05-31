@@ -4,9 +4,6 @@
     class="layout"
   >
     <header>
-      <div class="settings">
-        <c-user-settings />
-      </div>
       <c-topbar
         :sidebar-pinned="pinned"
       />
@@ -21,16 +18,14 @@
   </div>
 </template>
 <script>
-import CUserSettings from '../components/CUserSettings'
 import { mapGetters, mapActions } from 'vuex'
 import CAppSelector from '../components/CAppSelector'
-import { CTopbar } from '@cortezaproject/corteza-vue'
+import { components } from '@cortezaproject/corteza-vue'
 
-const mobileMaxWidth = 450
+const { CTopbar } = components
 
 export default {
   components: {
-    CUserSettings,
     CAppSelector,
     CTopbar,
   },
@@ -39,18 +34,6 @@ export default {
     return {
       // Are panels loaded?
       loaded: false,
-
-      // Window dimensions & panel position
-      windowWidth: undefined,
-      windowHeight: undefined,
-      panelOffsetTop: 0,
-      panelOffsetLeft: 0,
-
-      // Are be mobile tabs visible
-      //
-      // this is set when user clicks on top-right icon
-      // on mobile view
-      mobileTabsVisible: false,
 
       logo: 'applications/default_logo.jpg',
 
@@ -62,15 +45,9 @@ export default {
     ...mapGetters({
       layoutLoaded: 'layout/loaded',
     }),
-
-    mobile () {
-      return this.windowWidth <= mobileMaxWidth
-    },
   },
 
   created () {
-    window.addEventListener('resize', this.handleWindowResize)
-
     this.loaded = false
 
     // Load UI settings (layout, logo)
@@ -89,46 +66,17 @@ export default {
             })
         }
 
-        if (!this.layoutLoaded && one) {
-          this.setLayout(one)
-          this.$root.$emit('panels-resize')
-        }
-
         // Preload applications
         this.preloadApplications()
 
-        this.handleWindowResize()
         this.loaded = true
       })
   },
 
-  mounted () {
-    this.$nextTick(() => {
-      this.handleWindowResize()
-    })
-  },
-
-  beforeDestroy () {
-    window.removeEventListener('resize', this.handleWindowResize)
-  },
-
   methods: {
     ...mapActions({
-      setLayout: 'layout/set',
       preloadApplications: 'applications/load',
     }),
-
-    handleWindowResize () {
-      this.windowWidth = window.innerWidth
-      this.windowHeight = window.innerHeight
-
-      if (this.$refs['panels'] !== undefined) {
-        const { offsetTop = 0, offsetLeft = 0 } = this.$refs['panels'].$el
-
-        this.panelOffsetTop = offsetTop
-        this.panelOffsetLeft = offsetLeft
-      }
-    },
   },
 }
 
