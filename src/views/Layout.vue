@@ -4,12 +4,12 @@
     class="layout"
   >
     <header>
-      <div class="logo">
-        <img :src="logo">
-      </div>
       <div class="settings">
         <c-user-settings />
       </div>
+      <c-topbar
+        :sidebar-pinned="pinned"
+      />
     </header>
     <c-app-selector />
   </div>
@@ -24,6 +24,7 @@
 import CUserSettings from '../components/CUserSettings'
 import { mapGetters, mapActions } from 'vuex'
 import CAppSelector from '../components/CAppSelector'
+import { CTopbar } from '@cortezaproject/corteza-vue'
 
 const mobileMaxWidth = 450
 
@@ -31,6 +32,7 @@ export default {
   components: {
     CUserSettings,
     CAppSelector,
+    CTopbar,
   },
 
   data () {
@@ -51,6 +53,8 @@ export default {
       mobileTabsVisible: false,
 
       logo: 'applications/default_logo.jpg',
+
+      pinned: false,
     }
   },
 
