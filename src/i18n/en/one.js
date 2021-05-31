@@ -10,6 +10,7 @@ export default {
   },
   layout: {
     defaultTabTitle: 'App selector',
+    search: 'Type here to search',
   },
   app: {
     jitsi: {

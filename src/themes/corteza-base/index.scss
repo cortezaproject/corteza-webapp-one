@@ -29,6 +29,10 @@ h1, h2, h3, h4, h5 {
   border: none;
 }
 
+input {
+  font-family: $regular;
+}
+
 a {
   &:link,
   &:visited,

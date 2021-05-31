@@ -5,6 +5,14 @@
     <div class="logo">
       <img src="applications/default_logo.jpg">
     </div>
+    <div class="search">
+      <input
+        type="search"
+        name="search"
+        :aria-label="$t('layout.search')"
+        :placeholder="$t('layout.search')"
+      >
+    </div>
     <draggable
       v-model="appList"
       group="apps"
@@ -111,6 +119,8 @@ export default {
 <style lang="scss" scoped>
 $open-icon-height: .8rem;
 $app-item-default: 20px;
+$border-color: #E4E9EF;
+$primary-color: #4D7281;
 
 .app-selector {
   text-align: center;
@@ -120,6 +130,28 @@ $app-item-default: 20px;
     img {
       width: 100%;
       max-width: 400px;
+    }
+  }
+  .search {
+    padding: 0 40px;
+    input {
+      border: 2px solid $border-color;
+      height: 40px;
+      margin-top: 60px;
+      font-size: 1rem;
+      padding: 0.375rem 0.75rem;
+      width: 100%;
+      max-width: 500px;
+      border-radius: 0.3rem;
+      &:focus {
+        border-color: $primary-color;
+      }
+    }
+    input[type="search"]::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+      height: 13px;
+      width: 13px;
+      background: url("data:image/svg+xml;charset=UTF-8,%3csvg viewPort='0 0 12 12' version='1.1' xmlns='http://www.w3.org/2000/svg'%3e%3cline x1='1' y1='11' x2='11' y2='1' stroke='black' stroke-width='2'/%3e%3cline x1='1' y1='1' x2='11' y2='11' stroke='black' stroke-width='2'/%3e%3c/svg%3e");
     }
   }
   .section {
