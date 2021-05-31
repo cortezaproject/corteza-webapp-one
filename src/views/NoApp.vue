@@ -14,7 +14,7 @@ export default {
 <style lang="scss">
 main {
   margin: 40px;
-  text-aign: center;
+  text-align: center;
   width: 100%;
 }
 </style>

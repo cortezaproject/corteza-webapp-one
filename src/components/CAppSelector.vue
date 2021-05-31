@@ -2,7 +2,9 @@
   <div
     class="app-selector"
   >
-    <h1>{{ $t('app.general.availableApps') }}</h1>
+    <div class="logo">
+      <img src="applications/default_logo.jpg">
+    </div>
     <draggable
       v-model="appList"
       group="apps"
@@ -108,9 +110,18 @@ export default {
 </script>
 <style lang="scss" scoped>
 $open-icon-height: .8rem;
+$app-item-default: 20px;
 
 .app-selector {
   text-align: center;
+  overflow: auto;
+  .logo {
+    padding: 0 40px;
+    img {
+      width: 100%;
+      max-width: 400px;
+    }
+  }
   .section {
     max-width: 1200px;
     margin: 2rem auto;
@@ -121,25 +132,11 @@ $open-icon-height: .8rem;
     .app-item {
       position: relative;
       background-color: #fff;
-      border-radius: 20px;
-      margin: 20px;
-      padding-bottom: 20px;
-      &:hover {
-        .open-url {
-          .open-icon {
-            fill: $secondary;
-          }
-        }
-      }
-      .open-url {
-        position: absolute;
-        right: .2rem;
-        padding: .2rem;
-        .open-icon {
-          fill: white;
-          height: $open-icon-height;
-        }
-      }
+      border-radius: $app-item-default;
+      margin: $app-item-default;
+      padding-bottom: $app-item-default;
+      box-shadow: 0px 3px 6px #00000029;
+
       .star {
         position: absolute;
         top: .2rem;
@@ -177,11 +174,8 @@ $open-icon-height: .8rem;
         border-top-right-radius: 20px;
       }
       .app-name {
-        height: auto;
-        text-align: left;
-        padding: 20px;
+        padding: $app-item-default;
         margin-top: 0;
-        position: relative;
       }
     }
 

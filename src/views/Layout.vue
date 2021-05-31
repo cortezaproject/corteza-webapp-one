@@ -9,23 +9,9 @@
       </div>
       <div class="settings">
         <c-user-settings />
-        <i
-          v-if="mobile"
-          class="icon-menu1"
-          @click="mobileTabsVisible = !mobileTabsVisible"
-        />
       </div>
     </header>
-    <c-mobile
-      v-if="mobile"
-      :tabs-visible.sync="mobileTabsVisible"
-    />
-    <c-panels
-      v-else
-      ref="panels"
-      :width="windowWidth - panelOffsetLeft"
-      :height="windowHeight - panelOffsetTop"
-    />
+    <c-app-selector />
   </div>
   <div
     v-else
@@ -36,17 +22,15 @@
 </template>
 <script>
 import CUserSettings from '../components/CUserSettings'
-import CPanels from '../components/CPanels'
-import CMobile from '../components/CMobile'
 import { mapGetters, mapActions } from 'vuex'
+import CAppSelector from '../components/CAppSelector'
 
 const mobileMaxWidth = 450
 
 export default {
   components: {
-    CMobile,
     CUserSettings,
-    CPanels,
+    CAppSelector,
   },
 
   data () {
