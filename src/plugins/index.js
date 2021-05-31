@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import BootstrapVue from 'bootstrap-vue'
 import Router from 'vue-router'
 import Vuex from 'vuex'
 
@@ -11,6 +12,6 @@ Vue.use(plugins.Auth(), {
 
 Vue.use(Router)
 Vue.use(Vuex)
-
+Vue.use(BootstrapVue)
 Vue.use(plugins.CortezaAPI('system'))
 Vue.use(plugins.Settings, { api: Vue.prototype.$SystemAPI })
