@@ -1,51 +1,58 @@
 <template>
-  <div
-    class="app-selector"
+  <b-container
+    class="app-selector text-center"
   >
-    <div class="logo">
-      <img src="applications/default_logo.jpg">
+    <div class="logo px-5 mb-5">
+      <img
+        src="applications/default_logo.jpg"
+        class="w-100"
+      >
     </div>
-    <div class="search">
-      <input
+    <div class="search w-100 m-auto px-5">
+      <b-input
         type="search"
         name="search"
         :aria-label="$t('layout.search')"
         :placeholder="$t('layout.search')"
-      >
+      />
     </div>
     <draggable
       v-model="appList"
       group="apps"
-      class="section"
+      class="d-flex flex-wrap justify-content-center mt-4"
       :disabled="!canCreateApplication"
       @end="onDrop"
     >
-      <div
+      <b-card
         v-for="app in appList"
         :key="app.applicationID"
-        class="app-item"
+        no-body
+        overlay
+        :style="`max-width: 16rem;opacity:${app.enabled ? '1' : '0.4'}`"
+        class="m-3"
         @mouseover="hovered = app.applicationID"
         @mouseleave="hovered = undefined"
       >
-        <a
+        <b-card-img
+          :src="app.unify.logo"
+          :alt="app.unify.name || app.name"
+          class="rounded-bottom"
+        />
+        <b-card-title
+          class="my-4 h5"
+        >
+          {{ app.unify.name || app.name }}
+        </b-card-title>
+        <b-link
           :disabled="!app.enabled"
           :href="app.unify.url"
           target="_blank"
           :style="[{ cursor: `${app.enabled ? 'pointer': canCreateApplication ? 'grab' : 'default'}` }]"
-          class="app-button"
-        >
-          <div
-            class="app-logo"
-            :class="{ 'opacity-3': !app.enabled }"
-            :style="`background-image:url('${app.unify.logo}');opacity:${app.enabled ? '1' : '0.4'}`"
-          />
-          <h2 class="app-name">
-            {{ app.unify.name || app.name }}
-          </h2>
-        </a>
-      </div>
+          class="stretched-link"
+        />
+      </b-card>
     </draggable>
-  </div>
+  </b-container>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
@@ -117,36 +124,15 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-$open-icon-height: .8rem;
-$app-item-default: 20px;
-$border-color: #E4E9EF;
-$primary-color: #4D7281;
 
 .app-selector {
-  text-align: center;
-  overflow: auto;
   .logo {
-    padding: 0 40px;
     img {
-      width: 100%;
       max-width: 400px;
     }
   }
   .search {
-    padding: 0 40px;
-    input {
-      border: 2px solid $border-color;
-      height: 40px;
-      margin-top: 60px;
-      font-size: 1rem;
-      padding: 0.375rem 0.75rem;
-      width: 100%;
-      max-width: 500px;
-      border-radius: 0.3rem;
-      &:focus {
-        border-color: $primary-color;
-      }
-    }
+    max-width: 600px;
     input[type="search"]::-webkit-search-cancel-button {
       -webkit-appearance: none;
       height: 13px;
@@ -154,65 +140,18 @@ $primary-color: #4D7281;
       background: url("data:image/svg+xml;charset=UTF-8,%3csvg viewPort='0 0 12 12' version='1.1' xmlns='http://www.w3.org/2000/svg'%3e%3cline x1='1' y1='11' x2='11' y2='1' stroke='black' stroke-width='2'/%3e%3cline x1='1' y1='1' x2='11' y2='11' stroke='black' stroke-width='2'/%3e%3c/svg%3e");
     }
   }
-  .section {
-    max-width: 1200px;
-    margin: 2rem auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    .app-item {
-      position: relative;
-      background-color: #fff;
-      border-radius: $app-item-default;
-      margin: $app-item-default;
-      padding-bottom: $app-item-default;
-      box-shadow: 0px 3px 6px #00000029;
-
-      .star {
-        position: absolute;
-        top: .2rem;
-        left: .2rem;
-        padding: 0;
-        margin: 0;
-        background-color: transparent;
-        border: none;
-        .star-icon {
-          fill: $warning;
-          width: 1.2rem;
-          height: 1.2rem;
-        }
-      }
-    }
-
-    .app-button {
-      height: 160px;
-      background: none;
-      border: 0;
-      width:  280px;
-      padding: 0;
-      display: inline-block;
-      text-decoration: none;
-
-      .app-logo {
-        height: 100%;
-        max-width: 100%;
-        display: block;
-        margin: 0 auto;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: top;
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
-      }
-      .app-name {
-        padding: $app-item-default;
-        margin-top: 0;
-      }
-    }
-
-    button:disabled {
-      cursor: not-allowed;
+  .star {
+    position: absolute;
+    top: .2rem;
+    left: .2rem;
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    border: none;
+    .star-icon {
+      fill: $warning;
+      width: 1.2rem;
+      height: 1.2rem;
     }
   }
 }

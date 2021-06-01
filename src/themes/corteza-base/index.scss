@@ -1,32 +1,26 @@
 @import "variables";
+@import "~bootstrap/scss/bootstrap";
+@import '~bootstrap-vue/src/index.scss';
 @import "nunito";
-@import "icons";
 
 body {
-  // Make sure page does not bounce when on scroll
-  overflow: hidden;
   margin: 0;
   padding: 0;
   height: 100vh;
   font-family: $regular;
 }
 
-.grid {
-  display: grid;
-}
-
-.stretch {
-  align-self: stretch;
-  justify-items: stretch;
-}
-
-h1, h2, h3, h4, h5 {
+thead th,
+label,
+legend,
+strong,
+b,
+.font-weight-bold {
   font-family: $semibold;
 }
 
 :focus {
-  outline: none;
-  border: none;
+  outline-color: $primary;
 }
 
 input {

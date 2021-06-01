@@ -82,43 +82,6 @@ export default {
 
 </script>
 <style lang="scss" scoped>
-$header-height: 60px;
-
-.layout {
-  display: grid;
-  grid-template-rows: $header-height auto;
-  height: 100vh;
-  width: 100vw;
-
-  header {
-    display: flex;
-    align-items: center;
-    height: $header-height;
-    overflow: hidden;
-
-    // Make sure header (and all panels that might float over
-    // child elements) is not covered by panels
-    z-index: 1000;
-
-    .logo {
-      flex-grow: 1;
-      padding: 10px 10px;
-
-      img {
-        max-height: calc(#{$header-height} / 2);
-      }
-    }
-
-    & > .settings {
-      align-content: flex-end;
-      display: flex;
-    }
-
-    .icon-menu1 {
-      margin: 10px 8px 0;
-    }
-  }
-}
 
 .loader-logo {
   display: flex;
