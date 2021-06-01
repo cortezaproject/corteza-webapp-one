@@ -1,11 +1,25 @@
 export default {
-  header: {
-    appName: 'Corteza',
-    layoutSwitcherTitle: 'Panel layout',
-    tabsSwitcherTitle: 'Select tab',
-    user: {
+  navigation: {
+    namespace: 'Namespaces',
+    module: 'Modules',
+    page: 'Pages',
+    chart: 'Charts',
+    automation: 'Automation',
+    publicPages: 'Public pages',
+    configuration: 'Configuration',
+    adminPanel: 'Admin panel',
+    more: 'More',
+    noPageTitle: 'No page title',
+    help: {
+      forum: 'Help',
+      documentation: 'Documentation',
+      feedback: 'Send feedback',
+    },
+    userSettings: {
+      loggedInAs: 'Logged in as {{user}}',
+      profile: 'Profile',
+      changePassword: 'Change password',
       logout: 'Logout',
-      settings: 'Settings',
     },
   },
   layout: {
