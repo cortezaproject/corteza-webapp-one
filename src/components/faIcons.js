@@ -7,6 +7,7 @@ import {
 
 import {
   faQuestionCircle,
+  faUser,
 
 } from '@fortawesome/free-regular-svg-icons'
 
@@ -14,4 +15,5 @@ library.add(
   faQuestionCircle,
   faUserCog,
   faGripHorizontal,
+  faUser,
 )

@@ -14,6 +14,7 @@ export default {
       forum: 'Help',
       documentation: 'Documentation',
       feedback: 'Send feedback',
+      version: 'Version:',
     },
     userSettings: {
       loggedInAs: 'Logged in as {{user}}',
