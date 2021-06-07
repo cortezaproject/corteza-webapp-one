@@ -669,9 +669,9 @@
     to-fast-properties "^2.0.0"
 
 "@cortezaproject/corteza-js@^2021.3.0":
-  version "2021.3.6"
-  resolved "https://registry.yarnpkg.com/@cortezaproject/corteza-js/-/corteza-js-2021.3.6.tgz#7fe55ae3f752209d8c6c82ab9be35a582dce5174"
-  integrity sha512-/tSW2OxTUPVyrxTZBZ89CNgrZ2lw9FwFYis3rEno/XtGC8b278FaOZVcFMp+I53JVPAcVlqTPAhg1M1bLwpEVA==
+  version "2021.3.7"
+  resolved "https://registry.yarnpkg.com/@cortezaproject/corteza-js/-/corteza-js-2021.3.7.tgz#130d70f5e7a29639044e8edb3395b949cfa01359"
+  integrity sha512-ga1NsIgRsbDPaTH0wr9S44iMYKvZIswwCgIf9ibqE/cRjPiRoiV6N6ATnk9/3EIGr99svEFrEylEWDE0fplYqA==
   dependencies:
     axios "^0.21.1"
     chart.js "2.9.3"
@@ -685,9 +685,9 @@
     ts-sinon "^1.0.25"
 
 "@cortezaproject/corteza-vue@^2021.3.0":
-  version "2021.3.6"
-  resolved "https://registry.yarnpkg.com/@cortezaproject/corteza-vue/-/corteza-vue-2021.3.6.tgz#5d8771383bbbb435a6ebecb38a7d03261c264df9"
-  integrity sha512-1xX6P3i2uP5efIFMNvJicdhgpcr9mGZ7NhjaecdTp4Gm0bP7vt4/EA1L8OWjVLSKV0OidU7VarstgPYMgYhCcg==
+  version "2021.3.7"
+  resolved "https://registry.yarnpkg.com/@cortezaproject/corteza-vue/-/corteza-vue-2021.3.7.tgz#b2972b04a8e70bb8fe97ccba71f7fde98d27f3b9"
+  integrity sha512-CeB4ChfUzg/icu0EpC0frxXwdYl/qrNTa+Do/2SpZUv8IPGNVC977GsMgNMeDZt6MDer2LWjCPrzlSGzS7RVVg==
   dependencies:
     "@cortezaproject/corteza-js" "^2021.3.0"
     "@fortawesome/fontawesome-svg-core" "^1.2.26"
@@ -813,10 +813,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@sinonjs/fake-timers@^7.0.4":
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/@sinonjs/fake-timers/-/fake-timers-7.1.0.tgz#8f13af27d842cbf51ad4502e05562fe9391d084e"
-  integrity sha512-hAEzXi6Wbvlb67NnGMGSNOeAflLVnMa4yliPU/ty1qjgW/vAletH15/v/esJwASSIA0YlIyjnloenFbEZc9q9A==
+"@sinonjs/fake-timers@^7.1.0":
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/@sinonjs/fake-timers/-/fake-timers-7.1.2.tgz#2524eae70c4910edccf99b2f4e6efc5894aff7b5"
+  integrity sha512-iQADsW4LBMISqZ6Ci1dupJL9pprqwcVFTcOsEmQOEhW+KLCVn/Y4Jrvg2k19fIHCp+iFprriYPTdRcQR8NbUPg==
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
@@ -900,11 +900,11 @@
     "@types/sinon" "*"
 
 "@types/sinon@*":
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/@types/sinon/-/sinon-10.0.0.tgz#eecc3847af03d45ffe53d55aaaaf6ecb28b5e584"
-  integrity sha512-jDZ55oCKxqlDmoTBBbBBEx+N8ZraUVhggMZ9T5t+6/Dh8/4NiOjSUfpLrPiEwxQDlAe3wpAkoXhWvE6LibtsMQ==
+  version "10.0.2"
+  resolved "https://registry.yarnpkg.com/@types/sinon/-/sinon-10.0.2.tgz#f360d2f189c0fd433d14aeb97b9d705d7e4cc0e4"
+  integrity sha512-BHn8Bpkapj8Wdfxvh2jWIUoaYB/9/XhsL0oOvBfRagJtKlSl9NWPcFOz2lRukI9szwGxFtYZCTejJSqsGDbdmw==
   dependencies:
-    "@sinonjs/fake-timers" "^7.0.4"
+    "@sinonjs/fake-timers" "^7.1.0"
 
 "@types/sinon@^9.0.5":
   version "9.0.11"
@@ -9895,10 +9895,15 @@ vue2-google-maps@^0.10.6:
     babel-runtime "^6.26.0"
     marker-clusterer-plus "^2.1.4"
 
-vue@^2.6.10, vue@^2.6.11:
+vue@^2.6.10:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
   integrity sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg==
+
+vue@^2.6.11:
+  version "2.6.14"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.14.tgz#e51aa5250250d569a3fbad3a8a5a687d6036e235"
+  integrity sha512-x2284lgYvjOMj3Za7kqzRcUSxBboHqtgRE2zlos1qWaOye5yUmHn42LB1250NJBLRwEcdrB0JRwyPTEPhfQjiQ==
 
 vuedraggable@^2.23.2:
   version "2.24.3"
