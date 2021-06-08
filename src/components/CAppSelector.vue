@@ -39,7 +39,7 @@
           no-body
           overlay
           :style="`max-width: 16rem;`"
-          class="m-3"
+          class="app m-3"
           @mouseover="hovered = app.applicationID"
           @mouseleave="hovered = undefined"
         >
@@ -167,6 +167,18 @@ export default {
       height: 13px;
       width: 13px;
       background: url("data:image/svg+xml;charset=UTF-8,%3csvg viewPort='0 0 12 12' version='1.1' xmlns='http://www.w3.org/2000/svg'%3e%3cline x1='1' y1='11' x2='11' y2='1' stroke='black' stroke-width='2'/%3e%3cline x1='1' y1='1' x2='11' y2='11' stroke='black' stroke-width='2'/%3e%3c/svg%3e");
+    }
+  }
+
+  .app {
+    transition: all 0.2s ease;
+    box-shadow: 0;
+    top: 0;
+
+    &:hover {
+      transition: all 0.2s ease;
+      box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
+      top: -2px;
     }
   }
 
