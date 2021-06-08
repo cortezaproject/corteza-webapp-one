@@ -18,7 +18,7 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 import CAppSelector from '../components/CAppSelector'
 import { components } from '@cortezaproject/corteza-vue'
 
@@ -39,12 +39,6 @@ export default {
 
       pinned: false,
     }
-  },
-
-  computed: {
-    ...mapGetters({
-      layoutLoaded: 'layout/loaded',
-    }),
   },
 
   created () {

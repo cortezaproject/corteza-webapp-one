@@ -8,50 +8,72 @@
         class="w-100"
       >
     </div>
+
     <div class="search w-100 m-auto px-5">
       <b-input
+        v-model="query"
         type="search"
         name="search"
+        debounce="200"
         :aria-label="$t('layout.search')"
         :placeholder="$t('layout.search')"
       />
     </div>
+
     <draggable
+      v-if="filteredApps.length"
       v-model="appList"
       group="apps"
-      class="d-flex flex-wrap justify-content-center mt-4"
-      :disabled="!canCreateApplication"
+      class="mt-4"
+      :disabled="!canCreateApplication || query"
       @end="onDrop"
     >
-      <b-card
-        v-for="app in appList"
-        :key="app.applicationID"
-        no-body
-        overlay
-        :style="`max-width: 16rem;opacity:${app.enabled ? '1' : '0.4'}`"
-        class="m-3"
-        @mouseover="hovered = app.applicationID"
-        @mouseleave="hovered = undefined"
+      <transition-group
+        name="apps"
+        tag="div"
+        class="d-flex flex-wrap justify-content-center"
       >
-        <b-card-img
-          :src="app.unify.logo"
-          :alt="app.unify.name || app.name"
-          class="rounded-bottom"
-        />
-        <b-card-title
-          class="my-4 h5"
+        <b-card
+          v-for="app in filteredApps"
+          :key="app.applicationID"
+          no-body
+          overlay
+          :style="`max-width: 16rem;`"
+          class="m-3"
+          @mouseover="hovered = app.applicationID"
+          @mouseleave="hovered = undefined"
         >
-          {{ app.unify.name || app.name }}
-        </b-card-title>
-        <b-link
-          :disabled="!app.enabled"
-          :href="app.unify.url"
-          target="_blank"
-          :style="[{ cursor: `${app.enabled ? 'pointer': canCreateApplication ? 'grab' : 'default'}` }]"
-          class="stretched-link"
-        />
-      </b-card>
+          <b-card-img
+            :src="app.unify.logo"
+            :alt="app.unify.name || app.name"
+            class="rounded-bottom"
+          />
+
+          <b-card-title
+            class="my-4 h5"
+          >
+            {{ app.unify.name || app.name }}
+          </b-card-title>
+
+          <b-link
+            :disabled="!app.enabled"
+            :href="app.unify.url"
+            target="_blank"
+            :style="[{ cursor: `${app.enabled ? 'pointer': canCreateApplication ? 'grab' : 'default'}` }]"
+            class="stretched-link"
+          />
+        </b-card>
+      </transition-group>
     </draggable>
+
+    <div
+      v-else
+      class="d-flex justify-content-center"
+    >
+      <h4 class="mt-5">
+        {{ $t('layout.noApps') }}
+      </h4>
+    </div>
   </b-container>
 </template>
 <script>
@@ -65,6 +87,8 @@ export default {
 
   data () {
     return {
+      query: '',
+
       appList: [],
 
       canCreateApplication: false,
@@ -78,6 +102,11 @@ export default {
     ...mapGetters({
       apps: 'applications/unifyOnly',
     }),
+
+    filteredApps () {
+      const query = (this.query || '').toUpperCase()
+      return this.query ? this.appList.filter(({ name }) => (name.toUpperCase()).includes(query)) : this.appList
+    },
   },
 
   watch: {
@@ -124,13 +153,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-
 .app-selector {
   .logo {
     img {
       max-width: 400px;
     }
   }
+
   .search {
     max-width: 600px;
     input[type="search"]::-webkit-search-cancel-button {
@@ -140,6 +169,7 @@ export default {
       background: url("data:image/svg+xml;charset=UTF-8,%3csvg viewPort='0 0 12 12' version='1.1' xmlns='http://www.w3.org/2000/svg'%3e%3cline x1='1' y1='11' x2='11' y2='1' stroke='black' stroke-width='2'/%3e%3cline x1='1' y1='1' x2='11' y2='11' stroke='black' stroke-width='2'/%3e%3c/svg%3e");
     }
   }
+
   .star {
     position: absolute;
     top: .2rem;
@@ -154,6 +184,17 @@ export default {
       height: 1.2rem;
     }
   }
-}
 
+  .apps-leave-active {
+    position: absolute;
+    transition: opacity 0.25s ease;
+  }
+  .apps-enter, .apps-leave-to {
+    opacity: 0;
+  }
+
+  .apps-move {
+    transition: transform 0.25s ease;
+  }
+}
 </style>

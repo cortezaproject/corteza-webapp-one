@@ -24,8 +24,8 @@ export default {
     },
   },
   layout: {
-    defaultTabTitle: 'App selector',
     search: 'Type here to search',
+    noApps: 'No Applications',
   },
   app: {
     jitsi: {
