@@ -1,22 +1,34 @@
 <template>
   <div
     v-if="loaded"
-    class="layout"
+    class="d-flex flex-column w-100 vh-100"
   >
-    <header>
+    <header
+      class="mw-100"
+    >
       <c-topbar
         :sidebar-pinned="pinned"
+        hide-app-selector
       />
     </header>
-    <c-app-selector />
+
+    <main class="d-flex h-100 overflow-auto">
+      <c-app-selector />
+    </main>
   </div>
-  <div
+
+  <b-container
     v-else
-    class="loader-logo"
+    fluid
+    class="d-flex justify-content-center vh-100 logo"
   >
-    <img :src="logo">
-  </div>
+    <img
+      src="applications/default_logo.jpg"
+      class="w-100 my-auto"
+    >
+  </b-container>
 </template>
+
 <script>
 import { mapActions } from 'vuex'
 import CAppSelector from '../components/CAppSelector'
@@ -76,14 +88,22 @@ export default {
 
 </script>
 <style lang="scss" scoped>
-
-.loader-logo {
-  display: flex;
-  height: 100%;
+.logo {
   img {
-    opacity: .6;
-    max-width: 200px;
-    margin: auto;
+    max-width: 50vw;
+    animation: pulse 4.2s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      opacity: 0;
+    }
+    65% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
   }
 }
 </style>
