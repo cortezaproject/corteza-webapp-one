@@ -1,7 +1,7 @@
 {
   "name": "corteza-webapp-one",
   "description": "Corteza One WebApp",
-  "version": "2021.6.0-rc.1",
+  "version": "2021.6.0-rc.2",
   "license": "Apache-2.0",
   "contributors": [
     "Denis Arh <denis.arh@gmail.com>"
@@ -19,15 +19,15 @@
     "pre-commit": "yarn lint"
   },
   "dependencies": {
-    "@cortezaproject/corteza-js": "2021.6.0-rc.1",
-    "@cortezaproject/corteza-vue": "2021.6.0-rc.1",
+    "@cortezaproject/corteza-js": "^2021.6.0-rc.1",
+    "@cortezaproject/corteza-vue": "^2021.6.0-rc.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.21",
     "@fortawesome/free-regular-svg-icons": "^5.10.1",
     "@fortawesome/free-solid-svg-icons": "^5.10.1",
     "@fortawesome/vue-fontawesome": "^0.1.9",
-    "bootstrap-vue": "^2.3.0",
     "@panter/vue-i18next": "^0.15.0",
     "acorn": "^7.1.1",
+    "bootstrap-vue": "^2.3.0",
     "i18next": "^15.0.9",
     "i18next-browser-languagedetector": "3.0.2",
     "kind-of": "^6.0.3",

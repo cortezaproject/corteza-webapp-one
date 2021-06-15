@@ -668,10 +668,10 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@cortezaproject/corteza-js@2021.6.0-rc.1", "@cortezaproject/corteza-js@^2021.6.0-rc.1":
-  version "2021.6.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@cortezaproject/corteza-js/-/corteza-js-2021.6.0-rc.1.tgz#f2e3ddb31694a7139989e71e751d2e479692e428"
-  integrity sha512-qbuIHimHQCQaTBilWICCUY12IUJtQlwmySS1uF7Qm9Rp36pOOpUM4biBNj/ORvds0fNlbs4Z/bFd7RmssmBl2g==
+"@cortezaproject/corteza-js@^2021.6.0-rc.1":
+  version "2021.6.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@cortezaproject/corteza-js/-/corteza-js-2021.6.0-rc.2.tgz#c593fbf1f91bf16f1f6c1db8ea24a1748fd122ca"
+  integrity sha512-zKOXXdzJDuVbB4FuZPVK7llG1OzY1348EA/B4RC1i55CQQxXU4rT/Kr0vIhKRgSnvaavhQeXorxXgRgPtAD7BA==
   dependencies:
     axios "^0.21.1"
     chart.js "2.9.3"
@@ -684,10 +684,10 @@
     pino "^5.16.0"
     ts-sinon "^1.0.25"
 
-"@cortezaproject/corteza-vue@2021.6.0-rc.1":
-  version "2021.6.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@cortezaproject/corteza-vue/-/corteza-vue-2021.6.0-rc.1.tgz#373bce731dfacf771b9435e3d5f524c9663efdd2"
-  integrity sha512-EGrgCHyfcLdvj5Jzc01jO18lC4JqDVIjtdunWlSkjd2U1Xjl4WykEEiMrtuyVOU5vjdqP7RulCYwDT7QSeBnvw==
+"@cortezaproject/corteza-vue@^2021.6.0-rc.1":
+  version "2021.6.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@cortezaproject/corteza-vue/-/corteza-vue-2021.6.0-rc.2.tgz#8729b630a6e9167c5dd9e1f9aea4568221d17735"
+  integrity sha512-LkEgDgof+fvZLZeBqoU5mjdIkfRu+w+WypXQ+q1qdbrmt3GQ4ahrMZ8HQHBOVN+ogRBaJ/nr4A+SQSnVgKo+sA==
   dependencies:
     "@cortezaproject/corteza-js" "^2021.6.0-rc.1"
     "@fortawesome/fontawesome-svg-core" "^1.2.26"
@@ -699,6 +699,7 @@
     moment "2.25.3"
     pdfjs-dist "2.2.228"
     pino "^5.16.0"
+    portal-vue "^2.1.7"
     qs "^6.9.1"
     v-photoswipe "^1.0.3-1"
     vue "^2.6.11"
@@ -820,10 +821,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@sinonjs/fake-timers@^7.0.4":
-  version "7.0.5"
-  resolved "https://registry.yarnpkg.com/@sinonjs/fake-timers/-/fake-timers-7.0.5.tgz#558a7f8145a01366c44b3dcbdd7172c05c461564"
-  integrity sha512-fUt6b15bjV/VW93UP5opNXJxdwZSbK1EdiwnhN7XrQrcpaOhMJpZ/CjwFpM3THpxwA+YviBUJKSuEqKlCK5alw==
+"@sinonjs/fake-timers@^7.1.0":
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/@sinonjs/fake-timers/-/fake-timers-7.1.2.tgz#2524eae70c4910edccf99b2f4e6efc5894aff7b5"
+  integrity sha512-iQADsW4LBMISqZ6Ci1dupJL9pprqwcVFTcOsEmQOEhW+KLCVn/Y4Jrvg2k19fIHCp+iFprriYPTdRcQR8NbUPg==
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
@@ -884,9 +885,9 @@
   integrity sha512-J32dgx2hw8vXrSbu4ZlVhn1Nm3GbeCFNw2FWL8S5QKucHGY0cyNwjdQdO+KMBZ4wpmC7KhLCiNsdk1RFRIYUQQ==
 
 "@types/node@^11.15.20":
-  version "11.15.53"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.15.53.tgz#24b35ba006338dc60b133f9a637995e1c5a4e069"
-  integrity sha512-X4K0pwvbFZ7+x5wyJUSROj4TJvyXxL0MY4OaxyphfEfgw+0DdYDltyqTX14LiYTIQdY49sDA/MabdtYc973yFg==
+  version "11.15.54"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.15.54.tgz#59ed60e7b0d56905a654292e8d73275034eb6283"
+  integrity sha512-1RWYiq+5UfozGsU6MwJyFX6BtktcT10XRjvcAQmskCtMcW3tPske88lM/nHv7BQG1w9KBXI1zPGuu5PnNCX14g==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -907,11 +908,11 @@
     "@types/sinon" "*"
 
 "@types/sinon@*":
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/@types/sinon/-/sinon-10.0.0.tgz#eecc3847af03d45ffe53d55aaaaf6ecb28b5e584"
-  integrity sha512-jDZ55oCKxqlDmoTBBbBBEx+N8ZraUVhggMZ9T5t+6/Dh8/4NiOjSUfpLrPiEwxQDlAe3wpAkoXhWvE6LibtsMQ==
+  version "10.0.2"
+  resolved "https://registry.yarnpkg.com/@types/sinon/-/sinon-10.0.2.tgz#f360d2f189c0fd433d14aeb97b9d705d7e4cc0e4"
+  integrity sha512-BHn8Bpkapj8Wdfxvh2jWIUoaYB/9/XhsL0oOvBfRagJtKlSl9NWPcFOz2lRukI9szwGxFtYZCTejJSqsGDbdmw==
   dependencies:
-    "@sinonjs/fake-timers" "^7.0.4"
+    "@sinonjs/fake-timers" "^7.1.0"
 
 "@types/sinon@^9.0.5":
   version "9.0.11"
@@ -9903,10 +9904,15 @@ vue2-google-maps@^0.10.6:
     babel-runtime "^6.26.0"
     marker-clusterer-plus "^2.1.4"
 
-vue@^2.6.10, vue@^2.6.11:
+vue@^2.6.10:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
   integrity sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg==
+
+vue@^2.6.11:
+  version "2.6.14"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.14.tgz#e51aa5250250d569a3fbad3a8a5a687d6036e235"
+  integrity sha512-x2284lgYvjOMj3Za7kqzRcUSxBboHqtgRE2zlos1qWaOye5yUmHn42LB1250NJBLRwEcdrB0JRwyPTEPhfQjiQ==
 
 vuedraggable@^2.23.2:
   version "2.24.3"
