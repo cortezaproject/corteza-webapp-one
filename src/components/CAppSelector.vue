@@ -1,15 +1,15 @@
 <template>
   <b-container
-    class="app-selector text-center"
+    class="app-selector d-flex flex-column text-center m-0 p-0 mw-100"
   >
-    <div class="logo px-5 mb-5">
+    <div class="logo px-5">
       <img
         src="applications/default_logo.jpg"
         class="w-100"
       >
     </div>
 
-    <div class="search w-100 m-auto px-5">
+    <div class="search w-100 mx-auto mt-4 mb-3 px-5">
       <b-input
         v-model="query"
         type="search"
@@ -24,14 +24,14 @@
       v-if="filteredApps.length"
       v-model="appList"
       group="apps"
-      class="mt-4"
+      class="h-100 overflow-auto"
       :disabled="!canCreateApplication || query"
       @end="onDrop"
     >
       <transition-group
         name="apps"
         tag="div"
-        class="d-flex flex-wrap justify-content-center"
+        class="d-flex flex-wrap justify-content-center mw-transition-group m-auto"
       >
         <b-card
           v-for="app in filteredApps"
@@ -39,7 +39,7 @@
           no-body
           overlay
           :style="`max-width: 16rem;`"
-          class="app m-3"
+          class="app m-2"
           @mouseover="hovered = app.applicationID"
           @mouseleave="hovered = undefined"
         >
@@ -168,6 +168,10 @@ export default {
       width: 13px;
       background: url("data:image/svg+xml;charset=UTF-8,%3csvg viewPort='0 0 12 12' version='1.1' xmlns='http://www.w3.org/2000/svg'%3e%3cline x1='1' y1='11' x2='11' y2='1' stroke='black' stroke-width='2'/%3e%3cline x1='1' y1='1' x2='11' y2='11' stroke='black' stroke-width='2'/%3e%3c/svg%3e");
     }
+  }
+
+  .mw-transition-group {
+    max-width: 55%;
   }
 
   .app {

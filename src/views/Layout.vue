@@ -12,7 +12,7 @@
       />
     </header>
 
-    <main class="d-flex h-100 overflow-auto">
+    <main class="d-flex h-100 overflow-hidden">
       <c-app-selector />
     </main>
   </div>
