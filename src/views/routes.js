@@ -23,7 +23,6 @@ export default [
     ...r('bridge', '/bridge', 'Bridge/index'),
     children: [
       r('bridge-jitsi', 'jitsi', 'Bridge/Jitsi'),
-      r('bridge-google-maps', 'google-maps', 'Bridge/GoogleMaps'),
     ],
   },
 ]

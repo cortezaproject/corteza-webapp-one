@@ -35,8 +35,5 @@ export default {
       defaultLocalDisplayName: 'Anonymous',
       create: 'Create',
     },
-    googleMaps: {
-      search: 'Search',
-    },
   },
 }
