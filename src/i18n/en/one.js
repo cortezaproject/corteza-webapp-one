@@ -39,4 +39,8 @@ export default {
       search: 'Search',
     },
   },
+  noApp: {
+    application: 'Application',
+    notFound: 'not found.',
+  },
 }
