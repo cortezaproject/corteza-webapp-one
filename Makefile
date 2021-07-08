@@ -3,7 +3,6 @@
 YARN_FLAGS            ?= --non-interactive --no-progress --silent --emoji false
 YARN                   = yarn $(YARN_FLAGS)
 
-REPO_NAME             ?= $(DRONE_REPO_NAME)
 REPO_NAME             ?= corteza-webapp-one
 
 BUILD_FLAVOUR         ?= corteza
@@ -32,7 +31,7 @@ release:
 	@ tar -C $(BUILD_DEST_DIR) -czf $(RELEASE_NAME) $(dir $(BUILD_DEST_DIR))
 
 upload: $(RELEASE_PKEY)
-	@ echo "put *.tar.gz" | sftp -q -i $(RELEASE_PKEY) $(RELEASE_SFTP_URI)
+	@ echo "put *.tar.gz" | sftp -q -o "StrictHostKeyChecking no" -i $(RELEASE_PKEY) $(RELEASE_SFTP_URI)
 	@ rm -f $(RELEASE_PKEY)
 
 $(RELEASE_PKEY):
