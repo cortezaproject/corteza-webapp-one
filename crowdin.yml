@@ -1,0 +1,3 @@
+files:
+  - source: /src/i18n/en
+    translation: /src/i18n/%locale%
