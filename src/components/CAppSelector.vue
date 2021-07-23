@@ -58,7 +58,6 @@
           <b-link
             :disabled="!app.enabled"
             :href="app.unify.url"
-            target="_blank"
             :style="[{ cursor: `${app.enabled ? 'pointer': canCreateApplication ? 'grab' : 'default'}` }]"
             class="stretched-link"
           />
