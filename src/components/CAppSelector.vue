@@ -25,7 +25,7 @@
       v-model="appList"
       group="apps"
       class="h-100 overflow-auto"
-      :disabled="!canCreateApplication || query"
+      :disabled="!canCreateApplication || query || isMobileResolution"
       @end="onDrop"
     >
       <transition-group
@@ -94,6 +94,8 @@ export default {
       canPin: false,
 
       hovered: undefined,
+
+      isMobileResolution: false,
     }
   },
 
@@ -119,6 +121,9 @@ export default {
 
   created () {
     this.fetchEffective()
+    if (window.innerWidth < 576) {
+      this.isMobileResolution = true
+    }
   },
 
   methods: {
