@@ -23,7 +23,7 @@
     class="d-flex justify-content-center vh-100 logo"
   >
     <img
-      src="applications/default_logo.jpg"
+      :src="logo"
       class="w-100 my-auto"
     >
   </b-container>
@@ -58,18 +58,22 @@ export default {
 
     // Load UI settings (layout, logo)
     this.$Settings.init({ api: this.$SystemAPI })
-      .then(({ ui: { one = {} } }) => {
-        const localAttachment = /^attachment:(\d+)/
-        if (one.logo && localAttachment.test(one.logo)) {
-          // Assuming that this is URL to an uploaded image file
-          const [, attachmentID] = localAttachment.exec(one.logo)
+      .then(({ ui = {} }) => {
+        const { one } = ui
 
-          this.logo = this.$SystemAPI.baseURL +
-            this.$SystemAPI.attachmentOriginalEndpoint({
-              attachmentID,
-              kind: 'settings',
-              name: 'logo',
-            })
+        if (one) {
+          const localAttachment = /^attachment:(\d+)/
+          if (one.logo && localAttachment.test(one.logo)) {
+            // Assuming that this is URL to an uploaded image file
+            const [, attachmentID] = localAttachment.exec(one.logo)
+
+            this.logo = this.$SystemAPI.baseURL +
+              this.$SystemAPI.attachmentOriginalEndpoint({
+                attachmentID,
+                kind: 'settings',
+                name: 'logo',
+              })
+          }
         }
 
         // Preload applications
