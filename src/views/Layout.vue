@@ -7,8 +7,18 @@
       class="mw-100"
     >
       <c-topbar
-        :sidebar-pinned="pinned"
         hide-app-selector
+        :sidebar-pinned="false"
+        :labels="{
+          helpForum: $t('navigation.help.forum'),
+          helpDocumentation: $t('navigation.help.documentation'),
+          helpFeedback: $t('navigation.help.feedback'),
+          helpVersion: $t('navigation.help.version'),
+          userSettingsLoggedInAs: $t('navigation.userSettings.loggedInAs', { user }),
+          userSettingsProfile: $t('navigation.userSettings.profile'),
+          userSettingsChangePassword: $t('navigation.userSettings.changePassword'),
+          userSettingsLogout: $t('navigation.userSettings.logout'),
+        }"
       />
     </header>
 
@@ -41,14 +51,18 @@ export default {
   data () {
     return {
       loaded: false,
-
-      pinned: false,
+      logo: 'applications/default_logo.jpg',
     }
   },
 
   computed: {
     logo () {
       return this.$Settings.attachment('ui.mainLogo', logo)
+    },
+
+    user () {
+      const { user } = this.$auth
+      return user.name || user.handle || user.email || ''
     },
   },
 
