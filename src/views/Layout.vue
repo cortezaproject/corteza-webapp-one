@@ -17,70 +17,47 @@
     </main>
   </div>
 
-  <b-container
+  <c-loader-logo
     v-else
-    fluid
-    class="d-flex justify-content-center vh-100 logo"
-  >
-    <img
-      :src="logo"
-      class="w-100 my-auto"
-    >
-  </b-container>
+    :logo="logo"
+  />
 </template>
 
 <script>
 import { mapActions } from 'vuex'
 import CAppSelector from '../components/CAppSelector'
 import { components } from '@cortezaproject/corteza-vue'
+import logo from 'corteza-webapp-one/src/themes/corteza-base/img/logo.png'
 
-const { CTopbar } = components
+const { CTopbar, CLoaderLogo } = components
 
 export default {
   components: {
     CAppSelector,
     CTopbar,
+    CLoaderLogo,
   },
 
   data () {
     return {
-      // Are panels loaded?
       loaded: false,
-
-      logo: 'applications/default_logo.jpg',
 
       pinned: false,
     }
   },
 
+  computed: {
+    logo () {
+      return this.$Settings.attachment('ui.mainLogo', logo)
+    },
+  },
+
   created () {
     this.loaded = false
 
-    // Load UI settings (layout, logo)
-    this.$Settings.init({ api: this.$SystemAPI })
-      .then(({ ui = {} }) => {
-        const { one } = ui
-
-        if (one) {
-          const localAttachment = /^attachment:(\d+)/
-          if (one.logo && localAttachment.test(one.logo)) {
-            // Assuming that this is URL to an uploaded image file
-            const [, attachmentID] = localAttachment.exec(one.logo)
-
-            this.logo = this.$SystemAPI.baseURL +
-              this.$SystemAPI.attachmentOriginalEndpoint({
-                attachmentID,
-                kind: 'settings',
-                name: 'logo',
-              })
-          }
-        }
-
-        // Preload applications
-        this.preloadApplications()
-
-        this.loaded = true
-      })
+    this.preloadApplications().then(() => {
+      this.loaded = true
+    })
   },
 
   methods: {
@@ -92,22 +69,5 @@ export default {
 
 </script>
 <style lang="scss" scoped>
-.logo {
-  img {
-    max-width: 50vw;
-    animation: pulse 4.2s infinite;
-  }
 
-  @keyframes pulse {
-    0% {
-      opacity: 0;
-    }
-    65% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-}
 </style>

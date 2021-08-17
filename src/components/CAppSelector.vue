@@ -1,10 +1,11 @@
 <template>
   <b-container
+    fluid
     class="app-selector d-flex flex-column text-center m-0 p-0 mw-100"
   >
     <div class="logo px-5">
       <img
-        src="applications/default_logo.jpg"
+        :src="logo"
         class="w-100"
       >
     </div>
@@ -78,6 +79,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import Draggable from 'vuedraggable'
+import logo from 'corteza-webapp-one/src/themes/corteza-base/img/logo.png'
 
 export default {
   components: {
@@ -103,6 +105,10 @@ export default {
     ...mapGetters({
       apps: 'applications/unifyOnly',
     }),
+
+    logo () {
+      return this.$Settings.attachment('ui.mainLogo', logo)
+    },
 
     filteredApps () {
       const query = (this.query || '').toUpperCase()

@@ -20,8 +20,10 @@ export default (options = {}) => {
     data: () => ({ loaded: false }),
 
     async created () {
-      return this.$auth.handle().then(({ accessTokenFn, user }) => {
-        this.loaded = true
+      this.$auth.handle().then(({ accessTokenFn, user }) => {
+        this.$Settings.init({ api: this.$SystemAPI }).then(() => {
+          this.loaded = true
+        })
       }).catch((err) => {
         if (err instanceof Error && err.message === 'Unauthenticated') {
           // user not logged-in,
