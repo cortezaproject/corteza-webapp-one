@@ -143,7 +143,7 @@ export default {
       this.$SystemAPI.permissionsEffective({ resource: 'application' })
         .then(p => {
           this.canCreateApplication = p.find(per => per.operation === 'application.create').allow || false
-          this.canPin = p.find(({ resource, operation, allow }) => resource === 'system' && operation === 'application.flag.self').allow
+          // this.canPin = p.find(({ resource, operation, allow }) => resource === 'system' && operation === 'application.flag.self').allow
         })
     },
 
