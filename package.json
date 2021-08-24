@@ -1,7 +1,7 @@
 {
   "name": "corteza-webapp-one",
   "description": "Corteza One WebApp",
-  "version": "2021.3.10",
+  "version": "2021.3.11",
   "license": "Apache-2.0",
   "contributors": [
     "Denis Arh <denis.arh@gmail.com>"
@@ -19,8 +19,8 @@
     "pre-commit": "yarn lint"
   },
   "dependencies": {
-    "@cortezaproject/corteza-js": "^2021.3.0",
-    "@cortezaproject/corteza-vue": "^2021.3.0",
+    "@cortezaproject/corteza-js": "^2021.3.11",
+    "@cortezaproject/corteza-vue": "^2021.3.11",
     "@panter/vue-i18next": "^0.15.0",
     "acorn": "^7.1.1",
     "i18next": "^15.0.9",
