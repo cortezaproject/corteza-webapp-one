@@ -21,59 +21,68 @@
       />
     </div>
 
-    <draggable
-      v-if="filteredApps.length"
-      v-model="appList"
-      group="apps"
-      class="h-100 overflow-auto"
-      :disabled="!canCreateApplication || query || isMobileResolution"
-      @end="onDrop"
-    >
-      <transition-group
-        name="apps"
-        tag="div"
-        class="d-flex flex-wrap justify-content-center mw-transition-group m-auto"
+    <b-row class="row-width mx-auto overflow-auto">
+      <draggable
+        v-if="filteredApps.length"
+        v-model="appList"
+        group="apps"
+        class="h-100 w-100"
+        :disabled="!canCreateApplication || query || isMobileResolution"
+        @end="onDrop"
       >
-        <b-card
-          v-for="app in filteredApps"
-          :key="app.applicationID"
-          no-body
-          overlay
-          :style="`max-width: 16rem;`"
-          class="app m-2"
-          @mouseover="hovered = app.applicationID"
-          @mouseleave="hovered = undefined"
+        <transition-group
+          name="apps"
+          tag="div"
+          class="d-flex flex-wrap justify-content-center mw-transition-group m-auto"
         >
-          <b-card-img
-            :src="app.unify.logo"
-            :alt="app.unify.name || app.name"
-            class="rounded-bottom"
-          />
-
-          <b-card-title
-            class="my-4 h5"
+          <b-col
+            v-for="app in filteredApps"
+            :key="app.applicationID"
+            cols="12"
+            md="6"
+            lg="4"
+            xl="4"
+            class="p-0"
           >
-            {{ app.unify.name || app.name }}
-          </b-card-title>
+            <b-card
+              no-body
+              overlay
+              class="app m-2"
+              @mouseover="hovered = app.applicationID"
+              @mouseleave="hovered = undefined"
+            >
+              <b-card-img
+                :src="app.unify.logo"
+                :alt="app.unify.name || app.name"
+                class="rounded-bottom"
+              />
 
-          <b-link
-            :disabled="!app.enabled"
-            :href="app.unify.url"
-            :style="[{ cursor: `${app.enabled ? 'pointer': canCreateApplication ? 'grab' : 'default'}` }]"
-            class="stretched-link"
-          />
-        </b-card>
-      </transition-group>
-    </draggable>
+              <b-card-title
+                class="my-4 h5"
+              >
+                {{ app.unify.name || app.name }}
+              </b-card-title>
 
-    <div
-      v-else
-      class="d-flex justify-content-center"
-    >
-      <h4 class="mt-5">
-        {{ $t('layout.noApps') }}
-      </h4>
-    </div>
+              <b-link
+                :disabled="!app.enabled"
+                :href="app.unify.url"
+                :style="[{ cursor: `${app.enabled ? 'pointer': canCreateApplication ? 'grab' : 'default'}` }]"
+                class="stretched-link"
+              />
+            </b-card>
+          </b-col>
+        </transition-group>
+      </draggable>
+
+      <div
+        v-else
+        class="d-flex justify-content-center"
+      >
+        <h4 class="mt-5">
+          {{ $t('layout.noApps') }}
+        </h4>
+      </div>
+    </b-row>
   </b-container>
 </template>
 <script>
@@ -221,6 +230,11 @@ export default {
 
   .apps-move {
     transition: transform 0.25s ease;
+  }
+  @media only screen and (min-width: 1200px) {
+    .row-width{
+      width: 75%;
+    }
   }
 }
 </style>
