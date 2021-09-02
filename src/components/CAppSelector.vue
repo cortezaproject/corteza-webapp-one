@@ -3,14 +3,14 @@
     fluid
     class="app-selector d-flex flex-column text-center m-0 p-0 mw-100"
   >
-    <div class="logo px-5">
-      <img
+    <div class="d-flex justify-content-center align-items-center">
+      <b-img
         :src="logo"
-        class="w-100"
-      >
+        class="logo"
+      />
     </div>
 
-    <div class="search w-100 mx-auto mt-4 mb-3 px-5">
+    <div class="search flex-shrink-2 w-100 mx-auto mt-4 mb-3 px-5">
       <b-input
         v-model="query"
         type="search"
@@ -165,9 +165,9 @@ export default {
 <style lang="scss" scoped>
 .app-selector {
   .logo {
-    img {
-      max-width: 400px;
-    }
+    max-height: 30vh;
+    max-width: 50vw;
+    width: auto;
   }
 
   .search {
