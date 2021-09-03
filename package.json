@@ -1,7 +1,7 @@
 {
   "name": "corteza-webapp-one",
   "description": "Corteza One WebApp",
-  "version": "2021.9.0-dev.3",
+  "version": "2021.9.0-dev.4",
   "license": "Apache-2.0",
   "contributors": [
     "Denis Arh <denis.arh@gmail.com>"
@@ -36,7 +36,7 @@
     "minimist": "^1.2.5",
     "resolve-url-loader": "^3.1.2",
     "set-value": "^3.0.2",
-    "vue": "^2.6.10",
+    "vue": "2.6.14",
     "vue-plugin-load-script": "^1.2.0",
     "vue-router": "3.1.6",
     "vuedraggable": "^2.23.2",
@@ -58,7 +58,7 @@
     "node-sass": "4.13.1",
     "nyc": "^14.1.1",
     "sass-loader": "^7.1.0",
-    "vue-template-compiler": "^2.5.21"
+    "vue-template-compiler": "2.6.14"
   },
   "resolutions": {
     "**/**/node-forge": "^0.10.0",
