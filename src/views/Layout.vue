@@ -8,6 +8,16 @@
     >
       <c-topbar
         :sidebar-pinned="pinned"
+        :labels="{
+          helpForum: $t('navigation.help.forum'),
+          helpDocumentation: $t('navigation.help.documentation'),
+          helpFeedback: $t('navigation.help.feedback'),
+          helpVersion: $t('navigation.help.version'),
+          userSettingsLoggedInAs: $t('navigation.userSettings.loggedInAs', { user }),
+          userSettingsProfile: $t('navigation.userSettings.profile'),
+          userSettingsChangePassword: $t('navigation.userSettings.changePassword'),
+          userSettingsLogout: $t('navigation.userSettings.logout'),
+        }"
         hide-app-selector
       />
     </header>
@@ -47,6 +57,11 @@ export default {
   },
 
   computed: {
+    user () {
+      const { user } = this.$auth
+      return user.name || user.handle || user.email || ''
+    },
+
     logo () {
       return this.$Settings.attachment('ui.mainLogo', logo)
     },
