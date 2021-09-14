@@ -1,37 +1,5 @@
-@import "variables";
+@import "./variables.scss";
+@import "./custom.scss";
 @import "~bootstrap/scss/bootstrap";
 @import '~bootstrap-vue/src/index.scss';
-@import "nunito";
-
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  font-family: $regular;
-}
-
-thead th,
-label,
-legend,
-strong,
-b,
-.font-weight-bold {
-  font-family: $semibold;
-}
-
-:focus {
-  outline-color: $primary;
-}
-
-input {
-  font-family: $regular;
-}
-
-a {
-  &:link,
-  &:visited,
-  &:hover,
-  &:active {
-    color: $dark;
-  }
-}
+@import "./poppins.scss";
