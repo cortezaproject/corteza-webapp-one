@@ -28,7 +28,9 @@ export default (options = {}) => {
       })
 
       return this.$auth.vue(this).handle().then(({ user }) => {
-        this.loaded = true
+        this.$Settings.init({ api: this.$SystemAPI }).finally(() => {
+          this.loaded = true
+        })
       }).catch((err) => {
         if (err instanceof Error && err.message === 'Unauthenticated') {
           // user not logged-in,
