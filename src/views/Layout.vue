@@ -8,7 +8,7 @@
     >
       <c-topbar
         hide-app-selector
-        :sidebar-pinned="false"
+        :sidebar-pinned="pinned"
         :labels="{
           helpForum: $t('help.forum'),
           helpDocumentation: $t('help.documentation'),
@@ -55,6 +55,7 @@ export default {
   data () {
     return {
       loaded: false,
+
       pinned: false,
     }
   },
