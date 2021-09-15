@@ -23,7 +23,9 @@
     </header>
 
     <main class="d-flex h-100 overflow-hidden">
-      <c-app-selector />
+      <c-app-selector
+        :logo="logo"
+      />
     </main>
   </div>
 

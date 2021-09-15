@@ -90,7 +90,6 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import Draggable from 'vuedraggable'
-import logo from 'corteza-webapp-one/src/themes/corteza-base/img/logo.png'
 
 export default {
   i18nOptions: {
@@ -99,6 +98,13 @@ export default {
 
   components: {
     Draggable,
+  },
+
+  props: {
+    logo: {
+      type: String,
+      default: () => '',
+    },
   },
 
   data () {
@@ -120,10 +126,6 @@ export default {
     ...mapGetters({
       apps: 'applications/unifyOnly',
     }),
-
-    logo () {
-      return this.$Settings.attachment('ui.mainLogo', logo)
-    },
 
     filteredApps () {
       const query = (this.query || '').toUpperCase()
