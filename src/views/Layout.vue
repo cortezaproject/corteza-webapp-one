@@ -37,6 +37,7 @@
 import { mapActions } from 'vuex'
 import CAppSelector from '../components/CAppSelector'
 import { components } from '@cortezaproject/corteza-vue'
+import icon from 'corteza-webapp-one/src/themes/corteza-base/img/icon.png'
 import logo from 'corteza-webapp-one/src/themes/corteza-base/img/logo.png'
 
 const { CTopbar, CLoaderLogo } = components
@@ -61,6 +62,10 @@ export default {
   },
 
   computed: {
+    icon () {
+      return this.$Settings.attachment('ui.iconLogo', icon)
+    },
+
     logo () {
       return this.$Settings.attachment('ui.mainLogo', logo)
     },
@@ -68,6 +73,18 @@ export default {
     user () {
       const { user } = this.$auth
       return user.name || user.handle || user.email || ''
+    },
+  },
+
+  watch: {
+    icon: {
+      immediate: true,
+      handler (icon) {
+        if (icon) {
+          const favicon = document.getElementById('favicon')
+          favicon.href = icon
+        }
+      },
     },
   },
 
