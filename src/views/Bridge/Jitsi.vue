@@ -6,19 +6,19 @@
       >
     </div>
     <div id="roomselection">
-      <span>{{ $t('app.jitsi.toStart') }}</span>
+      <span>{{ $t('jitsi.toStart') }}</span>
       <input
         id="roomInputField"
         v-model="roomName"
         type="text"
-        :placeholder="$t('app.jitsi.roomName')"
+        :placeholder="$t('jitsi.roomName')"
       >
 
       <button
         :disabled="jitsi || (cleanup(roomName).length === 0)"
         @click="onCreate"
       >
-        {{ $t('app.jitsi.create') }}
+        {{ $t('jitsi.create') }}
       </button>
 
       <div
@@ -40,6 +40,10 @@ Vue.loadScript('https://meet.jit.si/external_api.js')
 const domain = 'meet.jit.si'
 
 export default {
+  i18nOptions: {
+    namespaces: 'app',
+  },
+
   name: 'JitsiBridge',
 
   params: {
@@ -114,8 +118,8 @@ export default {
           SHOW_BRAND_WATERMARK: false,
           BRAND_WATERMARK_LINK: '',
           SHOW_POWERED_BY: false,
-          DEFAULT_REMOTE_DISPLAY_NAME: $t('app.jitsi.defaultRemoteDisplayName'),
-          DEFAULT_LOCAL_DISPLAY_NAME: userDisplayName || $t('app.jitsi.defaultLocalDisplayName'),
+          DEFAULT_REMOTE_DISPLAY_NAME: $t('jitsi.defaultRemoteDisplayName'),
+          DEFAULT_LOCAL_DISPLAY_NAME: userDisplayName || $t('jitsi.defaultLocalDisplayName'),
           TOOLBAR_BUTTONS: [
             'microphone',
             'camera',

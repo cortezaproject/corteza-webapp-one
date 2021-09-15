@@ -10,14 +10,14 @@
         hide-app-selector
         :sidebar-pinned="false"
         :labels="{
-          helpForum: $t('navigation.help.forum'),
-          helpDocumentation: $t('navigation.help.documentation'),
-          helpFeedback: $t('navigation.help.feedback'),
-          helpVersion: $t('navigation.help.version'),
-          userSettingsLoggedInAs: $t('navigation.userSettings.loggedInAs', { user }),
-          userSettingsProfile: $t('navigation.userSettings.profile'),
-          userSettingsChangePassword: $t('navigation.userSettings.changePassword'),
-          userSettingsLogout: $t('navigation.userSettings.logout'),
+          helpForum: $t('help.forum'),
+          helpDocumentation: $t('help.documentation'),
+          helpFeedback: $t('help.feedback'),
+          helpVersion: $t('help.version'),
+          userSettingsLoggedInAs: $t('userSettings.loggedInAs', { user }),
+          userSettingsProfile: $t('userSettings.profile'),
+          userSettingsChangePassword: $t('userSettings.changePassword'),
+          userSettingsLogout: $t('userSettings.logout'),
         }"
       />
     </header>
@@ -42,6 +42,10 @@ import logo from 'corteza-webapp-one/src/themes/corteza-base/img/logo.png'
 const { CTopbar, CLoaderLogo } = components
 
 export default {
+  i18nOptions: {
+    namespaces: 'navigation',
+  },
+
   components: {
     CAppSelector,
     CTopbar,
@@ -51,7 +55,7 @@ export default {
   data () {
     return {
       loaded: false,
-      logo: 'applications/default_logo.jpg',
+      pinned: false,
     }
   },
 

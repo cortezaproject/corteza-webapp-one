@@ -16,8 +16,8 @@
         type="search"
         name="search"
         debounce="200"
-        :aria-label="$t('layout.search')"
-        :placeholder="$t('layout.search')"
+        :aria-label="$t('search')"
+        :placeholder="$t('search')"
       />
     </div>
 
@@ -78,8 +78,10 @@
         v-else
         class="d-flex justify-content-center"
       >
-        <h4 class="mt-5">
-          {{ $t('layout.noApps') }}
+        <h4
+          class="mt-5"
+        >
+          {{ $t('no-applications') }}
         </h4>
       </div>
     </b-row>
@@ -91,6 +93,10 @@ import Draggable from 'vuedraggable'
 import logo from 'corteza-webapp-one/src/themes/corteza-base/img/logo.png'
 
 export default {
+  i18nOptions: {
+    namespaces: 'layout',
+  },
+
   components: {
     Draggable,
   },
