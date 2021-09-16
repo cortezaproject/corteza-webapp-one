@@ -6,19 +6,19 @@
       >
     </div>
     <div id="roomselection">
-      <span>{{ $t('jitsi.toStart') }}</span>
+      <span>{{ $t('toStart') }}</span>
       <input
         id="roomInputField"
         v-model="roomName"
         type="text"
-        :placeholder="$t('jitsi.roomName')"
+        :placeholder="$t('roomName')"
       >
 
       <button
         :disabled="jitsi || (cleanup(roomName).length === 0)"
         @click="onCreate"
       >
-        {{ $t('jitsi.create') }}
+        {{ $t('create') }}
       </button>
 
       <div
@@ -42,6 +42,7 @@ const domain = 'meet.jit.si'
 export default {
   i18nOptions: {
     namespaces: 'app',
+    keyPrefix: 'jitsi',
   },
 
   name: 'JitsiBridge',

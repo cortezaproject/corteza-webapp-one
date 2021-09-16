@@ -25,4 +25,7 @@ export default [
       r('bridge-jitsi', 'jitsi', 'Bridge/Jitsi'),
     ],
   },
+
+  // When everything else fails, go to root
+  { path: '*', redirect: { name: 'layout' } },
 ]
