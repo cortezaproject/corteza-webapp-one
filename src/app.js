@@ -28,6 +28,12 @@ export default (options = {}) => {
       })
 
       return this.$auth.vue(this).handle().then(({ user }) => {
+        if (user.meta.preferredLanguage) {
+          // After user is authenticated, get his preferred language
+          // and instruct i18next to change it
+          this.$i18n.i18next.changeLanguage(user.meta.preferredLanguage)
+        }
+
         this.$Settings.init({ api: this.$SystemAPI }).finally(() => {
           this.loaded = true
         })
