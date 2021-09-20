@@ -58,7 +58,7 @@
               />
 
               <b-card-text
-                class="my-4"
+                class="my-4 h6"
               >
                 {{ app.unify.name || app.name }}
               </b-card-text>
