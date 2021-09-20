@@ -1,32 +1,49 @@
-body {
-  margin: 0;
-  padding: 0;
+html {
   height: 100vh;
-  font-family: $regular;
+  width: 100vw;
+  overflow: hidden;
 }
 
-thead th,
-label,
-legend,
-strong,
-b,
-.font-weight-bold {
-  font-family: $semibold;
+body {
+  height: 100%;
+}
+
+body {
+  height: 100%;
 }
 
 :focus {
   outline-color: $primary;
 }
 
-input {
-  font-family: $regular;
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
 }
 
-a {
-  &:link,
-  &:visited,
-  &:hover,
-  &:active {
-    color: $dark;
+.btn-link {
+  &:focus {
+    text-decoration: none;
   }
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.grab {
+  cursor: grab;
+}
+
+thead th,
+legend,
+label,
+.btn {
+  font-family: $font-medium;
+}
+
+strong,
+b,
+.font-weight-bold {
+  font-family: $font-semibold;
 }

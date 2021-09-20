@@ -57,11 +57,11 @@
                 class="rounded-bottom"
               />
 
-              <b-card-title
-                class="my-4 h5"
+              <b-card-text
+                class="my-4"
               >
                 {{ app.unify.name || app.name }}
-              </b-card-title>
+              </b-card-text>
 
               <b-link
                 :disabled="!app.enabled"
@@ -76,7 +76,7 @@
 
       <div
         v-else
-        class="d-flex justify-content-center"
+        class="d-flex justify-content-center w-100"
       >
         <h4
           class="mt-5"
