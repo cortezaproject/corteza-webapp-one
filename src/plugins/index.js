@@ -2,6 +2,7 @@ import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
 import Router from 'vue-router'
 import Vuex from 'vuex'
+import VueTour from 'vue-tour'
 
 import { plugins } from '@cortezaproject/corteza-vue'
 
@@ -10,6 +11,7 @@ Vue.use(plugins.Auth(), {
   rootApp: true,
 })
 
+Vue.use(VueTour)
 Vue.use(Router)
 Vue.use(Vuex)
 Vue.use(BootstrapVue)

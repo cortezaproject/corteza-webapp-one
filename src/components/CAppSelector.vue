@@ -13,6 +13,7 @@
     <div class="search flex-shrink-2 w-100 mx-auto mt-4 mb-3 px-5">
       <b-input
         v-model="query"
+        data-v-onboarding="app-list"
         type="search"
         name="search"
         debounce="200"
@@ -20,7 +21,9 @@
         :placeholder="$t('search')"
       />
     </div>
-
+    <tour-start
+      @start="startTour"
+    />
     <b-row class="row-width mx-auto overflow-auto">
       <draggable
         v-if="filteredApps.length"
@@ -43,6 +46,7 @@
             lg="4"
             xl="4"
             class="p-0"
+            :data-v-onboarding="getTourID(app.unify.url)"
           >
             <b-card
               no-body
@@ -85,11 +89,17 @@
         </h4>
       </div>
     </b-row>
+    <tour
+      ref="tour"
+      name="app-list"
+    />
   </b-container>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import Draggable from 'vuedraggable'
+import { components } from '@cortezaproject/corteza-vue'
+const { Tour, TourStart } = components
 
 export default {
   i18nOptions: {
@@ -98,6 +108,8 @@ export default {
 
   components: {
     Draggable,
+    Tour,
+    TourStart,
   },
 
   props: {
@@ -156,6 +168,19 @@ export default {
       unpinApp: 'applications/unpin',
     }),
 
+    getTourID (url) {
+      switch (url) {
+        case 'compose/':
+          return 'low-code'
+        case 'compose/ns/crm/pages':
+          return 'crm'
+        case 'reporter/':
+          return 'reporter'
+        case 'workflow/':
+          return 'workflow'
+      }
+    },
+
     fetchEffective () {
       this.$SystemAPI.permissionsEffective({ resource: 'application' })
         .then(p => {
@@ -175,6 +200,10 @@ export default {
     async onDrop () {
       const applicationIDs = this.appList.map(({ applicationID }) => applicationID)
       await this.reorderApp(applicationIDs)
+    },
+
+    startTour () {
+      this.$refs.tour.start()
     },
   },
 }
