@@ -46,7 +46,7 @@
             lg="4"
             xl="4"
             class="p-0"
-            :data-v-onboarding="getTourID(app.unify.url)"
+            :data-v-onboarding="getStepName(app.unify.url)"
           >
             <b-card
               no-body
@@ -92,6 +92,7 @@
     <tour
       ref="tour"
       name="app-list"
+      :steps="filteredSteps"
     />
   </b-container>
 </template>
@@ -131,6 +132,16 @@ export default {
       hovered: undefined,
 
       isMobileResolution: false,
+
+      steps: [
+        { name: 'app-list', dynamic: false },
+        { name: 'low-code', dynamic: true },
+        { name: 'crm', dynamic: true },
+        { name: 'reporter', dynamic: true },
+        { name: 'workflow', dynamic: true },
+        { name: 'profile', dynamic: false },
+      ],
+
     }
   },
 
@@ -142,6 +153,17 @@ export default {
     filteredApps () {
       const query = (this.query || '').toUpperCase()
       return this.query ? this.appList.filter(({ name }) => (name.toUpperCase()).includes(query)) : this.appList
+    },
+
+    filteredSteps () {
+      return this.steps.filter(step => {
+        if (step.dynamic) {
+          return this.filteredApps.some(app => {
+            return this.getStepName(app.unify.url) === step.name
+          })
+        }
+        return true
+      }).map(s => { return s.name })
     },
   },
 
@@ -168,7 +190,7 @@ export default {
       unpinApp: 'applications/unpin',
     }),
 
-    getTourID (url) {
+    getStepName (url) {
       switch (url) {
         case 'compose/':
           return 'low-code'
