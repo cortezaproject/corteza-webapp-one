@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-center align-items-center">
       <b-img
         :src="logo"
-        class="logo"
+        class="logo px-3"
       />
     </div>
 
@@ -293,6 +293,11 @@ export default {
   @media only screen and (min-width: 1200px) {
     .row-width{
       width: 75%;
+    }
+  }
+  @media only screen and (max-width: 576px) {
+    .logo {
+      max-width: 100%;
     }
   }
 }
