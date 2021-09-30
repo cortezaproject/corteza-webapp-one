@@ -11,84 +11,105 @@
     </div>
 
     <div class="search flex-shrink-2 w-100 mx-auto mt-4 mb-3 px-5">
-      <b-input
-        v-model="query"
-        data-v-onboarding="app-list"
-        type="search"
-        name="search"
-        debounce="200"
-        :aria-label="$t('search')"
-        :placeholder="$t('search')"
-      />
+      <div class="flex-grow-1 mt-1">
+        <b-input-group
+          data-v-onboarding="app-list"
+        >
+          <b-form-input
+            v-model.trim="query"
+            class="float-right mw-100"
+            type="search"
+            name="search"
+            debounce="200"
+            :aria-label="$t('search')"
+            :placeholder="$t('search')"
+          />
+          <b-input-group-append>
+            <b-input-group-text class="text-primary bg-white">
+              <font-awesome-icon
+                :icon="['fas', 'search']"
+              />
+            </b-input-group-text>
+          </b-input-group-append>
+        </b-input-group>
+      </div>
     </div>
+
+    <b-container
+      fluid="xl"
+      class="overflow-auto"
+    >
+      <b-row>
+        <draggable
+          v-if="filteredApps.length"
+          v-model="appList"
+          group="apps"
+          class="h-100 w-100"
+          :disabled="!canCreateApplication || query || isMobileResolution"
+          @end="onDrop"
+        >
+          <transition-group
+            name="apps"
+            tag="div"
+            class="d-flex flex-wrap justify-content-center mw-transition-group m-auto"
+          >
+            <b-col
+              v-for="app in filteredApps"
+              :key="app.applicationID"
+              cols="12"
+              md="6"
+              lg="4"
+              xl="4"
+              class="p-0"
+              :data-v-onboarding="getStepName(app.unify.url)"
+            >
+              <b-card
+                no-body
+                overlay
+                class="app m-2"
+                @mouseover="hovered = app.applicationID"
+                @mouseleave="hovered = undefined"
+              >
+                <b-card-img
+                  :src="app.unify.logo"
+                  :alt="app.unify.name || app.name"
+                  class="rounded-bottom"
+                />
+
+                <b-card-text
+                  class="my-4 h6"
+                >
+                  {{ app.unify.name || app.name }}
+                </b-card-text>
+
+                <b-link
+                  :disabled="!app.enabled"
+                  :href="app.unify.url"
+                  :style="[{ cursor: `${app.enabled ? 'pointer': canCreateApplication ? 'grab' : 'default'}` }]"
+                  class="stretched-link"
+                />
+              </b-card>
+            </b-col>
+          </transition-group>
+        </draggable>
+
+        <div
+          v-else
+          class="d-flex justify-content-center w-100"
+        >
+          <h4
+            class="mt-5"
+          >
+            {{ $t('no-applications') }}
+          </h4>
+        </div>
+      </b-row>
+    </b-container>
+
     <tour-start
       @start="startTour"
     />
-    <b-row class="row-width mx-auto overflow-auto">
-      <draggable
-        v-if="filteredApps.length"
-        v-model="appList"
-        group="apps"
-        class="h-100 w-100"
-        :disabled="!canCreateApplication || query || isMobileResolution"
-        @end="onDrop"
-      >
-        <transition-group
-          name="apps"
-          tag="div"
-          class="d-flex flex-wrap justify-content-center mw-transition-group m-auto"
-        >
-          <b-col
-            v-for="app in filteredApps"
-            :key="app.applicationID"
-            cols="12"
-            md="6"
-            lg="4"
-            xl="4"
-            class="p-0"
-            :data-v-onboarding="getStepName(app.unify.url)"
-          >
-            <b-card
-              no-body
-              overlay
-              class="app m-2"
-              @mouseover="hovered = app.applicationID"
-              @mouseleave="hovered = undefined"
-            >
-              <b-card-img
-                :src="app.unify.logo"
-                :alt="app.unify.name || app.name"
-                class="rounded-bottom"
-              />
 
-              <b-card-text
-                class="my-4 h6"
-              >
-                {{ app.unify.name || app.name }}
-              </b-card-text>
-
-              <b-link
-                :disabled="!app.enabled"
-                :href="app.unify.url"
-                :style="[{ cursor: `${app.enabled ? 'pointer': canCreateApplication ? 'grab' : 'default'}` }]"
-                class="stretched-link"
-              />
-            </b-card>
-          </b-col>
-        </transition-group>
-      </draggable>
-
-      <div
-        v-else
-        class="d-flex justify-content-center w-100"
-      >
-        <h4
-          class="mt-5"
-        >
-          {{ $t('no-applications') }}
-        </h4>
-      </div>
-    </b-row>
     <tour
       ref="tour"
       name="app-list"
@@ -238,6 +259,12 @@ export default {
     width: auto;
   }
 
+  @media only screen and (max-width: 576px) {
+    .logo {
+      max-width: 100%;
+    }
+  }
+
   .search {
     max-width: 600px;
     input[type="search"]::-webkit-search-cancel-button {
@@ -289,16 +316,6 @@ export default {
 
   .apps-move {
     transition: transform 0.25s ease;
-  }
-  @media only screen and (min-width: 1200px) {
-    .row-width{
-      width: 75%;
-    }
-  }
-  @media only screen and (max-width: 576px) {
-    .logo {
-      max-width: 100%;
-    }
   }
 }
 </style>
