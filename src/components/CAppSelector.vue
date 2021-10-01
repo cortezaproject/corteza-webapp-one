@@ -66,7 +66,7 @@
               <b-card
                 no-body
                 overlay
-                class="app m-2"
+                class="app mb-4"
                 @mouseover="hovered = app.applicationID"
                 @mouseleave="hovered = undefined"
               >
@@ -283,6 +283,7 @@ export default {
     transition: all 0.2s ease;
     box-shadow: 0;
     top: 0;
+    margin: 0 0.625rem;
 
     &:hover {
       transition: all 0.2s ease;
