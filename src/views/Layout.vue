@@ -19,7 +19,11 @@
           userSettingsChangePassword: $t('userSettings.changePassword'),
           userSettingsLogout: $t('userSettings.logout'),
         }"
-      />
+      >
+        <template #help-dropdown>
+          <portal-target name="topbar-help-dropdown" />
+        </template>
+      </c-topbar>
     </header>
 
     <main class="d-flex h-100 overflow-hidden">
