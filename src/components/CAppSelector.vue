@@ -106,6 +106,16 @@
       </b-row>
     </b-container>
 
+    <portal
+      to="topbar-help-dropdown"
+    >
+      <b-dropdown-item
+        @click="$refs.tour.onStartClick()"
+      >
+        {{ $t('start-tour') }}
+      </b-dropdown-item>
+    </portal>
+
     <tour-start
       @start="startTour"
     />
@@ -202,6 +212,9 @@ export default {
     if (window.innerWidth < 576) {
       this.isMobileResolution = true
     }
+    this.$nextTick(() => {
+      this.startTour()
+    })
   },
 
   methods: {
@@ -246,7 +259,7 @@ export default {
     },
 
     startTour () {
-      this.$refs.tour.start()
+      this.$refs.tour.onStart()
     },
   },
 }
