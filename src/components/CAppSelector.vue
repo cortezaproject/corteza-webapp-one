@@ -35,76 +35,80 @@
       </div>
     </div>
 
-    <b-container
-      fluid="xl"
+    <div
       class="overflow-auto"
     >
-      <b-row>
-        <draggable
-          v-if="filteredApps.length"
-          v-model="appList"
-          group="apps"
-          class="h-100 w-100"
-          :disabled="!canCreateApplication || query || isMobileResolution"
-          @end="onDrop"
-        >
-          <transition-group
-            name="apps"
-            tag="div"
-            class="d-flex flex-wrap justify-content-center mw-transition-group m-auto"
+      <b-container
+        fluid="xl"
+        class="h-100"
+      >
+        <b-row>
+          <draggable
+            v-if="filteredApps.length"
+            v-model="appList"
+            group="apps"
+            class="h-100 w-100"
+            :disabled="!canCreateApplication || query || isMobileResolution"
+            @end="onDrop"
           >
-            <b-col
-              v-for="app in filteredApps"
-              :key="app.applicationID"
-              cols="12"
-              md="6"
-              lg="4"
-              xl="4"
-              class="p-0"
-              :data-v-onboarding="getStepName(app.unify.url)"
+            <transition-group
+              name="apps"
+              tag="div"
+              class="d-flex flex-wrap justify-content-center mw-transition-group m-auto"
             >
-              <b-card
-                no-body
-                overlay
-                class="app mb-4"
-                @mouseover="hovered = app.applicationID"
-                @mouseleave="hovered = undefined"
+              <b-col
+                v-for="app in filteredApps"
+                :key="app.applicationID"
+                cols="12"
+                md="6"
+                lg="4"
+                xl="4"
+                class="p-0"
+                :data-v-onboarding="getStepName(app.unify.url)"
               >
-                <b-card-img
-                  :src="app.unify.logo"
-                  :alt="app.unify.name || app.name"
-                  class="rounded-bottom"
-                />
-
-                <b-card-text
-                  class="my-4 h6"
+                <b-card
+                  no-body
+                  overlay
+                  class="app mb-4"
+                  @mouseover="hovered = app.applicationID"
+                  @mouseleave="hovered = undefined"
                 >
-                  {{ app.unify.name || app.name }}
-                </b-card-text>
+                  <b-card-img
+                    :src="app.unify.logo"
+                    :alt="app.unify.name || app.name"
+                    class="rounded-bottom"
+                  />
 
-                <b-link
-                  :disabled="!app.enabled"
-                  :href="app.unify.url"
-                  :style="[{ cursor: `${app.enabled ? 'pointer': canCreateApplication ? 'grab' : 'default'}` }]"
-                  class="stretched-link"
-                />
-              </b-card>
-            </b-col>
-          </transition-group>
-        </draggable>
+                  <b-card-text
+                    class="my-4 h6"
+                  >
+                    {{ app.unify.name || app.name }}
+                  </b-card-text>
 
-        <div
-          v-else
-          class="d-flex justify-content-center w-100"
-        >
-          <h4
-            class="mt-5"
+                  <b-link
+                    :disabled="!app.enabled"
+                    :href="app.unify.url"
+                    :style="[{ cursor: `${app.enabled ? 'pointer': canCreateApplication ? 'grab' : 'default'}` }]"
+                    class="stretched-link"
+                  />
+                </b-card>
+              </b-col>
+            </transition-group>
+          </draggable>
+
+          <div
+            v-else
+            class="d-flex justify-content-center w-100"
           >
-            {{ $t('no-applications') }}
-          </h4>
-        </div>
-      </b-row>
-    </b-container>
+            <h4
+              class="mt-5"
+            >
+              {{ $t('no-applications') }}
+            </h4>
+          </div>
+        </b-row>
+      </b-container>
+    </div>
 
     <portal
       to="topbar-help-dropdown"
