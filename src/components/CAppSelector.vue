@@ -54,29 +54,30 @@
             <transition-group
               name="apps"
               tag="div"
-              class="d-flex flex-wrap justify-content-center mw-transition-group m-auto"
+              class="d-flex flex-wrap justify-content-center m-2 m-xl-0"
             >
               <b-col
                 v-for="app in filteredApps"
                 :key="app.applicationID"
                 cols="12"
+                sm="6"
                 md="6"
                 lg="4"
-                xl="4"
-                class="p-0"
+                xl="3"
+                class="p-0 mb-4"
                 :data-v-onboarding="getStepName(app.unify.url)"
               >
                 <b-card
                   no-body
                   overlay
-                  class="app mb-4"
+                  class="app"
                   @mouseover="hovered = app.applicationID"
                   @mouseleave="hovered = undefined"
                 >
                   <b-card-img
                     :src="app.unify.logo"
                     :alt="app.unify.name || app.name"
-                    class="rounded-bottom"
+                    class="rounded-bottom thumbnail"
                   />
 
                   <b-card-text
@@ -292,15 +293,18 @@ export default {
     }
   }
 
-  .mw-transition-group {
-    max-width: 55%;
-  }
-
   .app {
     transition: all 0.2s ease;
     box-shadow: 0;
     top: 0;
     margin: 0 0.625rem;
+
+    .thumbnail {
+      width: 100%;
+      height: 185px;
+      max-height: 185px;
+      object-fit: cover;
+    }
 
     &:hover {
       transition: all 0.2s ease;
