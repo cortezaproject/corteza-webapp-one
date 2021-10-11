@@ -70,15 +70,19 @@
                 <b-card
                   no-body
                   overlay
-                  class="app"
+                  class="app h-100"
                   @mouseover="hovered = app.applicationID"
                   @mouseleave="hovered = undefined"
                 >
-                  <b-card-img
-                    :src="app.unify.logo"
-                    :alt="app.unify.name || app.name"
-                    class="rounded-bottom thumbnail"
-                  />
+                  <div
+                    class="align-content-center d-flex flex-grow-1 flex-wrap"
+                  >
+                    <b-card-img
+                      :src="app.unify.logo"
+                      :alt="app.unify.name || app.name"
+                      class="rounded-bottom thumbnail"
+                    />
+                  </div>
 
                   <b-card-text
                     class="my-4 h6"
@@ -300,9 +304,8 @@ export default {
     margin: 0 0.625rem;
 
     .thumbnail {
-      width: 100%;
-      height: 185px;
-      max-height: 185px;
+      max-width: 100%;
+      max-height: 150px;
       object-fit: cover;
     }
 
