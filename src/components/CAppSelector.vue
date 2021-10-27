@@ -54,7 +54,7 @@
             <transition-group
               name="apps"
               tag="div"
-              class="d-flex flex-wrap justify-content-center m-2 m-xl-0"
+              class="d-flex flex-wrap justify-content-center m-2 m-xl-0 pt-1"
             >
               <b-col
                 v-for="app in filteredApps"
