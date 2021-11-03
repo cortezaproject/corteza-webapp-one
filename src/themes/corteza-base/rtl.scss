@@ -11,7 +11,10 @@ html[dir="rtl"] {
     .font-weight-bold,b,strong,
     .nav-active > span > .title {
         font-family: 'Assistant', sans-serif;
-    }    
+    }   
+    .b-sidebar:not(.expanded):not(.b-sidebar-right) {
+        right: auto;
+    }     
     body {
         direction: rtl;
         text-align: right;
