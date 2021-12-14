@@ -78,9 +78,9 @@
                     class="align-content-center d-flex flex-grow-1 flex-wrap"
                   >
                     <b-card-img
-                      :src="app.unify.logo"
-                      :alt="app.unify.name || app.name"
                       class="rounded-bottom thumbnail"
+                      :src="logoUrl(app)"
+                      :alt="app.unify.name || app.name"
                     />
                   </div>
 
@@ -139,7 +139,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import Draggable from 'vuedraggable'
-import { components } from '@cortezaproject/corteza-vue'
+import { components, url } from '@cortezaproject/corteza-vue'
 const { Tour, TourStart } = components
 
 export default {
@@ -269,6 +269,25 @@ export default {
 
     startTour () {
       this.$refs.tour.onStart()
+    },
+
+    logoUrl (app) {
+      if (!app.unify.logo) {
+        return 'applications/default-app.png'
+      }
+
+      const apiSystem = '/api/system'
+      const apiBaseUrl = (new URL(url.Make({ url: this.$SystemAPI.baseURL }))).toString()
+
+      // Properly handle uploaded logos
+      // but cut away only /api/system (without any potential base-url prefix)
+      if (app.unify.logo.startsWith(apiSystem)) {
+        // remove path from the URL
+        return apiBaseUrl.substring(0, apiBaseUrl.length - apiSystem.length) + app.unify.logo
+      }
+
+      // Provisioned app logos
+      return app.unify.logo
     },
   },
 }
