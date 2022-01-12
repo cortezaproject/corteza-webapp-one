@@ -675,10 +675,10 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@cortezaproject/corteza-js@^2021.9.6-dev.2":
-  version "2021.9.6-dev.2"
-  resolved "https://registry.yarnpkg.com/@cortezaproject/corteza-js/-/corteza-js-2021.9.6-dev.2.tgz#b1af0f0f24f4e152ed8ae756f0d48ad6f3fc3f2b"
-  integrity sha512-b8W+jgCKN7686I6PZt2e9cZLl5G9lp7QaV2kLyCepp/96K1mKDbszLQ1pgF2vC2YJ7icUofEVCXSF+qaB/DC+Q==
+"@cortezaproject/corteza-js@^2021.9.6-dev.3":
+  version "2021.9.6-dev.3"
+  resolved "https://registry.yarnpkg.com/@cortezaproject/corteza-js/-/corteza-js-2021.9.6-dev.3.tgz#dfa2a0be60dea2d89c472f9e391371ead9eb4254"
+  integrity sha512-uiLkJl0uItgidOaornvIvY15u8kN4GEiulftw920RPcYJQqE3BOYn3u0iT8UVR0QozuIJTPZr9SE/6hNkkndAw==
   dependencies:
     axios "^0.21.1"
     chart.js "2.9.3"
@@ -691,18 +691,19 @@
     pino "^5.16.0"
     ts-sinon "^1.0.25"
 
-"@cortezaproject/corteza-vue@^2021.9.6-dev.3":
-  version "2021.9.6-dev.3"
-  resolved "https://registry.yarnpkg.com/@cortezaproject/corteza-vue/-/corteza-vue-2021.9.6-dev.3.tgz#558c8df362e65e0ac5bcc19462a4013385513fef"
-  integrity sha512-b4Ql0DXjDE/DfquBWdIYmsigXNyv/HonttcXyBE63Z3j57np/5+uVZZBPKu/6XdSbgt8goRLAyzPaTD3nrXR2w==
+"@cortezaproject/corteza-vue@^2021.9.6-dev.4":
+  version "2021.9.6-dev.4"
+  resolved "https://registry.yarnpkg.com/@cortezaproject/corteza-vue/-/corteza-vue-2021.9.6-dev.4.tgz#27b1d0e272a825c7a3b1fd2274559c7fd893963c"
+  integrity sha512-vBaknFmjijJiluirvZTlLGPY62Obj+Ivtldqu05yQM9/apTfzKQsMdHNEYHiYMyqYEWdVdRPnUe6+eOECdx4sA==
   dependencies:
-    "@cortezaproject/corteza-js" "^2021.9.6-dev.2"
+    "@cortezaproject/corteza-js" "^2021.9.6-dev.3"
     "@fortawesome/fontawesome-svg-core" "^1.2.26"
     "@fortawesome/free-solid-svg-icons" "^5.12.0"
     "@fortawesome/vue-fontawesome" "^0.1.9"
     "@panter/vue-i18next" "^0.15.0"
     acorn "^7.3.1"
     bootstrap-vue "^2.21.2"
+    highlight.js "^10.4.1"
     html-parse-stringify "^3.0.1"
     i18next "^20.0.0"
     i18next-browser-languagedetector "^3.0.2"
@@ -722,6 +723,7 @@
     vuedraggable "^2.23.0"
     vuex "^3.6.2"
     websocket-extensions "^0.1.4"
+    y18n "^4.0.1"
 
 "@fortawesome/fontawesome-common-types@^0.2.35", "@fortawesome/fontawesome-common-types@^0.2.36":
   version "0.2.36"
@@ -4901,7 +4903,7 @@ highlight.js@^10.0.0:
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-10.4.1.tgz#d48fbcf4a9971c4361b3f95f302747afe19dbad0"
   integrity sha512-yR5lWvNz7c85OhVAEAeFhVCc/GV4C30Fjzc/rCP0aCWzc1UUOPUk55dK/qdwTZHBvMZo+eZ2jpk62ndX/xMFlg==
 
-highlight.js@~10.7.0:
+highlight.js@^10.4.1, highlight.js@~10.7.0:
   version "10.7.3"
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-10.7.3.tgz#697272e3991356e40c3cac566a74eef681756531"
   integrity sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A==
@@ -10569,6 +10571,11 @@ y18n@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/y18n/-/y18n-4.0.1.tgz#8db2b83c31c5d75099bb890b23f3094891e247d4"
   integrity sha512-wNcy4NvjMYL8gogWWYAO7ZFWFfHcbdbE57tZO8e4cbpj8tfUcwrwqSl3ad8HxpYWCdXcJUCeKKZS62Av1affwQ==
+
+y18n@^4.0.1:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/y18n/-/y18n-4.0.3.tgz#b5f259c82cd6e336921efd7bfd8bf560de9eeedf"
+  integrity sha512-JKhqTOwSrqNA1NY5lSztJ1GrBiUodLMmIZuLiDaMRJ+itFd+ABVE8XBjOvIWL+rSqNDC74LCSFmlb/U4UZ4hJQ==
 
 yallist@^2.1.2:
   version "2.1.2"
