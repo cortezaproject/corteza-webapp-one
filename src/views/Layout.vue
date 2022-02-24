@@ -9,6 +9,7 @@
       <c-topbar
         hide-app-selector
         :sidebar-pinned="pinned"
+        :settings="$Settings.get('ui.topbar', {})"
         :labels="{
           helpForum: $t('help.forum'),
           helpDocumentation: $t('help.documentation'),
