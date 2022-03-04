@@ -69,7 +69,6 @@ module.exports = ({ appFlavour, appLabel, version, theme, packageAlias, root = p
         .tap(options => ({
           ...options,
           sourceMap: true,
-          sourceMapContents: false,
         }))
 
       // Load CSS assets according to their location
@@ -107,9 +106,7 @@ module.exports = ({ appFlavour, appLabel, version, theme, packageAlias, root = p
       loaderOptions: {
         sass: {
           // @todo cleanup all components and remove this global import
-          data: `
-            @import "./src/themes/${theme}/variables.scss";
-          `,
+          additionalData: `@import "./src/themes/${theme}/variables.scss";`,
         },
       },
     },
