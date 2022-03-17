@@ -93,11 +93,6 @@ module.exports = ({ appFlavour, appLabel, version, theme, packageAlias, root = p
       hot: true,
       disableHostCheck: true,
 
-      overlay: {
-        warnings: true,
-        errors: true,
-      },
-
       watchOptions: {
         ignored: [
           // Do not watch for changes under node_modules
