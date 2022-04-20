@@ -30,7 +30,7 @@
     "bootstrap-vue": "^2.21.2",
     "kind-of": "^6.0.3",
     "lodash": "^4.17.21",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "postcss-rtl": "^1.7.3",
     "resolve-url-loader": "^3.1.2",
     "set-value": "^4.0.1",
