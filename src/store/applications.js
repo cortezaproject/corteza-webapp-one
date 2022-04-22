@@ -45,7 +45,6 @@ export default ({ api }) => {
       },
 
       async pin ({ dispatch }, { applicationID, ownedBy }) {
-        console.log(ownedBy)
         return api.applicationFlagCreate({ applicationID, flag: 'pinned', ownedBy }).then(() => {
           return dispatch('load')
         }).catch(() => {})
