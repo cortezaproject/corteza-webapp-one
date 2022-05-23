@@ -17,6 +17,7 @@
         >
           <b-form-input
             v-model.trim="query"
+            data-test-id="input-search"
             class="float-right mw-100"
             type="search"
             name="search"
@@ -91,6 +92,7 @@
                   </b-card-text>
 
                   <b-link
+                    :data-test-id="app.name"
                     :disabled="!app.enabled"
                     :href="app.unify.url"
                     :style="[{ cursor: `${app.enabled ? 'pointer': canCreateApplication ? 'grab' : 'default'}` }]"
@@ -106,6 +108,7 @@
             class="d-flex justify-content-center w-100"
           >
             <h4
+              data-test-id="heading-no-apps"
               class="mt-5"
             >
               {{ $t('no-applications') }}
@@ -119,6 +122,7 @@
       to="topbar-help-dropdown"
     >
       <b-dropdown-item
+        data-test-id="dropdown-helper-tour"
         @click="$refs.tour.onStartClick()"
       >
         {{ $t('start-tour') }}
