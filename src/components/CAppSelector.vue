@@ -11,27 +11,13 @@
 
     <div class="search w-100 mx-auto my-3 px-5">
       <div class="flex-grow-1 mt-1">
-        <b-input-group
+        <c-input-search
+          v-model.trim="query"
           data-v-onboarding="app-list"
-        >
-          <b-form-input
-            v-model.trim="query"
-            data-test-id="input-search"
-            class="float-right mw-100"
-            type="search"
-            name="search"
-            debounce="200"
-            :aria-label="$t('search')"
-            :placeholder="$t('search')"
-          />
-          <b-input-group-append>
-            <b-input-group-text class="text-primary bg-white">
-              <font-awesome-icon
-                :icon="['fas', 'search']"
-              />
-            </b-input-group-text>
-          </b-input-group-append>
-        </b-input-group>
+          :aria-label="$t('search')"
+          :placeholder="$t('search')"
+          :debounce="200"
+        />
       </div>
     </div>
 
@@ -142,7 +128,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import Draggable from 'vuedraggable'
 import { components, url } from '@cortezaproject/corteza-vue'
-const { Tour, TourStart } = components
+const { Tour, TourStart, CInputSearch } = components
 
 export default {
   i18nOptions: {
@@ -153,6 +139,7 @@ export default {
     Draggable,
     Tour,
     TourStart,
+    CInputSearch,
   },
 
   props: {
@@ -194,7 +181,9 @@ export default {
 
     filteredApps () {
       const query = (this.query || '').toUpperCase()
-      return this.query ? this.appList.filter(({ name }) => (name.toUpperCase()).includes(query)) : this.appList
+      return this.query
+        ? this.appList.filter(({ name }) => (name.toUpperCase()).includes(query))
+        : this.appList
     },
 
     filteredSteps () {
@@ -310,12 +299,6 @@ export default {
 
   .search {
     max-width: 600px;
-    input[type="search"]::-webkit-search-cancel-button {
-      -webkit-appearance: none;
-      height: 13px;
-      width: 13px;
-      background: url("data:image/svg+xml;charset=UTF-8,%3csvg viewPort='0 0 12 12' version='1.1' xmlns='http://www.w3.org/2000/svg'%3e%3cline x1='1' y1='11' x2='11' y2='1' stroke='black' stroke-width='2'/%3e%3cline x1='1' y1='1' x2='11' y2='11' stroke='black' stroke-width='2'/%3e%3c/svg%3e");
-    }
   }
 
   .app {
