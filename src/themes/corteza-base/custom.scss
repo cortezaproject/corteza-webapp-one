@@ -31,6 +31,10 @@ button:disabled {
   cursor: pointer;
 }
 
+.b-toaster.b-toaster-bottom-right {
+  bottom: 75px;
+}
+
 .grab {
   cursor: grab;
 }
