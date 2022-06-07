@@ -9,7 +9,7 @@ import './components'
 import store from './store'
 import router from './router'
 
-import { i18n } from '@cortezaproject/corteza-vue'
+import { i18n, websocket } from '@cortezaproject/corteza-vue'
 
 export default (options = {}) => {
   options = {
@@ -27,6 +27,8 @@ export default (options = {}) => {
         this.i18nLoaded = true
       })
 
+      this.websocket()
+
       return this.$auth.vue(this).handle().then(({ user }) => {
         // switch the page directionality on body based on language
         document.body.setAttribute('dir', this.textDirectionality(user.meta.preferredLanguage))
@@ -37,9 +39,9 @@ export default (options = {}) => {
           this.$i18n.i18next.changeLanguage(user.meta.preferredLanguage)
         }
 
-        this.$Settings.init({ api: this.$SystemAPI }).finally(() => {
-          this.loaded = true
-        })
+        this.$store.dispatch('wfPrompts/update')
+
+        return this.$Settings.init({ api: this.$SystemAPI })
       }).catch((err) => {
         if (err instanceof Error && err.message === 'Unauthenticated') {
           // user not logged-in,
@@ -49,7 +51,38 @@ export default (options = {}) => {
         }
 
         throw err
+      }).finally(() => {
+        this.loaded = true
       })
+    },
+
+    methods: {
+      /**
+       * Registers event listener for websocket messages and
+       * routes them depending on their type
+       */
+      websocket () {
+        // cross-link auth & websocket so that ws can use the right access token
+        websocket.init(this)
+
+        // register event listener for workflow messages
+        this.$on('websocket-message', ({ data }) => {
+          const msg = JSON.parse(data)
+          switch (msg['@type']) {
+            case 'workflowSessionPrompt': {
+              this.$store.dispatch('wfPrompts/new', msg['@value'])
+              break
+            }
+
+            case 'workflowSessionResumed':
+              this.$store.dispatch('wfPrompts/clear', msg['@value'])
+              break
+
+            case 'error':
+              console.error('websocket message with error', msg['@value'])
+          }
+        })
+      },
     },
 
     router,

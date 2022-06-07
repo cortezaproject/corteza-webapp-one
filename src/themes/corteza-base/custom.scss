@@ -31,6 +31,10 @@ button:disabled {
   cursor: pointer;
 }
 
+.b-toaster.b-toaster-bottom-right {
+  bottom: 75px;
+}
+
 .grab {
   cursor: grab;
 }
@@ -46,4 +50,32 @@ strong,
 b,
 .font-weight-bold {
   font-family: $font-semibold;
+}
+
+.v-select {
+  min-width: 250px;
+
+  .vs__search {
+    margin: 0;
+
+    &:focus {
+      margin: 0;
+    }
+  }
+
+  .vs__dropdown-toggle {
+    padding: 0.375rem;
+    border-width: 2px;
+    border-color: $light;
+  
+    .vs__selected {
+      margin: 0;
+    }
+  }
+  
+  .vs__clear,
+  .vs__open-indicator {
+    fill: $gray-900;
+    display: inline-flex;
+  }
 }
