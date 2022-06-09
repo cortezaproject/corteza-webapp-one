@@ -79,3 +79,27 @@ b,
     display: inline-flex;
   }
 }
+
+// Supporting CSS to improve print-to-PDF option
+@media print {
+  @page {
+    size: auto;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  main {
+    padding-top: 64px;
+  }
+
+  header, footer, aside, nav {
+    display: none;
+  }
+
+  .block {
+    break-inside: avoid;
+    width: 100%;
+  }
+}
