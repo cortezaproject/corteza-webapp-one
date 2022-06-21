@@ -4,6 +4,7 @@
   >
     <div
       v-show="loaded"
+      class="h-100"
     >
       <header
         class="mw-100"
