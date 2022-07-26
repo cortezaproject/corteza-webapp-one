@@ -104,7 +104,7 @@ export default {
 
   created () {
     this.preloadApplications()
-      .finally(() => {
+      .then(() => {
         setTimeout(() => {
           this.loaded = true
         }, 500)
