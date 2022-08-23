@@ -15,6 +15,7 @@
       >
 
       <button
+        data-test-id="button-create-room"
         :disabled="jitsi || (cleanup(roomName).length === 0)"
         @click="onCreate"
       >
