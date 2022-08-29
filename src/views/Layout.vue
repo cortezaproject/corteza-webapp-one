@@ -30,7 +30,10 @@
         </c-topbar>
       </header>
 
-      <main class="d-flex h-100 overflow-hidden">
+      <main
+        class="d-flex overflow-hidden"
+        style="height: 94%;"
+      >
         <c-app-selector
           :logo="logo"
         />
