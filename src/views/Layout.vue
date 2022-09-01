@@ -2,40 +2,39 @@
   <div
     class="d-flex flex-column w-100 vh-100"
   >
-    <div
+    <header
       v-show="loaded"
-      class="h-100"
+      class="mw-100"
     >
-      <header
-        class="mw-100"
+      <c-topbar
+        hide-app-selector
+        :sidebar-pinned="pinned"
+        :settings="$Settings.get('ui.topbar', {})"
+        :labels="{
+          helpForum: $t('help.forum'),
+          helpDocumentation: $t('help.documentation'),
+          helpFeedback: $t('help.feedback'),
+          helpVersion: $t('help.version'),
+          userSettingsLoggedInAs: $t('userSettings.loggedInAs', { user }),
+          userSettingsProfile: $t('userSettings.profile'),
+          userSettingsChangePassword: $t('userSettings.changePassword'),
+          userSettingsLogout: $t('userSettings.logout'),
+        }"
       >
-        <c-topbar
-          hide-app-selector
-          :sidebar-pinned="pinned"
-          :settings="$Settings.get('ui.topbar', {})"
-          :labels="{
-            helpForum: $t('help.forum'),
-            helpDocumentation: $t('help.documentation'),
-            helpFeedback: $t('help.feedback'),
-            helpVersion: $t('help.version'),
-            userSettingsLoggedInAs: $t('userSettings.loggedInAs', { user }),
-            userSettingsProfile: $t('userSettings.profile'),
-            userSettingsChangePassword: $t('userSettings.changePassword'),
-            userSettingsLogout: $t('userSettings.logout'),
-          }"
-        >
-          <template #help-dropdown>
-            <portal-target name="topbar-help-dropdown" />
-          </template>
-        </c-topbar>
-      </header>
+        <template #help-dropdown>
+          <portal-target name="topbar-help-dropdown" />
+        </template>
+      </c-topbar>
+    </header>
 
-      <main class="d-flex h-100 overflow-hidden">
-        <c-app-selector
-          :logo="logo"
-        />
-      </main>
-    </div>
+    <main
+      v-show="loaded"
+      class="flex-fill overflow-hidden"
+    >
+      <c-app-selector
+        :logo="logo"
+      />
+    </main>
 
     <c-loader-logo
       v-if="!loaded"

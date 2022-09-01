@@ -1,7 +1,6 @@
 <template>
-  <b-container
-    fluid
-    class="app-selector d-flex flex-column text-center m-0 p-0 mw-100"
+  <div
+    class="app-selector d-flex flex-column h-100"
   >
     <div class="d-flex justify-content-center align-items-center">
       <b-img
@@ -10,7 +9,7 @@
       />
     </div>
 
-    <div class="search flex-shrink-2 w-100 mx-auto mt-4 mb-3 px-5">
+    <div class="search w-100 mx-auto my-3 px-5">
       <div class="flex-grow-1 mt-1">
         <b-input-group
           data-v-onboarding="app-list"
@@ -37,10 +36,9 @@
     </div>
 
     <div
-      class="overflow-auto"
+      class="flex-fill overflow-auto"
     >
       <b-container
-        fluid="xl"
         class="h-100"
       >
         <b-row>
@@ -55,7 +53,7 @@
             <transition-group
               name="apps"
               tag="div"
-              class="d-flex flex-wrap justify-content-center m-2 m-xl-0 pt-1"
+              class="d-flex flex-wrap justify-content-center mx-2"
             >
               <b-col
                 v-for="app in filteredApps"
@@ -65,13 +63,13 @@
                 md="6"
                 lg="4"
                 xl="3"
-                class="p-0 mb-4"
+                class="p-0 mb-3 mt-1"
                 :data-v-onboarding="getStepName(app.unify.url)"
               >
                 <b-card
                   no-body
                   overlay
-                  class="app h-100"
+                  class="app"
                   @mouseover="hovered = app.applicationID"
                   @mouseleave="hovered = undefined"
                 >
@@ -86,7 +84,7 @@
                   </div>
 
                   <b-card-text
-                    class="my-4 h6"
+                    class="text-center my-4 h6"
                   >
                     {{ app.unify.name || app.name }}
                   </b-card-text>
@@ -138,7 +136,7 @@
       name="app-list"
       :steps="filteredSteps"
     />
-  </b-container>
+  </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
@@ -329,7 +327,7 @@ export default {
     .thumbnail {
       max-width: 100%;
       max-height: 150px;
-      object-fit: cover;
+      object-fit: contain;
     }
 
     &:hover {
