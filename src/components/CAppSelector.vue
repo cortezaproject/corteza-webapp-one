@@ -212,9 +212,6 @@ export default {
     if (window.innerWidth < 576) {
       this.isMobileResolution = true
     }
-    this.$nextTick(() => {
-      this.startTour()
-    })
   },
 
   methods: {
