@@ -27,78 +27,76 @@
       <b-container
         class="h-100"
       >
-        <b-row>
-          <draggable
-            v-if="filteredApps.length"
-            v-model="appList"
-            group="apps"
-            class="h-100 w-100"
-            :disabled="!canCreateApplication || query || isMobileResolution"
-            @end="onDrop"
+        <draggable
+          v-if="filteredApps.length"
+          v-model="appList"
+          group="apps"
+          class="h-100 w-100"
+          :disabled="!canCreateApplication || query || isMobileResolution"
+          @end="onDrop"
+        >
+          <transition-group
+            name="apps"
+            tag="b-row"
+            class="d-flex flex-wrap align-items-stretch justify-content-center mx-2"
           >
-            <transition-group
-              name="apps"
-              tag="div"
-              class="d-flex flex-wrap justify-content-center mx-2"
+            <b-col
+              v-for="app in filteredApps"
+              :key="app.applicationID"
+              cols="12"
+              sm="6"
+              md="6"
+              lg="4"
+              xl="3"
+              class="p-0 mb-3 mt-1"
+              :data-v-onboarding="getStepName(app.unify.url)"
             >
-              <b-col
-                v-for="app in filteredApps"
-                :key="app.applicationID"
-                cols="12"
-                sm="6"
-                md="6"
-                lg="4"
-                xl="3"
-                class="p-0 mb-3 mt-1"
-                :data-v-onboarding="getStepName(app.unify.url)"
+              <b-card
+                no-body
+                overlay
+                class="app h-100"
+                @mouseover="hovered = app.applicationID"
+                @mouseleave="hovered = undefined"
               >
-                <b-card
-                  no-body
-                  overlay
-                  class="app"
-                  @mouseover="hovered = app.applicationID"
-                  @mouseleave="hovered = undefined"
+                <div
+                  class="align-content-center d-flex flex-grow-1 flex-wrap"
                 >
-                  <div
-                    class="align-content-center d-flex flex-grow-1 flex-wrap"
-                  >
-                    <b-card-img
-                      class="rounded-bottom thumbnail"
-                      :src="logoUrl(app)"
-                      :alt="app.unify.name || app.name"
-                    />
-                  </div>
-
-                  <b-card-text
-                    class="text-center my-4 h6"
-                  >
-                    {{ app.unify.name || app.name }}
-                  </b-card-text>
-
-                  <b-link
-                    :data-test-id="app.name"
-                    :disabled="!app.enabled"
-                    :href="app.unify.url"
-                    :style="[{ cursor: `${app.enabled ? 'pointer': canCreateApplication ? 'grab' : 'default'}` }]"
-                    class="stretched-link"
+                  <b-card-img
+                    class="rounded-bottom thumbnail"
+                    :src="logoUrl(app)"
+                    :alt="app.unify.name || app.name"
                   />
-                </b-card>
-              </b-col>
-            </transition-group>
-          </draggable>
+                </div>
 
-          <div
-            v-else
-            class="d-flex justify-content-center w-100"
+                <b-card-text
+                  class="text-center my-4 h6"
+                >
+                  {{ app.unify.name || app.name }}
+                </b-card-text>
+
+                <b-link
+                  :data-test-id="app.name"
+                  :disabled="!app.enabled"
+                  :href="app.unify.url"
+                  :style="[{ cursor: `${app.enabled ? 'pointer': canCreateApplication ? 'grab' : 'default'}` }]"
+                  class="stretched-link"
+                />
+              </b-card>
+            </b-col>
+          </transition-group>
+        </draggable>
+
+        <div
+          v-else
+          class="d-flex justify-content-center w-100"
+        >
+          <h4
+            data-test-id="heading-no-apps"
+            class="mt-5"
           >
-            <h4
-              data-test-id="heading-no-apps"
-              class="mt-5"
-            >
-              {{ $t('no-applications') }}
-            </h4>
-          </div>
-        </b-row>
+            {{ $t('no-applications') }}
+          </h4>
+        </div>
       </b-container>
     </div>
 
@@ -299,6 +297,7 @@ export default {
   }
 
   .app {
+    min-height: 13rem;
     transition: all 0.2s ease;
     box-shadow: 0;
     top: 0;
